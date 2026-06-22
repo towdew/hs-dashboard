@@ -404,7 +404,9 @@
       text-align:left;
     }
     .guide-todo{
-      display:block;
+      display:flex;
+      gap: 6px;
+      align-items: center;
       width:100%;
       margin: 2px 0 5px;
       padding:6px 10px;
@@ -421,8 +423,7 @@
     }
     .guide-todo::before{
       content:'To-do';
-      display:inline-block;
-      margin-right:6px;
+      display: block;
       padding:1px 5px;
       border-radius:999px;
       background:#007a4d;
