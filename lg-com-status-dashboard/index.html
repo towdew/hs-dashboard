@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -315,8 +316,7 @@
       padding-right:16px;
     }
 
-    /* ── Cards (GP1 base card) ── */
-    .guide-card,
+    /* ── Cards / Status Guide ── */
     .summary-card{
       background:#fff;
       border:1px solid #EEEEEE;
@@ -325,127 +325,305 @@
       margin-bottom:14px;
       box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
     }
-
-    /* ── Status Guide ── */
-    .guide-title{
-      font-size:10px;
-      font-weight:700;
-      letter-spacing:.8px;
-      text-transform:uppercase;
-      color:var(--lg-gray-4);
-      margin-bottom:10px;
+    
+    .guide-card{
+      background:linear-gradient(135deg,#fff 0%,#fff 58%,#F8FBF9 100%);
+      border:1px solid #E3E8E5;
+      border-radius:18px;
+      padding:14px 18px 16px;
+      margin-bottom:12px;
+      box-shadow:0 2px 10px rgba(17,24,39,.05),0 10px 28px rgba(17,24,39,.06);
+      max-height:300px;
+      overflow:hidden;
     }
-    .guide-grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(220px,1fr));
+    
+    .guide-hero{
+      display:flex;
+      align-items:center;
       gap:10px;
+      padding-bottom:10px;
+      margin-bottom:12px;
+      border-bottom:1px solid #DDE5E0;
     }
-    .guide-section{
-      border:1px solid var(--lg-gray-2);
-      border-radius:8px;
-      padding:10px 12px;
-      background:var(--lg-gray-0);
+    
+    .guide-hero-icon{
+      width:42px;
+      height:42px;
+      flex:0 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      background:linear-gradient(135deg,#EAF7EF 0%,#F4FAF6 100%);
+      color:#07883E;
+      box-shadow:inset 0 0 0 1px rgba(7,136,62,.08);
     }
-    .guide-section h3{
-      margin:0 0 6px;
+    
+    .guide-hero-icon svg{
+      width:22px;
+      height:22px;
+    }
+    
+    .guide-main-title{
+      margin:0;
+      font-size:18px;
+      line-height:1.05;
+      font-weight:900;
+      letter-spacing:-.04em;
+      color:#0F172A;
+    }
+    
+    .guide-subtitle{
+      margin-top:4px;
+      font-size:12px;
+      line-height:1.25;
+      font-weight:600;
+      color:#536075;
+    }
+    
+    .guide-layout{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 300px;
+      gap:22px;
+      align-items:start;
+    }
+    
+    .guide-panel-title{
+      display:flex;
+      align-items:center;
+      gap:7px;
+      margin-bottom:8px;
       font-size:11px;
-      font-weight:700;
-      color:var(--lg-gray-5);
-      letter-spacing:.3px;
+      font-weight:900;
+      letter-spacing:-.01em;
       text-transform:uppercase;
+      color:#9b9b9b;
     }
-    .guide-list{
+    
+    .guide-panel-title svg{
+      width:14px;
+      height:14px;
+      flex:0 0 auto;
+      stroke:#7c7c7c;
+    }
+    
+    .workflow-list{
       display:flex;
       flex-direction:column;
-      gap:5px;
-      color:var(--lg-gray-5);
-      line-height:1.35;
-      font-size:13px;
+      gap:6px;
     }
-    .guide-list div{
-      display:flex;
-      align-items:flex-start;
-      gap:8px;
-      text-align:left;
+    
+    .workflow-step{
+      display:grid;
+      grid-template-columns:64px minmax(240px,1fr) minmax(320px,420px);
+      gap:10px;
+      align-items:center;
+      padding: 5px 12px;
+      border:1px solid #DDE5E0;
+      border-radius:10px;
+      background:rgba(255,255,255,.92);
+      box-shadow:0 1px 3px rgba(17,24,39,.04);
+      max-height: 68px;
     }
-    .guide-list .guide-row{
-      display:flex;
-      align-items:flex-start;
-      flex-wrap: wrap;
-      column-gap:10px;
-      row-gap:4px;
-      width:100%;
-      text-align:left;
-    }
-    .guide-step{
+    
+    .workflow-step-badge{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-height:20px;
-      padding:2px 7px;
-      border-radius:999px;
-      background:#F1F3F5;
-      color:var(--lg-gray-4);
+      min-width:56px;
+      height:24px;
+      padding:0 8px;
+      border-radius:7px;
+      background:#ECF8F1;
+      color:#07883E;
       font-size:10px;
-      font-weight:800;
-      letter-spacing:.2px;
-      white-space:nowrap;
+      font-weight:900;
       text-transform:uppercase;
-    }
-    .guide-list b{
-      color:var(--lg-gray-6);
       white-space:nowrap;
-      font-weight:700;
-      text-align:left;
     }
-    .guide-desc{
-      display:block;
+    
+    .workflow-copy{
       min-width:0;
-      text-align:left;
+      padding-right:4px;
     }
-    .guide-todo{
-      display:flex;
-      gap: 6px;
-      align-items: center;
-      width:100%;
-      margin: 2px 0 5px;
-      padding:6px 10px;
-      border-radius:8px;
-      background:#FFF;
-      color:#0ba66d;
-      box-shadow: 0 0 5px rgba(0, 0, 0,0.2);
+    
+    .workflow-name{
+      margin:0 0 3px;
+      font-size:15px;
+      line-height:1.12;
+      font-weight:900;
+      letter-spacing:-.025em;
+      color:#0F172A;
+    }
+    
+    .workflow-desc{
+      margin:0;
       font-size:12px;
-      line-height:1.35;
+      line-height:1.24;
       font-weight:600;
-      font-style:normal;
-      text-align:left;
-      box-sizing:border-box;
+      color:#1F2937;
     }
-    .guide-todo::before{
-      content:'To-do';
-      display: block;
-      padding:1px 5px;
+    
+    .workflow-todo{
+      position:relative;
+      display:grid;
+      grid-template-columns:28px minmax(0,1fr);
+      gap:8px;
+      align-items:center;
+      min-height:42px;
+      padding:7px 10px;
+      border-left: 2px solid #d8e4e7;
+      border-radius:8px;
+      background:#fbfffd;
+    }
+    
+    .todo-check{
+      width:28px;
+      height:28px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:8px;
+      background:#fff;
+      color:#07883E;
+      box-shadow:inset 0 0 0 1px rgba(7,136,62,.16);
+    }
+    
+    .todo-check svg{
+      width:18px;
+      height:18px;
+    }
+    
+    .todo-label{
+      display:block;
+      margin-bottom:1px;
+      color:#07883E;
+      font-size:12px;
+      line-height:1.1;
+      font-weight:900;
+      letter-spacing:-.01em;
+    }
+    
+    .todo-text{
+      display:block;
+      color:#0F172A;
+      font-size:12px;
+      line-height:1.22;
+      font-weight:600;
+    }
+    
+    .guide-color-panel{
+      padding-left:22px;
+      border-left:1px solid #DDE5E0;
+    }
+    
+    .color-list{
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+    }
+    
+    .color-card{
+      display:grid;
+      grid-template-columns:26px 1fr;
+      gap:10px;
+      align-items:center;
+      padding:6px 12px;
+      border:1px solid #DDE5E0;
+      border-radius:8px;
+      background:#fff;
+      box-shadow:0 1px 3px rgba(17,24,39,.04);
+    }
+    
+    .color-dot-lg{
+      width:18px;
+      height:18px;
       border-radius:999px;
-      background:#007a4d;
-      color:#ffffff;
-      font-size:10px;
-      font-weight:800;
-      letter-spacing:.2px;
-      vertical-align:1px;
-      min-width: 30px;
-      text-align: center;
+      box-shadow:0 4px 10px rgba(0,0,0,.12);
     }
-    @media(max-width:760px){
-      .guide-list .guide-row{
-        grid-template-columns:58px 1fr;
-        row-gap:4px;
-      }
-      .guide-list .guide-row .guide-desc{
-        grid-column:1 / -1;
-      }
+    
+    .color-dot-lg.red{
+      background:#B00035;
     }
-
-    /* ── Summary / KPI ── */
+    
+    .color-dot-lg.orange{
+      background:#F59E0B;
+    }
+    
+    .color-dot-lg.green{
+      background:#009A44;
+    }
+    
+    .color-dot-lg.grey{
+      background:#7A7A7A;
+    }
+    
+    .color-name{
+      display:block;
+      margin-bottom:2px;
+      font-size:12px;
+      line-height:1.1;
+      font-weight:900;
+      letter-spacing:-.02em;
+      color:#0F172A;
+    }
+    
+    .color-desc{
+      display:block;
+      font-size:12px;
+      line-height:1.15;
+      font-weight:600;
+      color:#475569;
+    }
+    
+    @media (max-width:1180px){
+    .guide-card{
+      max-height:none;
+    }
+    
+    .guide-layout{
+      grid-template-columns:1fr;
+      gap:18px;
+    }
+    
+    .guide-color-panel{
+      padding-left:0;
+      border-left:0;
+      border-top:1px solid #DDE5E0;
+      padding-top:14px;
+    }
+    
+    .color-list{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+    }
+    
+    @media (max-width:860px){
+    .guide-card{
+      padding:18px 16px;
+    }
+    
+    .guide-hero{
+      align-items:flex-start;
+    }
+    
+    .workflow-step{
+      grid-template-columns:64px 1fr;
+      gap:10px;
+    }
+    
+    .workflow-todo{
+      grid-column:1 / -1;
+      border-left:0;
+    }
+    
+    .color-list{
+      grid-template-columns:1fr;
+    }
+    }
+    
+        /* ── Summary / KPI ── */
     .summary-head{
       display:flex;
       justify-content:space-between;
@@ -921,6 +1099,22 @@
     .mx-table td.mx-article.orange .mx-art-ratio{ color:var(--s-orange); }
     .mx-table td.mx-article.red .mx-art-label,
     .mx-table td.mx-article.red .mx-art-ratio{ color:var(--s-red); }
+    /* Global Request.xlsx > LG Experience Articles 카운트 텍스트는 상태색을 적용하지 않음 */
+    .mx-table td.mx-article.green .mx-art-label,
+    .mx-table td.mx-article.orange .mx-art-label,
+    .mx-table td.mx-article.red .mx-art-label,
+    .mx-table td.mx-article.green .mx-art-ratio,
+    .mx-table td.mx-article.orange .mx-art-ratio,
+    .mx-table td.mx-article.red .mx-art-ratio,
+    .mx-table td.mx-article.green .mx-art-total,
+    .mx-table td.mx-article.orange .mx-art-total,
+    .mx-table td.mx-article.red .mx-art-total,
+    .mx-table td.mx-article.green .mx-art-done,
+    .mx-table td.mx-article.orange .mx-art-done,
+    .mx-table td.mx-article.red .mx-art-done{ color:#1A1A1A !important; }
+    .article-url-list{ display:flex; flex-direction:column; gap:6px; }
+    .article-url-list a{ color:var(--lg-heritage-red); font-weight:700; text-decoration:none; word-break:break-all; }
+    .article-url-list a:hover{ text-decoration:underline; }
     /* 신호등 색상 — aging 숫자에 적용 */
     .mx-table td.mx-data.red .mx-aging{ color:var(--s-red); }
     .mx-table td.mx-data.orange .mx-aging{ color:var(--s-orange); }
@@ -2205,10 +2399,11 @@ let EMBEDDED_DATA = (WEEK_DATASETS[latestDatasetKey()] || {rows:[]}).rows;
 let EMBEDDED_DATE = 'Google Sheet CSV';
 // ──────────────────────────────────────────────────────────────────
 
-const STATUS_BOARD_LOCAL_XLSX_FILE = '신호등data-0701.xlsx';
+const STATUS_BOARD_LOCAL_XLSX_FILE = '신호등data-0624.xlsx';
 const STATUS_BOARD_LOCAL_XLSX_FALLBACK_FILES = [
   STATUS_BOARD_LOCAL_XLSX_FILE,
   '신호등 data-0701.xlsx',
+  '신호등data-0624(7).xlsx',
   '신호등data.xlsx',
   '신호등 data.xlsx'
 ];
@@ -2308,6 +2503,16 @@ async function loadGoogleSheetData(){
     const sheetTabName = result.sheetName || SHEET_WEEK_FALLBACK_LABEL;
     const displayDateLabel = result.fileDateLabel || sheetTabName;
     setSheetTabWeek(sheetTabName, parsedRows, displayDateLabel);
+
+    // Global Request.xlsx > LG Experience Articles 카운트와 일반 데이터 국가키를 맞추기 위해
+    // 신호등data에서 실제로 여러 언어로 나뉜 국가만 먼저 계산합니다.
+    setCountryLangSplitBasesFromRows(parsedRows);
+
+    try {
+      await loadGlobalRequestArticleData();
+    } catch(articleErr) {
+      console.warn('[status-board] LG Experience Articles count load failed:', articleErr && articleErr.message ? articleErr.message : articleErr);
+    }
 
     currentRows = parsedRows;
     selectedCountry = null;
@@ -2418,13 +2623,50 @@ function formatDateValue(v){
 function elapsedText(days){
   return days !== null && days !== '' && days !== undefined ? `${days} days elapsed` : '';
 }
-function cleanCountryName(value){
+// 국가명 정규화
+// - 기본은 국가코드만 사용합니다. 예: AT-de -> AT
+// - 단, 같은 국가가 여러 언어로 나뉘어 존재하는 경우에만 언어코드를 유지합니다.
+//   예: HK-en + HK-zh가 같이 있으면 HK-en / HK-zh로 별도 카운트합니다.
+let COUNTRY_LANG_SPLIT_BASES = new Set();
+
+function parseProjectCountryCodeLang(value){
   let s = norm(value);
   const m = s.match(/^LGE\s+.+?\s*-\s*(.+?)(?:\s*\(.*?\))?\s*$/i);
   if(m) s = m[1].trim();
   s = s.replace(/\s*\(.*?\)\s*$/g, '').trim();
-  s = s.split('-')[0].trim();
-  return s;
+  const lm = s.match(/^([A-Za-z]{1,10})(?:[-_])([A-Za-z]{2})$/);
+  if(lm && isArticleLangSuffix(lm[2])){
+    return { base:String(lm[1] || '').trim().toUpperCase(), lang:String(lm[2] || '').trim().toLowerCase(), raw:s };
+  }
+  return { base:String(s.split('-')[0].split('_')[0] || '').trim().toUpperCase(), lang:'', raw:s };
+}
+
+function setCountryLangSplitBasesFromRows(rows){
+  try{
+    const mapped = mapRows(rows || []);
+    const langMap = {};
+    (mapped.data || []).forEach(function(r){
+      const info = parseProjectCountryCodeLang(r.country);
+      if(!info.base || !info.lang) return;
+      if(!langMap[info.base]) langMap[info.base] = new Set();
+      langMap[info.base].add(info.lang);
+    });
+    COUNTRY_LANG_SPLIT_BASES = new Set(Object.keys(langMap).filter(function(base){
+      return langMap[base] && langMap[base].size > 1;
+    }));
+    window.COUNTRY_LANG_SPLIT_BASES = COUNTRY_LANG_SPLIT_BASES;
+  }catch(e){
+    COUNTRY_LANG_SPLIT_BASES = new Set();
+    window.COUNTRY_LANG_SPLIT_BASES = COUNTRY_LANG_SPLIT_BASES;
+  }
+}
+
+function cleanCountryName(value){
+  const info = parseProjectCountryCodeLang(value);
+  if(info.base && info.lang && COUNTRY_LANG_SPLIT_BASES.has(info.base)){
+    return info.base + '-' + info.lang;
+  }
+  return info.base || norm(value);
 }
 function formatProjectCountry(v){
   return cleanCountryName(v);
@@ -2432,6 +2674,39 @@ function formatProjectCountry(v){
 function isValidUrl(v){
   const s = norm(v);
   return /^https?:\/\//i.test(s);
+}
+function extractUrls(value){
+  if(Array.isArray(value)){
+    const out = [];
+    value.forEach(function(v){ extractUrls(v).forEach(function(u){ if(out.indexOf(u) < 0) out.push(u); }); });
+    return out;
+  }
+  const s = norm(value);
+  if(!s) return [];
+  const matches = s.match(/https?:\/\/[^\s,;<>"']+/gi);
+  if(matches && matches.length){
+    const out = [];
+    matches.forEach(function(u){
+      const cleaned = String(u || '').replace(/[)\].,;]+$/g, '');
+      if(isValidUrl(cleaned) && out.indexOf(cleaned) < 0) out.push(cleaned);
+    });
+    return out;
+  }
+  return isValidUrl(s) ? [s] : [];
+}
+function mergeLiveUrls(target, value){
+  const arr = Array.isArray(target) ? target : [];
+  extractUrls(value).forEach(function(u){ if(arr.indexOf(u) < 0) arr.push(u); });
+  return arr;
+}
+function liveUrlListHtml(urls){
+  const list = extractUrls(urls);
+  if(!list.length) return '<span class="muted">-</span>';
+  const hasMultiple = list.length > 1;
+  return '<div class="article-url-list">' + list.map(function(url, idx){
+    const label = hasMultiple ? ('Live URL ' + (idx + 1) + ' ↗') : 'Live URL ↗';
+    return '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(label) + '</a>';
+  }).join('') + '</div>';
 }
 function damButtons(url){
   const value = norm(url);
@@ -2495,10 +2770,11 @@ function statusFor(r){
     return { signal:'Green', title:'Complete', aging:'', periodText, reason:'Task Status = [WPL] Closed' };
   }
 
-  // In progress 상태는 독려 대상에서 제외
+  // In progress 상태는 신호등data-####.xlsx의 일반 데이터에서만 표시합니다.
+  // Aging/Pending Period는 표시하지 않고, 셀에는 Status + Page 수만 노출합니다.
   const taskLower = task.toLowerCase();
   if(isInProgressTask(task)){
-    return { signal:'None', title:'', aging:'', periodText:'', reason:'In progress status excluded' };
+    return { signal:'Blue', title:'In Progress', aging:'', periodText:'', reason:'Task Status = ' + task };
   }
   const pttAge = ageDays(r.pttSubmit);
   const subAge = ageDays(r.submission);
@@ -2527,13 +2803,13 @@ function statusFor(r){
 function worse(a,b){ return PRIORITY[b.signal] > PRIORITY[a.signal] ? b : a; }
 
 function prepareData(rows){
+  setCountryLangSplitBasesFromRows(rows || []);
   const { col, data } = mapRows(rows);
   const missing = Object.entries({ 'Model Name':col.model, 'Project Name/Project':col.country, 'Task Status in PTT':col.task })
     .filter(([,v]) => !v).map(([k]) => k);
   if(missing.length) throw new Error('Required columns were not found: ' + missing.join(', '));
 
   const enriched = data
-    .filter(r => !isInProgressTask(r.task))
     .map((r,i) => ({
       ...r,
       idx:i+1,
@@ -2541,6 +2817,7 @@ function prepareData(rows){
       pg:norm(r.pg),
       division:norm(r.division),
       dam:norm(r.dam),
+      liveUrl:norm(r.liveUrl),
       country:formatProjectCountry(r.country),
       region:norm(r.region) || 'Other',
       status:statusFor(r)
@@ -2697,8 +2974,15 @@ const COUNTRY_NAMES = {
 
 function getCountryName(code){
   if(!code) return code;
-  var upper = String(code).toUpperCase();
-  return COUNTRY_NAMES[upper] || COUNTRY_NAMES[code] || code;
+  var raw = String(code).trim();
+  var lm = raw.match(/^([A-Za-z]{1,10})[-_]([A-Za-z]{2})$/);
+  if(lm){
+    var base = String(lm[1] || '').toUpperCase();
+    var lang = String(lm[2] || '').toLowerCase();
+    return (COUNTRY_NAMES[base] || base) + ' (' + lang + ')';
+  }
+  var upper = raw.toUpperCase();
+  return COUNTRY_NAMES[upper] || COUNTRY_NAMES[raw] || raw;
 }
 
 function toTitleCase(str){
@@ -2747,7 +3031,8 @@ function buildThreeCells(cell, country, req){
 
   // data-detail for click
   var detail = JSON.stringify({
-    country:country, division:req.division||'', model:req.model||'', dam:req.dam||'',
+    country:country, division:req.division||'', model:req.model||'', dam:req.dam||'', liveUrl:req.liveUrl||'',
+    liveUrls:(cell.liveUrls && cell.liveUrls.length ? cell.liveUrls : extractUrls(req.liveUrl || '')),
     signal:item.signal||'', title:item.title||'',
     aging:agingNum, periodText:item.periodText||'', reason:item.reason||'', pgTotal:item.pgTotal||0
   });
@@ -2763,6 +3048,8 @@ function buildFlatStatusItem(item, country, req){
     division: req.division || '',
     model: req.model || '',
     dam: req.dam || '',
+    liveUrl: req.liveUrl || '',
+    liveUrls: extractUrls(req.liveUrls && req.liveUrls.length ? req.liveUrls : (req.liveUrl || '')),
     signal: item.signal || '',
     title: item.title || '',
     aging: (item.aging !== '' && item.aging !== undefined && item.aging !== null) ? item.aging : '',
@@ -2814,7 +3101,7 @@ function buildFlatRows(requests, matrix, visibleRows, visibleCountries){
 
       if(!byRegion[region]) byRegion[region] = {};
       if(!byRegion[region][c]) byRegion[region][c] = [];
-      byRegion[region][c].push({ req: req, cell: { items: filteredItems, pgTotal: cell.pgTotal } });
+      byRegion[region][c].push({ req: req, cell: { items: filteredItems, pgTotal: cell.pgTotal, liveUrls: cell.liveUrls || [] } });
     });
   });
 
@@ -2884,8 +3171,189 @@ function buildFlatRows(requests, matrix, visibleRows, visibleCountries){
 }
 
 // ── LG Experience Articles 완료 카운트 (제품×국가) ──────────────────
-const ARTICLE_DATA = {"UK":{"WM":{"c":11,"t":12},"REF":{"c":9,"t":9},"DW":{"c":1,"t":3},"Cooking":{"c":0,"t":2}},"DE":{"WM":{"c":5,"t":13},"REF":{"c":0,"t":14},"DW":{"c":0,"t":3},"Cooking":{"c":0,"t":2}},"FR":{"WM":{"c":0,"t":12},"REF":{"c":0,"t":9},"DW":{"c":0,"t":3},"VC":{"c":0,"t":1},"Cooking":{"c":0,"t":2}},"IT":{"WM":{"c":0,"t":12},"REF":{"c":0,"t":9},"DW":{"c":1,"t":3},"Cooking":{"c":0,"t":2}},"ES":{"WM":{"c":0,"t":12},"REF":{"c":0,"t":9},"DW":{"c":0,"t":3},"Cooking":{"c":0,"t":2}},"GR":{"WM":{"c":0,"t":11},"REF":{"c":0,"t":9}},"TH":{"WM":{"c":0,"t":8},"REF":{"c":0,"t":5},"DW":{"c":0,"t":3}},"TW":{"WM":{"c":5,"t":9},"REF":{"c":0,"t":5},"DW":{"c":0,"t":3},"VC":{"c":0,"t":1},"Cooking":{"c":0,"t":2}},"PH":{"WM":{"c":7,"t":8,"x":1},"REF":{"c":4,"t":5,"x":1}},"VN":{"WM":{"c":8,"t":9},"REF":{"c":4,"t":5,"x":1},"DW":{"c":1,"t":3},"Cooking":{"c":0,"t":2}},"AU":{"WM":{"c":0,"t":9},"REF":{"c":0,"t":5},"DW":{"c":0,"t":3},"VC":{"c":0,"t":1},"Cooking":{"c":0,"t":2}},"HK":{"VC":{"c":0,"t":2}},"MY":{"VC":{"c":0,"t":1}},"SA":{"WM":{"c":6,"t":8},"REF":{"c":4,"t":4},"DW":{"c":6,"t":6},"Cooking":{"c":0,"t":4}},"EG":{"WM":{"c":6,"t":6},"REF":{"c":4,"t":4},"DW":{"c":6,"t":6}},"MX":{"WM":{"c":6,"t":7},"REF":{"c":7,"t":7},"DW":{"c":0,"t":3},"Cooking":{"c":0,"t":2}},"CO":{"WM":{"c":6,"t":7},"REF":{"c":7,"t":7},"DW":{"c":0,"t":3},"Cooking":{"c":0,"t":2}},"PE":{"WM":{"c":6,"t":6},"REF":{"c":7,"t":7}},"CL":{"WM":{"c":6,"t":6},"REF":{"c":7,"t":7},"DW":{"c":0,"t":2}},"BR":{"WM":{"c":0,"t":7},"REF":{"c":0,"t":7},"Cooking":{"c":0,"t":2}},"SE":{"WM":{"c":0,"t":3}},"CA":{"WM":{"c":0,"t":2},"DW":{"c":4,"t":6},"VC":{"c":0,"t":2},"Cooking":{"c":0,"t":4}},"ID":{"WM":{"c":0,"t":1},"DW":{"c":0,"t":2},"Cooking":{"c":0,"t":2}},"IN":{"WM":{"c":0,"t":1},"DW":{"c":0,"t":3}},"ZA":{"WM":{"c":0,"t":1},"DW":{"c":0,"t":3},"Cooking":{"c":0,"t":2}}};
+// Global Request.xlsx > "LG Experience Articles" 시트를 읽어 제품×국가별 완료/전체 카운트를 자동 생성합니다.
+// - 제품 컬럼: "제품"
+// - 국가 컬럼: Head 행의 Title 오른쪽(UK~LV 등)
+// - Done: URL 또는 완료/Done/Closed 계열 값
+// - Total: 빈칸이 아닌 모든 작업 상태/URL 값
+// - Cancel: Total에는 포함하되 화면 표시 시 effectiveTotal = Total - Cancel 로 계산
+// - Done 값이 URL인 경우 팝업에서 URL 리스트로 표시
+let ARTICLE_DATA = {};
 const ARTICLE_PRODUCTS = ["WM","REF","DW","VC","Cooking"];
+const GLOBAL_REQUEST_LOCAL_XLSX_FILE = 'Global Request.xlsx';
+const GLOBAL_REQUEST_LOCAL_XLSX_FALLBACK_FILES = [
+  GLOBAL_REQUEST_LOCAL_XLSX_FILE,
+  'Global Request(6).xlsx'
+];
+
+function getGlobalRequestLocalXlsxCandidateUrls(){
+  var urls = [];
+  function add(url){ if(url && urls.indexOf(url) < 0) urls.push(url); }
+  function addFile(fileName){
+    try { add(new URL(fileName, window.location.href).href); } catch(e) {}
+    try { add(new URL('../' + fileName, window.location.href).href); } catch(e) {}
+    try { add(new URL('/' + fileName, window.location.origin).href); } catch(e) {}
+    if(!urls.length) add('./' + encodeURIComponent(fileName));
+  }
+  GLOBAL_REQUEST_LOCAL_XLSX_FALLBACK_FILES.forEach(addFile);
+  return urls;
+}
+
+function normalizeArticleHeaderName(value){
+  return String(value || '').toLowerCase().replace(/[\s_\-/.]+/g, '');
+}
+
+function normalizeArticleProduct(value){
+  var raw = String(value || '').trim();
+  var key = raw.toUpperCase().replace(/\s+/g, '');
+  if(key === 'COOKING' || key === 'COOK') return 'Cooking';
+  if(ARTICLE_PRODUCTS.indexOf(key) >= 0) return key;
+  return raw;
+}
+
+function getArticleProductDisplayName(value){
+  var key = normalizeArticleProduct(value);
+  var map = {
+    'WM': 'Washing Machine',
+    'FRE': 'Refrigerator',
+    'REF': 'Refrigerator',
+    'VC': 'Vacuum Cleaner',
+    'Cooking': 'Cooking'
+  };
+  return map[key] || String(value || '').trim() || '-';
+}
+
+function isArticleLangSuffix(value){
+  return ['en','ar','fr','de','es','pt','ko','ja','zh','it','nl','vi','th','id','tr','pl','cs','da','sv','fi','no','he','fa','ro','bg','hr','hu','el','sk','sl','lt','lv','et','ms','hi'].indexOf(String(value || '').toLowerCase()) >= 0;
+}
+
+function normalizeArticleCountryKey(value){
+  var raw = String(value || '').trim();
+  if(!raw) return '';
+  if(raw.indexOf(':') >= 0) raw = raw.split(':')[0].trim();
+  raw = raw.replace(/\([^)]*\)/g, '').trim();
+  var m = raw.match(/^(.+?)[\s]*[-_][\s]*([A-Za-z]{2})\s*$/);
+  if(m && isArticleLangSuffix(m[2])){
+    var base = String(m[1] || '').replace(/\s+/g, ' ').trim().toUpperCase();
+    var lang = String(m[2] || '').trim().toLowerCase();
+    // 신호등data에서 실제로 여러 언어로 나뉜 국가만 article 카운트도 분리합니다.
+    if(COUNTRY_LANG_SPLIT_BASES && COUNTRY_LANG_SPLIT_BASES.has(base)){
+      return base + '-' + lang;
+    }
+    return base;
+  }
+  return raw.replace(/\s+/g, ' ').trim().toUpperCase();
+}
+
+function isArticleUrl(value){
+  return /^https?:\/\//i.test(String(value || '').trim());
+}
+
+function detectArticleCellStatus(value){
+  var raw = String(value == null ? '' : value)
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\u00A0/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if(!raw) return '';
+  var compact = raw.toLowerCase().replace(/[\s_\-/.]+/g, ' ').trim();
+  var noSpace = compact.replace(/\s+/g, '');
+  if(isArticleUrl(raw) || ['완료','등록완료','done','complete','completed','closed'].indexOf(compact) >= 0 || ['완료','등록완료'].indexOf(noSpace) >= 0) return 'Done';
+  if(['취소','cancel','cancelled','canceled'].indexOf(compact) >= 0 || noSpace === '취소') return 'Cancel';
+  return 'Other';
+}
+
+function buildArticleDataFromGlobalRequestMatrix(matrix){
+  var rows = Array.isArray(matrix) ? matrix : [];
+  var headerIdx = -1;
+  for(var i=0; i<Math.min(rows.length, 50); i++){
+    var first = String((rows[i] || [])[0] || '').trim().toLowerCase();
+    var joined = (rows[i] || []).map(function(v){ return String(v || '').trim(); }).join('|').toLowerCase();
+    if(first === 'head' || (joined.indexOf('제품') >= 0 && joined.indexOf('title') >= 0)){
+      headerIdx = i;
+      break;
+    }
+  }
+  if(headerIdx < 0) return {};
+
+  var headers = (rows[headerIdx] || []).map(function(v){ return String(v || '').trim(); });
+  var productCol = -1;
+  var titleCol = -1;
+  headers.forEach(function(h, idx){
+    var n = normalizeArticleHeaderName(h);
+    if(productCol < 0 && (n === '제품' || n === 'product' || n === 'prod')) productCol = idx;
+    if(titleCol < 0 && (n === 'title' || n === 'articletitle')) titleCol = idx;
+  });
+  if(productCol < 0) productCol = 1;
+  if(titleCol < 0) titleCol = 3;
+
+  var countryCols = [];
+  for(var c=titleCol + 1; c<headers.length; c++){
+    var country = normalizeArticleCountryKey(headers[c]);
+    if(!country) continue;
+    countryCols.push({ idx:c, country:country });
+  }
+
+  var out = {};
+  rows.slice(headerIdx + 1).forEach(function(row){
+    row = row || [];
+    var product = normalizeArticleProduct(row[productCol]);
+    if(!product || ARTICLE_PRODUCTS.indexOf(product) < 0) return;
+
+    countryCols.forEach(function(col){
+      var raw = String(row[col.idx] == null ? '' : row[col.idx]).trim();
+      if(!raw) return;
+      var status = detectArticleCellStatus(raw);
+      if(!status) return;
+      if(!out[col.country]) out[col.country] = {};
+      if(!out[col.country][product]) out[col.country][product] = { c:0, t:0, x:0, urls:[] };
+      var data = out[col.country][product];
+      data.t += 1;
+      if(status === 'Done') {
+        data.c += 1;
+        if(isArticleUrl(raw) && data.urls.indexOf(raw) < 0) data.urls.push(raw);
+      }
+      if(status === 'Cancel') data.x += 1;
+    });
+  });
+
+  return out;
+}
+
+async function loadGlobalRequestArticleData(){
+  if(!window.XLSX) throw new Error('XLSX 라이브러리가 로드되지 않았습니다.');
+  var urls = getGlobalRequestLocalXlsxCandidateUrls();
+  var lastError = null;
+  for(var i=0; i<urls.length; i++){
+    try{
+      var res = await fetch(urls[i], { cache:'default' });
+      if(!res.ok) throw new Error('Global Request.xlsx fetch failed: ' + res.status + ' / ' + urls[i]);
+      var buf = await res.arrayBuffer();
+      var wb = XLSX.read(buf, { type:'array', cellDates:false, raw:false });
+      var sheetName = (wb.SheetNames || []).find(function(name){
+        return String(name || '').trim().toLowerCase() === 'lg experience articles';
+      }) || (wb.SheetNames || []).find(function(name){
+        var n = String(name || '').toLowerCase();
+        return n.indexOf('experience') >= 0 && n.indexOf('article') >= 0;
+      });
+      if(!sheetName) throw new Error('Global Request.xlsx에서 LG Experience Articles 시트를 찾지 못했습니다.');
+      var ws = wb.Sheets[sheetName];
+      var matrix = XLSX.utils.sheet_to_json(ws, { header:1, defval:'', raw:false });
+      var data = buildArticleDataFromGlobalRequestMatrix(matrix);
+      ARTICLE_DATA = data || {};
+      window.ARTICLE_DATA = ARTICLE_DATA;
+      console.info('[status-board] LG Experience Articles counts loaded:', ARTICLE_DATA);
+      return ARTICLE_DATA;
+    }catch(e){
+      lastError = e;
+      console.warn('[status-board] Global Request.xlsx load retry:', e && e.message ? e.message : e);
+    }
+  }
+  ARTICLE_DATA = {};
+  window.ARTICLE_DATA = ARTICLE_DATA;
+  throw lastError || new Error('Global Request.xlsx를 찾지 못했습니다.');
+}
+window.ARTICLE_DATA = ARTICLE_DATA;
 
 // ── 리퀘스트 그룹 정의 (2단 헤더용) ─────────────────────────────────
 const REQUEST_GROUPS = [
@@ -2935,7 +3403,9 @@ function buildMatrixTable(visibleRows, visibleCountries){
   const cellMap = {};
   visibleRows.forEach(function(r){
     if(!cellMap[r.country]) cellMap[r.country] = {};
-    if(!cellMap[r.country][r.model]) cellMap[r.country][r.model] = { items:[], pgTotal:0, signal:'None', division:r.division, dam:r.dam };
+    if(!cellMap[r.country][r.model]) cellMap[r.country][r.model] = { items:[], pgTotal:0, signal:'None', division:r.division, dam:r.dam, liveUrl:r.liveUrl, liveUrls:[] };
+    if(!cellMap[r.country][r.model].liveUrl && r.liveUrl) cellMap[r.country][r.model].liveUrl = r.liveUrl;
+    mergeLiveUrls(cellMap[r.country][r.model].liveUrls, r.liveUrl);
     const cell = cellMap[r.country][r.model];
     const pgNum = Number(String(r.pg || '').replace(/,/g,'').trim());
     cell.pgTotal += !isNaN(pgNum) ? pgNum : 0;
@@ -2998,10 +3468,44 @@ function buildMatrixTable(visibleRows, visibleCountries){
   return { thead: thead, tbody: tbody, colCount: colCount, modelCount: columns.length };
 }
 
-// LG Experience Articles 셀: 완료/전체 카운트
+function openArticleStatusModal(detail){
+  const modal = document.getElementById('statusModal');
+  if(!modal || !detail) return;
+
+  const doneCount = Number(detail.doneCount || 0);
+  const totalCount = Number(detail.totalCount || 0);
+  const statusText = doneCount + ' Done / ' + totalCount + ' Total';
+  const isComplete = totalCount > 0 && doneCount >= totalCount;
+  const signalClass = isComplete ? 'green' : (doneCount > 0 ? 'orange' : 'red');
+  const countryDisplay = getCountryName(detail.country) || detail.country || '-';
+
+  document.getElementById('statusModalTitle').textContent = isComplete ? 'Complete' : 'LG Experience Articles';
+  const badge = document.getElementById('statusModalBadge');
+  badge.innerHTML = '<i class="dot ' + signalClass + '"></i><span>' + esc(statusText) + '</span>';
+
+  let rows = [
+    rowHtml('Country', esc(countryDisplay), !countryDisplay),
+    rowHtml('Request Title', 'LG Experience Articles', false),
+    rowHtml('Request Name', esc(getArticleProductDisplayName(detail.product)), !detail.product),
+    rowHtml('Status', esc(statusText), false)
+  ].join('');
+
+  const urls = Array.isArray(detail.urls) ? detail.urls.filter(Boolean) : [];
+  if(doneCount > 0 && urls.length){
+    rows += rowHtml('URL List', liveUrlListHtml(urls), false);
+  }
+
+  document.getElementById('statusModalBody').innerHTML = rows;
+  modal.querySelectorAll('.detail-copy-btn').forEach(function(b){ b.remove(); });
+  modal.classList.add('show');
+
+  const tip = document.getElementById('floatingTooltip');
+  if(tip){ tip.style.display = 'none'; tip.textContent = ''; }
+}
+
+// LG Experience Articles 셀: Global Request.xlsx의 완료/전체 카운트만 표시
 // data.x = 취소(cancelled) 건수 → effectiveTotal = t - x
-// done: ● Complete / N page (이미지 형식)
-// in-progress: Complete c / Total t page
+// In Progress 표기는 신호등data-####.xlsx에서 들어오는 일반 상태 셀에서만 처리합니다.
 function buildArticleCell(country, product){
   const data = (ARTICLE_DATA[country] || {})[product];
   if(!data || !data.t){
@@ -3014,15 +3518,18 @@ function buildArticleCell(country, product){
   }
   const done = (c >= effectiveTotal);
   const sc = done ? 'green' : (c > 0 ? 'orange' : 'red');
-  if(done){
-    return '<td class="mx-cell mx-article ' + sc + '">'
-      + '<div class="mx-cell-dot"><i class="dot green mx-dot"></i></div>'
-      + '<div class="mx-cell-label"><span class="mx-status-lbl">Complete</span></div>'
-      + '<div class="mx-cell-bot"><span class="mx-pg">' + effectiveTotal + ' page</span></div>'
-      + '</td>';
-  }
-  return '<td class="mx-cell mx-article ' + sc + '">'
-    + '<div class="mx-art-done">' + c + ' Done /</div><div class="mx-art-total">' + effectiveTotal + ' Total</div>'
+  const detail = JSON.stringify({
+    type:'article',
+    country:country,
+    product:product,
+    doneCount:c,
+    totalCount:effectiveTotal,
+    cancelCount:x,
+    urls:Array.isArray(data.urls) ? data.urls : []
+  });
+  return '<td class="mx-cell mx-article ' + sc + ' cst-clickable" style="cursor:pointer" data-article-detail="' + esc(detail) + '">'
+    + '<div class="mx-art-ratio"><b>' + c + ' Done</b> /</div>'
+    + '<div class="mx-art-total">' + effectiveTotal + ' Total</div>'
     + (x > 0 ? '<span class="mx-art-cancel">(' + x + ' cancelled)</span>' : '')
     + '</td>';
 }
@@ -3034,6 +3541,10 @@ function buildMatrixCell(cell, country, model, extraClass){
   }
   // 전체 항목 표시 (Pre-check 30일+ 제외 규칙 해제)
   const items = cell.items.slice();
+  const cancelCount = items.reduce(function(sum, it){
+    const isCancelled = it && (it.signal === 'Grey' || String(it.title || '').toLowerCase() === 'cancelled');
+    return sum + (isCancelled ? Number(it.count || 1) : 0);
+  }, 0);
   if(!items.length){
     return '<td class="mx-cell mx-empty"></td>';
   }
@@ -3043,14 +3554,28 @@ function buildMatrixCell(cell, country, model, extraClass){
   const agingNum = (item.aging !== '' && item.aging != null) ? item.aging : '';
   const pg = cell.pgTotal;
 
-  const dot = '<i class="dot ' + sc + ' mx-dot"></i>';
-
   const statusLabel = item.title || (item.signal === 'Blue' ? 'In Progress' : (item.signal === 'Green' ? 'Complete' : ''));
+  const isInProgress = String(statusLabel || '').toLowerCase().replace(/[\s_-]+/g, '') === 'inprogress' || item.signal === 'Blue';
   const displayLabel = statusLabel === 'Request Clarification' ? 'Request<br>Clarification' : esc(statusLabel);
-  // 구조: ● (dot) / Status / N days / N page — 각 줄 분리
+
+  const pgText = pg ? pg + ' page' : '';
+  let txt = '';
+
+  if(isInProgress){
+    // 신호등data-####.xlsx 일반 데이터의 In Progress는 점/팝업 없이 상태와 page 수만 표시
+    txt += '<div class="mx-cell-label"><span class="mx-status-lbl">In Progress</span></div>';
+    if(pgText){
+      txt += '<div class="mx-cell-bot"><span class="mx-pg">' + pgText + '</span></div>';
+    }
+    if(cancelCount > 0){
+      txt += '<span class="mx-art-cancel">(' + cancelCount + ' cancelled)</span>';
+    }
+    return '<td class="mx-cell mx-data ' + sc + extraClass + '">' + (txt || '<span class="mx-dash">—</span>') + '</td>';
+  }
+
+  const dot = '<i class="dot ' + sc + ' mx-dot"></i>';
   const dotLine   = '<div class="mx-cell-dot">' + dot + '</div>';
   const labelLine = '<div class="mx-cell-label"><span class="mx-status-lbl">' + displayLabel + '</span></div>';
-  const pgText = pg ? pg + ' page' : '';
   let agingLine = '', pgLine = '';
   if(agingNum !== ''){
     agingLine = '<div class="mx-cell-bot"><span class="mx-aging">' + esc(String(agingNum)) + ' days</span></div>';
@@ -3058,12 +3583,17 @@ function buildMatrixCell(cell, country, model, extraClass){
   if(pgText){
     pgLine = '<div class="mx-cell-bot"><span class="mx-pg">' + pgText + '</span></div>';
   }
-  let txt = (dotLine + labelLine + agingLine + pgLine) || '<span class="mx-dash">—</span>';
+  txt = (dotLine + labelLine + agingLine + pgLine) || '<span class="mx-dash">—</span>';
+  if(cancelCount > 0){
+    txt += '<span class="mx-art-cancel">(' + cancelCount + ' cancelled)</span>';
+  }
 
   const detail = JSON.stringify({
-    country: country, division: cell.division || '', model: model || '', dam: cell.dam || '',
+    country: country, division: cell.division || '', model: model || '', dam: cell.dam || '', liveUrl: cell.liveUrl || '',
+    liveUrls: (cell.liveUrls && cell.liveUrls.length ? cell.liveUrls : extractUrls(cell.liveUrl || '')),
     signal: item.signal || '', title: item.title || '',
-    aging: agingNum, periodText: item.periodText || '', reason: item.reason || '', pgTotal: pg || 0
+    aging: agingNum, periodText: item.periodText || '', reason: item.reason || '', pgTotal: pg || 0,
+    cancelCount: cancelCount || 0
   });
 
   return '<td class="mx-cell mx-data ' + sc + extraClass + ' cst-clickable" style="cursor:pointer" data-detail="' + esc(detail) + '">' + txt + '</td>';
@@ -3095,8 +3625,14 @@ function renderDashboard(rows, clickedCountry=null){
         key: requestKey,
         division: r.division,
         model: r.model,
-        dam: r.dam
+        dam: r.dam,
+        liveUrl: r.liveUrl,
+        liveUrls: extractUrls(r.liveUrl)
       });
+    } else {
+      const reqItem = requestMap.get(requestKey);
+      if(!reqItem.liveUrl && r.liveUrl) reqItem.liveUrl = r.liveUrl;
+      reqItem.liveUrls = mergeLiveUrls(reqItem.liveUrls || [], r.liveUrl);
     }
   });
   const requests = Array.from(requestMap.values()).sort((a,b) =>
@@ -3115,11 +3651,12 @@ function renderDashboard(rows, clickedCountry=null){
     const pgValue = !isNaN(pgNum) ? pgNum : 0;
 
     if(!matrix[requestKey][r.country]){
-      matrix[requestKey][r.country] = { signal:'None', items:[], pgTotal:0 };
+      matrix[requestKey][r.country] = { signal:'None', items:[], pgTotal:0, liveUrls:[] };
     }
 
     const cell = matrix[requestKey][r.country];
     cell.pgTotal += pgValue;
+    mergeLiveUrls(cell.liveUrls, r.liveUrl);
 
     if(r.status.signal !== 'None'){
       cell.items.push({
@@ -3164,12 +3701,14 @@ function renderDashboard(rows, clickedCountry=null){
         if(!groupedItems.has(groupKey)){
           groupedItems.set(groupKey, {
             ...item,
-            pgTotal:0
+            pgTotal:0,
+            count:0
           });
         }
 
         const grouped = groupedItems.get(groupKey);
         grouped.pgTotal += Number(item.pgTotal || 0);
+        grouped.count += Number(item.count || 1);
       });
 
       cell.items = Array.from(groupedItems.values())
@@ -3218,23 +3757,66 @@ function renderDashboard(rows, clickedCountry=null){
   let html = `
     <div id="captureArea">
       <section class="guide-card">
-        <div class="guide-title">Status Guide</div>
-        <div class="guide-grid">
-          <div class="guide-section">
-            <h3>Status Description</h3>
-            <div class="guide-list">
-              <div class="guide-row"><span class="guide-step">Step 1</span><b>Pre check</b><span class="guide-desc">Confirmation of content update and upload feasibility with the subsidiary before starting the work</span><em class="guide-todo">Check the work details and confirm with the person in charge whether the work should proceed.</em></div>
-              <div class="guide-row"><span class="guide-step">Step 2</span><b>Request Clarification</b><span class="guide-desc">Clarification of requirements with the subsidiary while the work is in progress</span><em class="guide-todo">Please respond to the person in charge regarding the work detail confirmation.</em></div>
-              <div class="guide-row"><span class="guide-step">Step 3</span><b>Subsidiary Review</b><span class="guide-desc">Review request to the subsidiary after completing page updates, followed by final approval</span><em class="guide-todo">The work page has been completed. Please conduct the final review before go-live and provide confirmation.</em></div>
+        <div class="guide-hero">
+          <div>
+            <h2 class="guide-main-title">Status Guide</h2>
+            <div class="guide-subtitle">Progress steps, stalled-action guidance, and status color meanings.</div>
+          </div>
+        </div>
+
+        <div class="guide-layout">
+          <div class="guide-workflow-panel">
+            <div class="guide-panel-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
+              <span>Workflow Steps</span>
+            </div>
+            <div class="workflow-list">
+              <div class="workflow-step">
+                <span class="workflow-step-badge">Step 1</span>
+                <div class="workflow-copy">
+                  <h3 class="workflow-name">Pre check</h3>
+                  <p class="workflow-desc">Confirm whether subsidiaries that have not started the work yet will proceed.</p>
+                </div>
+                <div class="workflow-todo">
+                  <span class="todo-check" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l2.4 2.4L16.5 8.8"/></svg></span>
+                  <span><strong class="todo-label">To-do if stalled</strong><span class="todo-text">Check the work details and inform Concentrix whether to proceed.</span></span>
+                </div>
+              </div>
+              <div class="workflow-step">
+                <span class="workflow-step-badge">Step 2</span>
+                <div class="workflow-copy">
+                  <h3 class="workflow-name">Request Clarification</h3>
+                  <p class="workflow-desc">Confirm unclear requirements with the subsidiary while the work is in progress.</p>
+                </div>
+                <div class="workflow-todo">
+                  <span class="todo-check" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l2.4 2.4L16.5 8.8"/></svg></span>
+                  <span><strong class="todo-label">To-do if stalled</strong><span class="todo-text">Review the clarification request and provide your response.</span></span>
+                </div>
+              </div>
+              <div class="workflow-step">
+                <span class="workflow-step-badge">Step 3</span>
+                <div class="workflow-copy">
+                  <h3 class="workflow-name">Subsidiary Review</h3>
+                  <p class="workflow-desc">Final subsidiary review after the page update has been completed.</p>
+                </div>
+                <div class="workflow-todo">
+                  <span class="todo-check" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l2.4 2.4L16.5 8.8"/></svg></span>
+                  <span><strong class="todo-label">To-do if stalled</strong><span class="todo-text">Review the completed page and confirm whether it can go live.</span></span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="guide-section">
-            <h3>Color Description</h3>
-            <div class="guide-list">
-              <div><i class="dot red"></i><b>Long Pending</b><span>Delayed for 14+ days</span></div>
-              <div><i class="dot orange"></i><b>Pending</b><span>7–13 days pending</span></div>
-              <div><i class="dot green"></i><b>Complete</b><span>Live completed</span></div>
-              <div><i class="dot grey"></i><b>Cancelled</b><span>Cancelled</span></div>
+
+          <div class="guide-color-panel">
+            <div class="guide-panel-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3H4a1 1 0 0 0-1 1v5.59A2 2 0 0 0 3.59 11l9.59 9.59a2 2 0 0 0 2.82 0l4.59-4.59a2 2 0 0 0 0-2.82z"/><path d="M7 7h.01"/></svg>
+              <span>Color Description</span>
+            </div>
+            <div class="color-list">
+              <div class="color-card"><span class="color-dot-lg red"></span><span><strong class="color-name">Long Pending</strong><span class="color-desc">Delayed for 14+ days</span></span></div>
+              <div class="color-card"><span class="color-dot-lg orange"></span><span><strong class="color-name">Pending</strong><span class="color-desc">7–13 days pending</span></span></div>
+              <div class="color-card"><span class="color-dot-lg green"></span><span><strong class="color-name">Complete</strong><span class="color-desc">Live completed</span></span></div>
+              <div class="color-card"><span class="color-dot-lg grey"></span><span><strong class="color-name">Cancelled</strong><span class="color-desc">Cancelled</span></span></div>
             </div>
           </div>
         </div>
@@ -3479,6 +4061,14 @@ function renderDashboard(rows, clickedCountry=null){
     matrixWrap.addEventListener('click', function(e){
       const td = e.target.closest('.cst-clickable');
       if(!td) return;
+      // LG Experience Articles 셀: 국가/제품별 Done/Total 팝업
+      if(td.classList.contains('mx-article')){
+        try{
+          const detail = JSON.parse(td.getAttribute('data-article-detail') || '{}');
+          if(detail) openArticleStatusModal(detail);
+        }catch(err){}
+        return;
+      }
       // 매트릭스 셀: 해당 셀만 단일 팝업
       if(td.classList.contains('mx-data')){
         try{
@@ -3505,12 +4095,14 @@ function renderCountryDetail(country, rows){
         model,
         division: norm(r.division),
         dam: norm(r.dam),
+        liveUrl: norm(r.liveUrl),
         totalPg: 0,
         statusGroups: {}
       });
     }
 
     const group = groupedMap.get(model);
+    if(!group.liveUrl && r.liveUrl) group.liveUrl = norm(r.liveUrl);
     const pgNum = Number(String(r.pg || '').replace(/,/g, '').trim());
     if(!isNaN(pgNum)) group.totalPg += pgNum;
 
@@ -3741,13 +4333,23 @@ function openStatusModal(detail){
     periodMuted = false;
   }
 
-  const pageVal = detail.pgTotal ? Number(detail.pgTotal).toLocaleString() : '-';
+  const cancelCount = Number(detail.cancelCount || 0);
+  let pageVal = detail.pgTotal ? Number(detail.pgTotal).toLocaleString() : '-';
+  if(cancelCount > 0){
+    pageVal += ' (' + cancelCount.toLocaleString() + ' Cancelled)';
+  }
   const countryDisplay = getCountryName(detail.country) || detail.country || '-';
 
-  // DAM 링크
-  let damVal = '<span class="muted">-</span>';
-  if(/^https?:\/\//i.test(String(detail.dam || ''))){
-    damVal = '<a href="' + esc(detail.dam) + '" target="_blank" rel="noopener" style="color:var(--lg-heritage-red);font-weight:700;text-decoration:none">Open DAM Link ↗</a>';
+  // Complete 상태는 DAM 대신 Live URL 표시, 그 외 상태는 DAM 표시
+  const isCompleteStatus = detail.signal === 'Green' || String(detail.title || '').toLowerCase() === 'complete';
+  let linkKey = isCompleteStatus ? 'Live URL' : 'DAM';
+  let linkVal = '<span class="muted">-</span>';
+  const liveUrls = extractUrls(detail.liveUrls && detail.liveUrls.length ? detail.liveUrls : (detail.liveUrl || ''));
+  const damUrl = String(detail.dam || '').trim();
+  if(isCompleteStatus){
+    linkVal = liveUrlListHtml(liveUrls);
+  } else if(/^https?:\/\//i.test(damUrl)){
+    linkVal = '<a href="' + esc(damUrl) + '" target="_blank" rel="noopener" style="color:var(--lg-heritage-red);font-weight:700;text-decoration:none">Open DAM Link ↗</a>';
   }
 
   const rows = [
@@ -3757,7 +4359,7 @@ function openStatusModal(detail){
     rowHtml('Status',         esc(detail.title    || '-'),  !detail.title),
     rowHtml(periodKey,        periodVal,                     periodMuted),
     rowHtml('Page Count',     esc(pageVal),                  !detail.pgTotal),
-    rowHtml('DAM',            damVal,                        false)
+    rowHtml(linkKey,          linkVal,                       false)
   ].join('');
 
   document.getElementById('statusModalBody').innerHTML = rows;
