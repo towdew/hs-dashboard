@@ -3187,22 +3187,16 @@ if(!ARTICLE_DATA || !Object.keys(ARTICLE_DATA).length){
   window.ARTICLE_DATA = ARTICLE_DATA;
 }
 const ARTICLE_PRODUCTS = ["WM","REF","DW","VC","Cooking"];
-const GLOBAL_REQUEST_LOCAL_XLSX_FILE = 'Global Request.xlsx';
-const GLOBAL_REQUEST_LOCAL_XLSX_FALLBACK_FILES = [
-  GLOBAL_REQUEST_LOCAL_XLSX_FILE,
-  'Global Request(6).xlsx'
-];
+// LG Experience Articles count source
+// The status dashboard is served from /lg-com-status-dashboard/.
+// Global Request.xlsx is intentionally stored in the sibling /hs/ folder.
+// Therefore the count must be loaded ONLY from ../hs/Global Request.xlsx to avoid duplicate/wrong counts.
+const GLOBAL_REQUEST_LOCAL_XLSX_FILE = '../hs/Global Request.xlsx';
 
 function getGlobalRequestLocalXlsxCandidateUrls(){
   var urls = [];
-  function add(url){ if(url && urls.indexOf(url) < 0) urls.push(url); }
-  function addFile(fileName){
-    try { add(new URL(fileName, window.location.href).href); } catch(e) {}
-    try { add(new URL('../' + fileName, window.location.href).href); } catch(e) {}
-    try { add(new URL('/' + fileName, window.location.origin).href); } catch(e) {}
-    if(!urls.length) add('./' + encodeURIComponent(fileName));
-  }
-  GLOBAL_REQUEST_LOCAL_XLSX_FALLBACK_FILES.forEach(addFile);
+  try { urls.push(new URL(GLOBAL_REQUEST_LOCAL_XLSX_FILE, window.location.href).href); } catch(e) {}
+  if(!urls.length) urls.push('../hs/Global%20Request.xlsx');
   return urls;
 }
 
@@ -3523,7 +3517,14 @@ function buildArticleCell(country, product){
   function getArticleDataForCountry(ctry, prod){
     var raw = String(ctry || '').trim();
     var base = raw.split('-')[0].split('_')[0].toUpperCase();
-    var variants = [raw, raw.toUpperCase(), base];
+    var variants = [];
+    function addVariant(v){
+      v = String(v || '').trim();
+      if(v && variants.indexOf(v) < 0) variants.push(v);
+    }
+    addVariant(raw);
+    addVariant(raw.toUpperCase());
+    addVariant(base);
     // If the status matrix is not language-split but Global Request has language split keys,
     // merge those language rows so counts still show under the base country.
     if(raw === base){
