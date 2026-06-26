@@ -1,1 +1,316 @@
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LG HS Content Operations Dashboard</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body style="">
+<!-- Initial full-screen loading overlay -->
+<div class="initial-loading-overlay" id="initialLoadingOverlay" role="status" aria-live="polite">
+  <div class="initial-loading-card">
+    <div class="initial-loading-kicker">HS DASHBOARD</div>
+    <div class="initial-loading-title">데이터를 불러오는 중입니다</div>
+    <!-- <div class="initial-loading-sub">로컬 XLSX 파일을 읽고 대시보드를 준비하고 있습니다.</div> -->
+    <div class="initial-loading-bar" aria-hidden="true"><span></span></div>
+  </div>
+</div>
 
+<!-- 로그인(접근 잠금) 화면 -->
+
+<div id="lockScreen" style="display: none !important;">
+  <div class="lock-card">
+    <div class="lock-badge">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    </div>
+    <div class="lock-logo">Request Status Dashboard</div>
+    <div class="lock-sub">Enter password to continue</div>
+    <div class="lock-label">Password</div>
+    <div class="lock-input-wrap" id="lockInputWrap">
+      <input type="password" id="lockPassword" onkeydown="if(event.key==='Enter')checkPassword()">
+    </div>
+    <div class="lock-error" id="lockError">비밀번호가 올바르지 않습니다.</div>
+    <button class="lock-btn" onclick="checkPassword()">Access Dashboard</button>
+    <div class="lock-footer">LG Electronics Dashboard - Authorized Access Only</div>
+  </div>
+</div>
+
+
+
+<div class="app" style="display: flex;">
+
+<!-- ══════════════════ SIDEBAR ══════════════════ -->
+<aside class="sidebar" id="sidebar">
+  <!-- Logo -->
+  <div class="sb-logo">
+    <button class="sb-toggle-btn" onclick="toggleSidebar()" title="메뉴 펼치기/닫기">
+      <div class="hb"><span></span><span></span><span></span></div>
+    </button>
+    <div class="sidebar-text-group">
+      <div class="sb-logo-text">HS Dashboard</div>
+
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <div class="sb-section" id="sheetNavList">
+    <div class="sb-section-label">Contents</div>
+    <div class="nav-item active loading-nav" data-key="loading">
+      <span class="ni-text" data-abbr="--">Loading...</span>
+      <span class="ni-badge" style="background:rgba(148,163,184,.16);color:#64748B">-</span>
+    </div>
+  </div>
+  
+</aside>
+
+<!-- Mobile sidebar backdrop -->
+<div class="sidebar-backdrop" id="sbBackdrop" onclick="closeMobileSidebar()"></div>
+
+<!-- ══════════════════ MAIN ══════════════════ -->
+<div class="main" id="mainArea">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <button class="mobile-menu-btn" onclick="openMobileSidebar()" aria-label="메뉴 열기">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+    <div class="topbar-titlewrap">
+      <span class="topbar-title" id="topTitle">Loading Google Sheet</span>
+    </div>
+    <span class="topbar-meta" id="topMeta">W--</span>
+    <div class="topbar-rpt-group" style="display:flex;align-items:center;gap:6px">
+      <button onclick="openWeeklyReport()" class="topbar-rpt-btn" style="display:none; align-items:center;gap:6px;padding:6px 14px;border:1px solid #A50034;border-radius:4px;background:#fff;color:#A50034;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s" onmouseover="this.style.background='#A50034';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='#A50034'"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="13" y2="17"></line></svg><span class="topbar-btn-label">주간 종합 리포트</span></button><button onclick="openStatusBoard()" class="topbar-rpt-btn" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border: 1px solid rgb(165, 0, 52); border-radius: 4px; background: rgb(165, 0, 52); color: rgb(255, 255, 255); font-size: 11px; font-weight: 700; cursor: pointer; font-family: inherit; transition: opacity 0.15s; opacity: 1;" onmouseover="this.style.opacity=0.88" onmouseout="this.style.opacity=1">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3" fill="currentColor"></circle></svg>
+      <span class="topbar-btn-label">법인 콘텐츠 등록 독려</span>
+    </button>
+    <button onclick="openHsUrlList()" class="topbar-rpt-btn" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid #E2E5EC;border-radius:4px;background:#fff;color:#1A1D2E;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s" onmouseover="this.style.borderColor='#A50034';this.style.color='#A50034'" onmouseout="this.style.borderColor='#E2E5EC';this.style.color='#1A1D2E'">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+      <span class="topbar-btn-label">전체 URL 리스트</span>
+    </button></div>
+    <div class="topbar-right">
+      <span id="weekSelWrap" style="display:none;align-items:center"><span style="font-size:11px;font-weight:700;color:#9BA3BF;margin-right:2px">주차</span>
+      <select id="topWeekSel" onchange="onWeekChange(this.value)" style="font-size: 12px; font-weight: 700; padding: 5px 30px 5px 12px; border-radius: 4px; border: 1px solid rgb(226, 229, 236); background: url(&quot;data:image/svg+xml;utf8,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 fill=%22none%22 stroke=%22%23A50034%22 stroke-width=%222.2%22&gt;&lt;polyline points=%222,4 6,8 10,4%22/&gt;&lt;/svg&gt;&quot;) right 10px center no-repeat rgb(255, 255, 255); color: rgb(26, 29, 46); cursor: pointer; appearance: none; margin-left: 0px; box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 2px; transition: border-color 0.15s;" onmouseover="this.style.borderColor='#A50034'" onmouseout="this.style.borderColor='#E2E5EC'"><option value="W25" selected="">W25</option></select></span>
+      <button id="logoutBtn" class="topbar-btn" onclick="logout()" style="margin-left:6px">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        <span class="topbar-btn-label">Logout</span>
+      </button>
+      
+    </div>
+  </div>
+
+  <!-- HQ STRIP -->
+  <!-- CONTENT WRAP -->
+  <div class="content-wrap" id="contentWrap">
+    <div class="dashboard-loading-shell" id="dashboardLoading">
+      <div class="dashboard-loading-card">
+        <div class="dashboard-loading-head">
+          <span class="dashboard-loading-dot"></span>
+          <span>법인 콘텐츠 등록 독려</span>
+        </div>
+        <div class="dashboard-loading-sub">Google Sheet data is loading</div>
+        <div class="dashboard-loading-bar"><span></span></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- .main -->
+</div><!-- .app -->
+
+
+
+<!-- 페이지 미리보기 레이어 팝업 -->
+<div id="pagePreviewModal" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(15,18,30,.55);backdrop-filter:blur(2px);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)closePagePreview()">
+  <div style="background:#fff;border-radius:16px;width:min(1100px,94vw);height:min(82vh,860px);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.3)">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #EEF0F5">
+      <div style="display:flex;align-items:center;gap:8px;min-width:0;flex:1">
+        <span style="font-size:13px;font-weight:800;color:#1A1D2E;white-space:nowrap">페이지 미리보기</span>
+        <input id="pagePreviewInput" type="text" placeholder="https://www.lg.com/uk/fridge-freezers/" onkeydown="if(event.key==='Enter')capturePreview()" style="flex:1;min-width:120px;max-width:520px;font-size:11px;color:#1A1D2E;border:1px solid #E0E4F0;border-radius:7px;padding:6px 10px;outline:none">
+        <button onclick="capturePreview()" style="font-size:11px;font-weight:700;color:#fff;background:#A50034;border:none;border-radius:7px;padding:6px 13px;cursor:pointer;white-space:nowrap">캡처</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <a id="pagePreviewOpen" href="#" target="_blank" style="font-size:11px;font-weight:700;color:#6B7280;border:1px solid #E0E4F0;border-radius:7px;padding:5px 11px;text-decoration:none">새 탭에서 열기</a>
+        <button onclick="closePagePreview()" style="width:30px;height:30px;border:none;border-radius:7px;background:#F5F6FA;cursor:pointer;font-size:16px;color:#6B7280;line-height:1">×</button>
+      </div>
+    </div>
+    <div style="flex:1;position:relative;background:#F5F6FA;overflow:auto">
+      <div id="pagePreviewLoading" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:#9BA3BF">화면을 캡처하는 중...</div>
+      <img id="pagePreviewImg" alt="page capture" style="display:block;width:100%;height:auto" onload="var l=document.getElementById('pagePreviewLoading');if(l)l.style.display='none'" onerror="this.style.display='none';var l=document.getElementById('pagePreviewLoading');if(l)l.innerHTML='\uCEA1\uCC98\uB97C \uBD88\uB7EC\uC62C \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uC0C8 \uD0ED\uC5D0\uC11C \uC5F4\uC5B4 \uD655\uC778\uD574\uC8FC\uC138\uC694.'">
+    </div>
+  </div>
+</div>
+
+
+<!-- 법인 콘텐츠 등록 독려 (별도 HTML, iframe 격리) -->
+<div id="statusBoardOverlay" style="display:none;position:fixed;inset:0;z-index:10001;background:#fff;flex-direction:column">
+  <div style="display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 20px;border-bottom:1px solid #E8EAF2;background:#fff;flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="display:inline-flex;width:9px;height:9px;border-radius:50%;background:#A50034"></span>
+      <span style="font-size:15px;font-weight:800;color:#1A1D2E">
+        법인 콘텐츠 등록 독려
+        <span style="font-size:11px;font-weight:600;color:#9BA3BF;margin-left:6px">Request Status Dashboard</span>
+      </span>
+    </div>
+
+    <button onclick="closeStatusBoard()" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid #E0E4F0;border-radius:4px;background:#fff;font-size:12px;font-weight:600;color:#4A5280;cursor:pointer;font-family:inherit" onmouseover="this.style.borderColor='#A50034';this.style.color='#A50034'" onmouseout="this.style.borderColor='#E0E4F0';this.style.color='#4A5280'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+      닫기
+    </button>
+  </div>
+
+  <iframe
+    id="statusBoardFrame"
+    title="법인 콘텐츠 등록 독려"
+    sandbox="allow-scripts allow-same-origin allow-popups allow-downloads allow-forms allow-modals"
+    style="flex:1;width:100%;border:0">
+  </iframe>
+</div>
+
+
+
+
+<!-- 독려 대상 국가 상태 모달 -->
+<div id="bgActionModal" style="display:none;position:fixed;inset:0;z-index:10002;background:rgba(15,18,30,.5);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)closeActionModal()">
+  <div style="background:#fff;border-radius:14px;max-width:920px;width:100%;max-height:82vh;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);display:flex;flex-direction:column">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #E8EAF2">
+      <div>
+        <div style="font-size:15px;font-weight:800;color:#1A1D2E">독려 대상 상세 <span id="bgActionModalTitle" style="font-size:11px;font-weight:600;color:#9BA3BF;margin-left:4px"></span></div>
+        <div id="bgActionModalSub" style="font-size:11px;color:#9BA3BF;font-weight:600;margin-top:2px"></div>
+      </div>
+      <button onclick="closeActionModal()" style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border:1px solid #E0E4F0;border-radius:8px;background:#fff;cursor:pointer;color:#6B7280" onmouseover="this.style.borderColor='#A50034';this.style.color='#A50034'" onmouseout="this.style.borderColor='#E0E4F0';this.style.color='#6B7280'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div id="bgActionModalBody" style="padding:16px 20px"></div>
+    <div style="padding:10px 20px;border-top:1px solid #F0F1F8;display:flex;gap:14px;flex-wrap:wrap;font-size:10px;color:#6B7280">
+      <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:50%;background:#CBD5E1"></span>사전검토</span>
+      <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:50%;background:#3B82F6"></span>작업중</span>
+      <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:50%;background:#F59E0B"></span>법인리뷰</span>
+      <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:50%;background:#22C55E"></span>완료</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- 주간 종합 리포트 모달 -->
+<div id="weeklyReportModal" style="display:none;position:fixed;inset:0;z-index:10003;background:rgba(15,18,30,.5);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)closeWeeklyReport()">
+  <div style="background:#fff;border-radius:14px;max-width:1000px;width:100%;max-height:88vh;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);display:flex;flex-direction:column">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid #E8EAF2">
+      <div style="display:flex;align-items:center;gap:16px">
+        <div>
+          <div style="font-size:16px;font-weight:800;color:#1A1D2E">주간 종합 리포트 <span style="font-size:11px;font-weight:600;color:#9BA3BF;margin-left:4px">Weekly Summary</span></div>
+          <div id="weeklyReportSub" style="font-size:11px;color:#9BA3BF;font-weight:600;margin-top:2px"></div>
+        </div>
+        <div style="display:inline-flex;background:#F1F3F8;border-radius:8px;padding:3px">
+          <button id="rptView_report" onclick="setReportView('report')" style="padding:6px 14px;border:none;border-radius:6px;background:#A50034;color:#fff;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">보고용</button>
+          <button id="rptView_admin" onclick="setReportView('admin')" style="padding:6px 14px;border:none;border-radius:6px;background:transparent;color:#6B7280;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">관리자용</button>
+        </div>
+      </div>
+      <button onclick="closeWeeklyReport()" style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border:1px solid #E0E4F0;border-radius:8px;background:#fff;cursor:pointer;color:#6B7280" onmouseover="this.style.borderColor='#A50034';this.style.color='#A50034'" onmouseout="this.style.borderColor='#E0E4F0';this.style.color='#6B7280'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div style="padding:18px 22px;overflow:auto">
+      <!-- [보고용] 종합 의견 텍스트만 -->
+      <div id="reportOpinionView" style="background:#FFFCF7;border:1px solid #F59E0B55;border-left:4px solid #F59E0B;border-radius:12px;padding:18px 22px;margin-bottom:20px">
+        <div style="font-size:12px;font-weight:800;letter-spacing:.04em;color:#A50034;margin-bottom:10px">종합 의견</div>
+        <div id="reportOpinionText" style="font-size:13px;color:#1A1D2E;line-height:1.85;white-space:pre-wrap"></div>
+      </div>
+      <!-- [관리자용] 종합 의견 편집 카드 -->
+      <div id="adminOpinionCard">
+      <!-- 종합 의견 (발표용 강조 카드) -->
+      <div style="background:linear-gradient(135deg,#A50034 0%,#7A0027 100%);border-radius:12px;padding:16px 18px;margin-bottom:20px;box-shadow:0 4px 16px rgba(165,0,52,.2)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="display:flex;align-items:center;gap:7px">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <span style="font-size:12px;font-weight:800;letter-spacing:.04em;color:#fff">종합 의견 · OVERALL COMMENT</span>
+          </div>
+          <button onclick="var o=document.getElementById('weeklyReportOpinion');o.value=buildReportOpinion();syncReportText();" style="display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border:1px solid rgba(255,255,255,.5);border-radius:6px;background:rgba(255,255,255,.12);color:#fff;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit" onmouseover="this.style.background='rgba(255,255,255,.25)'" onmouseout="this.style.background='rgba(255,255,255,.12)'" title="현재 주차 데이터로 의견 자동 재생성">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+            자동 작성
+          </button>
+        </div>
+        <textarea id="weeklyReportOpinion" placeholder="이번 주차 종합 의견을 작성하세요." oninput="syncReportText();syncOpinionView();" style="width:100%;height:130px;border:none;border-radius:8px;padding:13px 15px;font-size:12.5px;font-family:'Pretendard',sans-serif;color:#1A1D2E;background:#fff;resize:vertical;box-sizing:border-box;line-height:1.75;box-shadow:0 2px 8px rgba(0,0,0,.12)"></textarea>
+      </div>
+      </div>
+
+      <!-- 보고용 비주얼 -->
+      <div style="font-size:11px;font-weight:800;letter-spacing:.08em;color:#A50034;margin-bottom:10px">REPORT VIEW · 한눈에 보기</div>
+      <div id="weeklyReportVisual"></div>
+
+      <!-- 복사용 텍스트 -->
+      <div id="reportCopySection">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin:22px 0 10px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:11px;font-weight:800;letter-spacing:.08em;color:#A50034">COPY · 붙여넣기용</span>
+          <div style="display:flex;gap:6px;margin-left:6px">
+            <button id="rptTab_jira" onclick="setReportMode('jira')" style="padding:5px 12px;border:1px solid #A50034;border-radius:6px;background:#A50034;color:#fff;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">Jira</button>
+            <button id="rptTab_tsv" onclick="setReportMode('tsv')" style="padding:5px 12px;border:1px solid #E0E4F0;border-radius:6px;background:#fff;color:#4A5280;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">표(Excel)</button>
+            <button id="rptTab_email" onclick="copyReportEmail()" style="padding:5px 12px;border:1px solid #3B82F6;border-radius:6px;background:#fff;color:#3B82F6;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit" title="서식 있는 표를 클립보드에 복사 → 메일 본문에 바로 붙여넣기">메일용 표 복사</button>
+          </div>
+        </div>
+        <button onclick="copyReportText()" style="display:inline-flex;align-items:center;gap:6px;padding:7px 15px;border:1px solid #A50034;border-radius:6px;background:#A50034;color:#fff;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit" onmouseover="this.style.opacity=0.88" onmouseout="this.style.opacity=1">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          전체 복사
+        </button>
+      </div>
+      <textarea id="weeklyReportText" readonly="" style="width:100%;height:220px;border:1px solid #E0E4F0;border-radius:8px;padding:12px;font-size:11px;font-family:'DM Mono',monospace;color:#1A1D2E;background:#FAFBFC;resize:vertical;box-sizing:border-box;line-height:1.6" onclick="this.select()"></textarea>
+      <div style="font-size:10px;color:#9BA3BF;margin-top:6px">※ Jira 이슈 코멘트/설명란에 그대로 붙여넣으면 표·서식이 자동 적용됩니다. 표(Excel/메일) 모드는 셀로 분리되어 붙습니다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  try { sessionStorage.setItem('lg_hs_ops_authed', 'true'); } catch(e) {}
+  function hideInitialLoadingOverlay() {
+    var overlay = document.getElementById('initialLoadingOverlay');
+    if (!overlay) return;
+    overlay.classList.add('is-hidden');
+    setTimeout(function () {
+      if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    }, 360);
+  }
+</script>
+<script src="./sheet-loader.js"></script>
+<script>
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = function () { reject(new Error('Script load failed: ' + src)); };
+      document.body.appendChild(s);
+    });
+  }
+
+  loadDashboardFromPublishedHtml().then(function () {
+    return loadScript('./sheet-exceptions.js')
+      .catch(function (err) {
+        console.warn('[sheet-exceptions-load-warning]', err);
+      })
+      .then(function () { return loadScript('./common.js'); });
+  }).then(function () {
+    if (typeof dashboardInit === 'function') {
+      dashboardInit();
+    } else {
+      if (typeof updateTopbarTitle === 'function') updateTopbarTitle();
+      if (typeof renderContent === 'function') renderContent();
+    }
+    hideInitialLoadingOverlay();
+  }).catch(function (err) {
+    hideInitialLoadingOverlay();
+    var msg = err && (err.stack || err.message || String(err)) || 'Unknown error';
+    console.error('[dashboard-load-error]', err);
+    var box = document.createElement('div');
+    box.style.cssText = 'position:fixed;left:24px;right:24px;bottom:24px;z-index:99999;padding:16px 18px;border-radius:12px;background:#fff;border:1px solid #f3b8c8;box-shadow:0 8px 30px rgba(0,0,0,.12);font-family:Arial,sans-serif;color:#1A1D2E;font-size:13px;line-height:1.5;white-space:pre-wrap;';
+    box.innerHTML = '<b style="color:#A50034">Google Sheet 데이터를 불러오지 못했습니다.</b><br>' +
+      msg.replace(/[&<>]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]); });
+    document.body.appendChild(box);
+  });
+</script>
+</body></html>
