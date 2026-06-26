@@ -4693,7 +4693,7 @@ function b64ToUtf8(b64){
   catch(e){ return decodeURIComponent(escape(bin)); }
 }
 function openStatusBoard(){
-  var pageUrl = './lg-com-status-dashboard/';
+  var pageUrl = '../lg-com-status-dashboard/';
   var win = window.open(pageUrl, '_blank');
 
   if (!win) {
@@ -4705,7 +4705,7 @@ function openStatusBoard(){
 }
 
 function openHsUrlList(){
-  var pageUrl = './hs-url-list/';
+  var pageUrl = '../hs-url-list/';
   var win = window.open(pageUrl, '_blank');
 
   if (!win) {
