@@ -1440,8 +1440,256 @@ function updateHQ() {
   // HQ 스트립은 이제 날짜만 표시. 동적 업데이트 불필요.
 }
 
+// ══════════════════════════════════════════════════════════════════
+// NPI TRACKER VIEW
+// ══════════════════════════════════════════════════════════════════
+var _npiData = null;
+var _npiExpandedMonth = null;
+
+function renderNpiContent() {
+  updateTopbarTitle();
+  const wrap = document.getElementById('contentWrap');
+  wrap.innerHTML = '';
+
+  if (!_npiData) {
+    // Lazy fetch
+    wrap.innerHTML = '<div style="padding:40px;text-align:center;color:#64748B">NPI 데이터를 불러오는 중...</div>';
+    fetch('data/npi.json?v=' + (window.__BUILD_TS || Date.now()))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        _npiData = data;
+        renderNpiContent();
+      })
+      .catch(function(e) {
+        wrap.innerHTML = '<div style="padding:40px;text-align:center;color:#EF4444">NPI 데이터 로드 실패: ' + escapeHtmlSheet(String(e)) + '</div>';
+      });
+    return;
+  }
+
+  var months = (_npiData.months || []).slice().reverse(); // 최신 월부터
+  var latest = months[0];
+  var prev = months[1];
+  var delta = (latest && prev) ? (latest.pct - prev.pct) : null;
+
+  // ── 헤더 카드 ──
+  var headerHtml = '<div style="padding:16px 24px 0;flex-shrink:0"><div class="ov-card-new">';
+  headerHtml += '<div class="ov-head-new"><div class="ov-head-title">';
+  headerHtml += '<div class="ov-head-eyebrow">NPI Tracking · IT BU</div>';
+  headerHtml += '<div class="ov-head-name">월별 등록 진척 현황</div>';
+  headerHtml += '</div>';
+  if (latest) {
+    var deltaHtml = '';
+    if (delta !== null) {
+      deltaHtml = '<span style="font-size:12px;font-weight:600;color:' + (delta >= 0 ? '#10B981' : '#EF4444') + ';margin-left:8px">' +
+        (delta >= 0 ? '▲' : '▼') + ' ' + Math.abs(delta) + '% vs ' + (prev ? prev.month : '') + '</span>';
+    }
+    headerHtml += '<div class="ov-head-total"><div class="ov-head-total-num ov-head-total-sites">' +
+      latest.month + ' · <strong>' + latest.registered + '</strong>/' + latest.total + ' 등록 (' + latest.pct + '%)' + deltaHtml + '</div></div>';
+  }
+  headerHtml += '</div></div></div>';
+  wrap.insertAdjacentHTML('beforeend', headerHtml);
+
+  // ── 월별 진척 카드 그리드 ──
+  var gridHtml = '<div style="padding:16px 24px"><div class="npi-month-grid">';
+  months.forEach(function(m) {
+    var isExpanded = _npiExpandedMonth === m.month;
+    var pctColor = m.pct >= 80 ? '#10B981' : m.pct >= 50 ? '#F59E0B' : '#EF4444';
+    gridHtml += '<div class="npi-month-card' + (isExpanded ? ' npi-month-card-active' : '') + '" onclick="toggleNpiMonth(\'' + m.month + '\')">';
+    gridHtml += '<div class="npi-month-header"><span class="npi-month-label">' + m.month + '</span>';
+    gridHtml += '<span class="npi-month-pct" style="color:' + pctColor + '">' + m.pct + '%</span></div>';
+    gridHtml += '<div class="npi-progress-bar"><div class="npi-progress-fill" style="width:' + m.pct + '%;background:' + pctColor + '"></div></div>';
+    gridHtml += '<div class="npi-month-stats">';
+    gridHtml += '<span style="color:#10B981">✓ ' + m.registered + '</span> / ';
+    gridHtml += '<span style="color:#94A3B8">○ ' + m.unregistered + '</span> / ';
+    gridHtml += '<span style="color:#EF4444">✕ ' + m.cancelled + '</span>';
+    gridHtml += ' <span style="color:#94A3B8;font-size:11px">(' + m.total + '건)</span>';
+    gridHtml += '</div>';
+    gridHtml += '<div class="npi-month-expand-icon">' + (isExpanded ? '▲' : '▼') + '</div>';
+    gridHtml += '</div>';
+
+    // 펼침 테이블
+    if (isExpanded) {
+      gridHtml += '<div class="npi-detail-table-wrap" style="grid-column:1/-1">';
+      gridHtml += '<table class="npi-detail-table">';
+      gridHtml += '<thead><tr><th>Region</th><th>Country</th><th>Model</th><th>Suffix</th><th>Status</th><th>PTT</th><th>Target Date</th></tr></thead>';
+      gridHtml += '<tbody>';
+      (m.rows || []).forEach(function(row) {
+        var statusCfg = {
+          'Registered': { bg: '#ECFDF5', tc: '#065F46', dot: '#10B981', label: 'Registered' },
+          'Un-registered': { bg: '#EFF6FF', tc: '#1E40AF', dot: '#3B82F6', label: 'Un-registered' },
+          'Cancelled': { bg: '#F8FAFC', tc: '#475569', dot: '#94A3B8', label: 'Cancelled' },
+        }[row.status] || { bg: '#F1F5F9', tc: '#64748B', dot: '#94A3B8', label: row.status };
+
+        var statusHtml;
+        if (row.status === 'Registered' && row.liveUrl) {
+          statusHtml = '<a class="sheet-status-pill sheet-status-pill-link" href="' + escapeAttrSheet(row.liveUrl) + '" target="_blank" rel="noopener" style="background:' + statusCfg.bg + ';color:' + statusCfg.tc + ';text-decoration:none">' +
+            '<span style="background:' + statusCfg.dot + '"></span>' + escapeHtmlSheet(statusCfg.label) + '</a>';
+        } else {
+          statusHtml = '<span class="sheet-status-pill" style="background:' + statusCfg.bg + ';color:' + statusCfg.tc + '">' +
+            '<span style="background:' + statusCfg.dot + '"></span>' + escapeHtmlSheet(statusCfg.label) + '</span>';
+        }
+
+        gridHtml += '<tr>';
+        gridHtml += '<td>' + escapeHtmlSheet(row.region) + '</td>';
+        gridHtml += '<td>' + escapeHtmlSheet(row.country) + '</td>';
+        gridHtml += '<td style="font-weight:600">' + escapeHtmlSheet(row.modelName || row.suffix) + '</td>';
+        gridHtml += '<td style="color:#64748B;font-size:12px">' + escapeHtmlSheet(row.suffix) + '</td>';
+        gridHtml += '<td>' + statusHtml + '</td>';
+        gridHtml += '<td style="font-size:12px;color:#64748B">' + escapeHtmlSheet(row.pttId) + '</td>';
+        gridHtml += '<td style="font-size:12px;color:#64748B">' + escapeHtmlSheet(row.targetDate) + '</td>';
+        gridHtml += '</tr>';
+      });
+      gridHtml += '</tbody></table></div>';
+    }
+  });
+  gridHtml += '</div></div>';
+  wrap.insertAdjacentHTML('beforeend', gridHtml);
+  syncNavBadges();
+}
+
+function toggleNpiMonth(month) {
+  _npiExpandedMonth = (_npiExpandedMonth === month) ? null : month;
+  renderNpiContent();
+}
+
+// ══════════════════════════════════════════════════════════════════
+// LIVE URL LIBRARY VIEW
+// ══════════════════════════════════════════════════════════════════
+var _urlLibData = null;
+var _urlLibFilter = { search: '', category: '', status: '', page: 1 };
+var _urlLibExpandedModel = null;
+var URL_LIB_PAGE_SIZE = 50;
+
+function renderUrlLibraryContent() {
+  updateTopbarTitle();
+  const wrap = document.getElementById('contentWrap');
+  wrap.innerHTML = '';
+
+  if (!_urlLibData) {
+    wrap.innerHTML = '<div style="padding:40px;text-align:center;color:#64748B">URL Library 데이터를 불러오는 중...</div>';
+    fetch('data/url-library.json?v=' + (window.__BUILD_TS || Date.now()))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        _urlLibData = data;
+        renderUrlLibraryContent();
+      })
+      .catch(function(e) {
+        wrap.innerHTML = '<div style="padding:40px;text-align:center;color:#EF4444">URL Library 로드 실패: ' + escapeHtmlSheet(String(e)) + '</div>';
+      });
+    return;
+  }
+
+  var allModels = _urlLibData.models || [];
+  var categories = _urlLibData.categories || [];
+  var statusOptions = ['ACTIVE', 'DISCONTINUED', 'SUSPENDED', 'HIDDEN'];
+
+  // 필터 적용
+  var q = _urlLibFilter.search.toLowerCase().trim();
+  var filtered = allModels.filter(function(m) {
+    if (q && !m.modelName.toLowerCase().includes(q) && !m.salesModelCode.toLowerCase().includes(q)) return false;
+    if (_urlLibFilter.category && m.category !== _urlLibFilter.category) return false;
+    if (_urlLibFilter.status && !m.locales.some(function(l) { return l.status === _urlLibFilter.status; })) return false;
+    return true;
+  });
+
+  var totalPages = Math.ceil(filtered.length / URL_LIB_PAGE_SIZE);
+  var page = Math.max(1, Math.min(_urlLibFilter.page, totalPages || 1));
+  var pageModels = filtered.slice((page - 1) * URL_LIB_PAGE_SIZE, page * URL_LIB_PAGE_SIZE);
+
+  // ── 헤더 카드 ──
+  var headerHtml = '<div style="padding:16px 24px 0;flex-shrink:0"><div class="ov-card-new">';
+  headerHtml += '<div class="ov-head-new"><div class="ov-head-title">';
+  headerHtml += '<div class="ov-head-eyebrow">Live URL Library · IT Category</div>';
+  headerHtml += '<div class="ov-head-name">제품별 Live URL 모음집</div>';
+  headerHtml += '</div>';
+  headerHtml += '<div class="ov-head-total"><div class="ov-head-total-num ov-head-total-sites">';
+  headerHtml += '<strong>' + allModels.length.toLocaleString() + '</strong>개 모델 · ';
+  headerHtml += '<strong>' + (_urlLibData.totalUrls || 0).toLocaleString() + '</strong>개 URL';
+  headerHtml += '<span style="color:#94A3B8;font-size:12px;margin-left:8px">(' + (_urlLibData.cmsSource || '') + ')</span>';
+  headerHtml += '</div></div></div>';
+
+  // 필터 바
+  headerHtml += '<div class="url-lib-filter-bar">';
+  headerHtml += '<input class="url-lib-search" type="text" placeholder="모델명 또는 코드 검색..." value="' + escapeAttrSheet(_urlLibFilter.search) + '" oninput="urlLibSetFilter(\'search\',this.value)">';
+  headerHtml += '<select class="url-lib-select" onchange="urlLibSetFilter(\'category\',this.value)">';
+  headerHtml += '<option value="">전체 카테고리</option>';
+  categories.forEach(function(cat) {
+    headerHtml += '<option value="' + escapeAttrSheet(cat) + '"' + (_urlLibFilter.category === cat ? ' selected' : '') + '>' + escapeHtmlSheet(cat) + '</option>';
+  });
+  headerHtml += '</select>';
+  headerHtml += '<select class="url-lib-select" onchange="urlLibSetFilter(\'status\',this.value)">';
+  headerHtml += '<option value="">전체 상태</option>';
+  statusOptions.forEach(function(s) {
+    headerHtml += '<option value="' + s + '"' + (_urlLibFilter.status === s ? ' selected' : '') + '>' + s + '</option>';
+  });
+  headerHtml += '</select>';
+  headerHtml += '<span style="color:#64748B;font-size:13px;white-space:nowrap">' + filtered.length.toLocaleString() + '개 모델</span>';
+  headerHtml += '</div>';
+  headerHtml += '</div></div>';
+  wrap.insertAdjacentHTML('beforeend', headerHtml);
+
+  // ── 모델 목록 ──
+  var listHtml = '<div style="padding:12px 24px"><div class="url-lib-model-list">';
+  pageModels.forEach(function(model) {
+    var isExpanded = _urlLibExpandedModel === model.modelName;
+    var activeCount = model.locales.filter(function(l) { return l.status === 'ACTIVE'; }).length;
+    listHtml += '<div class="url-lib-model-row' + (isExpanded ? ' url-lib-model-row-active' : '') + '" onclick="toggleUrlLibModel(' + JSON.stringify(model.modelName) + ')">';
+    listHtml += '<div class="url-lib-model-main">';
+    listHtml += '<div>';
+    listHtml += '<span class="url-lib-model-name">' + escapeHtmlSheet(model.modelName) + '</span>';
+    listHtml += '<span class="url-lib-model-cat">' + escapeHtmlSheet(model.category) + '</span>';
+    listHtml += '</div>';
+    listHtml += '<div style="display:flex;align-items:center;gap:12px">';
+    listHtml += '<span style="font-size:12px;color:#10B981">ACTIVE ' + activeCount + '</span>';
+    listHtml += '<span style="font-size:12px;color:#64748B">' + model.locales.length + '개국</span>';
+    listHtml += '<span style="color:#94A3B8">' + (isExpanded ? '▲' : '▼') + '</span>';
+    listHtml += '</div></div>';
+
+    if (isExpanded) {
+      listHtml += '<div class="url-lib-locale-grid">';
+      model.locales.forEach(function(loc) {
+        var statusColor = loc.status === 'ACTIVE' ? '#10B981' : loc.status === 'DISCONTINUED' ? '#EF4444' : '#94A3B8';
+        listHtml += '<a class="url-lib-locale-chip" href="' + escapeAttrSheet(loc.prodUrl) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">';
+        listHtml += '<span class="url-lib-locale-badge">' + escapeHtmlSheet(loc.locale.toUpperCase()) + '</span>';
+        listHtml += '<span class="url-lib-locale-status" style="color:' + statusColor + '">' + escapeHtmlSheet(loc.status) + '</span>';
+        listHtml += '</a>';
+      });
+      listHtml += '</div>';
+    }
+    listHtml += '</div>';
+  });
+  listHtml += '</div>';
+
+  // 페이지네이션
+  if (totalPages > 1) {
+    listHtml += '<div class="url-lib-pagination">';
+    listHtml += '<button class="url-lib-page-btn" ' + (page <= 1 ? 'disabled' : '') + ' onclick="urlLibSetFilter(\'page\',' + (page - 1) + ')">← 이전</button>';
+    listHtml += '<span style="color:#64748B;font-size:13px">' + page + ' / ' + totalPages + '</span>';
+    listHtml += '<button class="url-lib-page-btn" ' + (page >= totalPages ? 'disabled' : '') + ' onclick="urlLibSetFilter(\'page\',' + (page + 1) + ')">다음 →</button>';
+    listHtml += '</div>';
+  }
+  listHtml += '</div>';
+  wrap.insertAdjacentHTML('beforeend', listHtml);
+  syncNavBadges();
+}
+
+function urlLibSetFilter(key, value) {
+  if (key !== 'page') _urlLibFilter.page = 1;
+  _urlLibFilter[key] = (key === 'page') ? parseInt(value, 10) : value;
+  renderUrlLibraryContent();
+}
+
+function toggleUrlLibModel(modelName) {
+  _urlLibExpandedModel = (_urlLibExpandedModel === modelName) ? null : modelName;
+  renderUrlLibraryContent();
+}
+
 // ── RENDER CONTENT ───────────────────────────────────────────
 function renderContent() {
+  // ── 커스텀 섹션 분기 ──
+  if (currentKey === 'npi') { renderNpiContent(); return; }
+  if (currentKey === 'url_library') { renderUrlLibraryContent(); return; }
+
   updateTopbarTitle();
   const wrap = document.getElementById('contentWrap');
   wrap.innerHTML = '';
