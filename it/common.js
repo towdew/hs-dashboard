@@ -4849,8 +4849,10 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
         var clickAttr = '';
         if (isCountryCell && rowLocale) {
           cellClasses.push('sheet-country-click');
-          clickAttr = ' role="button" tabindex="0" title="상세 보기 (전체 URL)"' +
-            ' onclick="window._returnToCountryList=false;showCountryModal(\'' + rowLocaleJs + '\')"';
+          // JS 문자열 escape(rowLocaleJs) 후, onclick 표현식 전체를 HTML 속성 escape하여
+          // 속성 주입(XSS) 방지. 브라우저가 속성 파싱 시 엔티티를 복원하므로 JS는 정상 실행됨.
+          var onclickExpr = "window._returnToCountryList=false;showCountryModal('" + rowLocaleJs + "')";
+          clickAttr = ' role="button" tabindex="0" title="상세 보기 (전체 URL)" onclick="' + escapeAttrSheet(onclickExpr) + '"';
         }
         var bg = normalizeSheetCellBg(row.__styles && row.__styles[h]);
         var styleAttr = bg ? ' style="background:' + escapeAttrSheet(bg) + '"' : '';
