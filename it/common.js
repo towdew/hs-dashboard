@@ -5207,25 +5207,26 @@ function renderSheetCell(value, header, row, sheetData) {
   var status = normalizeSheetRendererStatus(text);
   if (status) {
     var cfg = SC[status] || SC['Pre-Review'];
-    // 완료 상태이고 같은 행에 라이브 URL이 있으면 HS getDonePill과 동일한 클릭 가능 링크 칩 렌더.
-    if (status === 'Done' && row) {
-      var doneUrl = '';
+    // 완료·작업중 상태에서 같은 행에 URL이 있으면 클릭 가능 링크 칩으로 렌더.
+    if ((status === 'Done' || status === 'In Progress') && row) {
+      var linkUrl = '';
       var rowKeys = Object.keys(row);
       for (var ki = 0; ki < rowKeys.length; ki++) {
         var rk = rowKeys[ki];
         if (rk.charAt(0) === '_') continue; // __styles, __idx 등 메타 키 제외
         if (normalizeSheetHeaderName(rk) === 'url') {
           var rv = String(row[rk] || '').trim();
-          if (/^https?:\/\//i.test(rv)) { doneUrl = rv; break; }
+          if (/^https?:\/\//i.test(rv)) { linkUrl = rv; break; }
         }
       }
-      if (doneUrl) {
-        var exRules = window.SHEET_EXCEPTION_RULES;
-        if (exRules && typeof exRules.renderDonePill === 'function') {
-          return exRules.renderDonePill(doneUrl);
+      if (linkUrl) {
+        if (status === 'Done') {
+          var exRules = window.SHEET_EXCEPTION_RULES;
+          if (exRules && typeof exRules.renderDonePill === 'function') {
+            return exRules.renderDonePill(linkUrl);
+          }
         }
-        // 폴백: getDonePill 없을 때 동일 마크업 직접 생성
-        return '<a class="sheet-status-pill sheet-status-pill-link" href="' + escapeAttrSheet(doneUrl) + '" target="_blank" rel="noopener" style="background:' + cfg.bg + ';color:' + cfg.tc + ';text-decoration:none" title="Open URL"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(cfg.label || status) + '</a>';
+        return '<a class="sheet-status-pill sheet-status-pill-link" href="' + escapeAttrSheet(linkUrl) + '" target="_blank" rel="noopener" style="background:' + cfg.bg + ';color:' + cfg.tc + ';text-decoration:none" title="Open URL"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(cfg.label || status) + '</a>';
       }
     }
     return '<span class="sheet-status-pill" style="background:' + cfg.bg + ';color:' + cfg.tc + '"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(cfg.label || status) + '</span>';
