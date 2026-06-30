@@ -269,8 +269,8 @@
     }, 360);
   }
 </script>
-<script>var __BUILD_V = '0.6.0';</script>
-<script src="./sheet-loader.js?v=0.6.0"></script>
+<script>var __BUILD_V = '0.6.1';</script>
+<script src="./sheet-loader.js?v=0.6.1"></script>
 <script>
   function loadScript(src) {
     return new Promise(function (resolve, reject) {
@@ -283,11 +283,11 @@
   }
 
   loadDashboardFromPublishedHtml().then(function () {
-    return loadScript('./sheet-exceptions.js?v=0.6.0')
+    return loadScript('./sheet-exceptions.js?v=0.6.1')
       .catch(function (err) {
         console.warn('[sheet-exceptions-load-warning]', err);
       })
-      .then(function () { return loadScript('./common.js?v=0.6.0'); });
+      .then(function () { return loadScript('./common.js?v=0.6.1'); });
   }).then(function () {
     if (typeof dashboardInit === 'function') {
       dashboardInit();

@@ -332,10 +332,14 @@ async function loadDashboardFromPublishedHtml() {
   initBaseGlobals(keys, sourceMap);
 
   // 커스텀 섹션 (NPI / URL Library) 특수 키 등록 — initBaseGlobals(DATA={}) 이후에 추가
-  window.__DASHBOARD_KEYS.push('npi');
-  window.__DASHBOARD_KEYS.push('url_library');
-  window.DATA['npi'] = { displayTitle: 'NPI Tracker', _custom: true, _loaded: false };
-  window.DATA['url_library'] = { displayTitle: 'Live URL Library', _custom: true, _loaded: false };
+  // 임시 숨김: true로 바꾸면 사이드바에 다시 표시됩니다.
+  window.__SHOW_CUSTOM_NAV_TABS = false;
+  if (window.__SHOW_CUSTOM_NAV_TABS) {
+    window.__DASHBOARD_KEYS.push('npi');
+    window.__DASHBOARD_KEYS.push('url_library');
+    window.DATA['npi'] = { displayTitle: 'NPI Tracker', _custom: true, _loaded: false };
+    window.DATA['url_library'] = { displayTitle: 'Live URL Library', _custom: true, _loaded: false };
+  }
 
   validSheets.forEach(function(s) {
     applySheetData(s.key, s.data);
@@ -1636,19 +1640,21 @@ function renderSidebarNavFromSheets(keys) {
       '</div>');
   });
 
-  // ── NPI 섹션 ──
-  html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">NPI</div>');
-  html.push('<div class="nav-item nav-item-custom" data-key="npi" onclick="switchMenu(this)">' +
-    '<span class="ni-text" data-abbr="NP">NPI Tracker</span>' +
-    '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">IT</span>' +
-    '</div>');
+  if (window.__SHOW_CUSTOM_NAV_TABS) {
+    // ── NPI 섹션 ──
+    html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">NPI</div>');
+    html.push('<div class="nav-item nav-item-custom" data-key="npi" onclick="switchMenu(this)">' +
+      '<span class="ni-text" data-abbr="NP">NPI Tracker</span>' +
+      '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">IT</span>' +
+      '</div>');
 
-  // ── Live URL 섹션 ──
-  html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">Live URL</div>');
-  html.push('<div class="nav-item nav-item-custom" data-key="url_library" onclick="switchMenu(this)">' +
-    '<span class="ni-text" data-abbr="UL">Live URL Library</span>' +
-    '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">CMS</span>' +
-    '</div>');
+    // ── Live URL 섹션 ──
+    html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">Live URL</div>');
+    html.push('<div class="nav-item nav-item-custom" data-key="url_library" onclick="switchMenu(this)">' +
+      '<span class="ni-text" data-abbr="UL">Live URL Library</span>' +
+      '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">CMS</span>' +
+      '</div>');
+  }
 
   section.innerHTML = html.join('');
 }
