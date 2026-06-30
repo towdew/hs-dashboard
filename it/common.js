@@ -1515,7 +1515,6 @@ function renderContent() {
       <!-- Stat Cards -->
       <div class="stat-grid-new">${statBoxes}</div>
       ${renderCancelSummaryBelowStats(d, s)}
-      ${renderWeeklyUpdateSection(d)}
 
 
             <!-- 필터는 각 render 함수에서 풀 테이블 위에 표시 -->
@@ -4796,9 +4795,23 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
   var headerRowsForDisplay = disableRegion ? [] : (d.tableHeaderRows || []);
   var thead = buildSheetTableHead(displayHeaders, headerRowsForDisplay, d);
 
+  // ── 이번 주 신규(완료) 항목을 테이블 행에 NEW 배지/하이라이트로 표시 ──
+  // (별도 "이번주 업데이트 사항" 블록 대신 테이블 행으로 편입)
+  var weeklyNewUrlSet = {};
+  try {
+    (getWeeklyUpdateItems(d) || []).forEach(function(it) {
+      var u = String(it && it.url || '').trim().toLowerCase().replace(/\/+$/, '');
+      if (u) weeklyNewUrlSet[u] = 1;
+    });
+  } catch (e) {}
+  var weeklyNewHasAny = Object.keys(weeklyNewUrlSet).length > 0;
+  var urlDisplayHeader = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h) === 'url'; })[0] || null;
+
   var tbody = '';
   groupedRows.forEach(function(group) {
     group.rows.forEach(function(row, rowIdx) {
+      var rowUrlKey = (weeklyNewHasAny && urlDisplayHeader) ? String(row[urlDisplayHeader] || '').trim().toLowerCase().replace(/\/+$/, '') : '';
+      var isNewRow = !!(rowUrlKey && weeklyNewUrlSet[rowUrlKey]);
       var tds = displayHeaders.map(function(h, colIdx) {
         var value = row[h] || '';
         if (!disableRegion && colIdx === 0 && h === 'Region') {
@@ -4815,12 +4828,15 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
           if (extraClass) cellClasses.push(extraClass);
         }
         var html = renderSheetCell(value, h, row, d);
+        if (isNewRow && cellClasses.indexOf('sheet-country-col') !== -1) {
+          html += ' <span class="sheet-new-badge">NEW</span>';
+        }
         var bg = normalizeSheetCellBg(row.__styles && row.__styles[h]);
         var styleAttr = bg ? ' style="background:' + escapeAttrSheet(bg) + '"' : '';
         var classAttr = cellClasses.length ? ' class="' + cellClasses.join(' ') + '"' : '';
         return '<td' + classAttr + styleAttr + '>' + html + '</td>';
       }).join('');
-      tbody += '<tr>' + tds + '</tr>';
+      tbody += '<tr' + (isNewRow ? ' class="sheet-row-new"' : '') + '>' + tds + '</tr>';
     });
   });
 
