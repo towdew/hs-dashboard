@@ -1384,7 +1384,7 @@ function renderWeeklyUpdateSection(d) {
     '<section class="weekly-update-section" aria-label="이번주 업데이트 사항">' +
       '<div class="weekly-update-notice">' +
         '<div class="weekly-update-mainline">' +
-          '<span class="weekly-update-new-badge">NEW</span>' +
+          '<span class="weekly-update-new-badge">금주 업데이트</span>' +
           '<span class="weekly-update-desc">이번 주에 새로 완료된 항목 ' + items.length.toLocaleString() + '건입니다.</span>' +
         '</div>' +
         '<div class="weekly-update-items">' + list + '</div>' +
@@ -2167,16 +2167,16 @@ function buildNewBanner(){
   curList.forEach(function(it){ if (ids[itemIdOf(it,key)]) disp.push(itemNameOf(it,key)); });
   var listTxt = disp.slice(0,20).join(', ') + (disp.length>20?(' 외 '+(disp.length-20)):'');
   return '<div style="background:#EEF6FF;border:1px solid #3B82F633;border-left:3px solid #3B82F6;border-radius:8px;padding:11px 15px;margin-bottom:14px;font-size:11.5px;color:#1E40AF;line-height:1.6">' +
-    '<span style="display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 5px;border-radius:4px;background:#3B82F6;color:#fff;font-size:9px;font-weight:800;margin-right:6px;vertical-align:middle">NEW</span>' +
+    '<span style="display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 7px;border-radius:4px;background:#3B82F6;color:#fff;font-size:9px;font-weight:800;margin-right:6px;vertical-align:middle">금주 업데이트</span>' +
     '<b>' + wk + ' 신규 업데이트</b> — 이번 주차에 새로 완료된 항목 <b>' + disp.length + '건</b>입니다.<br>' +
     '<span style="display:inline-block;margin-top:5px;color:#2952A3">신규 항목: <b>' + listTxt + '</b></span>' +
   '</div>';
 }
-// 행 NEW 배지 (id가 신규면 표시)
+// 행 금주 업데이트 배지 (id가 신규면 표시)
 function newRowBadge(it, key, idsCache){
   var ids = idsCache || newItemIds(key);
   var id = itemIdOf(it, key);
-  if (id && ids[id]) return '<span style="display:inline-block;margin-left:5px;padding:0 4px;height:14px;line-height:14px;border-radius:3px;background:#3B82F6;color:#fff;font-size:8px;font-weight:800;vertical-align:middle">N</span>';
+  if (id && ids[id]) return '<span style="display:inline-block;margin-left:5px;padding:0 6px;height:15px;line-height:15px;border-radius:3px;background:#3B82F6;color:#fff;font-size:8px;font-weight:800;vertical-align:middle;white-space:nowrap">금주 업데이트</span>';
   return '';
 }
 
@@ -5101,7 +5101,7 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
         }
         var html = renderSheetCell(value, h, row, d);
         if (isNewRow && cellClasses.indexOf('sheet-country-col') !== -1) {
-          html += ' <span class="sheet-new-badge">NEW</span>';
+          html += ' <span class="sheet-new-badge">금주 업데이트</span>';
         }
         // 국가 셀을 클릭하면 상세 모달에서 전체 URL 등 상세 정보를 표시.
         var clickAttr = '';
