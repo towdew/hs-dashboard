@@ -574,7 +574,7 @@ function showCountryModal(locale) {
     <div class="country-cell-row">
       <div class="country-cell-left"><span class="country-cell-code">URL</span></div>
       <div class="country-cell-right-wrap">
-        <a href="${urlVal}" target="_blank" style="font-size:10px;color:#3B82F6">${urlVal.length>40?urlVal.slice(0,40)+'…':urlVal}</a>
+        <a href="${urlVal}" target="_blank" rel="noopener" style="font-size:10px;color:#3B82F6;word-break:break-all">${urlVal}</a>
       </div>
     </div>` : '');
 
@@ -4788,11 +4788,22 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
   var displayHeaders = disableRegion
     ? (headers || []).filter(function(h) { return normalizeSheetHeaderName(h) !== 'region'; })
     : ensureRegionFirstHeaders(headers);
+  // URL 컬럼은 테이블에서 숨김(HS 콘텐츠 시트 방식). 데이터(row의 URL)는 유지하여
+  // 행 클릭 시 상세 모달에서 전체 URL을 제공하고, NEW 행 매칭에도 계속 사용.
+  var urlDisplayHeader = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h) === 'url'; })[0] || null;
+  displayHeaders = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h) !== 'url'; });
   var groupedRows = disableRegion
     ? [{ region: '', rows: rows || [] }]
     : groupRowsByRegion(rows, displayHeaders);
   var countryDisplayHeader = findCountryHeader(displayHeaders);
   var headerRowsForDisplay = disableRegion ? [] : (d.tableHeaderRows || []);
+  // body에서 URL 컬럼을 숨겼으므로 헤더(tableHeaderRows)에서도 URL 셀 제거 → 컬럼 정렬 유지.
+  headerRowsForDisplay = headerRowsForDisplay.map(function(hr) {
+    return (hr || []).filter(function(cell) {
+      var t = typeof cell === 'string' ? cell : (cell && cell.text) || '';
+      return normalizeSheetHeaderName(t) !== 'url';
+    });
+  });
   var thead = buildSheetTableHead(displayHeaders, headerRowsForDisplay, d);
 
   // ── 이번 주 신규(완료) 항목을 테이블 행에 NEW 배지/하이라이트로 표시 ──
@@ -4805,13 +4816,15 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
     });
   } catch (e) {}
   var weeklyNewHasAny = Object.keys(weeklyNewUrlSet).length > 0;
-  var urlDisplayHeader = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h) === 'url'; })[0] || null;
 
   var tbody = '';
   groupedRows.forEach(function(group) {
     group.rows.forEach(function(row, rowIdx) {
       var rowUrlKey = (weeklyNewHasAny && urlDisplayHeader) ? String(row[urlDisplayHeader] || '').trim().toLowerCase().replace(/\/+$/, '') : '';
       var isNewRow = !!(rowUrlKey && weeklyNewUrlSet[rowUrlKey]);
+      // 행 클릭 시 상세 모달을 열기 위한 locale 키(= item.locale = Country 원본값).
+      var rowLocale = countryDisplayHeader ? String(row[countryDisplayHeader] || '').trim() : '';
+      var rowLocaleJs = rowLocale.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
       var tds = displayHeaders.map(function(h, colIdx) {
         var value = row[h] || '';
         if (!disableRegion && colIdx === 0 && h === 'Region') {
@@ -4819,7 +4832,8 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
           return '<td class="sheet-region-cell region-' + escapeAttrSheet(String(group.region || 'ETC').toLowerCase()) + '" rowspan="' + group.rows.length + '">' + escapeHtmlSheet(group.region || 'ETC') + '</td>';
         }
         var cellClasses = [];
-        if (isCountryDisplayHeader(h) || (countryDisplayHeader && h === countryDisplayHeader)) {
+        var isCountryCell = isCountryDisplayHeader(h) || (countryDisplayHeader && h === countryDisplayHeader);
+        if (isCountryCell) {
           value = displayCountryFullName(value);
           cellClasses.push('sheet-country-col');
         }
@@ -4831,10 +4845,17 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
         if (isNewRow && cellClasses.indexOf('sheet-country-col') !== -1) {
           html += ' <span class="sheet-new-badge">NEW</span>';
         }
+        // 국가 셀을 클릭하면 상세 모달에서 전체 URL 등 상세 정보를 표시.
+        var clickAttr = '';
+        if (isCountryCell && rowLocale) {
+          cellClasses.push('sheet-country-click');
+          clickAttr = ' role="button" tabindex="0" title="상세 보기 (전체 URL)"' +
+            ' onclick="window._returnToCountryList=false;showCountryModal(\'' + rowLocaleJs + '\')"';
+        }
         var bg = normalizeSheetCellBg(row.__styles && row.__styles[h]);
         var styleAttr = bg ? ' style="background:' + escapeAttrSheet(bg) + '"' : '';
         var classAttr = cellClasses.length ? ' class="' + cellClasses.join(' ') + '"' : '';
-        return '<td' + classAttr + styleAttr + '>' + html + '</td>';
+        return '<td' + classAttr + styleAttr + clickAttr + '>' + html + '</td>';
       }).join('');
       tbody += '<tr' + (isNewRow ? ' class="sheet-row-new"' : '') + '>' + tds + '</tr>';
     });
