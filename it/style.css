@@ -1963,37 +1963,54 @@ body{
   padding: 2px 7px;
   border-radius: 4px;
 }
-.url-lib-locale-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 8px 14px 12px;
-  border-top: 1px solid #F1F5F9;
-  background: #FAFBFC;
+.url-lib-detail-table {
+  border-top: 1px solid #E2E8F0;
+  background: #F8FAFC;
 }
-.url-lib-locale-chip {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 6px 10px;
-  background: #fff;
-  border: 1px solid #E2E8F0;
-  border-radius: 7px;
-  text-decoration: none;
-  transition: border-color .12s, box-shadow .12s;
-  min-width: 64px;
+.url-lib-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
 }
-.url-lib-locale-chip:hover {
-  border-color: #A50034;
-  box-shadow: 0 1px 4px rgba(165,0,52,.15);
+.url-lib-table thead th {
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: #94A3B8;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-bottom: 1px solid #E2E8F0;
+  background: #F1F5F9;
 }
+.url-lib-table tbody tr {
+  border-bottom: 1px solid #F1F5F9;
+  transition: background .1s;
+}
+.url-lib-table tbody tr:last-child { border-bottom: none; }
+.url-lib-table tbody tr:hover { background: #EFF6FF; }
+.url-lib-table td { padding: 7px 12px; vertical-align: middle; }
 .url-lib-locale-badge {
+  display: inline-block;
   font-size: 11px;
   font-weight: 700;
-  color: #1A1D2E;
+  color: #fff;
+  background: #334155;
+  border-radius: 4px;
+  padding: 2px 6px;
+  letter-spacing: .03em;
 }
-.url-lib-locale-status { font-size: 10px; }
+.url-lib-status-active  { font-size: 12px; font-weight: 600; color: #10B981; }
+.url-lib-status-disc    { font-size: 12px; font-weight: 600; color: #EF4444; }
+.url-lib-status-other   { font-size: 12px; color: #94A3B8; }
+.url-lib-url-link {
+  color: #2563EB;
+  text-decoration: none;
+  font-size: 12px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  word-break: break-all;
+}
+.url-lib-url-link:hover { text-decoration: underline; color: #A50034; }
 .url-lib-pagination {
   display: flex;
   justify-content: center;

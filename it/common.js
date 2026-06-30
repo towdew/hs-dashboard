@@ -1633,7 +1633,8 @@ function renderUrlLibraryContent() {
   pageModels.forEach(function(model) {
     var isExpanded = _urlLibExpandedModel === model.modelName;
     var activeCount = model.locales.filter(function(l) { return l.status === 'ACTIVE'; }).length;
-    listHtml += '<div class="url-lib-model-row' + (isExpanded ? ' url-lib-model-row-active' : '') + '" onclick="toggleUrlLibModel(' + JSON.stringify(model.modelName) + ')">';
+    // data-mk 속성 사용 — JSON.stringify 큰따옴표가 onclick 속성을 깨뜨리는 버그 방지
+    listHtml += '<div class="url-lib-model-row' + (isExpanded ? ' url-lib-model-row-active' : '') + '" data-mk="' + escapeAttrSheet(model.modelName) + '" onclick="toggleUrlLibModel(this.getAttribute(\'data-mk\'))">';
     listHtml += '<div class="url-lib-model-main">';
     listHtml += '<div>';
     listHtml += '<span class="url-lib-model-name">' + escapeHtmlSheet(model.modelName) + '</span>';
@@ -1646,15 +1647,24 @@ function renderUrlLibraryContent() {
     listHtml += '</div></div>';
 
     if (isExpanded) {
-      listHtml += '<div class="url-lib-locale-grid">';
+      listHtml += '<div class="url-lib-detail-table" onclick="event.stopPropagation()">';
+      listHtml += '<table class="url-lib-table"><thead><tr>';
+      listHtml += '<th>Locale</th><th>Country</th><th>Status</th><th>Live URL</th>';
+      listHtml += '</tr></thead><tbody>';
       model.locales.forEach(function(loc) {
-        var statusColor = loc.status === 'ACTIVE' ? '#10B981' : loc.status === 'DISCONTINUED' ? '#EF4444' : '#94A3B8';
-        listHtml += '<a class="url-lib-locale-chip" href="' + escapeAttrSheet(loc.prodUrl) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">';
-        listHtml += '<span class="url-lib-locale-badge">' + escapeHtmlSheet(loc.locale.toUpperCase()) + '</span>';
-        listHtml += '<span class="url-lib-locale-status" style="color:' + statusColor + '">' + escapeHtmlSheet(loc.status) + '</span>';
-        listHtml += '</a>';
+        var sc = loc.status === 'ACTIVE' ? 'url-lib-status-active'
+               : loc.status === 'DISCONTINUED' ? 'url-lib-status-disc'
+               : 'url-lib-status-other';
+        var displayUrl = loc.prodUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
+        if (displayUrl.length > 60) displayUrl = displayUrl.slice(0, 58) + '…';
+        listHtml += '<tr>';
+        listHtml += '<td><span class="url-lib-locale-badge">' + escapeHtmlSheet(loc.locale.toUpperCase()) + '</span></td>';
+        listHtml += '<td style="color:#334155">' + escapeHtmlSheet(loc.country || loc.locale) + '</td>';
+        listHtml += '<td><span class="' + sc + '">' + escapeHtmlSheet(loc.status) + '</span></td>';
+        listHtml += '<td><a class="url-lib-url-link" href="' + escapeAttrSheet(loc.prodUrl) + '" target="_blank" rel="noopener" title="' + escapeAttrSheet(loc.prodUrl) + '">' + escapeHtmlSheet(displayUrl) + '</a></td>';
+        listHtml += '</tr>';
       });
-      listHtml += '</div>';
+      listHtml += '</tbody></table></div>';
     }
     listHtml += '</div>';
   });
