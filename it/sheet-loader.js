@@ -331,6 +331,12 @@ async function loadDashboardFromPublishedHtml() {
 
   initBaseGlobals(keys, sourceMap);
 
+  // 커스텀 섹션 (NPI / URL Library) 특수 키 등록 — initBaseGlobals(DATA={}) 이후에 추가
+  window.__DASHBOARD_KEYS.push('npi');
+  window.__DASHBOARD_KEYS.push('url_library');
+  window.DATA['npi'] = { displayTitle: 'NPI Tracker', _custom: true, _loaded: false };
+  window.DATA['url_library'] = { displayTitle: 'Live URL Library', _custom: true, _loaded: false };
+
   validSheets.forEach(function(s) {
     applySheetData(s.key, s.data);
   });
@@ -1602,20 +1608,48 @@ function applySheetData(key, data) {
   target.matrix = data.matrix || target.matrix || [];
 }
 
+var CUSTOM_NAV_TABS = [
+  { key: 'npi', label: 'NPI Tracker', abbr: 'NP', section: 'NPI' },
+  { key: 'url_library', label: 'Live URL Library', abbr: 'UL', section: 'Live URL' },
+];
+
 function renderSidebarNavFromSheets(keys) {
   const section = document.getElementById('sheetNavList') || document.querySelector('.sb-section');
   if (!section) return;
-  const html = ['<div class="sb-section-label">Contents</div>'];
-  keys.forEach(function(key, idx) {
-    const d = window.DATA && window.DATA[key];
-    const title = (d && (d.displayTitle || d.sheetTabName || d.sheetTitle || d.title)) || key;
-    const abbr = makeNavAbbr(title, idx);
-    const total = d && d.stats ? (d.stats.Total || 0) : 0;
+
+  // GR 탭들만 필터 (커스텀 탭 제외)
+  var customKeys = CUSTOM_NAV_TABS.map(function(t) { return t.key; });
+  var grKeys = keys.filter(function(k) { return customKeys.indexOf(k) === -1; });
+
+  var html = [];
+
+  // ── Global Request 섹션 ──
+  html.push('<div class="sb-section-label">Global Request</div>');
+  grKeys.forEach(function(key, idx) {
+    var d = window.DATA && window.DATA[key];
+    var title = (d && (d.displayTitle || d.sheetTabName || d.sheetTitle || d.title)) || key;
+    var abbr = makeNavAbbr(title, idx);
+    var total = d && d.stats ? (d.stats.Total || 0) : 0;
     html.push('<div class="nav-item ' + (idx === 0 ? 'active' : '') + '" data-key="' + escapeAttrForLoader(key) + '" onclick="switchMenu(this)">' +
       '<span class="ni-text" data-abbr="' + escapeAttrForLoader(abbr) + '">' + escapeHtmlForLoader(title) + '</span>' +
       '<span class="ni-badge" style="background:rgba(148,163,184,.16);color:#64748B">' + total.toLocaleString() + '</span>' +
       '</div>');
   });
+
+  // ── NPI 섹션 ──
+  html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">NPI</div>');
+  html.push('<div class="nav-item nav-item-custom" data-key="npi" onclick="switchMenu(this)">' +
+    '<span class="ni-text" data-abbr="NP">NPI Tracker</span>' +
+    '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">IT</span>' +
+    '</div>');
+
+  // ── Live URL 섹션 ──
+  html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">Live URL</div>');
+  html.push('<div class="nav-item nav-item-custom" data-key="url_library" onclick="switchMenu(this)">' +
+    '<span class="ni-text" data-abbr="UL">Live URL Library</span>' +
+    '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">CMS</span>' +
+    '</div>');
+
   section.innerHTML = html.join('');
 }
 
