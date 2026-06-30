@@ -1596,6 +1596,11 @@ body{
 .sheet-data-table tbody td{padding:8px 5px;border-bottom:1px solid #EEF1F6;border-right:1px solid #F0F2F7;vertical-align:middle;line-height:1.45;max-width:260px;word-break: auto-phrase;}
 .sheet-data-table tbody tr:hover td{background:#FAFBFD}
 .sheet-data-table tbody tr:last-child td{border-bottom:none}
+/* 이번 주 신규(완료) 항목 행 하이라이트 + NEW 배지 (구 "이번주 업데이트 사항" 블록 대체) */
+.sheet-data-table tbody tr.sheet-row-new td{background:#EFF6FF}
+.sheet-data-table tbody tr.sheet-row-new td:first-child{box-shadow:inset 3px 0 0 #3B82F6}
+.sheet-data-table tbody tr.sheet-row-new:hover td{background:#E4EEFE}
+.sheet-new-badge{display:inline-block;margin-left:6px;padding:0 5px;height:15px;line-height:15px;border-radius:3px;background:#3B82F6;color:#fff;font-size:8px;font-weight:800;letter-spacing:.3px;vertical-align:middle}
 .sheet-empty{color:#CBD5E1}
 .sheet-link{color:#2563EB;text-decoration:none;font-weight:600}
 .sheet-link:hover{text-decoration:underline}
