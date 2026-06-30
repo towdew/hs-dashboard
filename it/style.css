@@ -1601,6 +1601,9 @@ body{
 .sheet-data-table tbody tr.sheet-row-new td:first-child{box-shadow:inset 3px 0 0 #3B82F6}
 .sheet-data-table tbody tr.sheet-row-new:hover td{background:#E4EEFE}
 .sheet-new-badge{display:inline-block;margin-left:6px;padding:0 5px;height:15px;line-height:15px;border-radius:3px;background:#3B82F6;color:#fff;font-size:8px;font-weight:800;letter-spacing:.3px;vertical-align:middle}
+/* URL 컬럼은 숨기고, 국가 셀 클릭 시 상세 모달에서 전체 URL 제공 */
+.sheet-data-table tbody td.sheet-country-click{cursor:pointer}
+.sheet-data-table tbody td.sheet-country-click:hover{text-decoration:underline;text-underline-offset:2px;color:#A50034}
 .sheet-empty{color:#CBD5E1}
 .sheet-link{color:#2563EB;text-decoration:none;font-weight:600}
 .sheet-link:hover{text-decoration:underline}
