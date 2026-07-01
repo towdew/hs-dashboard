@@ -1767,6 +1767,17 @@ body{
   font-weight:700;
 }
 .weekly-update-line:hover .weekly-update-line-text{text-decoration:underline}
+.weekly-update-group{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  min-width:0;
+  max-width:100%;
+  color:#1E40AF;
+  font-size:12px;
+  line-height:1.45;
+  font-weight:700;
+}
 .weekly-update-line-bullet{
   color:#60A5FA;
   font-weight:900;
@@ -1776,6 +1787,23 @@ body{
   font-weight:900;
   white-space:nowrap;
 }
+.weekly-update-url-list{
+  display:inline-flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:4px 10px;
+  min-width:0;
+}
+.weekly-update-url{
+  display:inline-flex;
+  align-items:center;
+  gap:3px;
+  min-width:0;
+  max-width:100%;
+  color:#1E40AF;
+  text-decoration:none;
+}
+.weekly-update-url:hover .weekly-update-line-text{text-decoration:underline}
 .weekly-update-line-text{
   color:#1E3A8A;
   font-weight:700;
@@ -1793,7 +1821,9 @@ body{
   .weekly-update-section{padding:10px 16px 0}
   .weekly-update-mainline{align-items:flex-start}
   .weekly-update-items{display:flex;flex-direction:column;align-items:flex-start;gap:5px}
-  .weekly-update-line{width:100%}
+  .weekly-update-line,.weekly-update-group{width:100%}
+  .weekly-update-group{align-items:flex-start}
+  .weekly-update-url-list{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
   .weekly-update-line-text{white-space:normal}
 }
 
