@@ -1310,26 +1310,44 @@ function getWeeklyUpdateItems(d) {
 }
 
 function splitWeeklyUpdateDisplayChunks(raw) {
-  raw = String(raw || '').trim();
+  raw = String(raw || '')
+    .replace(/\u00a0/g, ' ')
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .trim();
   if (!raw) return [];
-  var chunks = raw.split(/\r?\n+/).map(function(v){ return v.trim(); }).filter(Boolean);
-  if (chunks.length > 1) return chunks;
 
-  var urlRe = /https?:\/\/[^\s,;]+/ig;
-  var matches = [];
-  var m;
-  while ((m = urlRe.exec(raw))) matches.push({ url: m[0], index: m.index, end: urlRe.lastIndex });
-  if (matches.length > 1) {
-    var parts = [];
-    for (var i = 0; i < matches.length; i++) {
-      var labelStart = i === 0 ? 0 : matches[i - 1].end;
-      var label = raw.slice(labelStart, matches[i].index).trim().replace(/^[,;]+|[,;]+$/g, '').trim();
-      var part = ((label ? label + ' ' : '') + matches[i].url).trim();
-      if (part) parts.push(part);
+  var lines = raw.split(/\n+/).map(function(v){ return v.trim(); }).filter(Boolean);
+  var chunks = [];
+
+  lines.forEach(function(line) {
+    // B2가 줄바꿈 없이 "CA-en : url... CA-fr : url..."처럼 들어온 경우도 보정합니다.
+    var markerRe = /(^|\s)([^:：\n]{1,40}?)\s*[：:]\s*(?=https?:\/\/)/ig;
+    var markers = [];
+    var m;
+    while ((m = markerRe.exec(line))) {
+      markers.push({ index: m.index + (m[1] ? m[1].length : 0) });
     }
-    if (parts.length) return parts;
-  }
-  return raw.split(/\s*;\s*/).map(function(v){ return v.trim(); }).filter(Boolean);
+
+    if (markers.length > 1) {
+      for (var i = 0; i < markers.length; i++) {
+        var part = line.slice(markers[i].index, i + 1 < markers.length ? markers[i + 1].index : line.length).trim();
+        if (part) chunks.push(part);
+      }
+    } else {
+      chunks.push(line);
+    }
+  });
+
+  // 세미콜론으로 여러 항목을 넣은 경우도 분리합니다. URL 내부의 문자는 건드리지 않습니다.
+  var expanded = [];
+  chunks.forEach(function(chunk) {
+    String(chunk || '').split(/\s*;\s*/).forEach(function(part) {
+      part = part.trim();
+      if (part) expanded.push(part);
+    });
+  });
+  return expanded;
 }
 
 function parseWeeklyUpdateTextForDisplay(value) {
@@ -1339,45 +1357,92 @@ function parseWeeklyUpdateTextForDisplay(value) {
     .replace(/\r/g, '\n')
     .trim();
   if (!raw) return [];
+
   var chunks = splitWeeklyUpdateDisplayChunks(raw);
-  return chunks.map(function(part) {
+  var out = [];
+
+  chunks.forEach(function(part) {
     var text = String(part || '').trim();
-    if (!text) return null;
-    var m = text.match(/https?:\/\/\S+/i);
-    if (m) {
-      var url = m[0].replace(/[),.;]+$/g, '');
-      var country = text.slice(0, m.index).replace(/[：:>-]+\s*$/g, '').trim();
-      return { country: country || '신규 항목', url: url, text: text };
-    }
+    if (!text) return;
+
+    // 국가 : URL1, URL2 형태를 지원합니다.
     var kv = text.match(/^([^:：]{1,40})\s*[：:]\s*(.+)$/);
-    if (kv) return { country: kv[1].trim() || '신규 항목', url: '', text: kv[2].trim() || text };
-    return { country: '신규 항목', url: '', text: text };
-  }).filter(Boolean);
+    if (kv) {
+      var country = kv[1].trim() || '신규 항목';
+      var body = kv[2].trim();
+      var urlRe = /https?:\/\/[^\s,;]+/ig;
+      var matches = [];
+      var m;
+      while ((m = urlRe.exec(body))) matches.push(m[0].replace(/[),.;]+$/g, ''));
+
+      if (matches.length) {
+        matches.forEach(function(url) {
+          out.push({ country: country, url: url, text: url });
+        });
+      } else {
+        out.push({ country: country, url: '', text: body || text });
+      }
+      return;
+    }
+
+    var singleUrl = text.match(/https?:\/\/\S+/i);
+    if (singleUrl) {
+      var url = singleUrl[0].replace(/[),.;]+$/g, '');
+      var before = text.slice(0, singleUrl.index).replace(/[：:>-]+\s*$/g, '').trim();
+      out.push({ country: before || '신규 항목', url: url, text: url });
+      return;
+    }
+
+    out.push({ country: '신규 항목', url: '', text: text });
+  });
+
+  return out.filter(Boolean);
 }
 
 function renderWeeklyUpdateSection(d) {
   var items = getWeeklyUpdateItems(d);
   if (!items.length) return '';
-  var week = (typeof AUTO_WEEK !== 'undefined' ? AUTO_WEEK : getPrevIsoWeekLabelForMeta());
-  var list = items.map(function(item) {
-    var country = item.country || '신규 항목';
+
+  // 같은 국가에 URL이 여러 개 있는 경우, 국가는 한 번만 노출하고 URL만 옆으로 나열합니다.
+  var groups = [];
+  var groupMap = {};
+  items.forEach(function(item) {
+    var country = String(item && item.country || '신규 항목').trim() || '신규 항목';
+    var key = country.toLowerCase();
+    if (!groupMap[key]) {
+      groupMap[key] = { country: country, items: [] };
+      groups.push(groupMap[key]);
+    }
+    groupMap[key].items.push(item);
+  });
+
+  function shortUrlLabel(url, fallback) {
+    var label = String(url || fallback || '').trim();
+    if (url) label = String(url).replace(/^https?:\/\//i, '').replace(/^www\./i, '');
+    if (label.length > 78) label = label.slice(0, 78) + '…';
+    return label;
+  }
+
+  var list = groups.map(function(group) {
+    var country = group.country || '신규 항목';
     // "신규 항목" 같은 라벨은 국가명 변환하지 않고 그대로 둡니다.
     var displayCountry = /^(신규|new|update|공지|항목)/i.test(country) ? country : displayCountryFullName(country);
-    var rawText = item.text || item.url || '';
-    var bodyText = rawText;
-    if (item.url) {
-      bodyText = item.url.replace(/^https?:\/\//i, '').replace(/^www\./i, '');
-      if (bodyText.length > 78) bodyText = bodyText.slice(0, 78) + '…';
-    }
-    var inner = '' +
+    var links = group.items.map(function(item) {
+      var text = shortUrlLabel(item.url, item.text || item.url || '');
+      if (item.url) {
+        return '<a class="weekly-update-url" href="' + escapeAttrSheet(item.url) + '" target="_blank" rel="noopener" title="' + escapeAttrSheet(item.url) + '">' +
+          '<span class="weekly-update-line-text">' + escapeHtmlSheet(text) + '</span>' +
+          '<span class="weekly-update-line-open" aria-hidden="true">↗</span>' +
+        '</a>';
+      }
+      return '<span class="weekly-update-url weekly-update-url-text">' + escapeHtmlSheet(text) + '</span>';
+    }).join('');
+
+    return '<div class="weekly-update-group">' +
       '<span class="weekly-update-line-bullet">•</span>' +
       '<span class="weekly-update-line-country">' + escapeHtmlSheet(displayCountry) + '</span>' +
-      '<span class="weekly-update-line-text">' + escapeHtmlSheet(bodyText) + '</span>' +
-      (item.url ? '<span class="weekly-update-line-open" aria-hidden="true">↗</span>' : '');
-    if (item.url) {
-      return '<a class="weekly-update-line" href="' + escapeAttrSheet(item.url) + '" target="_blank" rel="noopener" title="' + escapeAttrSheet(item.url) + '">' + inner + '</a>';
-    }
-    return '<div class="weekly-update-line">' + inner + '</div>';
+      '<span class="weekly-update-url-list">' + links + '</span>' +
+    '</div>';
   }).join('');
 
   return '' +
