@@ -215,38 +215,79 @@ function extractWeeklyUpdateItemsFromText(text) {
 }
 
 function parseWeeklyUpdateText(text) {
-  const raw = String(text || '').replace(/\u00a0/g, ' ').trim();
+  const raw = String(text || '')
+    .replace(/\u00a0/g, ' ')
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .trim();
   if (!raw) return [];
   const items = [];
-  const chunks = raw.split(/\r?\n+/).map(function(v){ return v.trim(); }).filter(Boolean);
-  const source = chunks.length > 1 ? chunks : splitWeeklyUpdateSingleLine(raw);
+  const source = splitWeeklyUpdateSingleLine(raw);
   source.forEach(function(part) {
-    const item = parseWeeklyUpdateEntry(part);
-    if (item) items.push(item);
+    const parsed = parseWeeklyUpdateEntryList(part);
+    parsed.forEach(function(item) { if (item) items.push(item); });
   });
   return items;
 }
 
 function splitWeeklyUpdateSingleLine(text) {
-  const raw = String(text || '').trim();
+  const raw = String(text || '')
+    .replace(/\u00a0/g, ' ')
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .trim();
   if (!raw) return [];
-  const urlRe = /https?:\/\/[^\s,;]+/ig;
-  const matches = [];
-  let m;
-  while ((m = urlRe.exec(raw))) matches.push({ url:m[0], index:m.index, end:urlRe.lastIndex });
-  if (matches.length <= 1) return raw.split(/\s*[;]\s*/).filter(Boolean);
 
-  // When B2 line breaks are collapsed by Google export, values can look like:
-  // HK-en : https://... HK-zh : https://... IL : https://...
-  // Split by each URL and attach the label text immediately before that URL.
-  const parts = [];
-  for (let i = 0; i < matches.length; i++) {
-    const labelStart = i === 0 ? 0 : matches[i - 1].end;
-    const label = raw.slice(labelStart, matches[i].index).trim().replace(/^[,;]+|[,;]+$/g, '').trim();
-    const part = ((label ? label + ' ' : '') + matches[i].url).trim();
-    if (part) parts.push(part);
+  const lines = raw.split(/\n+/).map(function(v){ return v.trim(); }).filter(Boolean);
+  const chunks = [];
+  lines.forEach(function(line) {
+    // Google export 등으로 줄바꿈이 사라져도 "CA-en : url... CA-fr : url..." 단위로 재분리합니다.
+    const markerRe = /(^|\s)([^:：\n]{1,40}?)\s*[：:]\s*(?=https?:\/\/)/ig;
+    const markers = [];
+    let m;
+    while ((m = markerRe.exec(line))) {
+      markers.push({ index: m.index + (m[1] ? m[1].length : 0) });
+    }
+    if (markers.length > 1) {
+      for (let i = 0; i < markers.length; i++) {
+        const part = line.slice(markers[i].index, i + 1 < markers.length ? markers[i + 1].index : line.length).trim();
+        if (part) chunks.push(part);
+      }
+    } else {
+      chunks.push(line);
+    }
+  });
+
+  const out = [];
+  chunks.forEach(function(chunk) {
+    String(chunk || '').split(/\s*;\s*/).forEach(function(part) {
+      part = part.trim();
+      if (part) out.push(part);
+    });
+  });
+  return out;
+}
+
+function parseWeeklyUpdateEntryList(part) {
+  const text = String(part || '').trim();
+  if (!text) return [];
+
+  const kv = text.match(/^([^:：]{1,40})\s*[：:]\s*(.+)$/);
+  if (kv) {
+    const country = cleanText(kv[1]) || '신규 항목';
+    const body = String(kv[2] || '').trim();
+    const urls = [];
+    const urlRe = /https?:\/\/[^\s,;]+/ig;
+    let m;
+    while ((m = urlRe.exec(body))) urls.push(m[0].replace(/[),.;]+$/g, ''));
+    if (urls.length) {
+      return urls.map(function(url) { return { country: country, url: url, text: url }; });
+    }
+    return [{ country: country, url: '', text: cleanText(body) || text }];
   }
-  return parts.length ? parts : [raw];
+
+  const item = parseWeeklyUpdateEntry(text);
+  return item ? [item] : [];
 }
 
 function parseWeeklyUpdateEntry(part) {
