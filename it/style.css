@@ -2030,3 +2030,41 @@ body{
 }
 .url-lib-page-btn:hover:not(:disabled) { border-color: #A50034; color: #A50034; }
 .url-lib-page-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ── Live URL Library 국가별 뷰 (v0.6.5 백포트) ── */
+.url-lib-empty {
+  padding: 32px;
+  text-align: center;
+  color: #94A3B8;
+  font-size: 13px;
+}
+.url-lib-view-tabs { display: flex; gap: 6px; padding: 10px 0 0; }
+.url-lib-view-tab {
+  padding: 6px 14px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 13px;
+  color: #64748B;
+  cursor: pointer;
+}
+.url-lib-view-tab-active { border-color: #A50034; color: #A50034; font-weight: 600; background: #FEF2F2; }
+.url-lib-country-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+.url-lib-country-card {
+  background: #fff;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+}
+.url-lib-country-card:hover { border-color: #A50034; box-shadow: 0 1px 6px rgba(165,0,52,.1); }
+.url-lib-country-name { font-weight: 700; font-size: 14px; color: #1A1D2E; }
+.url-lib-country-token { font-size: 11px; color: #94A3B8; margin-top: 2px; }
+.url-lib-country-count { font-size: 12px; color: #475569; margin-top: 6px; }
+.url-lib-country-back { font-size: 13px; color: #A50034; cursor: pointer; margin-bottom: 4px; }
+.url-lib-country-back:hover { text-decoration: underline; }
