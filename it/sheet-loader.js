@@ -341,6 +341,10 @@ async function loadDashboardFromPublishedHtml() {
     window.DATA['url_library'] = { displayTitle: 'Live URL Library', _custom: true, _loaded: false };
   }
 
+  // IT 제품 현황 (NPI product status) — 항상 표시 (2026-07-08)
+  window.__DASHBOARD_KEYS.push('npi_product_status');
+  window.DATA['npi_product_status'] = { displayTitle: 'IT 제품 현황', _custom: true, _loaded: false };
+
   validSheets.forEach(function(s) {
     applySheetData(s.key, s.data);
   });
@@ -1639,6 +1643,13 @@ function renderSidebarNavFromSheets(keys) {
       '<span class="ni-badge" style="background:rgba(148,163,184,.16);color:#64748B">' + total.toLocaleString() + '</span>' +
       '</div>');
   });
+
+  // ── NPI 섹션: IT 제품 현황 (항상 표시) ──
+  html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">NPI</div>');
+  html.push('<div class="nav-item nav-item-custom" data-key="npi_product_status" onclick="switchMenu(this)">' +
+    '<span class="ni-text" data-abbr="PS">IT 제품 현황</span>' +
+    '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">PS</span>' +
+    '</div>');
 
   if (window.__SHOW_CUSTOM_NAV_TABS) {
     // ── NPI 섹션 ──

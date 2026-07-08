@@ -1553,6 +1553,113 @@ function toggleNpiMonth(month) {
 }
 
 // ══════════════════════════════════════════════════════════════════
+// NPI IT PRODUCT STATUS VIEW (1회성 스냅샷: 43 NPI for IT product status_20260707)
+// ══════════════════════════════════════════════════════════════════
+var _npiProductStatusData = null;
+
+var NPI_PS_COLOR_META = {
+  green: { label: '진행 중', desc: '6월 진행중(일부 컨텐츠 누락) 또는 7월 NPI 진행 예정 — 목표일정 내 delivery 필요', dot: '#10B981', bg: '#ECFDF5', tc: '#065F46' },
+  orange: { label: '법인 액션 필요', desc: 'PIM2.0 등록·Target Month 지정·Contents Readiness 확인 필요 (법인 액션)', dot: '#F59E0B', bg: '#FFFBEB', tc: '#92400E' },
+  other: { label: '기타', desc: '', dot: '#94A3B8', bg: '#F8FAFC', tc: '#475569' }
+};
+
+function renderNpiProductStatusContent() {
+  updateTopbarTitle();
+  const wrap = document.getElementById('contentWrap');
+  wrap.innerHTML = '';
+
+  if (!_npiProductStatusData) {
+    wrap.innerHTML = '<div style="padding:40px;text-align:center;color:#64748B">IT 제품 현황 데이터를 불러오는 중...</div>';
+    fetch('data/npi-product-status.json?v=' + (window.__BUILD_TS || Date.now()))
+      .then(function(r) { return r.json(); })
+      .then(function(data) { _npiProductStatusData = data; renderNpiProductStatusContent(); })
+      .catch(function(e) {
+        wrap.innerHTML = '<div style="padding:40px;text-align:center;color:#EF4444">IT 제품 현황 데이터 로드 실패: ' + escapeHtmlSheet(String(e)) + '</div>';
+      });
+    return;
+  }
+
+  var d = _npiProductStatusData;
+  var groups = d.groups || [];
+
+  // ── 헤더 카드 + 요약 칩 ──
+  var html = '<div style="padding:16px 24px 0"><div class="ov-card-new">';
+  html += '<div class="ov-head-new"><div class="ov-head-title">';
+  html += '<div class="ov-head-eyebrow">NPI · IT Product Status</div>';
+  html += '<div class="ov-head-name">IT 제품 현황 <span style="font-size:12px;font-weight:500;color:#94A3B8">(' + escapeHtmlSheet(d.sourceFile || '') + ')</span></div>';
+  html += '</div>';
+  html += '<div class="ov-head-total"><div class="ov-head-total-num ov-head-total-sites">총 <strong>' + (d.totalRows || 0) + '</strong>건</div></div>';
+  html += '</div>';
+
+  var colorTotals = { green: 0, orange: 0, other: 0 };
+  groups.forEach(function(g) { colorTotals[g.colorClass] = (colorTotals[g.colorClass] || 0) + g.rows.length; });
+  html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center">';
+  ['green', 'orange', 'other'].forEach(function(color) {
+    if (!colorTotals[color]) return;
+    var meta = NPI_PS_COLOR_META[color];
+    html += '<span class="npi-stage-chip" style="background:' + meta.bg + ';color:' + meta.tc + ';font-weight:700">' +
+      '<span class="npi-stage-dot" style="background:' + meta.dot + '"></span>' +
+      escapeHtmlSheet(meta.label) + ' ' + colorTotals[color] + '건</span>';
+  });
+  groups.forEach(function(g) {
+    var meta = NPI_PS_COLOR_META[g.colorClass] || NPI_PS_COLOR_META.other;
+    html += '<span class="npi-stage-chip"><span class="npi-stage-dot" style="background:' + meta.dot + '"></span>' +
+      escapeHtmlSheet(g.status) + ' ' + g.rows.length + '</span>';
+  });
+  html += '</div></div></div>';
+
+  // ── 단일 통합 테이블 (Region → LOCALE 정렬, 원본 12컬럼) ──
+  var flatRows = [];
+  groups.forEach(function(g) {
+    g.rows.forEach(function(row) {
+      flatRows.push({ status: g.status, colorClass: g.colorClass, row: row });
+    });
+  });
+  flatRows.sort(function(a, b) {
+    var r = (a.row.region || '').localeCompare(b.row.region || '');
+    if (r !== 0) return r;
+    return (a.row.locale || '').localeCompare(b.row.locale || '');
+  });
+
+  html += '<div style="padding:16px 24px">';
+  html += '<div class="npi-detail-table-wrap" style="overflow-x:auto">';
+  html += '<table class="npi-detail-table" style="min-width:1280px">';
+  html += '<thead><tr>' +
+    '<th>Region</th><th>Sub</th><th>LOCALE</th><th>Model</th>' +
+    '<th>key_Sales Model Code</th><th>PTT Task ID</th><th>Task Status in PTT</th>' +
+    '<th>status</th><th>Detail KR</th><th>Detail English</th>' +
+    '<th>Expected Local Target Date</th><th>PDP Status</th>' +
+    '</tr></thead><tbody>';
+  flatRows.forEach(function(item) {
+    var row = item.row;
+    var meta = NPI_PS_COLOR_META[item.colorClass] || NPI_PS_COLOR_META.other;
+    var statusCell = '<span class="sheet-status-pill" style="background:' + meta.bg + ';color:' + meta.tc + '" title="' + escapeAttrSheet(meta.desc || '') + '">' +
+      '<span style="background:' + meta.dot + '"></span>' + escapeHtmlSheet(item.status) + '</span>';
+    var target = row.expectedLocalTargetDate
+      ? '<span style="color:#334155">' + escapeHtmlSheet(row.expectedLocalTargetDate) + '</span>'
+      : '<span class="sheet-status-pill" style="background:#FFFBEB;color:#92400E">미입력</span>';
+    html += '<tr>';
+    html += '<td>' + escapeHtmlSheet(row.region) + '</td>';
+    html += '<td style="font-size:12px;color:#64748B">' + escapeHtmlSheet(row.sub || '-') + '</td>';
+    html += '<td>' + escapeHtmlSheet(row.locale) + '</td>';
+    html += '<td style="font-weight:600">' + escapeHtmlSheet(row.model) + '</td>';
+    html += '<td style="font-size:12px;color:#64748B">' + escapeHtmlSheet(row.salesModelKey || '-') + '</td>';
+    html += '<td style="font-size:12px;color:#64748B">' + escapeHtmlSheet(row.pttId || '-') + '</td>';
+    html += '<td style="font-size:12px;color:#475569">' + escapeHtmlSheet(row.pttStatus || '-') + '</td>';
+    html += '<td>' + statusCell + '</td>';
+    html += '<td style="font-size:12px;color:#475569;max-width:220px">' + escapeHtmlSheet(row.detailKr || '-') + '</td>';
+    html += '<td style="font-size:12px;color:#64748B;max-width:220px">' + escapeHtmlSheet(row.detailEn || '-') + '</td>';
+    html += '<td>' + target + '</td>';
+    html += '<td style="text-align:center">' + escapeHtmlSheet(row.pdpStatus || '-') + '</td>';
+    html += '</tr>';
+  });
+  html += '</tbody></table></div></div>';
+
+  wrap.insertAdjacentHTML('beforeend', html);
+  syncNavBadges();
+}
+
+// ══════════════════════════════════════════════════════════════════
 // LIVE URL LIBRARY VIEW
 // ══════════════════════════════════════════════════════════════════
 var _urlLibData = null;
@@ -1698,6 +1805,7 @@ function toggleUrlLibModel(modelName) {
 function renderContent() {
   // ── 커스텀 섹션 분기 ──
   if (currentKey === 'npi') { renderNpiContent(); return; }
+  if (currentKey === 'npi_product_status') { renderNpiProductStatusContent(); return; }
   if (currentKey === 'url_library') { renderUrlLibraryContent(); return; }
 
   updateTopbarTitle();
