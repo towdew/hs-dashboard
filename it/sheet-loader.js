@@ -12,10 +12,12 @@ const DEFAULT_PUBLISHED_BASE_URL = '';
 const DEFAULT_CSV_URL = '';
 
 function getLocalWorkbookUrl(fileName) {
+  // xlsx는 코드 배포 없이 데이터만 갱신되므로 항상 새로 받도록 캐시버스터 부착
+  // (data/*.json 의 '?v=' + Date.now() 패턴과 동일)
   try {
-    return new URL(fileName, window.location.href).href;
+    return new URL(fileName, window.location.href).href + '?v=' + Date.now();
   } catch (e) {
-    return './' + encodeURIComponent(fileName);
+    return './' + encodeURIComponent(fileName) + '?v=' + Date.now();
   }
 }
 
