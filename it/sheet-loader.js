@@ -338,10 +338,12 @@ async function loadDashboardFromPublishedHtml() {
   window.__SHOW_CUSTOM_NAV_TABS = false;
   if (window.__SHOW_CUSTOM_NAV_TABS) {
     window.__DASHBOARD_KEYS.push('npi');
-    window.__DASHBOARD_KEYS.push('url_library');
     window.DATA['npi'] = { displayTitle: 'NPI Tracker', _custom: true, _loaded: false };
-    window.DATA['url_library'] = { displayTitle: 'Live URL Library', _custom: true, _loaded: false };
   }
+
+  // Live URL Library — 항상 표시 (2026-07-08 배포)
+  window.__DASHBOARD_KEYS.push('url_library');
+  window.DATA['url_library'] = { displayTitle: 'Live URL Library', _custom: true, _loaded: false };
 
   // IT 제품 현황 (NPI product status) — 항상 표시 (2026-07-08)
   window.__DASHBOARD_KEYS.push('npi_product_status');
@@ -1661,13 +1663,14 @@ function renderSidebarNavFromSheets(keys) {
       '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">IT</span>' +
       '</div>');
 
-    // ── Live URL 섹션 ──
-    html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">Live URL</div>');
-    html.push('<div class="nav-item nav-item-custom" data-key="url_library" onclick="switchMenu(this)">' +
-      '<span class="ni-text" data-abbr="UL">Live URL Library</span>' +
-      '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">CMS</span>' +
-      '</div>');
   }
+
+  // ── Live URL 섹션 (항상 표시) ──
+  html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">Live URL</div>');
+  html.push('<div class="nav-item nav-item-custom" data-key="url_library" onclick="switchMenu(this)">' +
+    '<span class="ni-text" data-abbr="UL">Live URL Library</span>' +
+    '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">CMS</span>' +
+    '</div>');
 
   section.innerHTML = html.join('');
 }
