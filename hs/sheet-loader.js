@@ -179,6 +179,18 @@ function getWeeklyUpdateB2FromWorksheet(ws, matrix) {
   return String(value == null ? '' : value).replace(/\u00a0/g, ' ').trim();
 }
 
+function getRequestWeekB4FromWorksheet(ws, matrix) {
+  // User-managed request week cell: B4. Example: W23.
+  // Keep it separate from the Head table so it can be shown subtly in .ov-card-new.
+  var value = getWorksheetCellResolvedDisplayText(ws, 'B4');
+  if (!value && matrix && matrix[3]) {
+    value = String(matrix[3][1] == null ? '' : matrix[3][1]).trim();
+  }
+  value = String(value == null ? '' : value).replace(/\u00a0/g, ' ').trim();
+  if (!value || /^N\/?A$/i.test(value) || /^NA$/i.test(value) || value === '-' || value === '—') return '';
+  return value;
+}
+
 function extractWeeklyUpdateItemsFromMatrix(matrix) {
   const rows = Array.isArray(matrix) ? matrix : [];
 
@@ -348,7 +360,9 @@ async function loadDashboardFromPublishedHtml() {
       dashboardData.rawMatrix = payload.rawMatrix || payload.matrix || [];
       dashboardData.weeklyUpdateText = String(payload.weeklyUpdateText == null ? '' : payload.weeklyUpdateText).trim();
       dashboardData.weeklyUpdateB2 = String(payload.weeklyUpdateB2 == null ? dashboardData.weeklyUpdateText : payload.weeklyUpdateB2).trim();
-      dashboardData.metaCells = payload.metaCells || { B2: dashboardData.weeklyUpdateB2 };
+      dashboardData.requestWeek = String(payload.requestWeek == null ? '' : payload.requestWeek).trim();
+      dashboardData.requestWeekB4 = String(payload.requestWeekB4 == null ? dashboardData.requestWeek : payload.requestWeekB4).trim();
+      dashboardData.metaCells = Object.assign({}, payload.metaCells || {}, { B2: dashboardData.weeklyUpdateB2, B4: dashboardData.requestWeekB4 });
       dashboardData.weeklyUpdates = payload.weeklyUpdates || extractWeeklyUpdateItemsFromText(dashboardData.weeklyUpdateText) || extractWeeklyUpdateItemsFromMatrix(payload.rawMatrix || payload.matrix || []);
       validSheets.push({ key: key, source: { sheetName: dashboardData.displayTitle, displayTitle: dashboardData.displayTitle, originalSheetName: key, url: payload.sourceUrl || '' }, data: dashboardData });
     } catch (e) {
@@ -404,6 +418,7 @@ async function loadSheetsFromPublishedXlsx(xlsxUrl) {
     const cleaned = normalizeMatrix(matrix);
     if (hasHeadMarker(cleaned)) {
       const weeklyUpdateText = getWeeklyUpdateB2FromWorksheet(ws, matrix);
+      const requestWeekText = getRequestWeekB4FromWorksheet(ws, matrix);
       payloads.push({
         sheetName: displaySheetName,
         displayTitle: displaySheetName,
@@ -414,7 +429,9 @@ async function loadSheetsFromPublishedXlsx(xlsxUrl) {
         sourceUrl: xlsxUrl,
         weeklyUpdateText: weeklyUpdateText,
         weeklyUpdateB2: weeklyUpdateText,
-        metaCells: { B2: weeklyUpdateText },
+        requestWeek: requestWeekText,
+        requestWeekB4: requestWeekText,
+        metaCells: { B2: weeklyUpdateText, B4: requestWeekText },
         weeklyUpdates: extractWeeklyUpdateItemsFromText(weeklyUpdateText)
       });
     } else {
@@ -1637,8 +1654,10 @@ function applySheetData(key, data) {
   // always received an empty value.
   target.weeklyUpdateText = data.weeklyUpdateText || '';
   target.weeklyUpdateB2 = data.weeklyUpdateB2 || data.weeklyUpdateText || '';
+  target.requestWeek = data.requestWeek || data.requestWeekB4 || (data.metaCells && data.metaCells.B4) || '';
+  target.requestWeekB4 = data.requestWeekB4 || target.requestWeek || '';
   target.weeklyUpdates = Array.isArray(data.weeklyUpdates) ? data.weeklyUpdates : [];
-  target.metaCells = data.metaCells || {};
+  target.metaCells = Object.assign({}, data.metaCells || {}, { B2: target.weeklyUpdateB2, B4: target.requestWeekB4 });
   target.rawMatrix = data.rawMatrix || [];
   target.matrix = data.matrix || target.matrix || [];
 }
