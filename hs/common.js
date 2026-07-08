@@ -1399,6 +1399,23 @@ function parseWeeklyUpdateTextForDisplay(value) {
   return out.filter(Boolean);
 }
 
+
+function getRequestWeekFromSheetData(d) {
+  var v = d && (d.requestWeek || d.requestWeekB4 || (d.metaCells && d.metaCells.B4));
+  v = String(v == null ? '' : v).replace(/ /g, ' ').trim();
+  if (!v || /^N\/?A$/i.test(v) || /^NA$/i.test(v) || v === '-' || v === '—') return '';
+  return v;
+}
+
+function renderRequestWeekMeta(d) {
+  var week = getRequestWeekFromSheetData(d);
+  if (!week) return '';
+  return '<div class="request-week-meta" title="Excel B4 요청주차">' +
+    '<span class="request-week-label">Week of Request</span>' +
+    '<span class="request-week-value">' + escapeHtmlSheet(week) + '</span>' +
+  '</div>';
+}
+
 function renderWeeklyUpdateSection(d) {
   var items = getWeeklyUpdateItems(d);
   if (!items.length) return '';
@@ -1558,8 +1575,10 @@ function renderContent() {
       <!-- Header -->
       <div class="ov-head-new">
         <div class="ov-head-title">
-          <div class="ov-head-eyebrow">Overall Status</div>
-          <div class="ov-head-name" style="display:flex;align-items:center;gap:9px">${getDashboardDisplayTitle(d)}${(currentKey==='buying_guide'||currentKey==='article_list') ? '<button onclick="openPagePreview()" title="페이지 미리보기" style="width:28px;height:28px;border:1.5px solid #E0E4F0;border-radius:8px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>' : ''}</div>
+          <div class="ov-head-eyebrow">Overall Status${renderRequestWeekMeta(d)}</div>
+          <div class="ov-title-line">
+            <div class="ov-head-name" style="display:flex;align-items:center;gap:9px">${getDashboardDisplayTitle(d)}${(currentKey==='buying_guide'||currentKey==='article_list') ? '<button onclick="openPagePreview()" title="페이지 미리보기" style="width:28px;height:28px;border:1.5px solid #E0E4F0;border-radius:8px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>' : ''}</div>
+          </div>
         </div>
         <div class="ov-head-total">
           <div class="ov-head-total-label" style="display: none;">Total Request</div>
