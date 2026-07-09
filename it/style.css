@@ -6,6 +6,8 @@ body{
   background:#F5F6FA;color:#1A1D2E;
   -webkit-font-smoothing:antialiased;font-feature-settings:'tnum';
 }
+/* 폼 컨트롤은 폰트를 상속받지 않음 — 전역 강제 (주차 셀렉터·검색창 등 Arial 폴백 방지) */
+button,input,select,textarea{font-family:inherit}
 
 /* ── LAYOUT ─────────────────────────────────── */
 .app{display:flex;min-height:100vh;align-items:stretch}
@@ -425,7 +427,7 @@ body{
   transition:opacity .15s ease, transform .15s ease;
   z-index:9000;
   box-shadow:0 4px 12px rgba(0,0,0,.15);
-  font-family:'Pretendard Variable',Pretendard,system-ui,sans-serif;
+  font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;
 }
 [data-tooltip]::before{
   content:'';position:absolute;
@@ -1365,7 +1367,7 @@ body{
   overflow:hidden;
   touch-action:none;
   box-sizing:border-box;
-  font-family:'Pretendard Variable',Pretendard,system-ui,sans-serif;
+  font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;
 }
 .lock-screen.hidden{
   opacity:0;pointer-events:none;
@@ -1552,7 +1554,7 @@ body{
 /* ===== moved from inline <style> block 2 ===== */
 
   #lockScreen{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;
-    background:#EAEBEF;font-family:'Pretendard',-apple-system,sans-serif;transition:opacity .4s ease;padding:20px}
+    background:#EAEBEF;font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;transition:opacity .4s ease;padding:20px}
   #lockScreen.hidden{opacity:0;pointer-events:none}
   #lockScreen .lock-card{background:#fff;border-radius:18px;padding:38px 34px 30px;width:100%;max-width:380px;
     box-shadow:0 8px 36px rgba(0,0,0,.10);text-align:center}
@@ -2007,7 +2009,6 @@ body{
   color: #2563EB;
   text-decoration: none;
   font-size: 12px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
   word-break: break-all;
 }
 .url-lib-url-link:hover { text-decoration: underline; color: #A50034; }
