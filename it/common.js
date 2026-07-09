@@ -1556,12 +1556,41 @@ function toggleNpiMonth(month) {
 // NPI IT PRODUCT STATUS VIEW (1회성 스냅샷: 43 NPI for IT product status_20260707)
 // ══════════════════════════════════════════════════════════════════
 var _npiProductStatusData = null;
+var _npiPsFilter = { stage: '', region: '', locale: '', search: '' };
 
 var NPI_PS_COLOR_META = {
   green: { label: '진행 중', desc: '6월 진행중(일부 컨텐츠 누락) 또는 7월 NPI 진행 예정 — 목표일정 내 delivery 필요', dot: '#10B981', bg: '#ECFDF5', tc: '#065F46' },
   orange: { label: '법인 액션 필요', desc: 'PIM2.0 등록·Target Month 지정·Contents Readiness 확인 필요 (법인 액션)', dot: '#F59E0B', bg: '#FFFBEB', tc: '#92400E' },
   other: { label: '기타', desc: '', dot: '#94A3B8', bg: '#F8FAFC', tc: '#475569' }
 };
+
+// stage 키 → 색상 팔레트 (NPI_DETAIL_BUCKETS 팔레트 재사용/확장). d.stages(JSON)의 순서/라벨과 함께 사용.
+var NPI_PS_STAGE_META = {
+  live:          { color: '#10B981', bg: '#ECFDF5', tc: '#065F46' },
+  in_progress:   { color: '#3B82F6', bg: '#EFF6FF', tc: '#1E40AF' },
+  client_review: { color: '#8B5CF6', bg: '#F5F3FF', tc: '#5B21B6' },
+  clarify:       { color: '#06B6D4', bg: '#ECFEFF', tc: '#155E75' },
+  precheck:      { color: '#F59E0B', bg: '#FFFBEB', tc: '#92400E' },
+  cancelled:     { color: '#94A3B8', bg: '#F8FAFC', tc: '#475569' },
+  etc:           { color: '#CBD5E1', bg: '#F1F5F9', tc: '#64748B' }
+};
+
+function npiPsStageMeta(stageKey) {
+  return NPI_PS_STAGE_META[stageKey] || NPI_PS_STAGE_META.etc;
+}
+
+// groups(JSON) → 필터/집계용 평탄화 배열 [{status,colorClass,stage,row}]
+function npiPsFlatRows() {
+  var d = _npiProductStatusData;
+  var groups = (d && d.groups) || [];
+  var flatRows = [];
+  groups.forEach(function(g) {
+    g.rows.forEach(function(row) {
+      flatRows.push({ status: g.status, colorClass: g.colorClass, stage: row.stage || 'etc', row: row });
+    });
+  });
+  return flatRows;
+}
 
 function renderNpiProductStatusContent() {
   updateTopbarTitle();
@@ -1586,53 +1615,193 @@ function renderNpiProductStatusContent() {
   var html = '<div style="padding:16px 24px 0"><div class="ov-card-new">';
   html += '<div class="ov-head-new"><div class="ov-head-title">';
   html += '<div class="ov-head-eyebrow">NPI · IT Product Status</div>';
-  html += '<div class="ov-head-name">IT 제품 현황 <span style="font-size:12px;font-weight:500;color:#94A3B8">(' + escapeHtmlSheet(d.sourceFile || '') + ')</span></div>';
+  html += '<div class="ov-head-name">IT 제품 현황 <span style="font-size:var(--fs-caption);font-weight:500;color:#94A3B8">(' + escapeHtmlSheet(d.sourceFile || '') + ')</span></div>';
   html += '</div>';
   html += '<div class="ov-head-total"><div class="ov-head-total-num ov-head-total-sites">총 <strong>' + (d.totalRows || 0) + '</strong>건</div></div>';
   html += '</div>';
 
-  var colorTotals = { green: 0, orange: 0, other: 0 };
-  groups.forEach(function(g) { colorTotals[g.colorClass] = (colorTotals[g.colorClass] || 0) + g.rows.length; });
+  // 요약 칩: 표준 stage 체계로 재구성(엑셀 원본 초록/주황 분류는 테이블의 status 컬럼으로 이동).
+  // 칩은 이 헤더 블록 안에서 탭 진입 시 1회만 빌드되며, 이후 클릭/필터 변경 시에는
+  // npiPsSyncFilterControls()가 active 클래스만 직접 토글한다(재렌더 아님).
+  var allFlatRows = npiPsFlatRows();
+  var stageCounts = npiPsStageCounts(allFlatRows);
+  var stages = d.stages || [];
   html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center">';
-  ['green', 'orange', 'other'].forEach(function(color) {
-    if (!colorTotals[color]) return;
-    var meta = NPI_PS_COLOR_META[color];
-    html += '<span class="npi-stage-chip" style="background:' + meta.bg + ';color:' + meta.tc + ';font-weight:700">' +
-      '<span class="npi-stage-dot" style="background:' + meta.dot + '"></span>' +
-      escapeHtmlSheet(meta.label) + ' ' + colorTotals[color] + '건</span>';
-  });
-  groups.forEach(function(g) {
-    var meta = NPI_PS_COLOR_META[g.colorClass] || NPI_PS_COLOR_META.other;
-    html += '<span class="npi-stage-chip"><span class="npi-stage-dot" style="background:' + meta.dot + '"></span>' +
-      escapeHtmlSheet(g.status) + ' ' + g.rows.length + '</span>';
+  stages.forEach(function(s) {
+    var cnt = stageCounts[s.key] || 0;
+    if (!cnt) return;
+    var meta = npiPsStageMeta(s.key);
+    var isActive = _npiPsFilter.stage === s.key;
+    html += '<span class="npi-stage-chip npi-ps-stage-chip' + (isActive ? ' npi-ps-stage-chip-active' : '') +
+      '" data-stage="' + escapeAttrSheet(s.key) + '" style="background:' + meta.bg + ';color:' + meta.tc + ';font-weight:700" onclick="npiPsToggleStageChip(\'' + escapeAttrSheet(s.key) + '\')">' +
+      '<span class="npi-stage-dot" style="background:' + meta.color + '"></span>' +
+      escapeHtmlSheet(s.label) + ' ' + cnt + '건</span>';
   });
   html += '</div></div></div>';
 
-  // ── 단일 통합 테이블 (Region → LOCALE 정렬, 원본 12컬럼) ──
-  var flatRows = [];
-  groups.forEach(function(g) {
-    g.rows.forEach(function(row) {
-      flatRows.push({ status: g.status, colorClass: g.colorClass, row: row });
-    });
+  // 필터바 컨테이너 — 탭 진입 시 1회만 npiPsRenderFilterBar()로 채워지고, 이후 필터 변경 시
+  // 재생성되지 않는다(입력 포커스/IME 조합 상태 유지 — url_library 탭과 동일한 부분 렌더 패턴).
+  html += '<div id="npiPsFilterBar"></div>';
+  // 결과 컨테이너 — 통합 테이블은 이 안쪽만 재렌더된다
+  html += '<div id="npiPsResults"></div>';
+
+  wrap.insertAdjacentHTML('beforeend', html);
+  npiPsRenderFilterBar();
+  npiPsRenderResults();
+}
+
+// 필터바(Stage/Region/LOCALE select + 검색창 + 초기화 버튼) — 탭 진입 시 1회만 호출.
+function npiPsRenderFilterBar() {
+  var bar = document.getElementById('npiPsFilterBar');
+  if (!bar) return;
+  var d = _npiProductStatusData;
+  var stages = (d && d.stages) || [];
+  var flatRows = npiPsFlatRows();
+  var stageCounts = npiPsStageCounts(flatRows);
+
+  var regions = [], regionSeen = {};
+  var locales = [], localeSeen = {};
+  flatRows.forEach(function(item) {
+    var region = item.row.region;
+    if (region && !regionSeen[region]) { regionSeen[region] = 1; regions.push(region); }
+    var locale = item.row.locale;
+    if (locale && !localeSeen[locale]) { localeSeen[locale] = 1; locales.push(locale); }
   });
+  regions.sort();
+  locales.sort();
+
+  var html = '<div class="url-lib-filter-bar">';
+
+  html += '<select class="url-lib-select" id="npiPsStageSelect" onchange="npiPsSetFilter(\'stage\', this.value)">';
+  html += '<option value="">전체 Stage</option>';
+  stages.forEach(function(s) {
+    var cnt = stageCounts[s.key] || 0;
+    html += '<option value="' + escapeAttrSheet(s.key) + '"' + (_npiPsFilter.stage === s.key ? ' selected' : '') + '>' +
+      escapeHtmlSheet(s.label) + ' (' + cnt + ')</option>';
+  });
+  html += '</select>';
+
+  html += '<select class="url-lib-select" id="npiPsRegionSelect" onchange="npiPsSetFilter(\'region\', this.value)">';
+  html += '<option value="">전체 Region</option>';
+  regions.forEach(function(region) {
+    html += '<option value="' + escapeAttrSheet(region) + '"' + (_npiPsFilter.region === region ? ' selected' : '') + '>' + escapeHtmlSheet(region) + '</option>';
+  });
+  html += '</select>';
+
+  html += '<select class="url-lib-select" id="npiPsLocaleSelect" onchange="npiPsSetFilter(\'locale\', this.value)">';
+  html += '<option value="">전체 LOCALE</option>';
+  locales.forEach(function(locale) {
+    html += '<option value="' + escapeAttrSheet(locale) + '"' + (_npiPsFilter.locale === locale ? ' selected' : '') + '>' + escapeHtmlSheet(locale) + '</option>';
+  });
+  html += '</select>';
+
+  html += '<div class="dash-search">' + DASH_SEARCH_ICON_SVG;
+  html += '<input id="npiPsSearchInput" class="dash-search-input" type="text" placeholder="모델명/서픽스/PTT ID 검색..." value="' + escapeAttrSheet(_npiPsFilter.search) + '" oninput="npiPsOnSearchInput(this)">';
+  html += '<button type="button" class="dash-search-clear' + (_npiPsFilter.search ? ' dash-search-clear-visible' : '') + '" id="npiPsSearchClear" onclick="npiPsClearSearch()" aria-label="검색어 지우기">&times;</button>';
+  html += '</div>';
+
+  html += '<button type="button" class="url-lib-page-btn" id="npiPsResetBtn" onclick="npiPsResetFilter()">초기화</button>';
+  html += '</div>';
+
+  bar.innerHTML = html;
+}
+
+// select(Stage/Region/LOCALE)에서 호출 — 상태 갱신 후 컨트롤 동기화 + 결과만 재렌더(필터바는 유지)
+function npiPsSetFilter(key, value) {
+  _npiPsFilter[key] = value;
+  npiPsSyncFilterControls();
+  npiPsRenderResults();
+}
+
+// 요약 칩 클릭 — 같은 stage를 다시 클릭하면 토글 해제. Stage select 값도 함께 동기화.
+function npiPsToggleStageChip(stageKey) {
+  _npiPsFilter.stage = (_npiPsFilter.stage === stageKey) ? '' : stageKey;
+  npiPsSyncFilterControls();
+  npiPsRenderResults();
+}
+
+// select 값 + 칩 active 하이라이트를 직접 DOM 조작으로 동기화(필터바/헤더 HTML 재생성 없이).
+function npiPsSyncFilterControls() {
+  var stageSel = document.getElementById('npiPsStageSelect');
+  if (stageSel) stageSel.value = _npiPsFilter.stage;
+  var regionSel = document.getElementById('npiPsRegionSelect');
+  if (regionSel) regionSel.value = _npiPsFilter.region;
+  var localeSel = document.getElementById('npiPsLocaleSelect');
+  if (localeSel) localeSel.value = _npiPsFilter.locale;
+  var chips = document.querySelectorAll('.npi-ps-stage-chip');
+  for (var i = 0; i < chips.length; i++) {
+    var chip = chips[i];
+    if (chip.getAttribute('data-stage') === _npiPsFilter.stage) chip.classList.add('npi-ps-stage-chip-active');
+    else chip.classList.remove('npi-ps-stage-chip-active');
+  }
+}
+
+// ── 검색창: 상태/클리어버튼은 즉시, 결과 재렌더는 디바운스(포커스/IME 보존) ──
+var _npiPsDebouncedRenderResults = dashDebounce(function() { npiPsRenderResults(); }, 150);
+
+function npiPsOnSearchInput(inputEl) {
+  var value = inputEl.value;
+  _npiPsFilter.search = value;
+  urlLibToggleClearBtn('npiPsSearchClear', value);
+  _npiPsDebouncedRenderResults();
+}
+
+function npiPsClearSearch() {
+  var input = document.getElementById('npiPsSearchInput');
+  if (input) input.value = '';
+  _npiPsFilter.search = '';
+  urlLibToggleClearBtn('npiPsSearchClear', '');
+  npiPsRenderResults();
+  if (input) input.focus();
+}
+
+// 초기화 — 필터 상태 전체 리셋 + select/입력값/칩 하이라이트 동기화 + 결과 재렌더(필터바 자체는 재생성 안 함)
+function npiPsResetFilter() {
+  _npiPsFilter = { stage: '', region: '', locale: '', search: '' };
+  var input = document.getElementById('npiPsSearchInput');
+  if (input) input.value = '';
+  urlLibToggleClearBtn('npiPsSearchClear', '');
+  npiPsSyncFilterControls();
+  npiPsRenderResults();
+}
+
+// 통합 테이블만 재렌더 — #npiPsResults의 innerHTML만 교체(헤더/칩/필터바는 유지)
+function npiPsRenderResults() {
+  var resultsEl = document.getElementById('npiPsResults');
+  if (!resultsEl) return;
+
+  var d = _npiProductStatusData;
+  var totalRows = (d && d.totalRows) || 0;
+
+  // ── 단일 통합 테이블 (Region → LOCALE 정렬, 원본 12컬럼 + Stage 컬럼) ──
+  var allFlatRows = npiPsFlatRows();
+  var flatRows = npiPsFilterRows(allFlatRows, _npiPsFilter);
   flatRows.sort(function(a, b) {
     var r = (a.row.region || '').localeCompare(b.row.region || '');
     if (r !== 0) return r;
     return (a.row.locale || '').localeCompare(b.row.locale || '');
   });
 
-  html += '<div style="padding:16px 24px">';
+  var html = '<div style="padding:16px 24px">';
+  html += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500;margin-bottom:8px">' + flatRows.length.toLocaleString() + '건 / 전체 ' + totalRows.toLocaleString() + '건</div>';
   html += '<div class="npi-detail-table-wrap" style="overflow-x:auto">';
-  html += '<table class="npi-detail-table" style="min-width:1280px">';
+  html += '<table class="npi-detail-table" style="min-width:1360px">';
   html += '<thead><tr>' +
     '<th>Region</th><th>Sub</th><th>LOCALE</th><th>Model</th>' +
     '<th>key_Sales Model Code</th><th>PTT Task ID</th><th>Task Status in PTT</th>' +
-    '<th>status</th><th>Detail KR</th><th>Detail English</th>' +
+    '<th>Stage</th><th>status</th><th>Detail KR</th><th>Detail English</th>' +
     '<th>Expected Local Target Date</th><th>PDP Status</th>' +
     '</tr></thead><tbody>';
   flatRows.forEach(function(item) {
     var row = item.row;
     var meta = NPI_PS_COLOR_META[item.colorClass] || NPI_PS_COLOR_META.other;
+    var stageMeta = npiPsStageMeta(item.stage);
+    var stageLabel = (function() {
+      var found = (d.stages || []).filter(function(s) { return s.key === item.stage; })[0];
+      return found ? found.label : item.stage;
+    })();
+    var stageCell = '<span class="sheet-status-pill" style="background:' + stageMeta.bg + ';color:' + stageMeta.tc + '">' +
+      '<span style="background:' + stageMeta.color + '"></span>' + escapeHtmlSheet(stageLabel) + '</span>';
     var statusCell = '<span class="sheet-status-pill" style="background:' + meta.bg + ';color:' + meta.tc + '" title="' + escapeAttrSheet(meta.desc || '') + '">' +
       '<span style="background:' + meta.dot + '"></span>' + escapeHtmlSheet(item.status) + '</span>';
     var target = row.expectedLocalTargetDate
@@ -1640,22 +1809,23 @@ function renderNpiProductStatusContent() {
       : '<span class="sheet-status-pill" style="background:#FFFBEB;color:#92400E">미입력</span>';
     html += '<tr>';
     html += '<td>' + escapeHtmlSheet(row.region) + '</td>';
-    html += '<td style="font-size:12px;color:#64748B">' + escapeHtmlSheet(row.sub || '-') + '</td>';
+    html += '<td style="font-size:var(--fs-caption);color:#64748B">' + escapeHtmlSheet(row.sub || '-') + '</td>';
     html += '<td>' + escapeHtmlSheet(row.locale) + '</td>';
     html += '<td style="font-weight:600">' + escapeHtmlSheet(row.model) + '</td>';
-    html += '<td style="font-size:12px;color:#64748B">' + escapeHtmlSheet(row.salesModelKey || '-') + '</td>';
-    html += '<td style="font-size:12px;color:#64748B">' + escapeHtmlSheet(row.pttId || '-') + '</td>';
-    html += '<td style="font-size:12px;color:#475569">' + escapeHtmlSheet(row.pttStatus || '-') + '</td>';
+    html += '<td style="font-size:var(--fs-caption);color:#64748B">' + escapeHtmlSheet(row.salesModelKey || '-') + '</td>';
+    html += '<td style="font-size:var(--fs-caption);color:#64748B">' + escapeHtmlSheet(row.pttId || '-') + '</td>';
+    html += '<td style="font-size:var(--fs-caption);color:#475569">' + escapeHtmlSheet(row.pttStatus || '-') + '</td>';
+    html += '<td>' + stageCell + '</td>';
     html += '<td>' + statusCell + '</td>';
-    html += '<td style="font-size:12px;color:#475569;max-width:220px">' + escapeHtmlSheet(row.detailKr || '-') + '</td>';
-    html += '<td style="font-size:12px;color:#64748B;max-width:220px">' + escapeHtmlSheet(row.detailEn || '-') + '</td>';
+    html += '<td style="font-size:var(--fs-caption);color:#475569;max-width:220px">' + escapeHtmlSheet(row.detailKr || '-') + '</td>';
+    html += '<td style="font-size:var(--fs-caption);color:#64748B;max-width:220px">' + escapeHtmlSheet(row.detailEn || '-') + '</td>';
     html += '<td>' + target + '</td>';
     html += '<td style="text-align:center">' + escapeHtmlSheet(row.pdpStatus || '-') + '</td>';
     html += '</tr>';
   });
   html += '</tbody></table></div></div>';
 
-  wrap.insertAdjacentHTML('beforeend', html);
+  resultsEl.innerHTML = html;
   syncNavBadges();
 }
 
@@ -1663,12 +1833,25 @@ function renderNpiProductStatusContent() {
 // LIVE URL LIBRARY VIEW
 // ══════════════════════════════════════════════════════════════════
 var _urlLibData = null;
-var _urlLibFilter = { search: '', category: '', status: '', page: 1 };
+var _urlLibFilter = { search: '', category: '', status: '', locale: '', countRange: '', sort: 'name', page: 1 };
 var _urlLibExpandedModel = null;
 var _urlLibViewMode = 'model'; // 'model' | 'country'
 var _urlLibCountryQuery = '';
 var _urlLibSelectedLocale = null;
 var _urlLibLocaleIndexCache = null;
+
+// ── 공유 디바운스 헬퍼 (검색 입력 → 결과 재렌더 지연, 필터바/select는 즉시 반영) ──
+function dashDebounce(fn, ms) {
+  var timer = null;
+  return function() {
+    var args = arguments, ctx = this;
+    clearTimeout(timer);
+    timer = setTimeout(function() { fn.apply(ctx, args); }, ms);
+  };
+}
+
+// ── 공유 검색 아이콘 SVG (.dash-search 마크업에서 사용) ──
+var DASH_SEARCH_ICON_SVG = '<svg class="dash-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
 
 function getUrlLibLocaleIndex() {
   if (!_urlLibLocaleIndexCache) {
@@ -1677,20 +1860,76 @@ function getUrlLibLocaleIndex() {
   return _urlLibLocaleIndexCache;
 }
 
+// 모델별 뷰의 로케일 셀렉트 옵션 — 데이터에 등장하는 로케일 토큰 전체(정렬됨)
+function urlLibAllLocaleTokens(allModels) {
+  var seen = {};
+  var tokens = [];
+  (allModels || []).forEach(function(model) {
+    (model.locales || []).forEach(function(loc) {
+      var token = urlLibLocaleToken(loc.locale);
+      if (token && !seen[token]) { seen[token] = 1; tokens.push(token); }
+    });
+  });
+  tokens.sort();
+  return tokens;
+}
+
+// 뷰 모드 전환은 필터바 자체(검색창 placeholder 등)가 바뀌는 의도된 컨텍스트 전환이므로 전체 재렌더
 function urlLibSetViewMode(mode) {
   _urlLibViewMode = mode;
   _urlLibSelectedLocale = null;
   renderUrlLibraryContent();
 }
 
-function urlLibSetCountryQuery(value) {
-  _urlLibCountryQuery = value;
-  renderUrlLibraryContent();
+// ── 모델별 검색창: 상태 즉시 갱신 + × 버튼 토글은 즉시, 결과 재렌더는 디바운스(포커스/IME 보존) ──
+var _urlLibDebouncedRenderResults = dashDebounce(function() { urlLibRenderResults(); }, 150);
+
+function urlLibOnSearchInput(inputEl) {
+  var value = inputEl.value;
+  _urlLibFilter.search = value;
+  _urlLibFilter.page = 1;
+  urlLibToggleClearBtn('urlLibSearchClear', value);
+  _urlLibDebouncedRenderResults();
 }
 
+function urlLibClearSearch() {
+  var input = document.getElementById('urlLibSearchInput');
+  if (input) input.value = '';
+  _urlLibFilter.search = '';
+  _urlLibFilter.page = 1;
+  urlLibToggleClearBtn('urlLibSearchClear', '');
+  urlLibRenderResults();
+  if (input) input.focus();
+}
+
+// ── 국가별 검색창: 동일 패턴 ──
+function urlLibOnCountryQueryInput(inputEl) {
+  var value = inputEl.value;
+  _urlLibCountryQuery = value;
+  urlLibToggleClearBtn('urlLibCountryClear', value);
+  _urlLibDebouncedRenderResults();
+}
+
+function urlLibClearCountryQuery() {
+  var input = document.getElementById('urlLibCountryQueryInput');
+  if (input) input.value = '';
+  _urlLibCountryQuery = '';
+  urlLibToggleClearBtn('urlLibCountryClear', '');
+  urlLibRenderResults();
+  if (input) input.focus();
+}
+
+function urlLibToggleClearBtn(id, value) {
+  var btn = document.getElementById(id);
+  if (!btn) return;
+  if (value) btn.classList.add('dash-search-clear-visible');
+  else btn.classList.remove('dash-search-clear-visible');
+}
+
+// 국가 카드 선택/뒤로가기는 필터바에 영향 없음 → 결과 영역만 재렌더
 function urlLibSelectLocale(token) {
   _urlLibSelectedLocale = (_urlLibSelectedLocale === token) ? null : token;
-  renderUrlLibraryContent();
+  urlLibRenderResults();
 }
 var URL_LIB_PAGE_SIZE = 50;
 
@@ -1716,6 +1955,17 @@ function renderUrlLibraryContent() {
   var allModels = _urlLibData.models || [];
   var categories = _urlLibData.categories || [];
   var statusOptions = ['ACTIVE', 'DISCONTINUED', 'SUSPENDED', 'HIDDEN'];
+  var localeTokens = urlLibAllLocaleTokens(allModels);
+  var countRangeOptions = [
+    { value: '1', label: '1개국' },
+    { value: '2-9', label: '2~9개국' },
+    { value: '10+', label: '10개국+' },
+  ];
+  var sortOptions = [
+    { value: 'name', label: '모델명순' },
+    { value: 'locales_desc', label: '국가수 많은순' },
+    { value: 'locales_asc', label: '국가수 적은순' },
+  ];
 
   // ── 헤더 카드 ──
   var headerHtml = '<div style="padding:16px 24px 0;flex-shrink:0"><div class="ov-card-new">';
@@ -1726,7 +1976,7 @@ function renderUrlLibraryContent() {
   headerHtml += '<div class="ov-head-total"><div class="ov-head-total-num ov-head-total-sites">';
   headerHtml += '<strong>' + allModels.length.toLocaleString() + '</strong>개 모델 · ';
   headerHtml += '<strong>' + (_urlLibData.totalUrls || 0).toLocaleString() + '</strong>개 URL';
-  headerHtml += '<span style="color:#94A3B8;font-size:12px;margin-left:8px">(' + (_urlLibData.cmsSource || '') + ')</span>';
+  headerHtml += '<span style="color:#94A3B8;font-size:var(--fs-caption);font-weight:500;margin-left:8px">(' + (_urlLibData.cmsSource || '') + ')</span>';
   headerHtml += '</div></div></div>';
 
   // 뷰 전환 탭
@@ -1736,28 +1986,69 @@ function renderUrlLibraryContent() {
   headerHtml += '</div>';
 
   // 필터 바 (검색창은 뷰 모드에 따라 모델명/국가명 검색으로 전환, 카테고리·상태는 공통)
+  // 이 필터바는 탭 진입/뷰모드 전환 시에만 재생성됨 — 검색·select·페이지 변경은 #urlLibResults만 갱신하므로
+  // 입력창 포커스와 한글(IME) 조합 상태가 유지된다.
   headerHtml += '<div class="url-lib-filter-bar">';
   if (_urlLibViewMode === 'country') {
-    headerHtml += '<input class="url-lib-search" type="text" placeholder="국가명 또는 로케일 검색 (예: Spain, ES)..." value="' + escapeAttrSheet(_urlLibCountryQuery) + '" oninput="urlLibSetCountryQuery(this.value)">';
+    headerHtml += '<div class="dash-search">' + DASH_SEARCH_ICON_SVG;
+    headerHtml += '<input id="urlLibCountryQueryInput" class="dash-search-input" type="text" placeholder="국가명 또는 로케일 검색 (예: Spain, ES)..." value="' + escapeAttrSheet(_urlLibCountryQuery) + '" oninput="urlLibOnCountryQueryInput(this)">';
+    headerHtml += '<button type="button" class="dash-search-clear' + (_urlLibCountryQuery ? ' dash-search-clear-visible' : '') + '" id="urlLibCountryClear" onclick="urlLibClearCountryQuery()" aria-label="검색어 지우기">&times;</button>';
+    headerHtml += '</div>';
   } else {
-    headerHtml += '<input class="url-lib-search" type="text" placeholder="모델명 또는 코드 검색..." value="' + escapeAttrSheet(_urlLibFilter.search) + '" oninput="urlLibSetFilter(\'search\',this.value)">';
+    headerHtml += '<div class="dash-search">' + DASH_SEARCH_ICON_SVG;
+    headerHtml += '<input id="urlLibSearchInput" class="dash-search-input" type="text" placeholder="모델명 또는 코드 검색..." value="' + escapeAttrSheet(_urlLibFilter.search) + '" oninput="urlLibOnSearchInput(this)">';
+    headerHtml += '<button type="button" class="dash-search-clear' + (_urlLibFilter.search ? ' dash-search-clear-visible' : '') + '" id="urlLibSearchClear" onclick="urlLibClearSearch()" aria-label="검색어 지우기">&times;</button>';
+    headerHtml += '</div>';
   }
-  headerHtml += '<select class="url-lib-select" onchange="urlLibSetFilter(\'category\',this.value)">';
+  headerHtml += '<select class="url-lib-select" id="urlLibCategorySelect" onchange="urlLibSetFilter(\'category\',this.value)">';
   headerHtml += '<option value="">전체 카테고리</option>';
   categories.forEach(function(cat) {
     headerHtml += '<option value="' + escapeAttrSheet(cat) + '"' + (_urlLibFilter.category === cat ? ' selected' : '') + '>' + escapeHtmlSheet(cat) + '</option>';
   });
   headerHtml += '</select>';
-  headerHtml += '<select class="url-lib-select" onchange="urlLibSetFilter(\'status\',this.value)">';
+  headerHtml += '<select class="url-lib-select" id="urlLibStatusSelect" onchange="urlLibSetFilter(\'status\',this.value)">';
   headerHtml += '<option value="">전체 상태</option>';
   statusOptions.forEach(function(s) {
     headerHtml += '<option value="' + s + '"' + (_urlLibFilter.status === s ? ' selected' : '') + '>' + s + '</option>';
   });
   headerHtml += '</select>';
+  if (_urlLibViewMode !== 'country') {
+    headerHtml += '<select class="url-lib-select" id="urlLibLocaleSelect" onchange="urlLibSetFilter(\'locale\',this.value)">';
+    headerHtml += '<option value="">전체 로케일</option>';
+    localeTokens.forEach(function(token) {
+      var label = token + ' — ' + urlLibCountryName(token);
+      headerHtml += '<option value="' + escapeAttrSheet(token) + '"' + (_urlLibFilter.locale === token ? ' selected' : '') + '>' + escapeHtmlSheet(label) + '</option>';
+    });
+    headerHtml += '</select>';
+    headerHtml += '<select class="url-lib-select" id="urlLibCountRangeSelect" onchange="urlLibSetFilter(\'countRange\',this.value)">';
+    headerHtml += '<option value="">전체 국가수</option>';
+    countRangeOptions.forEach(function(opt) {
+      headerHtml += '<option value="' + opt.value + '"' + (_urlLibFilter.countRange === opt.value ? ' selected' : '') + '>' + opt.label + '</option>';
+    });
+    headerHtml += '</select>';
+    headerHtml += '<select class="url-lib-select" id="urlLibSortSelect" onchange="urlLibSetFilter(\'sort\',this.value)">';
+    sortOptions.forEach(function(opt) {
+      headerHtml += '<option value="' + opt.value + '"' + (_urlLibFilter.sort === opt.value ? ' selected' : '') + '>' + opt.label + '</option>';
+    });
+    headerHtml += '</select>';
+    headerHtml += '<button type="button" class="url-lib-page-btn" id="urlLibResetBtn" onclick="urlLibResetFilter()">초기화</button>';
+  }
   headerHtml += '</div>';
   headerHtml += '</div></div>';
+  // 결과 컨테이너 — 검색/필터/페이지/expand 변경 시 이 안쪽만 재렌더된다
+  headerHtml += '<div id="urlLibResults"></div>';
   wrap.insertAdjacentHTML('beforeend', headerHtml);
 
+  urlLibRenderResults();
+}
+
+// 필터/검색/정렬/페이지/expand 상태 변경 시 호출 — #urlLibResults의 innerHTML만 교체한다.
+// 필터바(검색 입력·select)는 절대 재생성하지 않으므로 입력 포커스가 유지된다.
+function urlLibRenderResults() {
+  var resultsEl = document.getElementById('urlLibResults');
+  if (!resultsEl) return;
+  resultsEl.innerHTML = '';
+  var allModels = (_urlLibData && _urlLibData.models) || [];
   if (_urlLibViewMode === 'country') {
     renderUrlLibCountryView();
   } else {
@@ -1767,15 +2058,17 @@ function renderUrlLibraryContent() {
 }
 
 function renderUrlLibModelView(allModels) {
-  const wrap = document.getElementById('contentWrap');
+  const wrap = document.getElementById('urlLibResults');
+  if (!wrap) return;
   var filtered = urlLibFilterModels(allModels, _urlLibFilter);
+  filtered = urlLibSortModels(filtered, _urlLibFilter.sort);
   var pageInfo = urlLibPaginate(filtered, _urlLibFilter.page, URL_LIB_PAGE_SIZE);
   var totalPages = pageInfo.totalPages;
   var page = pageInfo.page;
   var pageModels = pageInfo.pageItems;
 
   var listHtml = '<div style="padding:12px 24px">';
-  listHtml += '<div style="color:#64748B;font-size:13px;margin-bottom:8px">' + filtered.length.toLocaleString() + '개 모델</div>';
+  listHtml += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500;margin-bottom:8px">' + filtered.length.toLocaleString() + '개 모델</div>';
 
   if (!filtered.length) {
     listHtml += '<div class="url-lib-empty">조건에 맞는 결과가 없습니다</div></div>';
@@ -1794,8 +2087,8 @@ function renderUrlLibModelView(allModels) {
     listHtml += '<span class="url-lib-model-cat">' + escapeHtmlSheet(model.category) + '</span>';
     listHtml += '</div>';
     listHtml += '<div style="display:flex;align-items:center;gap:12px">';
-    listHtml += '<span style="font-size:12px;color:#10B981">ACTIVE ' + activeCount + '</span>';
-    listHtml += '<span style="font-size:12px;color:#64748B">' + model.locales.length + '개국</span>';
+    listHtml += '<span style="font-size:var(--fs-caption);color:#10B981">ACTIVE ' + activeCount + '</span>';
+    listHtml += '<span style="font-size:var(--fs-caption);color:#64748B">' + model.locales.length + '개국</span>';
     listHtml += '<span style="color:#94A3B8">' + (isExpanded ? '▲' : '▼') + '</span>';
     listHtml += '</div></div>';
 
@@ -1825,7 +2118,7 @@ function renderUrlLibModelView(allModels) {
   if (totalPages > 1) {
     listHtml += '<div class="url-lib-pagination">';
     listHtml += '<button class="url-lib-page-btn" ' + (page <= 1 ? 'disabled' : '') + ' onclick="urlLibSetFilter(\'page\',' + (page - 1) + ')">← 이전</button>';
-    listHtml += '<span style="color:#64748B;font-size:13px">' + page + ' / ' + totalPages + '</span>';
+    listHtml += '<span style="color:#64748B;font-size:var(--fs-caption)">' + page + ' / ' + totalPages + '</span>';
     listHtml += '<button class="url-lib-page-btn" ' + (page >= totalPages ? 'disabled' : '') + ' onclick="urlLibSetFilter(\'page\',' + (page + 1) + ')">다음 →</button>';
     listHtml += '</div>';
   }
@@ -1834,7 +2127,8 @@ function renderUrlLibModelView(allModels) {
 }
 
 function renderUrlLibCountryView() {
-  const wrap = document.getElementById('contentWrap');
+  const wrap = document.getElementById('urlLibResults');
+  if (!wrap) return;
   var index = getUrlLibLocaleIndex();
   var tokens = Object.keys(index);
 
@@ -1858,7 +2152,7 @@ function renderUrlLibCountryView() {
       wrap.insertAdjacentHTML('beforeend', html);
       return;
     }
-    html += '<div style="color:#64748B;font-size:13px;margin-bottom:8px">국가를 검색하거나 아래에서 선택하세요</div>';
+    html += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500;margin-bottom:8px">국가를 검색하거나 아래에서 선택하세요</div>';
     html += '<div class="url-lib-country-grid">';
     matched.forEach(function(token) {
       var count = countByToken[token];
@@ -1882,7 +2176,7 @@ function renderUrlLibCountryView() {
   html2 += '<div class="url-lib-country-back" data-token="' + escapeAttrSheet(_urlLibSelectedLocale) + '" onclick="urlLibSelectLocale(this.getAttribute(\'data-token\'))">← 국가 목록으로</div>';
   html2 += '<div class="ov-head-total-num ov-head-total-sites" style="margin:8px 0">';
   html2 += escapeHtmlSheet(urlLibCountryName(_urlLibSelectedLocale)) + ' (' + escapeHtmlSheet(_urlLibSelectedLocale) + ') · <strong>' + entries.length.toLocaleString() + '</strong>개 IT 제품 라이브';
-  if (catSummary) html2 += '<span style="color:#94A3B8;font-size:12px;margin-left:8px">(' + escapeHtmlSheet(catSummary) + ')</span>';
+  if (catSummary) html2 += '<span style="color:#94A3B8;font-size:var(--fs-caption);font-weight:500;margin-left:8px">(' + escapeHtmlSheet(catSummary) + ')</span>';
   html2 += '</div>';
 
   if (!entries.length) {
@@ -1909,15 +2203,35 @@ function renderUrlLibCountryView() {
   wrap.insertAdjacentHTML('beforeend', html2);
 }
 
+// select(카테고리/상태/로케일/국가수/정렬)·페이지네이션 버튼에서 호출 — 즉시 결과만 재렌더(필터바는 그대로 유지)
 function urlLibSetFilter(key, value) {
   if (key !== 'page') _urlLibFilter.page = 1;
   _urlLibFilter[key] = (key === 'page') ? parseInt(value, 10) : value;
-  renderUrlLibraryContent();
+  urlLibRenderResults();
+}
+
+// 초기화 — 검색/카테고리/상태/로케일/국가수/정렬/페이지 전체 리셋 + 입력값/select 동기화 + 결과 재렌더(필터바 자체는 재생성 안 함)
+function urlLibResetFilter() {
+  _urlLibFilter = { search: '', category: '', status: '', locale: '', countRange: '', sort: 'name', page: 1 };
+  var searchInput = document.getElementById('urlLibSearchInput');
+  if (searchInput) searchInput.value = '';
+  urlLibToggleClearBtn('urlLibSearchClear', '');
+  var categorySel = document.getElementById('urlLibCategorySelect');
+  if (categorySel) categorySel.value = '';
+  var statusSel = document.getElementById('urlLibStatusSelect');
+  if (statusSel) statusSel.value = '';
+  var localeSel = document.getElementById('urlLibLocaleSelect');
+  if (localeSel) localeSel.value = '';
+  var countRangeSel = document.getElementById('urlLibCountRangeSelect');
+  if (countRangeSel) countRangeSel.value = '';
+  var sortSel = document.getElementById('urlLibSortSelect');
+  if (sortSel) sortSel.value = 'name';
+  urlLibRenderResults();
 }
 
 function toggleUrlLibModel(modelName) {
   _urlLibExpandedModel = (_urlLibExpandedModel === modelName) ? null : modelName;
-  renderUrlLibraryContent();
+  urlLibRenderResults();
 }
 
 // ── RENDER CONTENT ───────────────────────────────────────────

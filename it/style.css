@@ -6,6 +6,16 @@ body{
   background:#F5F6FA;color:#1A1D2E;
   -webkit-font-smoothing:antialiased;font-feature-settings:'tnum';
 }
+/* ── 커스텀 탭 타이포 톤 스케일 (NPI Tracker / IT 제품 현황 / Live URL Library 3종 전용) ──
+   GR 탭은 기존 개별 값을 그대로 유지(미적용). --fs-title은 .ov-head-name(GR·커스텀 공용, 20px/800)의
+   현재 기준값을 문서화한 참고 변수로, 해당 공용 클래스 자체는 건드리지 않는다. */
+:root{
+  --fs-title:20px;   /* 탭/카드 대제목 — ov-head-name 기준값(참고, 공용 클래스는 미변경) */
+  --fs-section:14px; /* 카드·행 서브타이틀(월 라벨/모델명/국가명) */
+  --fs-body:13px;    /* 테이블 본문(th/td 앰비언트)·필터 셀렉트·검색창·버튼 */
+  --fs-caption:12px; /* 보조 설명·캡션·메타(기준일·요약문구·건수) */
+  --fs-badge:10px;   /* 칩·배지·미니 라벨 */
+}
 /* 폼 컨트롤은 폰트를 상속받지 않음 — 전역 강제 (주차 셀렉터·검색창 등 Arial 폴백 방지) */
 button,input,select,textarea{font-family:inherit}
 
@@ -1861,7 +1871,7 @@ button,input,select,textarea{font-family:inherit}
   align-items: center;
   margin-bottom: 8px;
 }
-.npi-month-label { font-weight: 700; font-size: 15px; color: #1A1D2E; }
+.npi-month-label { font-weight: 700; font-size: var(--fs-section); color: #1A1D2E; }
 .npi-month-pct { font-weight: 800; font-size: 20px; }
 .npi-progress-bar {
   height: 6px;
@@ -1871,8 +1881,37 @@ button,input,select,textarea{font-family:inherit}
   margin-bottom: 8px;
 }
 .npi-progress-fill { height: 100%; border-radius: 4px; transition: width .3s; }
-.npi-month-stats { font-size: 12px; color: #64748B; }
-.npi-month-expand-icon { text-align: center; font-size: 11px; color: #94A3B8; margin-top: 6px; }
+.npi-stage-bar {
+  display: flex;
+  height: 5px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: #F1F5F9;
+  margin-bottom: 8px;
+}
+.npi-stage-bar > div { height: 100%; }
+.npi-month-stats { font-size: var(--fs-caption); color: #64748B; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.npi-stage-chip { display: inline-flex; align-items: center; gap: 4px; font-size: var(--fs-badge); font-weight: 700; color: #475569; }
+.npi-stage-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+/* IT 제품 현황 stage 요약 칩(클릭 가능 — Stage 필터 토글) */
+.npi-ps-stage-chip {
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  transition: box-shadow .12s, border-color .12s, filter .12s;
+}
+.npi-ps-stage-chip:hover { filter: brightness(.97); }
+.npi-ps-stage-chip-active { border-color: #A50034; box-shadow: 0 0 0 1px #A50034 inset; }
+.npi-month-expand-icon { text-align: center; font-size: var(--fs-badge); color: #94A3B8; margin-top: 6px; }
+.npi-stage-detail-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #E2E8F0;
+  background: #F8FAFC;
+}
 .npi-detail-table-wrap {
   margin-top: 4px;
   overflow-x: auto;
@@ -1882,7 +1921,7 @@ button,input,select,textarea{font-family:inherit}
 .npi-detail-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: var(--fs-body);
 }
 .npi-detail-table th {
   background: #F8FAFC;
@@ -1910,23 +1949,58 @@ button,input,select,textarea{font-family:inherit}
   flex-wrap: wrap;
   padding: 12px 0 4px;
 }
-.url-lib-search {
+/* ── 공유 검색 컴포넌트 (.dash-search): 좌측 돋보기 아이콘 + 우측 × 클리어 버튼 ──
+   커스텀 탭(URL Library/IT 제품 현황)의 텍스트 검색창에 공통 사용 */
+.dash-search {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
   flex: 1;
-  min-width: 220px;
-  max-width: 360px;
-  padding: 8px 12px;
-  border: 1.5px solid #E2E8F0;
+  min-width: 260px;
+  max-width: 380px;
+}
+.dash-search-icon {
+  position: absolute;
+  left: 10px;
+  color: #94A3B8;
+  pointer-events: none;
+}
+.dash-search-input {
+  width: 100%;
+  padding: 8px 30px 8px 32px;
+  border: 1.5px solid #E0E4F0;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: var(--fs-body);
   color: #1A1D2E;
   outline: none;
+  transition: border-color .15s;
 }
-.url-lib-search:focus { border-color: #A50034; }
+.dash-search-input:focus { border-color: #A50034; }
+.dash-search-clear {
+  position: absolute;
+  right: 6px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #E2E8F0;
+  color: #64748B;
+  font-size: var(--fs-body);
+  line-height: 1;
+  cursor: pointer;
+  transition: background .12s, color .12s;
+}
+.dash-search-clear:hover { background: #CBD5E1; color: #1A1D2E; }
+.dash-search-clear.dash-search-clear-visible { display: flex; }
 .url-lib-select {
   padding: 7px 10px;
   border: 1.5px solid #E2E8F0;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: var(--fs-body);
   color: #1A1D2E;
   background: #fff;
   outline: none;
@@ -1954,12 +2028,12 @@ button,input,select,textarea{font-family:inherit}
 }
 .url-lib-model-name {
   font-weight: 700;
-  font-size: 14px;
+  font-size: var(--fs-section);
   color: #1A1D2E;
   margin-right: 8px;
 }
 .url-lib-model-cat {
-  font-size: 11px;
+  font-size: var(--fs-badge);
   color: #64748B;
   background: #F1F5F9;
   padding: 2px 7px;
@@ -1972,13 +2046,13 @@ button,input,select,textarea{font-family:inherit}
 .url-lib-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: var(--fs-body);
 }
 .url-lib-table thead th {
   padding: 8px 12px;
   text-align: left;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: var(--fs-badge);
+  font-weight: 700;
   color: #94A3B8;
   text-transform: uppercase;
   letter-spacing: .04em;
@@ -1994,7 +2068,7 @@ button,input,select,textarea{font-family:inherit}
 .url-lib-table td { padding: 7px 12px; vertical-align: middle; }
 .url-lib-locale-badge {
   display: inline-block;
-  font-size: 11px;
+  font-size: var(--fs-badge);
   font-weight: 700;
   color: #fff;
   background: #334155;
@@ -2002,42 +2076,21 @@ button,input,select,textarea{font-family:inherit}
   padding: 2px 6px;
   letter-spacing: .03em;
 }
-.url-lib-status-active  { font-size: 12px; font-weight: 600; color: #10B981; }
-.url-lib-status-disc    { font-size: 12px; font-weight: 600; color: #EF4444; }
-.url-lib-status-other   { font-size: 12px; color: #94A3B8; }
+.url-lib-status-active  { font-size: var(--fs-caption); font-weight: 600; color: #10B981; }
+.url-lib-status-disc    { font-size: var(--fs-caption); font-weight: 600; color: #EF4444; }
+.url-lib-status-other   { font-size: var(--fs-caption); color: #94A3B8; }
 .url-lib-url-link {
   color: #2563EB;
   text-decoration: none;
-  font-size: 12px;
+  font-size: var(--fs-caption);
   word-break: break-all;
 }
 .url-lib-url-link:hover { text-decoration: underline; color: #A50034; }
-.url-lib-pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  padding: 16px;
-}
-.url-lib-page-btn {
-  padding: 6px 16px;
-  border: 1.5px solid #E2E8F0;
-  border-radius: 7px;
-  background: #fff;
-  font-size: 13px;
-  cursor: pointer;
-  color: #475569;
-  transition: border-color .12s;
-}
-.url-lib-page-btn:hover:not(:disabled) { border-color: #A50034; color: #A50034; }
-.url-lib-page-btn:disabled { opacity: .4; cursor: not-allowed; }
-
-/* ── Live URL Library 국가별 뷰 (v0.6.5 백포트) ── */
 .url-lib-empty {
   padding: 32px;
   text-align: center;
   color: #94A3B8;
-  font-size: 13px;
+  font-size: var(--fs-body);
 }
 .url-lib-view-tabs { display: flex; gap: 6px; padding: 10px 0 0; }
 .url-lib-view-tab {
@@ -2045,7 +2098,7 @@ button,input,select,textarea{font-family:inherit}
   border: 1.5px solid #E2E8F0;
   border-radius: 8px;
   background: #fff;
-  font-size: 13px;
+  font-size: var(--fs-body);
   color: #64748B;
   cursor: pointer;
 }
@@ -2064,8 +2117,27 @@ button,input,select,textarea{font-family:inherit}
   transition: border-color .15s, box-shadow .15s;
 }
 .url-lib-country-card:hover { border-color: #A50034; box-shadow: 0 1px 6px rgba(165,0,52,.1); }
-.url-lib-country-name { font-weight: 700; font-size: 14px; color: #1A1D2E; }
-.url-lib-country-token { font-size: 11px; color: #94A3B8; margin-top: 2px; }
-.url-lib-country-count { font-size: 12px; color: #475569; margin-top: 6px; }
-.url-lib-country-back { font-size: 13px; color: #A50034; cursor: pointer; margin-bottom: 4px; }
+.url-lib-country-name { font-weight: 700; font-size: var(--fs-section); color: #1A1D2E; }
+.url-lib-country-token { font-size: var(--fs-badge); color: #94A3B8; margin-top: 2px; }
+.url-lib-country-count { font-size: var(--fs-caption); color: #475569; margin-top: 6px; }
+.url-lib-country-back { font-size: var(--fs-body); color: #A50034; cursor: pointer; margin-bottom: 4px; }
 .url-lib-country-back:hover { text-decoration: underline; }
+.url-lib-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+}
+.url-lib-page-btn {
+  padding: 6px 16px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 7px;
+  background: #fff;
+  font-size: var(--fs-body);
+  cursor: pointer;
+  color: #475569;
+  transition: border-color .12s;
+}
+.url-lib-page-btn:hover:not(:disabled) { border-color: #A50034; color: #A50034; }
+.url-lib-page-btn:disabled { opacity: .4; cursor: not-allowed; }

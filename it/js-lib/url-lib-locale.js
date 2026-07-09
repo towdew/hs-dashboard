@@ -59,12 +59,46 @@ function urlLibDisplayUrl(prodUrl) {
 
 function urlLibFilterModels(allModels, filter) {
   var q = (filter.search || '').toLowerCase().trim();
+  var localeTok = filter.locale || '';
+  var countRange = filter.countRange || '';
   return (allModels || []).filter(function (m) {
-    if (q && !m.modelName.toLowerCase().includes(q) && !m.salesModelCode.toLowerCase().includes(q)) return false;
+    if (q) {
+      var nameHit = m.modelName.toLowerCase().includes(q);
+      var codeHit = m.salesModelCode.toLowerCase().includes(q);
+      var urlHit = (m.locales || []).some(function (l) {
+        return (l.prodUrl || '').toLowerCase().indexOf(q) !== -1;
+      });
+      if (!nameHit && !codeHit && !urlHit) return false;
+    }
     if (filter.category && m.category !== filter.category) return false;
     if (filter.status && !m.locales.some(function (l) { return l.status === filter.status; })) return false;
+    if (localeTok && !m.locales.some(function (l) { return urlLibLocaleToken(l.locale) === localeTok; })) return false;
+    if (countRange) {
+      var n = m.locales.length;
+      if (countRange === '1' && n !== 1) return false;
+      if (countRange === '2-9' && (n < 2 || n > 9)) return false;
+      if (countRange === '10+' && n < 10) return false;
+    }
     return true;
   });
+}
+
+function urlLibSortModels(models, sortKey) {
+  var arr = (models || []).slice();
+  if (sortKey === 'name') {
+    arr.sort(function (a, b) { return a.modelName.localeCompare(b.modelName); });
+  } else if (sortKey === 'locales_desc') {
+    arr.sort(function (a, b) {
+      var d = b.locales.length - a.locales.length;
+      return d !== 0 ? d : a.modelName.localeCompare(b.modelName);
+    });
+  } else if (sortKey === 'locales_asc') {
+    arr.sort(function (a, b) {
+      var d = a.locales.length - b.locales.length;
+      return d !== 0 ? d : a.modelName.localeCompare(b.modelName);
+    });
+  }
+  return arr;
 }
 
 function urlLibPaginate(items, page, pageSize) {
@@ -82,6 +116,7 @@ if (typeof module !== 'undefined' && module.exports) {
     buildUrlLibLocaleIndex: buildUrlLibLocaleIndex,
     urlLibDisplayUrl: urlLibDisplayUrl,
     urlLibFilterModels: urlLibFilterModels,
+    urlLibSortModels: urlLibSortModels,
     urlLibPaginate: urlLibPaginate,
     URL_LIB_COUNTRY_NAMES: URL_LIB_COUNTRY_NAMES,
   };
