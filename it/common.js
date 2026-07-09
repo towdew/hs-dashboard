@@ -1637,11 +1637,13 @@ function renderNpiProductStatusContent() {
       '<span class="npi-stage-dot" style="background:' + meta.color + '"></span>' +
       escapeHtmlSheet(s.label) + ' ' + cnt + '건</span>';
   });
-  html += '</div></div></div>';
+  html += '</div>';
 
   // 필터바 컨테이너 — 탭 진입 시 1회만 npiPsRenderFilterBar()로 채워지고, 이후 필터 변경 시
   // 재생성되지 않는다(입력 포커스/IME 조합 상태 유지 — url_library 탭과 동일한 부분 렌더 패턴).
+  // 위치: 헤더 카드(ov-card-new) 내부 — URL Library 필터바와 동일한 정렬/톤 유지.
   html += '<div id="npiPsFilterBar"></div>';
+  html += '</div></div>';
   // 결과 컨테이너 — 통합 테이블은 이 안쪽만 재렌더된다
   html += '<div id="npiPsResults"></div>';
 
