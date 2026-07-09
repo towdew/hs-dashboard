@@ -2,6 +2,36 @@
   "generatedAt": "2026-07-09",
   "sourceFile": "43 NPI for IT product status_20260707.xlsx",
   "totalRows": 40,
+  "stages": [
+    {
+      "key": "live",
+      "label": "Live"
+    },
+    {
+      "key": "in_progress",
+      "label": "In Progress"
+    },
+    {
+      "key": "client_review",
+      "label": "Client Review"
+    },
+    {
+      "key": "clarify",
+      "label": "Clarify"
+    },
+    {
+      "key": "precheck",
+      "label": "Precheck"
+    },
+    {
+      "key": "cancelled",
+      "label": "Cancelled"
+    },
+    {
+      "key": "etc",
+      "label": "기타"
+    }
+  ],
   "groups": [
     {
       "status": "7월 10일 STG 완료",
@@ -19,7 +49,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "2026-07-10",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -33,7 +64,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "2026-07-10",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -47,7 +79,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "2026-07-10",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -61,7 +94,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "2026-07-10",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -75,7 +109,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "2026-07-10",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -89,7 +124,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "2026-07-10",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -103,7 +139,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "2026-07-10",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -117,7 +154,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "2026-07-10",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -131,7 +169,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "2026-07-10",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -145,7 +184,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "2026-07-10",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         }
       ]
     },
@@ -165,7 +205,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI, but some contents missing",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "clarify"
         },
         {
           "region": "EU",
@@ -179,7 +220,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI, but some contents missing",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "clarify"
         },
         {
           "region": "EU",
@@ -193,7 +235,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -207,7 +250,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -221,7 +265,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -235,7 +280,8 @@
           "detailKr": "7월 NPI",
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         }
       ]
     },
@@ -255,7 +301,8 @@
           "detailKr": "컨텐츠미비",
           "detailEn": "part of Jun NPI\nsome contents are missing still\n(UFN, Key Features)",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "clarify"
         },
         {
           "region": "EU",
@@ -269,7 +316,8 @@
           "detailKr": "컨텐츠미비",
           "detailEn": "part of Jun NPI\nsome contents are missing still\n(UFN, Key Features)",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "clarify"
         },
         {
           "region": "EU",
@@ -283,7 +331,8 @@
           "detailKr": "컨텐츠미비",
           "detailEn": "part of Jun NPI\nsome contents are missing still\n(UFN, Key Features)",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "in_progress"
         },
         {
           "region": "EU",
@@ -297,7 +346,8 @@
           "detailKr": "컨텐츠미비",
           "detailEn": "part of Jun NPI\nsome contents are missing",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "clarify"
         },
         {
           "region": "EU",
@@ -311,7 +361,8 @@
           "detailKr": "컨텐츠미비",
           "detailEn": "part of Jun NPI\nsome contents are missing",
           "expectedLocalTargetDate": "6/23 퍼블리싱",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "live"
         }
       ]
     },
@@ -331,7 +382,8 @@
           "detailKr": "PIM 미등록",
           "detailEn": "Need to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "client_review"
         },
         {
           "region": "EU",
@@ -345,7 +397,8 @@
           "detailKr": "pim 내 NPI 미지정",
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -359,7 +412,8 @@
           "detailKr": "pim 내 NPI 미지정",
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -373,7 +427,8 @@
           "detailKr": "pim 내 NPI 미지정",
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -387,7 +442,8 @@
           "detailKr": "pim 내 NPI 미지정",
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -401,7 +457,8 @@
           "detailKr": "PIM 미등록",
           "detailEn": "Need to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -415,7 +472,8 @@
           "detailKr": "pim 내 NPI 미지정",
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -429,7 +487,8 @@
           "detailKr": "pim 내 NPI 미지정",
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -443,7 +502,8 @@
           "detailKr": "pim 내 NPI 미지정",
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         },
         {
           "region": "EU",
@@ -457,7 +517,8 @@
           "detailKr": "pim 내 NPI 미지정",
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "precheck"
         }
       ]
     },
@@ -477,7 +538,8 @@
           "detailKr": "미요청건",
           "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "etc"
         },
         {
           "region": "EU",
@@ -491,7 +553,8 @@
           "detailKr": "미요청건",
           "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "etc"
         },
         {
           "region": "EU",
@@ -505,7 +568,8 @@
           "detailKr": "미요청건",
           "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "etc"
         },
         {
           "region": "SEA",
@@ -519,7 +583,8 @@
           "detailKr": "미요청건",
           "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "etc"
         },
         {
           "region": "SEA",
@@ -533,7 +598,8 @@
           "detailKr": "미요청건",
           "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "etc"
         },
         {
           "region": "SEA",
@@ -547,7 +613,8 @@
           "detailKr": "미요청건",
           "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "etc"
         },
         {
           "region": "SEA",
@@ -561,7 +628,8 @@
           "detailKr": "미요청건",
           "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "etc"
         }
       ]
     },
@@ -581,7 +649,8 @@
           "detailKr": "6월 NPI - 마무리중",
           "detailEn": "proceeding as a part of Jun NPI\n(contents were missing in June)",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "client_review"
         },
         {
           "region": "SEA",
@@ -595,7 +664,8 @@
           "detailKr": "6월 NPI - 마무리중",
           "detailEn": "proceeding as a part of Jun NPI\n(contents were missing in June)\ntask is under Client Review, waiting for final approval from local.",
           "expectedLocalTargetDate": "",
-          "pdpStatus": "N"
+          "pdpStatus": "N",
+          "stage": "client_review"
         }
       ]
     }
