@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-09",
+  "generatedAt": "2026-07-10",
   "sourceFile": "43 NPI for IT product status_20260707.xlsx",
-  "totalRows": 40,
+  "totalRows": 42,
   "stages": [
     {
       "key": "live",
@@ -666,6 +666,42 @@
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
           "stage": "client_review"
+        }
+      ]
+    },
+    {
+      "status": "미기재",
+      "colorClass": "orange",
+      "rows": [
+        {
+          "region": "NA",
+          "sub": "LGECI",
+          "locale": "ca_en",
+          "model": "17Z90U-G.AU78A9",
+          "salesModelKey": "ca_FR-17Z90U-G",
+          "pttId": "WR2257506YW",
+          "pttStatus": "[WPL] Closed",
+          "targetStagingDate": "",
+          "detailKr": "",
+          "detailEn": "NPI production [WPL] Closed, but CSR needs to be raised for Spec modification",
+          "expectedLocalTargetDate": "",
+          "pdpStatus": "제품 이미지에 스펙 잘못됨. 16GB로 수정 필요",
+          "stage": "in_progress"
+        },
+        {
+          "region": "NA",
+          "sub": "LGECI",
+          "locale": "ca_en",
+          "model": "17Z90UR-P.AU9CA9",
+          "salesModelKey": "ca_FR-17Z90UR-P",
+          "pttId": "WR2261186YW",
+          "pttStatus": "[WPL] Closed",
+          "targetStagingDate": "",
+          "detailKr": "",
+          "detailEn": "NPI production [WPL] Closed, but CSR needs to be raised for Spec modification",
+          "expectedLocalTargetDate": "",
+          "pdpStatus": "제품 이미지에 스펙 잘못됨. 2TB로 수정 필요. 상세 스펙 입력 안되어 있음",
+          "stage": "in_progress"
         }
       ]
     }
