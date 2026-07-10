@@ -1,0 +1,120 @@
+// GR(Global Request) 탭 전용 메타 헬퍼 — 순수함수만 포함(DOM 접근 없음).
+// 용도: (1) 워크북 Country 셀 원문(예: "CA-en", "RU : RU (ru)")을
+//          data/gr-changes.json·data/gr-urls.json의 countryCode(예: "CA_EN","RU")로 정규화
+//       (2) 시트 displayTitle(예: "W17 - GNB Structure")을 두 JSON의 task 키("GNB Structure")로 정규화
+//       (3) "task|code" 키로 두 JSON을 조회(별칭 매핑 포함)
+
+// ── 국가 코드 DUAL 규칙 ──────────────────────────────────────
+// 워크북 Country 셀이 "XX-yy"(대문자 베이스 + 소문자 언어접미사) 형태일 때,
+// 같은 베이스 국가라도 언어에 따라 서로 다른 countryCode를 쓰는 예외들.
+// ca/hk/sa/ae는 계획서에 명시된 예외, ch/eg는 gr-changes.json·gr-urls.json 실 데이터
+// (예: "GNB Structure|CH_DE", "GNB Structure|EG_AR")로 확인된 예외.
+var GR_DUAL_LOCALE_MAP = {
+  'ca-en': 'CA_EN', 'ca-fr': 'CA_FR',
+  'hk-en': 'HK_EN', 'hk-zh': 'HK',
+  'sa-en': 'SA_EN', 'sa-ar': 'SA',
+  'ae-ar': 'AE_AR', 'ae-en': 'AE',
+  'ch-de': 'CH_DE', 'ch-fr': 'CH_FR',
+  'eg-ar': 'EG_AR', 'eg-en': 'EG_EN',
+};
+
+// ── 작업명 별칭 매핑 ─────────────────────────────────────────
+// 분석리포트(gr-changes/gr-urls 원천)와 Global Request 워크북의 작업명 표기가
+// 어긋나는 경우의 예외 테이블. grLookup이 1차 조회 실패 시 여기서 대체 키를 시도한다.
+var GR_TASK_KEY_ALIASES = {
+  'UL인증 feature 삭제 1차': 'UL인증 feature 삭제',
+};
+
+// ── 국가 풀네임 역매핑 ───────────────────────────────────────
+// sheet-loader.js의 COUNTRY_FULLNAME_MAP(코드→풀네임)을 렌더 시점에 이미 거쳐
+// DATA[key].tableRows의 Country 셀 값이 "United Arab Emirates (ar)"처럼 코드가 아닌
+// 풀네임(+언어 힌트)으로 저장되어 있는 경우가 많다. grNormalizeCountryCode가 이를
+// 다시 코드로 되돌리기 위한 역매핑(코드가 두 개인 UK/GB는 gr-changes/gr-urls가 실제
+// 사용하는 "UK"를 채택). sheet-loader.js의 맵과 항상 동기화할 것.
+var GR_COUNTRY_NAME_TO_CODE = {
+  AFRICA: 'AFRICA', LEVANT: 'LEVANT',
+  'UNITED ARAB EMIRATES': 'AE', AFGHANISTAN: 'AF', ANGOLA: 'AO', ARGENTINA: 'AR', AUSTRIA: 'AT', AUSTRALIA: 'AU',
+  BANGLADESH: 'BD', BELGIUM: 'BE', BULGARIA: 'BG', BAHRAIN: 'BH', BOLIVIA: 'BO', BRAZIL: 'BR', CANADA: 'CA',
+  SWITZERLAND: 'CH', CHILE: 'CL', CHINA: 'CN', COLOMBIA: 'CO', 'COSTA RICA': 'CR', CYPRUS: 'CY', 'CZECH REPUBLIC': 'CZ',
+  GERMANY: 'DE', DENMARK: 'DK', 'DOMINICAN REPUBLIC': 'DO', ALGERIA: 'DZ', ECUADOR: 'EC', ESTONIA: 'EE', EGYPT: 'EG',
+  SPAIN: 'ES', FINLAND: 'FI', FRANCE: 'FR', GHANA: 'GH', GREECE: 'GR', GUATEMALA: 'GT',
+  'HONG KONG': 'HK', HONDURAS: 'HN', CROATIA: 'HR', HUNGARY: 'HU', INDONESIA: 'ID', IRELAND: 'IE', ISRAEL: 'IL',
+  INDIA: 'IN', IRAN: 'IR', IRAQ: 'IQ', ITALY: 'IT', JORDAN: 'JO', JAPAN: 'JP', KENYA: 'KE', CAMBODIA: 'KH',
+  'SOUTH KOREA': 'KR', KUWAIT: 'KW', KAZAKHSTAN: 'KZ', LEBANON: 'LB', 'SRI LANKA': 'LK', LITHUANIA: 'LT', LATVIA: 'LV',
+  MOROCCO: 'MA', MYANMAR: 'MM', MEXICO: 'MX', MALAYSIA: 'MY', NIGERIA: 'NG', NICARAGUA: 'NI', NETHERLANDS: 'NL',
+  NORWAY: 'NO', NEPAL: 'NP', 'NEW ZEALAND': 'NZ', OMAN: 'OM', PANAMA: 'PA', PERU: 'PE', PHILIPPINES: 'PH',
+  PAKISTAN: 'PK', POLAND: 'PL', 'PUERTO RICO': 'PR', PORTUGAL: 'PT', PARAGUAY: 'PY', QATAR: 'QA', ROMANIA: 'RO',
+  SERBIA: 'RS', 'SAUDI ARABIA': 'SA', SWEDEN: 'SE', SINGAPORE: 'SG', SLOVENIA: 'SI', SLOVAKIA: 'SK', 'EL SALVADOR': 'SV',
+  THAILAND: 'TH', TUNISIA: 'TN', TURKEY: 'TR', TAIWAN: 'TW', TANZANIA: 'TZ', UKRAINE: 'UA',
+  'UNITED KINGDOM': 'UK',
+  'UNITED STATES': 'US', URUGUAY: 'UY', VENEZUELA: 'VE', VIETNAM: 'VN', 'SOUTH AFRICA': 'ZA',
+};
+
+function grNormalizeCountryCode(rawCountry) {
+  var s = String(rawCountry == null ? '' : rawCountry).trim();
+  if (!s) return '';
+
+  // 언어 힌트: 원문 어디에 있든 마지막 "(xx)" 괄호에서 추출.
+  // "CA : CA (en)", "CA (en)", "CN (zh)", "United Arab Emirates (ar)" 처럼
+  // 콜론/풀네임 유무와 무관하게 붙는 형태를 포괄한다.
+  var langHint = '';
+  var parenMatch = s.match(/\(([a-zA-Z]{2})\)\s*$/);
+  if (parenMatch) langHint = parenMatch[1].toLowerCase();
+
+  // 베이스 토큰: " : " 앞부분(있으면 그것), 없으면 원문 전체에서 괄호 힌트만 제거.
+  var base = s;
+  var colonIdx = base.indexOf(' : ');
+  if (colonIdx >= 0) base = base.slice(0, colonIdx);
+  base = base.replace(/\s*\([a-zA-Z]+\)\s*$/, '').trim();
+  if (!base) return '';
+
+  // "XX-yy" 형태(대문자 베이스 + 소문자 2자리 언어 접미사)면 접미사를 언어 힌트로 채택.
+  var dashMatch = base.match(/^([A-Za-z]+)-([a-zA-Z]{2})$/);
+  if (dashMatch) {
+    base = dashMatch[1];
+    langHint = dashMatch[2].toLowerCase();
+  }
+  base = base.toUpperCase();
+
+  // 렌더 파이프라인이 이미 코드를 풀네임으로 바꿔둔 경우("United Arab Emirates") 역매핑.
+  if (Object.prototype.hasOwnProperty.call(GR_COUNTRY_NAME_TO_CODE, base)) {
+    base = GR_COUNTRY_NAME_TO_CODE[base];
+  }
+
+  // DUAL 규칙: 언어 힌트가 있고 (베이스+언어) 조합이 예외 테이블에 있으면 대체 코드 사용.
+  if (langHint) {
+    var dualKey = base.toLowerCase() + '-' + langHint;
+    if (Object.prototype.hasOwnProperty.call(GR_DUAL_LOCALE_MAP, dualKey)) {
+      return GR_DUAL_LOCALE_MAP[dualKey];
+    }
+  }
+  return base;
+}
+
+function grTaskKeyOf(displayTitle) {
+  var s = String(displayTitle == null ? '' : displayTitle).trim();
+  return s.replace(/^W\d+\s*-\s*/, '').trim();
+}
+
+function grLookup(dict, taskKey, code) {
+  if (!dict || !taskKey || !code) return null;
+  var key = taskKey + '|' + code;
+  if (Object.prototype.hasOwnProperty.call(dict, key)) return dict[key];
+  var alias = GR_TASK_KEY_ALIASES[taskKey];
+  if (alias) {
+    var aliasKey = alias + '|' + code;
+    if (Object.prototype.hasOwnProperty.call(dict, aliasKey)) return dict[aliasKey];
+  }
+  return null;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    grNormalizeCountryCode: grNormalizeCountryCode,
+    grTaskKeyOf: grTaskKeyOf,
+    grLookup: grLookup,
+    GR_DUAL_LOCALE_MAP: GR_DUAL_LOCALE_MAP,
+    GR_COUNTRY_NAME_TO_CODE: GR_COUNTRY_NAME_TO_CODE,
+    GR_TASK_KEY_ALIASES: GR_TASK_KEY_ALIASES,
+  };
+}

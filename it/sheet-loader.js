@@ -1339,8 +1339,8 @@ function initBaseGlobals(activeKeys, sourceMap) {
   window.COL_FULL = {};
   window.STALLED_DAYS = {};
   window.LOCALE_MAP = {};
-  window.REGION_CFG = { EU:{label:'EU'}, ASIA:{label:'ASIA'}, CIS:{label:'CIS'}, LATAM:{label:'LATAM'}, MEA:{label:'MEA'}, INDIA:{label:'INDIA'}, NA:{label:'NA'}, ETC:{label:'ETC'} };
-  window.REGION_ORDER = ['EU','ASIA','CIS','LATAM','MEA','INDIA','NA','ETC'];
+  window.REGION_CFG = { EU:{label:'EU'}, ASIA:{label:'ASIA'}, CIS:{label:'CIS'}, LATAM:{label:'LATAM'}, MEA:{label:'MEA'}, INDIA:{label:'INDIA'}, NA:{label:'NA'}, GLOBAL:{label:'GLOBAL'}, ETC:{label:'ETC'} };
+  window.REGION_ORDER = ['EU','ASIA','CIS','LATAM','MEA','INDIA','NA','GLOBAL','ETC'];
   window.ART_ABBR = {};
   window.REPORT_KEYS = activeKeys.slice();
   window.DATA = {};
@@ -1471,6 +1471,14 @@ function parseCountryValueParts(value) {
   let raw = String(value || '').trim();
   if (!raw) return { code: '', lang: '' };
 
+  // "CA : CA (en)"처럼 언어 힌트가 콜론 뒤(버려지는 구간)에 붙는 형태는 콜론 분리 시
+  // 힌트가 사라진다. 분리 전에 원문 전체에서 한 번 먼저 추출해 폴백으로 보관해 둔다.
+  let fallbackLang = '';
+  const wholeParenLocale = raw.match(/\((?:[A-Z]{2}\s*[-_]\s*)?([a-z]{2})\)\s*$/i);
+  if (wholeParenLocale && isSheetLoaderLanguageCode(wholeParenLocale[1])) {
+    fallbackLang = String(wholeParenLocale[1]).toLowerCase();
+  }
+
   if (raw.indexOf(':') >= 0) raw = raw.split(':')[0].trim();
   raw = raw.replace(/^(LGE|LG)\s+[A-Z0-9.]+\s*-\s*/i, '').trim();
 
@@ -1490,6 +1498,8 @@ function parseCountryValueParts(value) {
     raw = String(localeMatch[1] || '').trim();
     lang = String(localeMatch[2] || '').toLowerCase();
   }
+
+  if (!lang && fallbackLang) lang = fallbackLang;
 
   const code = normalizeCountryKey(raw);
   return { code: code, lang: lang };
@@ -1555,9 +1565,9 @@ const COUNTRY_REGION_MAP = {
   // EU / Europe
   AT:'EU', BE:'EU', BG:'EU', CH:'EU', CY:'EU', CZ:'EU', DE:'EU', DK:'EU', EE:'EU', ES:'EU', FI:'EU', FR:'EU',
   GB:'EU', UK:'EU', GR:'EU', HR:'EU', HU:'EU', IE:'EU', IT:'EU', LT:'EU', LV:'EU', NL:'EU', NO:'EU', PL:'EU',
-  PT:'EU', RO:'EU', RS:'EU', SE:'EU', SI:'EU', SK:'EU', TR:'EU', UA:'EU',
-  // CIS
-  KZ:'CIS',
+  PT:'EU', RO:'EU', RS:'EU', SE:'EU', SI:'EU', SK:'EU', TR:'EU',
+  // CIS(옛 소비에트권 — GR 워크북에서 Russia/Ukraine/Kazakhstan을 이 버킷으로 묶어 사용)
+  KZ:'CIS', RU:'CIS', UA:'CIS',
   // ASIA / Oceania
   AU:'ASIA', BD:'ASIA', CN:'ASIA', HK:'ASIA', ID:'ASIA', JP:'ASIA', KR:'ASIA', LK:'ASIA', MY:'ASIA', MM:'ASIA',
   NZ:'ASIA', PH:'ASIA', SG:'ASIA', TH:'ASIA', TW:'ASIA', VN:'ASIA', PK:'ASIA', KH:'ASIA', NP:'ASIA',
@@ -1565,12 +1575,14 @@ const COUNTRY_REGION_MAP = {
   IN:'INDIA',
   // North America
   US:'NA', CA:'NA',
-  // LATAM
-  AR:'LATAM', BO:'LATAM', BR:'LATAM', CL:'LATAM', CO:'LATAM', CR:'LATAM', DO:'LATAM', EC:'LATAM', GT:'LATAM',
+  // LATAM(CAC=Central America, CP=CAC 계열 국가코드 모두 포함)
+  AR:'LATAM', BO:'LATAM', BR:'LATAM', CAC:'LATAM', CL:'LATAM', CO:'LATAM', CP:'LATAM', CR:'LATAM', DO:'LATAM', EC:'LATAM', GT:'LATAM',
   HN:'LATAM', MX:'LATAM', NI:'LATAM', PA:'LATAM', PE:'LATAM', PR:'LATAM', PY:'LATAM', SV:'LATAM', UY:'LATAM', VE:'LATAM',
   // MEA
   AE:'MEA', AF:'MEA', AO:'MEA', BH:'MEA', DZ:'MEA', EG:'MEA', GH:'MEA', IL:'MEA', IR:'MEA', IQ:'MEA', JO:'MEA',
-  KE:'MEA', KW:'MEA', LB:'MEA', MA:'MEA', NG:'MEA', OM:'MEA', QA:'MEA', SA:'MEA', TN:'MEA', TZ:'MEA', ZA:'MEA'
+  KE:'MEA', KW:'MEA', LB:'MEA', MA:'MEA', NG:'MEA', OM:'MEA', QA:'MEA', SA:'MEA', TN:'MEA', TZ:'MEA', ZA:'MEA',
+  // GLOBAL(국가 무관 공통 페이지) — REGION_CFG/REGION_ORDER에도 별도 버킷으로 추가됨
+  GLOBAL:'GLOBAL'
 };
 
 const COUNTRY_FULLNAME_MAP = {
