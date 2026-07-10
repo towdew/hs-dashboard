@@ -1109,9 +1109,16 @@ function getSheetPageCountInfo(d) {
     hasPageColumn: false,
     isStatusFallback: false,
     total: 0,
-    byStatus: { Done:0, 'Corp. Review':0, 'In Progress':0, 'Pre-Review':0, Cancel:0 }
+    byStatus: { Done:0, 'Corp. Review':0, 'In Progress':0, 'Pre-Review':0, Cancel:0 },
+    // Page#(페이지 수) 합계는 완료율 분모와 분리된 별도 통계입니다 — "N Pages" 표시 전용.
+    pagesTotal: 0,
+    pagesByStatus: { Done:0, 'Corp. Review':0, 'In Progress':0, 'Pre-Review':0, Cancel:0 }
   };
 
+  // 완료율(byStatus/total)은 국가(행/아이템) 단위 집계 — Page# 유무와 무관하게 status가 있으면 1건.
+  // 주의: 이 함수는 contentStats를 통해 HS 유래 페이지-가중 탭(alttext/pdp_gallery/vacuum/wmo_faq)과도
+  // 공유되지만, IT 대시보드에서는 해당 *_WEEKS 전역이 빈 객체로만 초기화되고(sheet-loader.js initBaseGlobals)
+  // 메뉴에도 없어 도달 불가. 그 탭들을 살리려면 완료율 단위(페이지 가중 vs 국가 단위)를 재검토할 것.
   function addCount(status, count) {
     status = normalizeStatus(status);
     count = Number(count || 0);
@@ -1120,18 +1127,33 @@ function getSheetPageCountInfo(d) {
     info.total += count;
   }
 
+  // 페이지 수(pagesByStatus/pagesTotal)는 Page# 컬럼 합계 — "N Pages" 표시 전용, 완료율에는 쓰지 않음.
+  function addPageCount(status, count) {
+    status = normalizeStatus(status);
+    count = Number(count || 0);
+    if (info.pagesByStatus[status] == null) info.pagesByStatus[status] = 0;
+    info.pagesByStatus[status] += count;
+    info.pagesTotal += count;
+  }
+
   if (rows.length) {
     rows.forEach(function(row) {
+      var rawStatus = pickSheetRowValue(row, statusCandidates);
       var rawPage = pickSheetRowValue(row, pageCandidates);
-      if (rawPage === '') return;
-      info.hasPageColumn = true;
-      info.hasPages = true;
-      addCount(pickSheetRowValue(row, statusCandidates), toSheetStatNumber(rawPage));
+      if (rawPage !== '') info.hasPageColumn = true;
+
+      if (rawStatus !== '') {
+        info.hasPages = true;
+        addCount(rawStatus, 1);
+      }
+      if (rawPage !== '') {
+        addPageCount(rawStatus, toSheetStatNumber(rawPage));
+      }
     });
 
-    // Page# 컬럼이 없는 시트는 표 안의 실제 Status 값 개수를 Page# 정보로 대체 집계합니다.
-    // 완료 / 법인리뷰 / 진행중 / 사전검토 같은 상태값 셀 1개 = 1 Page로 계산합니다.
-    if (!info.hasPageColumn) {
+    // Page# 컬럼도 없고 Status 컬럼도 없는 시트는 표 안의 실제 Status 값 개수를 대체 집계합니다.
+    // 완료 / 법인리뷰 / 진행중 / 사전검토 같은 상태값 셀 1개 = 1건으로 계산합니다.
+    if (!info.hasPages) {
       rows.forEach(function(row) {
         var cellCounts = countStatusCellsInSheetRow(row, d);
         if (!cellCounts.total) return;
@@ -1140,25 +1162,31 @@ function getSheetPageCountInfo(d) {
         Object.keys(cellCounts).forEach(function(st) {
           if (st === 'total' || !cellCounts[st]) return;
           addCount(st, cellCounts[st]);
+          if (info.hasPageColumn) addPageCount(st, cellCounts[st]);
         });
       });
     }
   } else {
     items.forEach(function(item) {
-      if (!item || item.pages == null || item.pages === '') return;
-      info.hasPageColumn = true;
+      if (!item) return;
+      var st = item.overall || item.status || '';
+      if (st === '') return;
       info.hasPages = true;
-      addCount(item.overall || item.status || 'Pre-Review', toSheetStatNumber(item.pages));
+      addCount(st, 1);
+      if (item.pages != null && item.pages !== '') {
+        info.hasPageColumn = true;
+        addPageCount(st, toSheetStatNumber(item.pages));
+      }
     });
 
-    if (!info.hasPageColumn && items.length) {
+    if (!info.hasPages && items.length) {
       items.forEach(function(item) {
         if (!item) return;
-        var st = detectSheetStatusValue(item.overall || item.status || '');
-        if (!st) return;
+        var st2 = detectSheetStatusValue(item.overall || item.status || '');
+        if (!st2) return;
         info.hasPages = true;
         info.isStatusFallback = true;
-        addCount(st, 1);
+        addCount(st2, 1);
       });
     }
   }
@@ -1252,12 +1280,15 @@ function getSheetOverviewTotalInfo(d) {
   var items = Array.isArray(d.items) ? d.items : [];
 
   var pageInfo = getSheetPageCountInfo(d);
+  // "N Pages" 표시는 Page# 컬럼 합계(pagesTotal)를 사용합니다. Page# 컬럼이 없는 시트는
+  // status 대체 집계 결과(total)를 페이지 수처럼 보여주던 기존 동작을 유지합니다.
+  var pagesForDisplay = pageInfo.hasPageColumn ? pageInfo.pagesTotal : pageInfo.total;
   // Sites는 표의 Country/Contry/PDP Country/Locale 컬럼에 실제로 나오는 값 개수만 사용합니다.
   // row 수 fallback을 쓰면 Country 수와 달라지므로 제거했습니다.
   var sites = countSheetCountrySites(d) || 0;
   var text = sites.toLocaleString() + ' Sites';
-  if (pageInfo.hasPages) text += ' / ' + pageInfo.total.toLocaleString() + ' Pages';
-  return { sites: sites, pages: pageInfo.total, hasPages: pageInfo.hasPages, text: text };
+  if (pageInfo.hasPages) text += ' / ' + pagesForDisplay.toLocaleString() + ' Pages';
+  return { sites: sites, pages: pagesForDisplay, hasPages: pageInfo.hasPages, text: text };
 }
 
 
@@ -2296,6 +2327,7 @@ function renderContent() {
         <div class="ov-head-title">
           <div class="ov-head-eyebrow">Overall Status</div>
           <div class="ov-head-name" style="display:flex;align-items:center;gap:9px">${getDashboardDisplayTitle(d)}${(currentKey==='buying_guide'||currentKey==='article_list') ? '<button onclick="openPagePreview()" title="페이지 미리보기" style="width:28px;height:28px;border:1.5px solid #E0E4F0;border-radius:8px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>' : ''}</div>
+          ${typeof buildGrWeeklyChangeSummaryHtml === 'function' ? buildGrWeeklyChangeSummaryHtml(d) : ''}
         </div>
         <div class="ov-head-total">
           <div class="ov-head-total-label" style="display: none;">Total Request</div>
@@ -5518,6 +5550,167 @@ document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeSta
 /* ===== moved from inline <script> block 2 ===== */
 
 
+
+// ── GR(Global Request) 탭 전용: 주간 변경 배지 + 국가별 URL 모달 ──
+// data/gr-changes.json · data/gr-urls.json은 GR 탭(displayTitle이 "W<n> - ..." 형식)
+// 최초 렌더 시에만 lazy fetch한다. js-lib/gr-meta.js(grNormalizeCountryCode/grTaskKeyOf/
+// grLookup)가 로드되어 있지 않으면(스크립트 로드 실패 등) 조용히 기능을 비활성화한다.
+var _grChanges = null;
+var _grUrls = null;
+var _grDataLoadTriggered = false;
+
+function isGrSheetDisplayTitle(displayTitle) {
+  return /^W\d+\s*-\s*/.test(String(displayTitle || ''));
+}
+
+function ensureGrDataLoaded() {
+  if (_grDataLoadTriggered) return;
+  _grDataLoadTriggered = true;
+  var bust = '?v=' + Date.now();
+  function maybeRerenderGrTab() {
+    var d = DATA[currentKey];
+    if (window.__SHEET_DRIVEN_NAV && d && isGrSheetDisplayTitle(getDashboardDisplayTitle(d))) {
+      renderTable();
+    }
+  }
+  fetch('data/gr-changes.json' + bust).then(function(r) { return r.ok ? r.json() : null; }).then(function(data) {
+    _grChanges = data || null;
+    window._grChanges = _grChanges;
+    if (_grChanges) maybeRerenderGrTab();
+  }).catch(function() { _grChanges = null; window._grChanges = null; });
+  fetch('data/gr-urls.json' + bust).then(function(r) { return r.ok ? r.json() : null; }).then(function(data) {
+    _grUrls = data || null;
+    window._grUrls = _grUrls;
+    if (_grUrls) maybeRerenderGrTab();
+  }).catch(function() { _grUrls = null; window._grUrls = null; });
+}
+
+// 국가 셀(header)의 원문 raw 값을 row 객체에서 찾는다(__로 시작하는 메타 키 제외).
+function grRowCountryRaw(row) {
+  if (!row) return '';
+  var keys = Object.keys(row);
+  for (var i = 0; i < keys.length; i++) {
+    var k = keys[i];
+    if (k.charAt(0) === '_') continue;
+    if (isCountryDisplayHeader(k)) return row[k];
+  }
+  return '';
+}
+
+function grJsStrEscape(s) {
+  return String(s == null ? '' : s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
+// displayTitle("W17 - GNB Structure")·국가 원문 셀 값으로 이번 주 변경 여부를 조회해
+// NEW/UPDATED 배지 HTML을 반환한다. 데이터 미로딩/비GR 시트/변경 없음이면 ''.
+function grChangeBadgeHtml(displayTitle, rawCountry) {
+  if (!_grChanges || !_grChanges.changes) return '';
+  if (!isGrSheetDisplayTitle(displayTitle)) return '';
+  if (typeof grTaskKeyOf !== 'function' || typeof grNormalizeCountryCode !== 'function' || typeof grLookup !== 'function') return '';
+  var taskKey = grTaskKeyOf(displayTitle);
+  var code = grNormalizeCountryCode(rawCountry);
+  if (!taskKey || !code) return '';
+  var entry = grLookup(_grChanges.changes, taskKey, code);
+  if (!entry) return '';
+  if (entry.type === 'new_task' || entry.type === 'new_country') {
+    return ' <span class="sheet-new-badge gr-change-badge" title="이번 주 신규 항목">NEW</span>';
+  }
+  if (entry.type === 'status' || entry.type === 'url') {
+    var tip = entry.type === 'status' ? ('상태 변경: ' + (entry.from || '') + ' → ' + (entry.to || '')) : 'URL 변경';
+    return ' <span class="sheet-updated-badge gr-change-badge" title="' + escapeAttrSheet(tip) + '">UPDATED</span>';
+  }
+  return '';
+}
+
+// Overall Status 카드에 "금주 변경 N건" 한 줄 요약을 덧붙인다(GR 탭이 아니거나
+// 데이터 미로딩/변경 없음이면 빈 문자열 — 카드 구조에 영향 없음).
+function buildGrWeeklyChangeSummaryHtml(d) {
+  if (!_grChanges || !_grChanges.taskSummary) return '';
+  var displayTitle = getDashboardDisplayTitle(d);
+  if (!isGrSheetDisplayTitle(displayTitle)) return '';
+  if (typeof grTaskKeyOf !== 'function') return '';
+  var taskKey = grTaskKeyOf(displayTitle);
+  var summary = taskKey ? _grChanges.taskSummary[taskKey] : null;
+  if (!summary) return '';
+  var n = (summary.changed || 0) + (summary.new || 0);
+  if (!n) return '';
+  return '<div class="gr-weekly-change-summary" style="margin-top:4px;font-size:11px;font-weight:700;color:#A50034">' +
+    '금주 변경 ' + n + '건' + (summary.new ? ' (신규 ' + summary.new + ')' : '') +
+    '</div>';
+}
+
+// ── GR 국가별 전체 URL 모달 ────────────────────────────────
+var GR_URL_MODAL_MAX_OPEN = 15;
+
+function grOpenUrlModal(taskKey, code, countryLabel) {
+  var urls = (window._grUrls && typeof grLookup === 'function') ? grLookup(window._grUrls, taskKey, code) : null;
+  if (!urls || !urls.length) return;
+
+  var rowsHtml = urls.map(function(u) {
+    var short = (typeof urlLibDisplayUrl === 'function') ? urlLibDisplayUrl(u) : u;
+    return '<div class="country-cell-row">' +
+      '<div class="country-cell-left"><a href="' + escapeAttrSheet(u) + '" target="_blank" rel="noopener" style="font-size:11px;color:#3B82F6;word-break:break-all">' + escapeHtmlSheet(short) + '</a></div>' +
+    '</div>';
+  }).join('');
+
+  var openCount = Math.min(urls.length, GR_URL_MODAL_MAX_OPEN);
+  var openAllWarning = urls.length > GR_URL_MODAL_MAX_OPEN
+    ? '<div style="padding:0 20px;font-size:11px;color:#C2410C">전체 ' + urls.length + '개 중 최대 ' + GR_URL_MODAL_MAX_OPEN + '개까지만 새 탭으로 엽니다.</div>'
+    : '';
+  var urlsJson = JSON.stringify(urls.slice(0, GR_URL_MODAL_MAX_OPEN));
+  var onclickExpr = 'grOpenAllUrls(' + urlsJson + ')';
+
+  var html = '' +
+    '<div class="modal-overlay" id="grUrlModal" onclick="if(event.target===this)closeGrUrlModal()">' +
+      '<div class="modal-card" style="max-width:560px" onclick="event.stopPropagation()">' +
+        '<div class="country-modal-header">' +
+          '<div class="country-modal-info">' +
+            '<div class="country-modal-title">' + escapeHtmlSheet(countryLabel || code) + ' — ' + escapeHtmlSheet(taskKey) + '</div>' +
+            '<div class="country-modal-meta"><span style="font-size:11px;color:#9BA3BF">' + urls.length + '개 URL</span></div>' +
+          '</div>' +
+          '<button class="modal-close-btn" onclick="closeGrUrlModal()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>' +
+        '</div>' +
+        '<div class="country-modal-cells" style="max-height:360px;overflow:auto">' + rowsHtml + '</div>' +
+        openAllWarning +
+        '<div class="country-modal-actions">' +
+          '<button class="country-action-btn" style="flex:1;justify-content:center" onclick="' + escapeAttrSheet(onclickExpr) + '">전체 열기 (' + openCount + ')</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  var existing = document.getElementById('grUrlModal');
+  if (existing) existing.remove();
+  document.body.insertAdjacentHTML('beforeend', html);
+  requestAnimationFrame(function() {
+    setTimeout(function() {
+      var m = document.getElementById('grUrlModal');
+      if (m) m.classList.add('modal-show');
+    }, 10);
+  });
+  if (window._grUrlModalEscHandler) {
+    document.removeEventListener('keydown', window._grUrlModalEscHandler);
+  }
+  window._grUrlModalEscHandler = function(e) {
+    if (e.key === 'Escape') closeGrUrlModal();
+  };
+  document.addEventListener('keydown', window._grUrlModalEscHandler);
+}
+
+function closeGrUrlModal() {
+  if (window._grUrlModalEscHandler) {
+    document.removeEventListener('keydown', window._grUrlModalEscHandler);
+    window._grUrlModalEscHandler = null;
+  }
+  var m = document.getElementById('grUrlModal');
+  if (!m) return;
+  m.classList.remove('modal-show');
+  setTimeout(function() { if (m.parentNode) m.remove(); }, 220);
+}
+
+function grOpenAllUrls(urls) {
+  (urls || []).forEach(function(u) { window.open(u, '_blank', 'noopener'); });
+}
+
 // ── Google Sheet Published HTML raw table renderer ───────────
 // Used when sheet-loader.js provides DATA[currentKey].tableHeaders/tableRows.
 function renderSheetDrivenTable(area, d) {
@@ -5529,6 +5722,9 @@ function renderSheetDrivenTable(area, d) {
   var displayTitle = getDashboardDisplayTitle(d);
   var topTitleEl = document.getElementById('topTitle');
   if (topTitleEl && displayTitle) topTitleEl.textContent = displayTitle;
+
+  // GR(Global Request) 탭 최초 렌더 시에만 주간 변경/URL 목록 데이터를 lazy fetch.
+  if (isGrSheetDisplayTitle(displayTitle)) ensureGrDataLoaded();
 
   if (currentTab !== 'all') {
     rows = rows.filter(function(row, idx) {
@@ -5585,6 +5781,7 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
   }
 
   var d = sheetData || DATA[currentKey] || {};
+  var grDisplayTitle = getDashboardDisplayTitle(d);
   var exceptionRules = window.SHEET_EXCEPTION_RULES || null;
   var disableRegion = !!(exceptionRules && typeof exceptionRules.shouldDisableRegionColumn === 'function' && exceptionRules.shouldDisableRegionColumn(d));
   var displayHeaders = disableRegion
@@ -5647,6 +5844,9 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
         if (isNewRow && cellClasses.indexOf('sheet-country-col') !== -1) {
           html += ' <span class="sheet-new-badge">금주 업데이트</span>';
         }
+        if (isCountryCell) {
+          html += grChangeBadgeHtml(grDisplayTitle, row[h]);
+        }
         // 국가 셀을 클릭하면 상세 모달에서 전체 URL 등 상세 정보를 표시.
         var clickAttr = '';
         if (isCountryCell && rowLocale) {
@@ -5683,7 +5883,7 @@ function ensureRegionFirstHeaders(headers) {
 }
 
 function groupRowsByRegion(rows, headers) {
-  var order = ['EU', 'ASIA', 'CIS', 'LATAM', 'MEA', 'INDIA', 'NA', 'ETC'];
+  var order = ['EU', 'ASIA', 'CIS', 'LATAM', 'MEA', 'INDIA', 'NA', 'GLOBAL', 'ETC'];
   var countryHeader = findCountryHeader(headers);
   var enriched = (rows || []).map(function(row, idx) {
     var copy = Object.assign({}, row);
@@ -6022,6 +6222,21 @@ function renderSheetCell(value, header, row, sheetData) {
         }
       }
       if (linkUrl) {
+        // GR 탭에서 (task, country)에 URL이 2개 이상 등록되어 있으면 즉시 새탭 대신
+        // 전체 URL 목록 모달을 띄운다(1개 이하는 기존 즉시 새탭 동작 유지).
+        var grSheetTitle = getDashboardDisplayTitle(sheetData || DATA[currentKey] || {});
+        if (isGrSheetDisplayTitle(grSheetTitle) && window._grUrls &&
+            typeof grTaskKeyOf === 'function' && typeof grNormalizeCountryCode === 'function' && typeof grLookup === 'function') {
+          var grTaskKey = grTaskKeyOf(grSheetTitle);
+          var grCountryRaw = grRowCountryRaw(row);
+          var grCode = grNormalizeCountryCode(grCountryRaw);
+          var grUrlList = grLookup(window._grUrls, grTaskKey, grCode);
+          if (grUrlList && grUrlList.length >= 2) {
+            var grCountryLabel = displayCountryFullName(grCountryRaw);
+            var grOnclickExpr = "grOpenUrlModal('" + grJsStrEscape(grTaskKey) + "','" + grJsStrEscape(grCode) + "','" + grJsStrEscape(grCountryLabel) + "');return false;";
+            return '<a class="sheet-status-pill sheet-status-pill-link" href="' + escapeAttrSheet(linkUrl) + '" target="_blank" rel="noopener" onclick="' + escapeAttrSheet(grOnclickExpr) + '" style="background:' + cfg.bg + ';color:' + cfg.tc + ';text-decoration:none" title="' + escapeAttrSheet(grUrlList.length + '개 URL — 클릭 시 목록 보기') + '"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(cfg.label || status) + '</a>';
+          }
+        }
         if (status === 'Done') {
           var exRules = window.SHEET_EXCEPTION_RULES;
           if (exRules && typeof exRules.renderDonePill === 'function') {

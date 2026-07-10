@@ -1613,6 +1613,7 @@ button,input,select,textarea{font-family:inherit}
 .sheet-data-table tbody tr.sheet-row-new td:first-child{box-shadow:inset 3px 0 0 #3B82F6}
 .sheet-data-table tbody tr.sheet-row-new:hover td{background:#E4EEFE}
 .sheet-new-badge{display:inline-block;margin-left:6px;padding:0 6px;height:16px;line-height:16px;border-radius:3px;background:#A50034;color:#fff;font-size:8px;font-weight:800;letter-spacing:.1px;vertical-align:middle;white-space:nowrap}
+.sheet-updated-badge{display:inline-block;margin-left:6px;padding:0 5px;height:15px;line-height:15px;border-radius:3px;background:#3B82F6;color:#fff;font-size:8px;font-weight:800;letter-spacing:.3px;vertical-align:middle}
 /* URL 컬럼은 숨기고, 국가 셀 클릭 시 상세 모달에서 전체 URL 제공 */
 .sheet-data-table tbody td.sheet-country-click{cursor:pointer}
 .sheet-data-table tbody td.sheet-country-click:hover{text-decoration:underline;text-underline-offset:2px;color:#A50034}
@@ -1654,6 +1655,7 @@ button,input,select,textarea{font-family:inherit}
 .sheet-region-cell.region-na{background:#F8FAFC!important;color:#334155!important}
 .sheet-region-cell.region-etc{background:#F1F5F9!important;color:#64748B!important}
 .sheet-region-cell.region-cis{background:#EEF2FF!important;color:#3730A3!important}
+.sheet-region-cell.region-global{background:#F0FDFA!important;color:#0F766E!important}
 
 /* v20: keep Country column readable */
 .sheet-data-table th.sheet-country-col,
