@@ -1733,9 +1733,9 @@ function pickValue(row, candidates) {
 function normalizeStatus(value) {
   const v = String(value || '').trim().toLowerCase();
   if (!v) return 'Pre-Review';
-  if (['done', 'complete', 'completed', 'closed', '완료', '등록완료'].includes(v)) return 'Done';
+  if (['done', 'complete', 'completed', 'closed', '완료', '등록완료', '반영'].includes(v)) return 'Done';
   if (['corp. review', 'corp review', 'client review', '법인리뷰', '법인 리뷰'].includes(v)) return 'Corp. Review';
-  if (['in progress', 'wip', 'working', '작업중', '진행중'].includes(v)) return 'In Progress';
+  if (['in progress', 'wip', 'working', '작업중', '진행중', '미반영', '부분반영', '부분 반영'].includes(v)) return 'In Progress';
   if (['cancel', 'cancelled', 'canceled', '취소'].includes(v)) return 'Cancel';
   if (['pre-review', 'pre review', 'pre review ', '사전검토', '사전 검토'].includes(v)) return 'Pre-Review';
   return 'Pre-Review';

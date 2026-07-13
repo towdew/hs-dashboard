@@ -6223,9 +6223,8 @@ function renderSheetCell(value, header, row, sheetData) {
   var status = normalizeSheetRendererStatus(text);
   if (status) {
     var cfg = SC[status] || SC['Pre-Review'];
-    var normalizedLabel = cfg.label || status;
-    // 정규화된 칩 라벨이 원문과 다르면(예: "1차완료" → "완료") title에 원문을 표기.
-    var origTitleAttr = (normalizedLabel !== text) ? (' title="' + escapeAttrSheet(text) + '"') : '';
+    // 칩 라벨은 원문 그대로 표기(반영/미반영/부분반영 등) — 색상만 정규화 버킷(SC) 기준.
+    var chipLabel = text;
     // 완료·작업중 상태에서 같은 행에 URL이 있으면 클릭 가능 링크 칩으로 렌더.
     if ((status === 'Done' || status === 'In Progress') && row) {
       var linkUrl = '';
@@ -6243,7 +6242,7 @@ function renderSheetCell(value, header, row, sheetData) {
         // GR 탭은 URL 개수/매칭 성공 여부와 무관하게 항상 모달을 띄운다.
         // grOpenUrlModal 내부가 gr-urls lookup을 우선 시도하고, 실패 시 fallbackUrls(=행 linkUrl)를 사용.
         if (!linkUrl) {
-          return '<span class="sheet-status-pill" style="background:' + cfg.bg + ';color:' + cfg.tc + '" title="URL 없음"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(cfg.label || status) + '</span>';
+          return '<span class="sheet-status-pill" style="background:' + cfg.bg + ';color:' + cfg.tc + '" title="URL 없음"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(chipLabel) + '</span>';
         }
         var grTaskKey = (typeof grTaskKeyOf === 'function') ? grTaskKeyOf(grSheetTitle) : '';
         var grCountryRaw = grRowCountryRaw(row);
@@ -6251,7 +6250,7 @@ function renderSheetCell(value, header, row, sheetData) {
         var grCountryLabel = displayCountryFullName(grCountryRaw);
         var fallbackUrlsJson = JSON.stringify([linkUrl]);
         var grOnclickExpr = "grOpenUrlModal('" + grJsStrEscape(grTaskKey) + "','" + grJsStrEscape(grCode) + "','" + grJsStrEscape(grCountryLabel) + "'," + fallbackUrlsJson + ');return false;';
-        return '<a class="sheet-status-pill sheet-status-pill-link" href="' + escapeAttrSheet(linkUrl) + '" target="_blank" rel="noopener" onclick="' + escapeAttrSheet(grOnclickExpr) + '" style="background:' + cfg.bg + ';color:' + cfg.tc + ';text-decoration:none" title="클릭 시 URL 목록 보기"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(cfg.label || status) + '</a>';
+        return '<a class="sheet-status-pill sheet-status-pill-link" href="' + escapeAttrSheet(linkUrl) + '" target="_blank" rel="noopener" onclick="' + escapeAttrSheet(grOnclickExpr) + '" style="background:' + cfg.bg + ';color:' + cfg.tc + ';text-decoration:none" title="클릭 시 URL 목록 보기"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(chipLabel) + '</a>';
       }
       if (linkUrl) {
         if (status === 'Done') {
@@ -6260,10 +6259,10 @@ function renderSheetCell(value, header, row, sheetData) {
             return exRules.renderDonePill(linkUrl);
           }
         }
-        return '<a class="sheet-status-pill sheet-status-pill-link" href="' + escapeAttrSheet(linkUrl) + '" target="_blank" rel="noopener" style="background:' + cfg.bg + ';color:' + cfg.tc + ';text-decoration:none" title="Open URL"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(cfg.label || status) + '</a>';
+        return '<a class="sheet-status-pill sheet-status-pill-link" href="' + escapeAttrSheet(linkUrl) + '" target="_blank" rel="noopener" style="background:' + cfg.bg + ';color:' + cfg.tc + ';text-decoration:none" title="Open URL"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(chipLabel) + '</a>';
       }
     }
-    return '<span class="sheet-status-pill" style="background:' + cfg.bg + ';color:' + cfg.tc + '"' + origTitleAttr + '><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(normalizedLabel) + '</span>';
+    return '<span class="sheet-status-pill" style="background:' + cfg.bg + ';color:' + cfg.tc + '"' + '><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(chipLabel) + '</span>';
   }
 
   if (normalizeSheetHeaderName(header) === 'status') {
@@ -6277,9 +6276,9 @@ function renderSheetCell(value, header, row, sheetData) {
 function normalizeSheetRendererStatus(value) {
   var v = String(value || '').trim().toLowerCase();
   if (!v) return '';
-  if (['done','complete','completed','closed','완료','등록완료'].indexOf(v) >= 0) return 'Done';
+  if (['done','complete','completed','closed','완료','등록완료','반영'].indexOf(v) >= 0) return 'Done';
   if (['corp. review','corp review','client review','법인리뷰','법인 리뷰'].indexOf(v) >= 0) return 'Corp. Review';
-  if (['in progress','wip','working','작업중','진행중'].indexOf(v) >= 0) return 'In Progress';
+  if (['in progress','wip','working','작업중','진행중','미반영','부분반영','부분 반영'].indexOf(v) >= 0) return 'In Progress';
   if (['cancel','cancelled','canceled','취소'].indexOf(v) >= 0) return 'Cancel';
   if (['pre-review','pre review','사전검토','사전 검토'].indexOf(v) >= 0) return 'Pre-Review';
   // exact match 실패 시 규칙 기반 폴백(부분 문자열 매칭). 취소를 완료보다 먼저 검사해야
