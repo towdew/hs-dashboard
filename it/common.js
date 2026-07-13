@@ -1803,6 +1803,13 @@ function npiPsResetFilter() {
 }
 
 // 통합 테이블만 재렌더 — #npiPsResults의 innerHTML만 교체(헤더/칩/필터바는 유지)
+// STG(AEM 스테이징)/Live URL 셀 — PTT Raw 조인 값. http(s)가 아니면 '-' 표시.
+function npiPsUrlCell(url) {
+  if (!url || !/^https?:\/\//i.test(url)) return '<span style="color:#CBD5E1">-</span>';
+  return '<a href="' + escapeAttrSheet(url) + '" target="_blank" rel="noopener" title="' + escapeAttrSheet(url) +
+    '" style="color:#2563EB;font-weight:600;text-decoration:none">링크</a>';
+}
+
 function npiPsRenderResults() {
   var resultsEl = document.getElementById('npiPsResults');
   if (!resultsEl) return;
@@ -1822,13 +1829,13 @@ function npiPsRenderResults() {
   var html = '<div style="padding:16px 24px">';
   html += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500;margin-bottom:8px">' + flatRows.length.toLocaleString() + '건 / 전체 ' + totalRows.toLocaleString() + '건</div>';
   html += '<div class="npi-detail-table-wrap" style="overflow-x:auto">';
-  html += '<table class="npi-detail-table" style="min-width:1180px">';
+  html += '<table class="npi-detail-table" style="min-width:1300px">';
   // 컬럼 구성 2026-07-10 사용자 지시: Task Status in PTT·key_Sales Model Code 제외,
   // PTT Task ID는 맨 오른쪽 — 원문 pttStatus는 PTT Task ID 툴팁으로만 유지
   html += '<thead><tr>' +
     '<th>Region</th><th>Sub</th><th>LOCALE</th><th>Model</th>' +
     '<th>Stage</th><th>status</th><th>Detail KR</th><th>Detail English</th>' +
-    '<th>Expected Local Target Date</th><th>PDP Status</th><th>PTT Task ID</th>' +
+    '<th>Expected Local Target Date</th><th>PDP Status</th><th>STG</th><th>Live URL</th><th>PTT Task ID</th>' +
     '</tr></thead><tbody>';
   flatRows.forEach(function(item) {
     var row = item.row;
@@ -1856,6 +1863,8 @@ function npiPsRenderResults() {
     html += '<td style="font-size:var(--fs-caption);color:#64748B;max-width:220px">' + escapeHtmlSheet(row.detailEn || '-') + '</td>';
     html += '<td>' + target + '</td>';
     html += '<td style="text-align:center">' + escapeHtmlSheet(row.pdpStatus || '-') + '</td>';
+    html += '<td style="text-align:center">' + npiPsUrlCell(row.stgUrl) + '</td>';
+    html += '<td style="text-align:center">' + npiPsUrlCell(row.liveUrl) + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#64748B" title="' + escapeAttrSheet(row.pttStatus || '') + '">' + escapeHtmlSheet(row.pttId || '-') + '</td>';
     html += '</tr>';
   });
