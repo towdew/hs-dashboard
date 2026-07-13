@@ -1836,7 +1836,7 @@ function npiPsRenderResults() {
   html += '<thead><tr>' +
     '<th>Region</th><th>Sub</th><th>LOCALE</th><th>Model</th>' +
     '<th>Stage</th><th>status</th><th>Detail KR</th><th>Detail English</th>' +
-    '<th>PDP Status</th><th>STG</th><th>Live URL</th><th>PTT Task ID</th>' +
+    '<th>STG</th><th>Live URL</th><th>PTT Task ID</th>' +
     '</tr></thead><tbody>';
   flatRows.forEach(function(item) {
     var row = item.row;
@@ -1859,7 +1859,6 @@ function npiPsRenderResults() {
     html += '<td>' + statusCell + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#475569;max-width:220px">' + escapeHtmlSheet(row.detailKr || '-') + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#64748B;max-width:220px">' + escapeHtmlSheet(row.detailEn || '-') + '</td>';
-    html += '<td style="text-align:center">' + escapeHtmlSheet(row.pdpStatus || '-') + '</td>';
     html += '<td style="text-align:center">' + npiPsUrlCell(row.stgUrl) + '</td>';
     html += '<td style="text-align:center">' + npiPsUrlCell(row.liveUrl) + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#64748B" title="' + escapeAttrSheet(row.pttStatus || '') + '">' + escapeHtmlSheet(row.pttId || '-') + '</td>';
