@@ -5654,8 +5654,9 @@ function buildGrWeeklyChangeSummaryHtml(d) {
 // ── GR 국가별 전체 URL 모달 ────────────────────────────────
 var GR_URL_MODAL_MAX_OPEN = 15;
 
-function grOpenUrlModal(taskKey, code, countryLabel) {
+function grOpenUrlModal(taskKey, code, countryLabel, fallbackUrls) {
   var urls = (window._grUrls && typeof grLookup === 'function') ? grLookup(window._grUrls, taskKey, code) : null;
+  if (!urls || !urls.length) urls = (fallbackUrls || []).filter(function(u) { return /^https?:\/\//i.test(String(u || '')); });
   if (!urls || !urls.length) return;
 
   var rowsHtml = urls.map(function(u) {
@@ -5794,6 +5795,7 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
 
   var d = sheetData || DATA[currentKey] || {};
   var grDisplayTitle = getDashboardDisplayTitle(d);
+  var isGrSheet = isGrSheetDisplayTitle(grDisplayTitle);
   var exceptionRules = window.SHEET_EXCEPTION_RULES || null;
   var disableRegion = !!(exceptionRules && typeof exceptionRules.shouldDisableRegionColumn === 'function' && exceptionRules.shouldDisableRegionColumn(d));
   var displayHeaders = disableRegion
@@ -5868,7 +5870,7 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
           var onclickExpr = "window._returnToCountryList=false;showCountryModal('" + rowLocaleJs + "')";
           clickAttr = ' role="button" tabindex="0" title="상세 보기 (전체 URL)" onclick="' + escapeAttrSheet(onclickExpr) + '"';
         }
-        var bg = normalizeSheetCellBg(row.__styles && row.__styles[h]);
+        var bg = isGrSheet ? '' : normalizeSheetCellBg(row.__styles && row.__styles[h]);
         var styleAttr = bg ? ' style="background:' + escapeAttrSheet(bg) + '"' : '';
         var classAttr = cellClasses.length ? ' class="' + cellClasses.join(' ') + '"' : '';
         return '<td' + classAttr + styleAttr + clickAttr + '>' + html + '</td>';
@@ -6221,6 +6223,9 @@ function renderSheetCell(value, header, row, sheetData) {
   var status = normalizeSheetRendererStatus(text);
   if (status) {
     var cfg = SC[status] || SC['Pre-Review'];
+    var normalizedLabel = cfg.label || status;
+    // 정규화된 칩 라벨이 원문과 다르면(예: "1차완료" → "완료") title에 원문을 표기.
+    var origTitleAttr = (normalizedLabel !== text) ? (' title="' + escapeAttrSheet(text) + '"') : '';
     // 완료·작업중 상태에서 같은 행에 URL이 있으면 클릭 가능 링크 칩으로 렌더.
     if ((status === 'Done' || status === 'In Progress') && row) {
       var linkUrl = '';
@@ -6233,22 +6238,22 @@ function renderSheetCell(value, header, row, sheetData) {
           if (/^https?:\/\//i.test(rv)) { linkUrl = rv; break; }
         }
       }
-      if (linkUrl) {
-        // GR 탭에서 (task, country)에 URL이 2개 이상 등록되어 있으면 즉시 새탭 대신
-        // 전체 URL 목록 모달을 띄운다(1개 이하는 기존 즉시 새탭 동작 유지).
-        var grSheetTitle = getDashboardDisplayTitle(sheetData || DATA[currentKey] || {});
-        if (isGrSheetDisplayTitle(grSheetTitle) && window._grUrls &&
-            typeof grTaskKeyOf === 'function' && typeof grNormalizeCountryCode === 'function' && typeof grLookup === 'function') {
-          var grTaskKey = grTaskKeyOf(grSheetTitle);
-          var grCountryRaw = grRowCountryRaw(row);
-          var grCode = grNormalizeCountryCode(grCountryRaw);
-          var grUrlList = grLookup(window._grUrls, grTaskKey, grCode);
-          if (grUrlList && grUrlList.length >= 2) {
-            var grCountryLabel = displayCountryFullName(grCountryRaw);
-            var grOnclickExpr = "grOpenUrlModal('" + grJsStrEscape(grTaskKey) + "','" + grJsStrEscape(grCode) + "','" + grJsStrEscape(grCountryLabel) + "');return false;";
-            return '<a class="sheet-status-pill sheet-status-pill-link" href="' + escapeAttrSheet(linkUrl) + '" target="_blank" rel="noopener" onclick="' + escapeAttrSheet(grOnclickExpr) + '" style="background:' + cfg.bg + ';color:' + cfg.tc + ';text-decoration:none" title="' + escapeAttrSheet(grUrlList.length + '개 URL — 클릭 시 목록 보기') + '"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(cfg.label || status) + '</a>';
-          }
+      var grSheetTitle = getDashboardDisplayTitle(sheetData || DATA[currentKey] || {});
+      if (isGrSheetDisplayTitle(grSheetTitle)) {
+        // GR 탭은 URL 개수/매칭 성공 여부와 무관하게 항상 모달을 띄운다.
+        // grOpenUrlModal 내부가 gr-urls lookup을 우선 시도하고, 실패 시 fallbackUrls(=행 linkUrl)를 사용.
+        if (!linkUrl) {
+          return '<span class="sheet-status-pill" style="background:' + cfg.bg + ';color:' + cfg.tc + '" title="URL 없음"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(cfg.label || status) + '</span>';
         }
+        var grTaskKey = (typeof grTaskKeyOf === 'function') ? grTaskKeyOf(grSheetTitle) : '';
+        var grCountryRaw = grRowCountryRaw(row);
+        var grCode = (typeof grNormalizeCountryCode === 'function') ? grNormalizeCountryCode(grCountryRaw) : '';
+        var grCountryLabel = displayCountryFullName(grCountryRaw);
+        var fallbackUrlsJson = JSON.stringify([linkUrl]);
+        var grOnclickExpr = "grOpenUrlModal('" + grJsStrEscape(grTaskKey) + "','" + grJsStrEscape(grCode) + "','" + grJsStrEscape(grCountryLabel) + "'," + fallbackUrlsJson + ');return false;';
+        return '<a class="sheet-status-pill sheet-status-pill-link" href="' + escapeAttrSheet(linkUrl) + '" target="_blank" rel="noopener" onclick="' + escapeAttrSheet(grOnclickExpr) + '" style="background:' + cfg.bg + ';color:' + cfg.tc + ';text-decoration:none" title="클릭 시 URL 목록 보기"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(cfg.label || status) + '</a>';
+      }
+      if (linkUrl) {
         if (status === 'Done') {
           var exRules = window.SHEET_EXCEPTION_RULES;
           if (exRules && typeof exRules.renderDonePill === 'function') {
@@ -6258,7 +6263,12 @@ function renderSheetCell(value, header, row, sheetData) {
         return '<a class="sheet-status-pill sheet-status-pill-link" href="' + escapeAttrSheet(linkUrl) + '" target="_blank" rel="noopener" style="background:' + cfg.bg + ';color:' + cfg.tc + ';text-decoration:none" title="Open URL"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(cfg.label || status) + '</a>';
       }
     }
-    return '<span class="sheet-status-pill" style="background:' + cfg.bg + ';color:' + cfg.tc + '"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(cfg.label || status) + '</span>';
+    return '<span class="sheet-status-pill" style="background:' + cfg.bg + ';color:' + cfg.tc + '"' + origTitleAttr + '><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(normalizedLabel) + '</span>';
+  }
+
+  if (normalizeSheetHeaderName(header) === 'status') {
+    // Status 컬럼인데 정규화 실패한 비어있지 않은 값 → 일반 텍스트 대신 중립 회색 칩으로 렌더.
+    return '<span class="sheet-status-pill" style="background:#F1F5F9;color:#64748B" title="' + escapeAttrSheet(text) + '"><span style="background:#94A3B8"></span>' + escapeHtmlSheet(text) + '</span>';
   }
 
   return escapeHtmlSheet(text);
@@ -6272,6 +6282,13 @@ function normalizeSheetRendererStatus(value) {
   if (['in progress','wip','working','작업중','진행중'].indexOf(v) >= 0) return 'In Progress';
   if (['cancel','cancelled','canceled','취소'].indexOf(v) >= 0) return 'Cancel';
   if (['pre-review','pre review','사전검토','사전 검토'].indexOf(v) >= 0) return 'Pre-Review';
+  // exact match 실패 시 규칙 기반 폴백(부분 문자열 매칭). 취소를 완료보다 먼저 검사해야
+  // "취소완료" 같은 복합 표현이 완료로 오분류되지 않는다.
+  if (v.indexOf('취소') >= 0 || v.indexOf('cancel') >= 0) return 'Cancel';
+  if (v.indexOf('완료') >= 0 || v.indexOf('done') >= 0 || v.indexOf('complete') >= 0) return 'Done';
+  if (v.indexOf('리뷰') >= 0 || v.indexOf('review') >= 0) return 'Corp. Review';
+  if (v.indexOf('작업') >= 0 || v.indexOf('진행') >= 0 || v.indexOf('progress') >= 0) return 'In Progress';
+  if (v.indexOf('검토') >= 0) return 'Pre-Review';
   return '';
 }
 
