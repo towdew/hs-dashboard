@@ -6220,7 +6220,10 @@ function renderSheetCell(value, header, row, sheetData) {
     return '<a class="sheet-link" href="' + escapeAttrSheet(text) + '" target="_blank" rel="noopener">' + escapeHtmlSheet(shortenUrlSheet(text)) + '</a>';
   }
 
-  var status = normalizeSheetRendererStatus(text);
+  // 상태 칩은 Status 컬럼에서만 렌더 — 다른 컬럼(국가/Remark 등)의 텍스트가 부분 문자열
+  // 폴백에 오매칭돼 칩이 되는 것 방지 (예: "InDONEsia"가 done에 매칭돼 초록 칩이 되던 버그).
+  var isStatusColumn = normalizeSheetHeaderName(header) === 'status';
+  var status = isStatusColumn ? normalizeSheetRendererStatus(text) : '';
   if (status) {
     var cfg = SC[status] || SC['Pre-Review'];
     // 칩 라벨은 원문 그대로 표기(반영/미반영/부분반영 등) — 색상만 정규화 버킷(SC) 기준.
