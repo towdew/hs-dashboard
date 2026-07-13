@@ -1647,6 +1647,10 @@ function renderNpiProductStatusContent() {
   html += '<div class="ov-head-new"><div class="ov-head-title">';
   html += '<div class="ov-head-eyebrow">NPI · IT Product Status</div>';
   html += '<div class="ov-head-name">IT 제품 현황 <span style="font-size:var(--fs-caption);font-weight:500;color:#94A3B8">(' + escapeHtmlSheet(d.sourceFile || '') + ')</span></div>';
+  if (d.generatedAt) {
+    html += '<div style="font-size:var(--fs-caption);font-weight:500;color:#94A3B8;margin-top:2px">업데이트: ' + escapeHtmlSheet(d.generatedAt) +
+      (d.pttRawFile ? ' · PTT: ' + escapeHtmlSheet(d.pttRawFile) : '') + '</div>';
+  }
   html += '</div>';
   html += '<div class="ov-head-total"><div class="ov-head-total-num ov-head-total-sites">총 <strong>' + (d.totalRows || 0) + '</strong>건</div></div>';
   html += '</div>';
