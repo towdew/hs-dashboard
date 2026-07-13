@@ -1836,7 +1836,7 @@ function npiPsRenderResults() {
   html += '<thead><tr>' +
     '<th>Region</th><th>Sub</th><th>LOCALE</th><th>Model</th>' +
     '<th>Stage</th><th>status</th><th>Detail KR</th><th>Detail English</th>' +
-    '<th>CMS 라이브</th><th>PDP Status</th><th>STG</th><th>Live URL</th><th>PTT Task ID</th>' +
+    '<th>PDP Status</th><th>STG</th><th>Live URL</th><th>PTT Task ID</th>' +
     '</tr></thead><tbody>';
   flatRows.forEach(function(item) {
     var row = item.row;
@@ -1850,18 +1850,6 @@ function npiPsRenderResults() {
       '<span style="background:' + stageMeta.color + '"></span>' + escapeHtmlSheet(stageLabel) + '</span>';
     var statusCell = '<span class="sheet-status-pill" style="background:' + meta.bg + ';color:' + meta.tc + '" title="' + escapeAttrSheet(meta.desc || '') + '">' +
       '<span style="background:' + meta.dot + '"></span>' + escapeHtmlSheet(item.status) + '</span>';
-    // CMS 라이브 판정 칩 (2026-07-14: Expected Local Target Date 컬럼 대체, --cms 조인 결과)
-    var cmsMeta = {
-      '라이브': { bg: '#ECFDF5', tc: '#047857', dot: '#10B981' },
-      '등록·미게시': { bg: '#EFF6FF', tc: '#1D4ED8', dot: '#3B82F6' },
-      'STG만': { bg: '#FFFBEB', tc: '#92400E', dot: '#F59E0B' },
-      'PIM 미등록': { bg: '#FEF2F2', tc: '#B91C1C', dot: '#EF4444' }
-    }[row.cmsLive] || { bg: '#F1F5F9', tc: '#64748B', dot: '#94A3B8' };
-    var cmsCell = row.cmsLive
-      ? '<span class="sheet-status-pill" style="background:' + cmsMeta.bg + ';color:' + cmsMeta.tc + '"' +
-        (row.cmsProdUrl ? ' title="' + escapeAttrSheet(row.cmsProdUrl) + '"' : '') +
-        '><span style="background:' + cmsMeta.dot + '"></span>' + escapeHtmlSheet(row.cmsLive) + '</span>'
-      : '<span style="color:#CBD5E1">-</span>';
     html += '<tr>';
     html += '<td>' + escapeHtmlSheet(row.region) + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#64748B">' + escapeHtmlSheet(row.sub || '-') + '</td>';
@@ -1871,7 +1859,6 @@ function npiPsRenderResults() {
     html += '<td>' + statusCell + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#475569;max-width:220px">' + escapeHtmlSheet(row.detailKr || '-') + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#64748B;max-width:220px">' + escapeHtmlSheet(row.detailEn || '-') + '</td>';
-    html += '<td style="text-align:center">' + cmsCell + '</td>';
     html += '<td style="text-align:center">' + escapeHtmlSheet(row.pdpStatus || '-') + '</td>';
     html += '<td style="text-align:center">' + npiPsUrlCell(row.stgUrl) + '</td>';
     html += '<td style="text-align:center">' + npiPsUrlCell(row.liveUrl) + '</td>';

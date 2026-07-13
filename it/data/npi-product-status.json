@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14 00:27",
+  "generatedAt": "2026-07-14 00:32",
   "pttRawFile": "raw-data-20260713.xlsb",
   "cmsFile": "cms_merged_view_20260713_190952.csv",
   "sourceFile": "43 NPI for IT product status_20260707.xlsx",
@@ -55,7 +55,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "clarify"
         },
         {
@@ -74,7 +73,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "clarify"
         },
         {
@@ -93,7 +91,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "precheck"
         },
         {
@@ -110,9 +107,8 @@
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
           "stgUrl": "",
-          "liveUrl": "",
+          "liveUrl": "https://www.lg.com/it/notebook/gram/17z90tl-g-au88dn/",
           "cmsLive": "라이브",
-          "cmsProdUrl": "https://www.lg.com/it/notebook/gram/17z90tl-g-au88dn/",
           "stage": "precheck"
         },
         {
@@ -131,7 +127,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "precheck"
         },
         {
@@ -150,7 +145,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "precheck"
         },
         {
@@ -169,7 +163,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram/16z90tl-g-au75an.html?wcmmode=disabled",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "client_review"
         },
         {
@@ -188,7 +181,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram/16z90tl-g-au78an.html?wcmmode=disabled",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "client_review"
         },
         {
@@ -207,7 +199,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram/17z90tl-g-au78an.html?wcmmode=disabled",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "client_review"
         },
         {
@@ -226,7 +217,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram/17z90tl-g-au88an.html?wcmmode=disabled",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "client_review"
         },
         {
@@ -245,7 +235,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram-pro/16z90u-k-aub8an.html?wcmmode=disabled",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "client_review"
         },
         {
@@ -264,7 +253,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram-pro/16z90u-h-au78an.html?wcmmode=disabled",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "client_review"
         },
         {
@@ -283,7 +271,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram-books/16u55u-h-au75an.html?wcmmode=disabled",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "client_review"
         },
         {
@@ -302,7 +289,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram/15u50u-g-aa55an.html?wcmmode=disabled",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "client_review"
         },
         {
@@ -321,7 +307,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram-pro-2in1/16t95tp-k.html?wcmmode=disabled",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "client_review"
         },
         {
@@ -340,7 +325,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram/17z90u-g-au78an.html?wcmmode=disabled",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "client_review"
         }
       ]
@@ -365,7 +349,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "clarify"
         },
         {
@@ -384,7 +367,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "clarify"
         },
         {
@@ -403,7 +385,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "in_progress"
         },
         {
@@ -422,7 +403,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "clarify"
         },
         {
@@ -439,9 +419,8 @@
           "expectedLocalTargetDate": "6/23 퍼블리싱",
           "pdpStatus": "N",
           "stgUrl": "",
-          "liveUrl": "",
+          "liveUrl": "https://www.lg.com/es/business/informatica/ordenadores/portatiles-para-creadores/14z95u-g-au88bn/",
           "cmsLive": "라이브",
-          "cmsProdUrl": "https://www.lg.com/es/business/informatica/ordenadores/portatiles-para-creadores/14z95u-g-au88bn/",
           "stage": "live"
         }
       ]
@@ -466,7 +445,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/es/es/portatiles/gram/16z90tl-g.html?wcmmode=disabled",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "etc"
         },
         {
@@ -485,7 +463,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "precheck"
         },
         {
@@ -504,7 +481,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "precheck"
         },
         {
@@ -523,7 +499,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "STG만",
-          "cmsProdUrl": "",
           "stage": "precheck"
         },
         {
@@ -542,7 +517,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "precheck"
         },
         {
@@ -561,7 +535,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "precheck"
         },
         {
@@ -580,7 +553,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "STG만",
-          "cmsProdUrl": "",
           "stage": "precheck"
         },
         {
@@ -599,7 +571,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "precheck"
         },
         {
@@ -616,9 +587,8 @@
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
           "stgUrl": "",
-          "liveUrl": "",
+          "liveUrl": "https://www.lg.com/fr/pc-portables/gram/17z90tl-g-au75fn/",
           "cmsLive": "라이브",
-          "cmsProdUrl": "https://www.lg.com/fr/pc-portables/gram/17z90tl-g-au75fn/",
           "stage": "precheck"
         },
         {
@@ -635,9 +605,8 @@
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
           "stgUrl": "",
-          "liveUrl": "",
+          "liveUrl": "https://www.lg.com/fr/pc-portables/gram/17z90tl-g-au88fn/",
           "cmsLive": "라이브",
-          "cmsProdUrl": "https://www.lg.com/fr/pc-portables/gram/17z90tl-g-au88fn/",
           "stage": "precheck"
         }
       ]
@@ -662,7 +631,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "etc"
         },
         {
@@ -681,7 +649,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "etc"
         },
         {
@@ -700,7 +667,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "etc"
         },
         {
@@ -719,7 +685,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "etc"
         },
         {
@@ -738,7 +703,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "etc"
         },
         {
@@ -755,9 +719,8 @@
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
           "stgUrl": "",
-          "liveUrl": "",
+          "liveUrl": "https://www.lg.com/jp/mobile-pc/gram/16z90ts-gu89j/",
           "cmsLive": "라이브",
-          "cmsProdUrl": "https://www.lg.com/jp/mobile-pc/gram/16z90ts-gu89j/",
           "stage": "etc"
         },
         {
@@ -776,7 +739,6 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "etc"
         }
       ]
@@ -801,7 +763,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/es/es/business/informatica/ordenadores/portatiles-para-creadores/16u55u-g-au88bn.html?wcmmode=disabled",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
-          "cmsProdUrl": "",
           "stage": "client_review"
         },
         {
@@ -820,7 +781,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/au/en/laptops/gram-pro/16z90u-g-au75ap.html?wcmmode=disabled",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "client_review"
         }
       ]
@@ -845,7 +805,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/ca/en/laptops/all-laptops/17z90u-g78.html?wcmmode=disabled",
           "liveUrl": "https://www.lg.com/ca_en/laptops/all-laptops/17z90u-g78/",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "in_progress"
         },
         {
@@ -864,7 +823,6 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/ca/fr/ordinateurs-portables/gram/17z90ur-p.html?wcmmode=disabled",
           "liveUrl": "https://www.lg.com/ca_fr/computing/purchase-guide/laptops/17Z90ur-p/",
           "cmsLive": "PIM 미등록",
-          "cmsProdUrl": "",
           "stage": "in_progress"
         }
       ]
