@@ -6241,7 +6241,8 @@ function renderSheetCell(value, header, row, sheetData) {
 
   // 상태 칩은 Status 컬럼에서만 렌더 — 다른 컬럼(국가/Remark 등)의 텍스트가 부분 문자열
   // 폴백에 오매칭돼 칩이 되는 것 방지 (예: "InDONEsia"가 done에 매칭돼 초록 칩이 되던 버그).
-  var isStatusColumn = normalizeSheetHeaderName(header) === 'status';
+  // Status 2 같은 보조 상태 컬럼도 칩으로 렌더 (예: GNB 미반영)
+  var isStatusColumn = /^status\d*$/.test(normalizeSheetHeaderName(header));
   var status = isStatusColumn ? normalizeSheetRendererStatus(text) : '';
   if (status) {
     var cfg = SC[status] || SC['Pre-Review'];
@@ -6287,7 +6288,7 @@ function renderSheetCell(value, header, row, sheetData) {
     return '<span class="sheet-status-pill" style="background:' + cfg.bg + ';color:' + cfg.tc + '"' + '><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(chipLabel) + '</span>';
   }
 
-  if (normalizeSheetHeaderName(header) === 'status') {
+  if (/^status\d*$/.test(normalizeSheetHeaderName(header))) {
     // Status 컬럼인데 정규화 실패한 비어있지 않은 값 → 일반 텍스트 대신 중립 회색 칩으로 렌더.
     return '<span class="sheet-status-pill" style="background:#F1F5F9;color:#64748B" title="' + escapeAttrSheet(text) + '"><span style="background:#94A3B8"></span>' + escapeHtmlSheet(text) + '</span>';
   }
