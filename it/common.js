@@ -1822,12 +1822,13 @@ function npiPsRenderResults() {
   var html = '<div style="padding:16px 24px">';
   html += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500;margin-bottom:8px">' + flatRows.length.toLocaleString() + '건 / 전체 ' + totalRows.toLocaleString() + '건</div>';
   html += '<div class="npi-detail-table-wrap" style="overflow-x:auto">';
-  html += '<table class="npi-detail-table" style="min-width:1360px">';
+  html += '<table class="npi-detail-table" style="min-width:1180px">';
+  // 컬럼 구성 2026-07-10 사용자 지시: Task Status in PTT·key_Sales Model Code 제외,
+  // PTT Task ID는 맨 오른쪽 — 원문 pttStatus는 PTT Task ID 툴팁으로만 유지
   html += '<thead><tr>' +
     '<th>Region</th><th>Sub</th><th>LOCALE</th><th>Model</th>' +
-    '<th>key_Sales Model Code</th><th>PTT Task ID</th><th>Task Status in PTT</th>' +
     '<th>Stage</th><th>status</th><th>Detail KR</th><th>Detail English</th>' +
-    '<th>Expected Local Target Date</th><th>PDP Status</th>' +
+    '<th>Expected Local Target Date</th><th>PDP Status</th><th>PTT Task ID</th>' +
     '</tr></thead><tbody>';
   flatRows.forEach(function(item) {
     var row = item.row;
@@ -1848,16 +1849,14 @@ function npiPsRenderResults() {
     html += '<td>' + escapeHtmlSheet(row.region) + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#64748B">' + escapeHtmlSheet(row.sub || '-') + '</td>';
     html += '<td>' + escapeHtmlSheet(row.locale) + '</td>';
-    html += '<td style="font-weight:600">' + escapeHtmlSheet(row.model) + '</td>';
-    html += '<td style="font-size:var(--fs-caption);color:#64748B">' + escapeHtmlSheet(row.salesModelKey || '-') + '</td>';
-    html += '<td style="font-size:var(--fs-caption);color:#64748B">' + escapeHtmlSheet(row.pttId || '-') + '</td>';
-    html += '<td style="font-size:var(--fs-caption);color:#475569">' + escapeHtmlSheet(row.pttStatus || '-') + '</td>';
+    html += '<td style="font-weight:600" title="' + escapeAttrSheet(row.salesModelKey || '') + '">' + escapeHtmlSheet(row.model) + '</td>';
     html += '<td>' + stageCell + '</td>';
     html += '<td>' + statusCell + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#475569;max-width:220px">' + escapeHtmlSheet(row.detailKr || '-') + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#64748B;max-width:220px">' + escapeHtmlSheet(row.detailEn || '-') + '</td>';
     html += '<td>' + target + '</td>';
     html += '<td style="text-align:center">' + escapeHtmlSheet(row.pdpStatus || '-') + '</td>';
+    html += '<td style="font-size:var(--fs-caption);color:#64748B" title="' + escapeAttrSheet(row.pttStatus || '') + '">' + escapeHtmlSheet(row.pttId || '-') + '</td>';
     html += '</tr>';
   });
   html += '</tbody></table></div></div>';
