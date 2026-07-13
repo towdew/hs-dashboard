@@ -91,8 +91,28 @@ function grNormalizeCountryCode(rawCountry) {
   return base;
 }
 
+// GR 타이틀 문자열(예: "GR26-W16-MS-IT-PC PDP Gallery Card Addition for JS Global")을
+// 정규화해 window._grTitleToTask(displayTitle→task 역매핑)의 조회 키로 쓴다.
+// 공백 정리 + casefold — grNormalizeCountryCode 등 파일 내 다른 정규화 스타일과 통일.
+function grNormTitleKey(s) {
+  return String(s == null ? '' : s).replace(/\s+/g, ' ').trim().toLowerCase();
+}
+
 function grTaskKeyOf(displayTitle) {
   var s = String(displayTitle == null ? '' : displayTitle).trim();
+  // 1순위: GR 타이틀 → 태스크명 역매핑(ensureGrDataLoaded가 로드하는 data/gr-titles.json 기반).
+  // GR 타이틀은 태스크명을 문자열로 포함하지 않는 경우가 있어(예: "GR26-W16-MS-IT-PC PDP
+  // Gallery Card Addition for JS Global" ↔ "Microsoft PDP Gallery Card") 정규식 폴백만으로는
+  // 복원 불가 — 반드시 역매핑 테이블을 우선 조회한다.
+  var hasWindow = typeof window !== 'undefined';
+  var titleToTask = hasWindow ? window._grTitleToTask : null;
+  if (titleToTask) {
+    var normKey = grNormTitleKey(s);
+    if (Object.prototype.hasOwnProperty.call(titleToTask, normKey)) {
+      return titleToTask[normKey];
+    }
+  }
+  // 2순위(폴백): 기존 "W<n> - 태스크명" 프리픽스 제거.
   return s.replace(/^W\d+\s*-\s*/, '').trim();
 }
 
@@ -113,6 +133,7 @@ if (typeof module !== 'undefined' && module.exports) {
     grNormalizeCountryCode: grNormalizeCountryCode,
     grTaskKeyOf: grTaskKeyOf,
     grLookup: grLookup,
+    grNormTitleKey: grNormTitleKey,
     GR_DUAL_LOCALE_MAP: GR_DUAL_LOCALE_MAP,
     GR_COUNTRY_NAME_TO_CODE: GR_COUNTRY_NAME_TO_CODE,
     GR_TASK_KEY_ALIASES: GR_TASK_KEY_ALIASES,

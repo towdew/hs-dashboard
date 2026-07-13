@@ -5572,7 +5572,8 @@ var _grUrls = null;
 var _grDataLoadTriggered = false;
 
 function isGrSheetDisplayTitle(displayTitle) {
-  return /^W\d+\s*-\s*/.test(String(displayTitle || ''));
+  var s = String(displayTitle || '');
+  return /^W\d+\s*-\s*/.test(s) || /^GR\d+-W\d+/i.test(s);
 }
 
 function ensureGrDataLoaded() {
@@ -5595,6 +5596,24 @@ function ensureGrDataLoaded() {
     window._grUrls = _grUrls;
     if (_grUrls) maybeRerenderGrTab();
   }).catch(function() { _grUrls = null; window._grUrls = null; });
+  // GR 시트 표시 타이틀(예: "GR26-W16-MS-IT-PC PDP Gallery Card Addition for JS Global")을
+  // 내부 태스크 키(예: "Microsoft PDP Gallery Card")로 복원하기 위한 역매핑.
+  // 404/실패 시 조용히 null(기존 gr-changes/gr-urls 패턴과 동일) — grTaskKeyOf는 이 경우
+  // 기존 "W<n> - " 프리픽스 제거 폴백으로 계속 동작한다.
+  fetch('data/gr-titles.json' + bust).then(function(r) { return r.ok ? r.json() : null; }).then(function(data) {
+    var titles = (data && data.titles) || null;
+    window._grTitles = titles;
+    var titleToTask = null;
+    if (titles && typeof grNormTitleKey === 'function') {
+      titleToTask = {};
+      for (var task in titles) {
+        if (!Object.prototype.hasOwnProperty.call(titles, task)) continue;
+        titleToTask[grNormTitleKey(titles[task])] = task;
+      }
+    }
+    window._grTitleToTask = titleToTask;
+    if (titleToTask) maybeRerenderGrTab();
+  }).catch(function() { window._grTitles = null; window._grTitleToTask = null; });
 }
 
 // 국가 셀(header)의 원문 raw 값을 row 객체에서 찾는다(__로 시작하는 메타 키 제외).
