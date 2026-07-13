@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13 10:04",
+  "generatedAt": "2026-07-13 10:43",
   "pttRawFile": "raw-data-20260711.xlsb",
   "sourceFile": "43 NPI for IT product status_20260707.xlsx",
   "totalRows": 42,
@@ -51,6 +51,8 @@
           "detailEn": "proceeding part of July NPI, but some contents missing",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "clarify"
         },
         {
@@ -66,6 +68,8 @@
           "detailEn": "proceeding part of July NPI, but some contents missing",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "clarify"
         },
         {
@@ -81,6 +85,8 @@
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "precheck"
         },
         {
@@ -96,6 +102,8 @@
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "precheck"
         },
         {
@@ -111,6 +119,8 @@
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "precheck"
         },
         {
@@ -126,6 +136,8 @@
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "precheck"
         },
         {
@@ -141,6 +153,8 @@
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram/16z90tl-g-au75an.html?wcmmode=disabled",
+          "liveUrl": "",
           "stage": "in_progress"
         },
         {
@@ -156,6 +170,8 @@
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram/16z90tl-g-au78an.html?wcmmode=disabled",
+          "liveUrl": "",
           "stage": "client_review"
         },
         {
@@ -171,6 +187,8 @@
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram/17z90tl-g-au78an.html?wcmmode=disabled",
+          "liveUrl": "",
           "stage": "in_progress"
         },
         {
@@ -186,6 +204,8 @@
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram/17z90tl-g-au88an.html?wcmmode=disabled",
+          "liveUrl": "",
           "stage": "in_progress"
         },
         {
@@ -201,6 +221,8 @@
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram-pro/16z90u-k-aub8an.html?wcmmode=disabled",
+          "liveUrl": "",
           "stage": "client_review"
         },
         {
@@ -216,6 +238,8 @@
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram-pro/16z90u-h-au78an.html?wcmmode=disabled",
+          "liveUrl": "",
           "stage": "client_review"
         },
         {
@@ -231,6 +255,8 @@
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram-books/16u55u-h.html?wcmmode=disabled",
+          "liveUrl": "",
           "stage": "in_progress"
         },
         {
@@ -246,6 +272,8 @@
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram/15u50u-g-aa55an.html?wcmmode=disabled",
+          "liveUrl": "",
           "stage": "client_review"
         },
         {
@@ -261,6 +289,8 @@
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram-pro-2in1/16t95tp-k.html?wcmmode=disabled",
+          "liveUrl": "",
           "stage": "client_review"
         },
         {
@@ -276,6 +306,8 @@
           "detailEn": "proceeding part of July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/gb/en/laptops/gram/17z90u-g-au78an.html?wcmmode=disabled",
+          "liveUrl": "",
           "stage": "in_progress"
         }
       ]
@@ -297,6 +329,8 @@
           "detailEn": "part of Jun NPI\nsome contents are missing still\n(UFN, Key Features)",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "clarify"
         },
         {
@@ -312,6 +346,8 @@
           "detailEn": "part of Jun NPI\nsome contents are missing still\n(UFN, Key Features)",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "clarify"
         },
         {
@@ -327,6 +363,8 @@
           "detailEn": "part of Jun NPI\nsome contents are missing still\n(UFN, Key Features)",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "in_progress"
         },
         {
@@ -342,6 +380,8 @@
           "detailEn": "part of Jun NPI\nsome contents are missing",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "clarify"
         },
         {
@@ -357,6 +397,8 @@
           "detailEn": "part of Jun NPI\nsome contents are missing",
           "expectedLocalTargetDate": "6/23 퍼블리싱",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "live"
         }
       ]
@@ -378,6 +420,8 @@
           "detailEn": "Need to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/es/es/portatiles/gram/16z90tl-g.html?wcmmode=disabled",
+          "liveUrl": "",
           "stage": "etc"
         },
         {
@@ -393,6 +437,8 @@
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "precheck"
         },
         {
@@ -408,6 +454,8 @@
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "precheck"
         },
         {
@@ -423,6 +471,8 @@
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "precheck"
         },
         {
@@ -438,6 +488,8 @@
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "precheck"
         },
         {
@@ -453,6 +505,8 @@
           "detailEn": "Need to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "precheck"
         },
         {
@@ -468,6 +522,8 @@
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "precheck"
         },
         {
@@ -483,6 +539,8 @@
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "precheck"
         },
         {
@@ -498,6 +556,8 @@
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "precheck"
         },
         {
@@ -513,6 +573,8 @@
           "detailEn": "Target Month has to be assigned in PIM2.0, \nthen it'll be processed as July NPI",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "precheck"
         }
       ]
@@ -534,6 +596,8 @@
           "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "etc"
         },
         {
@@ -549,6 +613,8 @@
           "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "etc"
         },
         {
@@ -564,6 +630,8 @@
           "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "etc"
         },
         {
@@ -579,6 +647,8 @@
           "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "etc"
         },
         {
@@ -594,6 +664,8 @@
           "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "etc"
         },
         {
@@ -609,6 +681,8 @@
           "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "etc"
         },
         {
@@ -624,6 +698,8 @@
           "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
           "stage": "etc"
         }
       ]
@@ -645,6 +721,8 @@
           "detailEn": "proceeding as a part of Jun NPI\n(contents were missing in June)",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/es/es/business/informatica/ordenadores/portatiles-para-creadores/16u55u-g-au88bn.html?wcmmode=disabled",
+          "liveUrl": "",
           "stage": "client_review"
         },
         {
@@ -660,6 +738,8 @@
           "detailEn": "proceeding as a part of Jun NPI\n(contents were missing in June)\ntask is under Client Review, waiting for final approval from local.",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/au/en/laptops/gram-pro/16z90u-g-au75ap.html?wcmmode=disabled",
+          "liveUrl": "",
           "stage": "client_review"
         }
       ]
@@ -681,6 +761,8 @@
           "detailEn": "NPI production [WPL] Closed, but CSR needs to be raised for Spec modification",
           "expectedLocalTargetDate": "",
           "pdpStatus": "제품 이미지에 스펙 잘못됨. 16GB로 수정 필요",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/ca/en/laptops/all-laptops/17z90u-g78.html?wcmmode=disabled",
+          "liveUrl": "https://www.lg.com/ca_en/laptops/all-laptops/17z90u-g78/",
           "stage": "in_progress"
         },
         {
@@ -696,6 +778,8 @@
           "detailEn": "NPI production [WPL] Closed, but CSR needs to be raised for Spec modification",
           "expectedLocalTargetDate": "",
           "pdpStatus": "제품 이미지에 스펙 잘못됨. 2TB로 수정 필요. 상세 스펙 입력 안되어 있음",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/ca/fr/ordinateurs-portables/gram/17z90ur-p.html?wcmmode=disabled",
+          "liveUrl": "https://www.lg.com/ca_fr/computing/purchase-guide/laptops/17Z90ur-p/",
           "stage": "in_progress"
         }
       ]
