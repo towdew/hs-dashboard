@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14 11:47",
+  "generatedAt": "2026-07-14 12:28",
   "pttRawFile": "raw-data-20260714.xlsb",
   "cmsFile": "cms_merged_view_20260713_190952.csv",
   "sourceFile": "43 NPI for IT product status_20260707.xlsx",
@@ -36,7 +36,7 @@
   ],
   "groups": [
     {
-      "status": "7월예정",
+      "status": "NPI 7월",
       "colorClass": "green",
       "rows": [
         {
