@@ -1832,8 +1832,8 @@ var NPI_PS_COLUMNS = [
   { key: 'region', label: 'Region' }, { key: 'sub', label: 'Sub' },
   { key: 'country', label: 'Country' }, { key: 'model', label: 'Model' },
   { key: 'stage', label: 'Stage' }, { key: 'status', label: 'Status' },
-  { key: 'detailKr', label: 'Detail KR' }, { key: 'detailEn', label: 'Detail English' },
-  { key: 'stg', label: 'STG' }, { key: 'live', label: 'Live URL' }, { key: 'ptt', label: 'PTT Task ID' }
+  { key: 'detail', label: 'Detail' },
+  { key: 'stg', label: 'STG URL' }, { key: 'live', label: 'Live URL' }, { key: 'ptt', label: 'PTT Task ID' }
 ];
 // 스테이지 정렬은 프로세스 진행 순서(precheck→…→live)로. Clarify는 client_review와 동급.
 var NPI_PS_STAGE_RANK = { precheck: 1, in_progress: 2, client_review: 3, clarify: 3, live: 5, cancelled: 6, etc: 7 };
@@ -1846,8 +1846,7 @@ function npiPsSortValue(item, key) {
     case 'model': return row.model || '';
     case 'stage': return NPI_PS_STAGE_RANK[item.stage] || 9;
     case 'status': return item.status || '';
-    case 'detailKr': return row.detailKr || '';
-    case 'detailEn': return row.detailEn || '';
+    case 'detail': return ((row.detailKr || '') + ' ' + (row.detailEn || '')).trim();
     case 'stg': return (row.stgUrl || '').indexOf('http') === 0 ? 1 : 0;
     case 'live': return (row.liveUrl || '').indexOf('http') === 0 ? 1 : 0;
     case 'ptt': return row.pttId || '';
@@ -1892,9 +1891,10 @@ function npiPsDownloadExcel() {
       var found = (d.stages || []).filter(function(s) { return s.key === item.stage; })[0];
       return found ? found.label : item.stage;
     })();
+    var detail = (row.detailKr || '') + ((row.detailKr && row.detailEn) ? '\n' : '') + (row.detailEn || '');
     aoa.push([
       row.region || '', row.sub || '', npiPsCountryName(row.locale), row.model || '',
-      stageLabel, item.status || '', row.detailKr || '', row.detailEn || '',
+      stageLabel, item.status || '', detail,
       row.stgUrl || '', row.liveUrl || '', row.pttId || ''
     ]);
   });
@@ -2000,8 +2000,12 @@ function npiPsRenderResults() {
     html += '<td style="font-weight:600" title="' + escapeAttrSheet(row.salesModelKey || '') + '">' + escapeHtmlSheet(row.model) + '</td>';
     html += '<td>' + stageCell + '</td>';
     html += '<td>' + statusCell + '</td>';
-    html += '<td style="font-size:var(--fs-caption);color:#475569;max-width:220px">' + escapeHtmlSheet(row.detailKr || '-') + '</td>';
-    html += '<td style="font-size:var(--fs-caption);color:#64748B;max-width:220px">' + escapeHtmlSheet(row.detailEn || '-') + '</td>';
+    // Detail: KR/EN 통합 단일 컬럼 — KR(기본) + EN(작은 회색 서브줄)
+    var detKr = row.detailKr || '', detEn = row.detailEn || '';
+    var detailCell = detKr ? '<span style="color:#334155">' + escapeHtmlSheet(detKr) + '</span>' : '';
+    if (detEn) detailCell += (detKr ? '<br>' : '') + '<span style="color:#94A3B8">' + escapeHtmlSheet(detEn) + '</span>';
+    if (!detailCell) detailCell = '-';
+    html += '<td style="font-size:var(--fs-caption);max-width:280px">' + detailCell + '</td>';
     html += '<td style="text-align:center">' + npiPsUrlCell(row.stgUrl) + '</td>';
     html += '<td style="text-align:center">' + npiPsUrlCell(row.liveUrl) + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#64748B" title="' + escapeAttrSheet(row.pttStatus || '') + '">' + escapeHtmlSheet(row.pttId || '-') + '</td>';
