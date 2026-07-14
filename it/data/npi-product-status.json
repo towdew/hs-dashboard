@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14 12:43",
+  "generatedAt": "2026-07-14 12:49",
   "pttRawFile": "raw-data-20260714.xlsb",
   "cmsFile": "cms_merged_view_20260713_190952.csv",
   "sourceFile": "43 NPI for IT product status_20260707.xlsx",
@@ -852,7 +852,7 @@
       ]
     },
     {
-      "status": "?",
+      "status": "NPI 6월",
       "colorClass": "orange",
       "rows": [
         {
@@ -864,8 +864,8 @@
           "pttId": "WR2259877AK",
           "pttStatus": "[WPL] Change req. need close",
           "targetStagingDate": "2026-06-15",
-          "detailKr": "PIM 등록 · Readiness 미노출",
-          "detailEn": "Registered in PIM, not shown in Readiness Check",
+          "detailKr": "6월 NPI · 변경요청 검토중",
+          "detailEn": "June NPI (transfer), change request under review",
           "expectedLocalTargetDate": "",
           "pdpStatus": "N",
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/es/es/portatiles/gram/16z90tl-g.html?wcmmode=disabled",
