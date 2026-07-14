@@ -99,7 +99,7 @@ body{
 }
 .nav-item .ni-badge{
   margin-left:auto;flex-shrink:0;
-  font-size:9px;font-weight:800;padding:1px 5px;border-radius:3px;
+  font-size:9px;font-weight:700;padding:1px 5px;border-radius:20px;
   transition:opacity .2s,width .2s;
 }
 .sidebar.collapsed .ni-badge{opacity:0;width:0;padding:0;margin:0;overflow:hidden}
@@ -1704,7 +1704,7 @@ body{
   width:8px;
   height:8px;
   border-radius:50%;
-  background:#f12626;
+  background:#A50034;
   flex:0 0 auto;
 }
 .stat-cancel-desc strong{
@@ -1742,9 +1742,9 @@ body{
   align-items:center;
   justify-content:center;
   height:17px;
-  padding:0 7px;
-  border-radius:6px;
-  background:#EA1917;
+  padding:0 8px;
+  border-radius:20px;
+  background:#A50034;
   color:#fff;
   font-size:10px;
   font-weight:900;
@@ -1791,7 +1791,7 @@ body{
   font-weight:600;
 }
 .weekly-update-line-bullet{
-  color:#60A5FA;
+  color:#A50034;
   font-weight:900;
 }
 .weekly-update-line-country{
