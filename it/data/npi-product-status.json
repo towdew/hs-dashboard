@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14 09:32",
+  "generatedAt": "2026-07-14 09:51",
   "pttRawFile": "raw-data-20260714.xlsb",
   "cmsFile": "cms_merged_view_20260713_190952.csv",
   "sourceFile": "43 NPI for IT product status_20260707.xlsx",
@@ -445,6 +445,8 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
+          "statusTip": "",
+          "stageForce": "",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -464,6 +466,8 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
+          "statusTip": "",
+          "stageForce": "",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -483,6 +487,8 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "STG만",
+          "statusTip": "",
+          "stageForce": "",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -502,6 +508,8 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
+          "statusTip": "",
+          "stageForce": "",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -521,6 +529,8 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "STG만",
+          "statusTip": "",
+          "stageForce": "",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -540,6 +550,8 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
+          "statusTip": "",
+          "stageForce": "",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -559,6 +571,8 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
+          "statusTip": "",
+          "stageForce": "",
           "pimChecked": true,
           "stage": "etc"
         },
@@ -578,6 +592,8 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
+          "statusTip": "",
+          "stageForce": "",
           "pimChecked": true,
           "stage": "etc"
         },
@@ -597,6 +613,8 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
+          "statusTip": "",
+          "stageForce": "",
           "pimChecked": true,
           "stage": "etc"
         },
@@ -616,6 +634,8 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
+          "statusTip": "",
+          "stageForce": "",
           "pimChecked": true,
           "stage": "etc"
         }
@@ -641,6 +661,8 @@
           "stgUrl": "",
           "liveUrl": "https://www.lg.com/fr/pc-portables/gram/17z90tl-g-au75fn/",
           "cmsLive": "라이브",
+          "statusTip": "",
+          "stageForce": "",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -660,6 +682,8 @@
           "stgUrl": "",
           "liveUrl": "https://www.lg.com/fr/pc-portables/gram/17z90tl-g-au88fn/",
           "cmsLive": "라이브",
+          "statusTip": "",
+          "stageForce": "",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -679,13 +703,63 @@
           "stgUrl": "",
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
+          "statusTip": "",
+          "stageForce": "",
           "pimChecked": true,
           "stage": "etc"
         }
       ]
     },
     {
-      "status": "PIM 등록",
+      "status": "?",
+      "colorClass": "orange",
+      "rows": [
+        {
+          "region": "EU",
+          "sub": "LGEES",
+          "locale": "ES-es",
+          "model": "14ZB90S-G.AA55BN",
+          "salesModelKey": "ES-es-14ZB90S-G.AA55BN",
+          "pttId": "WR2289890AK",
+          "pttStatus": "[WPL] Create Request",
+          "targetStagingDate": "2026-06-15",
+          "detailKr": "PIM 미등록",
+          "detailEn": "Need to be registered in PIM2.0 and let CNX WPL and RM know for further action",
+          "expectedLocalTargetDate": "",
+          "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
+          "cmsLive": "PIM 미등록",
+          "statusTip": "4/27 오픈 전 제품은 Readiness Check에 미노출",
+          "stageForce": "",
+          "pimChecked": true,
+          "stage": "precheck"
+        },
+        {
+          "region": "SEA",
+          "sub": "LGESL",
+          "locale": "BD-en",
+          "model": "14Z90U-G.AU74A3",
+          "salesModelKey": "BD-en-14Z90U-G",
+          "pttId": "#N/A",
+          "pttStatus": "#N/A",
+          "targetStagingDate": "",
+          "detailKr": "미요청건",
+          "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
+          "expectedLocalTargetDate": "",
+          "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
+          "cmsLive": "PIM 미등록",
+          "statusTip": "4/27 오픈 전 제품은 Readiness Check에 미노출",
+          "stageForce": "",
+          "pimChecked": true,
+          "stage": "etc"
+        }
+      ]
+    },
+    {
+      "status": "라이브",
       "colorClass": "orange",
       "rows": [
         {
@@ -704,27 +778,10 @@
           "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/es/es/portatiles/gram/16z90tl-g.html?wcmmode=disabled",
           "liveUrl": "",
           "cmsLive": "등록·미게시",
+          "statusTip": "",
+          "stageForce": "live",
           "pimChecked": true,
-          "stage": "etc"
-        },
-        {
-          "region": "EU",
-          "sub": "LGEES",
-          "locale": "ES-es",
-          "model": "14ZB90S-G.AA55BN",
-          "salesModelKey": "ES-es-14ZB90S-G.AA55BN",
-          "pttId": "WR2289890AK",
-          "pttStatus": "[WPL] Create Request",
-          "targetStagingDate": "2026-06-15",
-          "detailKr": "PIM 미등록",
-          "detailEn": "Need to be registered in PIM2.0 and let CNX WPL and RM know for further action",
-          "expectedLocalTargetDate": "",
-          "pdpStatus": "N",
-          "stgUrl": "",
-          "liveUrl": "",
-          "cmsLive": "PIM 미등록",
-          "pimChecked": true,
-          "stage": "precheck"
+          "stage": "live"
         },
         {
           "region": "SEA",
@@ -742,8 +799,10 @@
           "stgUrl": "",
           "liveUrl": "https://www.lg.com/jp/mobile-pc/gram/16z90ts-gu89j/",
           "cmsLive": "라이브",
+          "statusTip": "",
+          "stageForce": "live",
           "pimChecked": true,
-          "stage": "etc"
+          "stage": "live"
         }
       ]
     },
@@ -828,31 +887,6 @@
           "liveUrl": "https://www.lg.com/ca_fr/computing/purchase-guide/laptops/17Z90ur-p/",
           "cmsLive": "PIM 미등록",
           "stage": "live"
-        }
-      ]
-    },
-    {
-      "status": "PIM 미등록",
-      "colorClass": "orange",
-      "rows": [
-        {
-          "region": "SEA",
-          "sub": "LGESL",
-          "locale": "BD-en",
-          "model": "14Z90U-G.AU74A3",
-          "salesModelKey": "BD-en-14Z90U-G",
-          "pttId": "#N/A",
-          "pttStatus": "#N/A",
-          "targetStagingDate": "",
-          "detailKr": "미요청건",
-          "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
-          "expectedLocalTargetDate": "",
-          "pdpStatus": "N",
-          "stgUrl": "",
-          "liveUrl": "",
-          "cmsLive": "PIM 미등록",
-          "pimChecked": true,
-          "stage": "etc"
         }
       ]
     }
