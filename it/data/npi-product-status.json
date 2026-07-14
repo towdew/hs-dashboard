@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14 12:28",
+  "generatedAt": "2026-07-14 12:43",
   "pttRawFile": "raw-data-20260714.xlsb",
   "cmsFile": "cms_merged_view_20260713_190952.csv",
   "sourceFile": "43 NPI for IT product status_20260707.xlsx",
@@ -875,7 +875,7 @@
           "stageForce": "",
           "stageFallback": "",
           "pimChecked": true,
-          "stage": "etc"
+          "stage": "client_review"
         }
       ]
     },
