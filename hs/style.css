@@ -548,8 +548,8 @@ body{
   display:inline-flex;align-items:center;gap:6px;
 }
 .ov-head-name{
-  font-size:18px;font-weight:800;color:#1A1D2E;
-  letter-spacing:-.4px;line-height:1.2;
+  font-size:22px;font-weight:800;color:#1A1D2E;
+  letter-spacing:-.4px;line-height:1.2;margin-top:8px;
 }
 
 .ov-title-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
