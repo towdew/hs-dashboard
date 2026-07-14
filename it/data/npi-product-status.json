@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14 10:03",
+  "generatedAt": "2026-07-14 11:16",
   "pttRawFile": "raw-data-20260714.xlsb",
   "cmsFile": "cms_merged_view_20260713_190952.csv",
   "sourceFile": "43 NPI for IT product status_20260707.xlsx",
@@ -447,6 +447,7 @@
           "cmsLive": "PIM 미등록",
           "statusTip": "",
           "stageForce": "",
+          "stageFallback": "",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -468,6 +469,7 @@
           "cmsLive": "PIM 미등록",
           "statusTip": "",
           "stageForce": "",
+          "stageFallback": "",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -489,6 +491,7 @@
           "cmsLive": "STG만",
           "statusTip": "",
           "stageForce": "",
+          "stageFallback": "",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -510,6 +513,29 @@
           "cmsLive": "PIM 미등록",
           "statusTip": "",
           "stageForce": "",
+          "stageFallback": "",
+          "pimChecked": true,
+          "stage": "precheck"
+        },
+        {
+          "region": "EU",
+          "sub": "LGEES",
+          "locale": "ES-es",
+          "model": "14ZB90S-G.AA55BN",
+          "salesModelKey": "ES-es-14ZB90S-G.AA55BN",
+          "pttId": "WR2289890AK",
+          "pttStatus": "[WPL] Create Request",
+          "targetStagingDate": "2026-06-15",
+          "detailKr": "PIM 미등록",
+          "detailEn": "Need to be registered in PIM2.0 and let CNX WPL and RM know for further action",
+          "expectedLocalTargetDate": "",
+          "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
+          "cmsLive": "PIM 미등록",
+          "statusTip": "4/27 오픈 전 제품은 Readiness Check에 미노출",
+          "stageForce": "",
+          "stageFallback": "",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -531,6 +557,7 @@
           "cmsLive": "STG만",
           "statusTip": "",
           "stageForce": "",
+          "stageFallback": "",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -552,6 +579,7 @@
           "cmsLive": "PIM 미등록",
           "statusTip": "",
           "stageForce": "",
+          "stageFallback": "",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -573,6 +601,7 @@
           "cmsLive": "PIM 미등록",
           "statusTip": "",
           "stageForce": "",
+          "stageFallback": "",
           "pimChecked": true,
           "stage": "etc"
         },
@@ -594,6 +623,7 @@
           "cmsLive": "PIM 미등록",
           "statusTip": "",
           "stageForce": "",
+          "stageFallback": "",
           "pimChecked": true,
           "stage": "etc"
         },
@@ -615,6 +645,7 @@
           "cmsLive": "PIM 미등록",
           "statusTip": "",
           "stageForce": "",
+          "stageFallback": "",
           "pimChecked": true,
           "stage": "etc"
         },
@@ -636,6 +667,29 @@
           "cmsLive": "PIM 미등록",
           "statusTip": "",
           "stageForce": "",
+          "stageFallback": "",
+          "pimChecked": true,
+          "stage": "etc"
+        },
+        {
+          "region": "SEA",
+          "sub": "LGESL",
+          "locale": "BD-en",
+          "model": "14Z90U-G.AU74A3",
+          "salesModelKey": "BD-en-14Z90U-G",
+          "pttId": "#N/A",
+          "pttStatus": "#N/A",
+          "targetStagingDate": "",
+          "detailKr": "미요청건",
+          "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
+          "expectedLocalTargetDate": "",
+          "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "",
+          "cmsLive": "PIM 미등록",
+          "statusTip": "4/27 오픈 전 제품은 Readiness Check에 미노출",
+          "stageForce": "",
+          "stageFallback": "",
           "pimChecked": true,
           "stage": "etc"
         }
@@ -663,6 +717,7 @@
           "cmsLive": "라이브",
           "statusTip": "",
           "stageForce": "",
+          "stageFallback": "precheck",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -684,6 +739,7 @@
           "cmsLive": "라이브",
           "statusTip": "",
           "stageForce": "",
+          "stageFallback": "precheck",
           "pimChecked": true,
           "stage": "precheck"
         },
@@ -705,56 +761,9 @@
           "cmsLive": "PIM 미등록",
           "statusTip": "",
           "stageForce": "",
-          "pimChecked": true,
-          "stage": "etc"
-        }
-      ]
-    },
-    {
-      "status": "?",
-      "colorClass": "orange",
-      "rows": [
-        {
-          "region": "EU",
-          "sub": "LGEES",
-          "locale": "ES-es",
-          "model": "14ZB90S-G.AA55BN",
-          "salesModelKey": "ES-es-14ZB90S-G.AA55BN",
-          "pttId": "WR2289890AK",
-          "pttStatus": "[WPL] Create Request",
-          "targetStagingDate": "2026-06-15",
-          "detailKr": "PIM 미등록",
-          "detailEn": "Need to be registered in PIM2.0 and let CNX WPL and RM know for further action",
-          "expectedLocalTargetDate": "",
-          "pdpStatus": "N",
-          "stgUrl": "",
-          "liveUrl": "",
-          "cmsLive": "PIM 미등록",
-          "statusTip": "4/27 오픈 전 제품은 Readiness Check에 미노출",
-          "stageForce": "",
+          "stageFallback": "precheck",
           "pimChecked": true,
           "stage": "precheck"
-        },
-        {
-          "region": "SEA",
-          "sub": "LGESL",
-          "locale": "BD-en",
-          "model": "14Z90U-G.AU74A3",
-          "salesModelKey": "BD-en-14Z90U-G",
-          "pttId": "#N/A",
-          "pttStatus": "#N/A",
-          "targetStagingDate": "",
-          "detailKr": "미요청건",
-          "detailEn": "Never requested before\nNeed to be registered in PIM2.0 and let CNX WPL and RM know for further action",
-          "expectedLocalTargetDate": "",
-          "pdpStatus": "N",
-          "stgUrl": "",
-          "liveUrl": "",
-          "cmsLive": "PIM 미등록",
-          "statusTip": "4/27 오픈 전 제품은 Readiness Check에 미노출",
-          "stageForce": "",
-          "pimChecked": true,
-          "stage": "etc"
         }
       ]
     },
@@ -780,6 +789,7 @@
           "cmsLive": "등록·미게시",
           "statusTip": "",
           "stageForce": "live",
+          "stageFallback": "",
           "pimChecked": true,
           "stage": "live"
         },
@@ -801,6 +811,7 @@
           "cmsLive": "라이브",
           "statusTip": "",
           "stageForce": "live",
+          "stageFallback": "",
           "pimChecked": true,
           "stage": "live"
         }
