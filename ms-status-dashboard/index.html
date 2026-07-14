@@ -2468,7 +2468,7 @@ let EMBEDDED_DATA = (WEEK_DATASETS[latestDatasetKey()] || {rows:[]}).rows;
 let EMBEDDED_DATE = 'Google Sheet CSV';
 // ──────────────────────────────────────────────────────────────────
 
-const STATUS_BOARD_LOCAL_XLSX_FILE = 'MS-신호등Data-0713.xlsx';
+const STATUS_BOARD_LOCAL_XLSX_FILE = 'MS-신호등data-0713.xlsx';
 const STATUS_BOARD_LOCAL_XLSX_FALLBACK_FILES = [STATUS_BOARD_LOCAL_XLSX_FILE];
 
 function getStatusBoardLocalXlsxCandidateUrls(){
@@ -2527,7 +2527,7 @@ async function loadLocalStatusBoardXlsxData(){
       const buf = await res.arrayBuffer();
       const wb = XLSX.read(buf, { type:'array', cellDates:false, raw:false });
       const sheetName = (wb.SheetNames || [])[0];
-      if(!sheetName) throw new Error('MS-신호등Data-0713.xlsx에 시트가 없습니다.');
+      if(!sheetName) throw new Error('MS-신호등data-0713.xlsx에 시트가 없습니다.');
       const ws = wb.Sheets[sheetName];
       const matrix = XLSX.utils.sheet_to_json(ws, { header:1, defval:'', raw:false });
       const rows = matrixToObjects(matrix);
@@ -2543,7 +2543,7 @@ async function loadLocalStatusBoardXlsxData(){
     }
   }
 
-  throw lastError || new Error('MS-신호등Data-0713.xlsx를 찾지 못했습니다.');
+  throw lastError || new Error('MS-신호등data-0713.xlsx를 찾지 못했습니다.');
 }
 
 async function loadGoogleSheetData(){
@@ -2554,7 +2554,7 @@ async function loadGoogleSheetData(){
     const parsedRows = (result.rows || []).filter(function(row){
       return Object.keys(row).some(function(key){ return String(row[key] == null ? '' : row[key]).trim(); });
     });
-    if(!parsedRows.length) throw new Error('MS-신호등Data-0713.xlsx에서 데이터 행을 찾지 못했습니다.');
+    if(!parsedRows.length) throw new Error('MS-신호등data-0713.xlsx에서 데이터 행을 찾지 못했습니다.');
 
     const sheetTabName = result.sheetName || SHEET_WEEK_FALLBACK_LABEL;
     const displayDateLabel = result.fileDateLabel || sheetTabName;
@@ -2577,7 +2577,7 @@ async function loadGoogleSheetData(){
     selectedDivision = '';
     const dashboard = document.getElementById('dashboard');
     if(dashboard){
-      dashboard.innerHTML = '<div class="empty">MS-신호등Data-0713.xlsx 파일을 index.html과 같은 폴더에 넣어주세요.</div>';
+      dashboard.innerHTML = '<div class="empty">MS-신호등data-0713.xlsx 파일을 index.html과 같은 폴더에 넣어주세요.</div>';
     }
     setStatusPageLoading(false);
   }
