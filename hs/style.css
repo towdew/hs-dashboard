@@ -1595,11 +1595,11 @@ body{
 
 /* ── Google Sheet HTML-driven table ───────────────────────── */
 .sheet-filter-row{
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
   margin:0 0 12px;
 }
 .sheet-filter-left{display:flex;align-items:center;gap:10px;min-width:0}
-.sheet-filter-left strong{font-size:13px;font-weight:800;color:#1A1D2E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:420px}
+.sheet-filter-left strong{font-size:14px;font-weight:800;color:#000000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:420px}
 .sheet-filter-right{display:flex;align-items:center;gap:8px}
 .sheet-table-card{background:#fff;border:1px solid #E8EAF2;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(15,18,30,.04); padding: 24px;}
 .sheet-table-scroll{overflow:auto; border: 1px solid #E8EAF2; border-radius: 10px;}
