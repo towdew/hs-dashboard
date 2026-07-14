@@ -3701,6 +3701,7 @@ function bindTableDragScroll(container){
   let startScrollLeft = 0;
   let dragged = false;
   let suppressClick = false;
+  let hasPointerCapture = false;
   const threshold = 5;
 
   container.addEventListener('pointerdown', function(e){
@@ -3712,14 +3713,23 @@ function bindTableDragScroll(container){
     startScrollLeft = container.scrollLeft;
     dragged = false;
     suppressClick = false;
-    container.classList.add('is-dragging');
-    try{ container.setPointerCapture(pointerId); }catch(err){}
+    hasPointerCapture = false;
+    // Do not capture on pointerdown. Capturing here changes the following
+    // click target to .matrix-wrap and prevents the status-cell popup.
   });
 
   container.addEventListener('pointermove', function(e){
     if(pointerId !== e.pointerId) return;
     const deltaX = e.clientX - startX;
-    if(!dragged && Math.abs(deltaX) >= threshold) dragged = true;
+
+    if(!dragged && Math.abs(deltaX) >= threshold){
+      dragged = true;
+      container.classList.add('is-dragging');
+      try{
+        container.setPointerCapture(pointerId);
+        hasPointerCapture = true;
+      }catch(err){}
+    }
     if(!dragged) return;
 
     e.preventDefault();
@@ -3728,11 +3738,17 @@ function bindTableDragScroll(container){
 
   function endDrag(e){
     if(pointerId === null || (e && e.pointerId !== pointerId)) return;
+    const endedPointerId = pointerId;
     suppressClick = dragged;
-    try{ container.releasePointerCapture(pointerId); }catch(err){}
     pointerId = null;
     dragged = false;
     container.classList.remove('is-dragging');
+
+    if(hasPointerCapture){
+      try{ container.releasePointerCapture(endedPointerId); }catch(err){}
+    }
+    hasPointerCapture = false;
+
     if(suppressClick){
       window.setTimeout(function(){ suppressClick = false; }, 150);
     }
@@ -3741,18 +3757,19 @@ function bindTableDragScroll(container){
   container.addEventListener('pointerup', endDrag);
   container.addEventListener('pointercancel', endDrag);
   container.addEventListener('lostpointercapture', function(){
-    if(pointerId !== null){
-      suppressClick = dragged;
+    if(pointerId !== null && dragged){
+      suppressClick = true;
       pointerId = null;
       dragged = false;
+      hasPointerCapture = false;
       container.classList.remove('is-dragging');
-      if(suppressClick){
-        window.setTimeout(function(){ suppressClick = false; }, 150);
-      }
+      window.setTimeout(function(){ suppressClick = false; }, 150);
     }
   });
 
   container.addEventListener('click', function(e){
+    // Suppress only the synthetic click that immediately follows a real drag.
+    // A normal click keeps its original TD target, so the popup handler runs.
     if(!suppressClick) return;
     e.preventDefault();
     e.stopImmediatePropagation();
@@ -4858,7 +4875,7 @@ async function captureElementToPng(sourceEls, getFilename){
     .capture-inner{position:absolute !important; left:${CAPTURE_PADDING}px !important; top:${CAPTURE_PADDING}px !important; display:inline-block !important; width:auto !important; min-width:0 !important; max-width:none !important; overflow:visible !important;}
     .capture-clone th, .capture-clone td{padding:8px 10px !important;}
     .capture-clone .matrix-card, .capture-clone .detail-card{display:block !important; width:max-content !important; min-width:max-content !important; max-width:none !important; overflow:visible !important; margin-left:0 !important; margin-right:0 !important;}
-    .capture-clone .guide-card{width:100% !important; min-width:0 !important; max-width:none !important; box-sizing:border-box !important;}
+    .capture-clone .guide-card{width:1440px !important; min-width:1440px !important; max-width:1440px !important; box-sizing:border-box !important;}
     .capture-clone .summary-card{width:max-content !important; min-width:max-content !important; max-width:none !important;}
     .capture-clone .guide-grid{width:100% !important;}
     .capture-clone .matrix-wrap, .capture-clone .detail-scroll{display:block !important; width:max-content !important; min-width:max-content !important; max-width:none !important; max-height:none !important; overflow:visible !important;}
@@ -4946,12 +4963,9 @@ async function captureElementToPng(sourceEls, getFilename){
       const measuredCountryWidth = countryHead ? countryHead.getBoundingClientRect().width : 0;
       const countryColWidth = Math.max(110, Math.ceil(measuredCountryWidth || 120));
 
-      const measuredTableWidth = Math.max(
-        Math.ceil(table.getBoundingClientRect().width || 0),
-        Math.ceil(table.scrollWidth || 0),
-        Math.ceil(targetContentWidth || 0)
-      );
-      const reqColWidth = Math.max(104, Math.ceil((measuredTableWidth - countryColWidth) / reqHeads.length));
+      // 다운로드 이미지에서 각 Request 열은 항상 150px로 고정합니다.
+      // 화면 전체 폭에 맞춰 열을 강제로 늘리지 않아 지나치게 긴 이미지가 생성되는 것을 방지합니다.
+      const reqColWidth = 150;
       const finalTableWidth = countryColWidth + (reqColWidth * reqHeads.length);
 
       table.style.setProperty('--capture-country-col-width', countryColWidth + 'px');
@@ -4982,10 +4996,13 @@ async function captureElementToPng(sourceEls, getFilename){
       inner.style.minWidth = targetContentWidth + 'px';
       inner.style.maxWidth = 'none';
 
+      // Guide는 테이블 전체 폭까지 늘리지 않고 1440px로 유지합니다.
+      // 테이블이 더 넓으면 Guide 오른쪽 영역은 캡처 배경 여백으로 남습니다.
+      targetContentWidth = Math.max(targetContentWidth, 1440);
       inner.querySelectorAll('.guide-card').forEach(card => {
-        card.style.width = '100%';
-        card.style.minWidth = '0';
-        card.style.maxWidth = 'none';
+        card.style.width = '1440px';
+        card.style.minWidth = '1440px';
+        card.style.maxWidth = '1440px';
         card.style.boxSizing = 'border-box';
         card.style.marginLeft = '0';
         card.style.marginRight = '0';
@@ -5105,4 +5122,3 @@ async function downloadCountryImage(){
 
 </body>
 </html>
-
