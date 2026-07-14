@@ -1860,6 +1860,51 @@ function npiPsToggleSort(key) {
   npiPsRenderResults();
 }
 
+// 현재 필터+정렬이 적용된 행 목록(테이블 렌더·엑셀 다운로드 공용)
+function npiPsVisibleRows() {
+  var flatRows = npiPsFilterRows(npiPsFlatRows(), _npiPsFilter);
+  if (_npiPsSort.key) {
+    flatRows.sort(function(a, b) {
+      var va = npiPsSortValue(a, _npiPsSort.key), vb = npiPsSortValue(b, _npiPsSort.key);
+      var r = (typeof va === 'number' && typeof vb === 'number') ? (va - vb) : String(va).localeCompare(String(vb));
+      return r * _npiPsSort.dir;
+    });
+  } else {
+    flatRows.sort(function(a, b) {
+      var r = (a.row.region || '').localeCompare(b.row.region || '');
+      if (r !== 0) return r;
+      return (a.row.locale || '').localeCompare(b.row.locale || '');
+    });
+  }
+  return flatRows;
+}
+
+// 현재 화면(필터+정렬)을 xlsx로 다운로드 (SheetJS)
+function npiPsDownloadExcel() {
+  if (typeof XLSX === 'undefined') { alert('엑셀 라이브러리를 불러오지 못했습니다.'); return; }
+  var d = _npiProductStatusData;
+  if (!d) return;
+  var rows = npiPsVisibleRows();
+  var aoa = [NPI_PS_COLUMNS.map(function(c) { return c.label; })];
+  rows.forEach(function(item) {
+    var row = item.row;
+    var stageLabel = (function() {
+      var found = (d.stages || []).filter(function(s) { return s.key === item.stage; })[0];
+      return found ? found.label : item.stage;
+    })();
+    aoa.push([
+      row.region || '', row.sub || '', npiPsCountryName(row.locale), row.model || '',
+      stageLabel, item.status || '', row.detailKr || '', row.detailEn || '',
+      row.stgUrl || '', row.liveUrl || '', row.pttId || ''
+    ]);
+  });
+  var ws = XLSX.utils.aoa_to_sheet(aoa);
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'IT 제품 현황');
+  var stamp = String(d.generatedAt || '').replace(/[^0-9]/g, '').slice(0, 8) || 'export';
+  XLSX.writeFile(wb, 'IT_제품현황_' + stamp + '.xlsx');
+}
+
 // ── 검색창: 상태/클리어버튼은 즉시, 결과 재렌더는 디바운스(포커스/IME 보존) ──
 var _npiPsDebouncedRenderResults = dashDebounce(function() { npiPsRenderResults(); }, 150);
 
