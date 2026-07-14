@@ -1587,7 +1587,7 @@ function toggleNpiMonth(month) {
 // NPI IT PRODUCT STATUS VIEW (1회성 스냅샷: 43 NPI for IT product status_20260707)
 // ══════════════════════════════════════════════════════════════════
 var _npiProductStatusData = null;
-var _npiPsFilter = { stage: '', region: '', locale: '', search: '' };
+var _npiPsFilter = { stage: '', region: '', locale: '', search: '', excludeLive: false };
 
 var NPI_PS_COLOR_META = {
   green: { label: '진행 중', desc: '6월 진행중(일부 컨텐츠 누락) 또는 7월 NPI 진행 예정 — 목표일정 내 delivery 필요', dot: '#10B981', bg: '#ECFDF5', tc: '#065F46' },
@@ -1790,6 +1790,8 @@ function npiPsRenderFilterBar() {
   html += '<button type="button" class="dash-search-clear' + (_npiPsFilter.search ? ' dash-search-clear-visible' : '') + '" id="npiPsSearchClear" onclick="npiPsClearSearch()" aria-label="검색어 지우기">&times;</button>';
   html += '</div>';
 
+  html += '<label style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-caption);color:#475569;cursor:pointer;white-space:nowrap">' +
+    '<input type="checkbox" id="npiPsExcludeLive"' + (_npiPsFilter.excludeLive ? ' checked' : '') + ' onchange="npiPsSetFilter(\'excludeLive\', this.checked)">라이브 제외</label>';
   html += '<button type="button" class="url-lib-page-btn" id="npiPsResetBtn" onclick="npiPsResetFilter()">초기화</button>';
   html += '</div>';
 
@@ -1818,6 +1820,8 @@ function npiPsSyncFilterControls() {
   if (regionSel) regionSel.value = _npiPsFilter.region;
   var localeSel = document.getElementById('npiPsLocaleSelect');
   if (localeSel) localeSel.value = _npiPsFilter.locale;
+  var exLive = document.getElementById('npiPsExcludeLive');
+  if (exLive) exLive.checked = !!_npiPsFilter.excludeLive;
   var chips = document.querySelectorAll('.npi-ps-stage-chip');
   for (var i = 0; i < chips.length; i++) {
     var chip = chips[i];
@@ -1926,7 +1930,7 @@ function npiPsClearSearch() {
 
 // 초기화 — 필터 상태 전체 리셋 + select/입력값/칩 하이라이트 동기화 + 결과 재렌더(필터바 자체는 재생성 안 함)
 function npiPsResetFilter() {
-  _npiPsFilter = { stage: '', region: '', locale: '', search: '' };
+  _npiPsFilter = { stage: '', region: '', locale: '', search: '', excludeLive: false };
   _npiPsSort = { key: '', dir: 1 };
   var input = document.getElementById('npiPsSearchInput');
   if (input) input.value = '';
@@ -1939,8 +1943,11 @@ function npiPsResetFilter() {
 // STG(AEM 스테이징)/Live URL 셀 — PTT Raw 조인 값. http(s)가 아니면 '-' 표시.
 function npiPsUrlCell(url) {
   if (!url || !/^https?:\/\//i.test(url)) return '<span style="color:#CBD5E1">-</span>';
+  // 텍스트 '링크' 대신 외부링크 아이콘 버튼(호버 시 파랑, title에 전체 URL)
   return '<a href="' + escapeAttrSheet(url) + '" target="_blank" rel="noopener" title="' + escapeAttrSheet(url) +
-    '" style="color:#2563EB;font-weight:600;text-decoration:none">링크</a>';
+    '" class="npi-url-icon" aria-label="열기">' +
+    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a>';
 }
 
 // locale(예: 'IT-it','ca_en','UK-en') → 국가명. 언어별 사이트는 'Canada (en)'처럼 언어 병기.

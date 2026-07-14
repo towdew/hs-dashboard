@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14 11:37",
+  "generatedAt": "2026-07-14 11:47",
   "pttRawFile": "raw-data-20260714.xlsb",
   "cmsFile": "cms_merged_view_20260713_190952.csv",
   "sourceFile": "43 NPI for IT product status_20260707.xlsx",
@@ -446,10 +446,10 @@
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
           "statusTip": "",
-          "stageForce": "",
+          "stageForce": "etc",
           "stageFallback": "",
           "pimChecked": true,
-          "stage": "precheck"
+          "stage": "etc"
         },
         {
           "region": "EU",
@@ -468,10 +468,10 @@
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
           "statusTip": "",
-          "stageForce": "",
+          "stageForce": "etc",
           "stageFallback": "",
           "pimChecked": true,
-          "stage": "precheck"
+          "stage": "etc"
         },
         {
           "region": "EU",
@@ -490,10 +490,10 @@
           "liveUrl": "",
           "cmsLive": "STG만",
           "statusTip": "",
-          "stageForce": "",
+          "stageForce": "etc",
           "stageFallback": "",
           "pimChecked": true,
-          "stage": "precheck"
+          "stage": "etc"
         },
         {
           "region": "EU",
@@ -512,10 +512,10 @@
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
           "statusTip": "",
-          "stageForce": "",
+          "stageForce": "etc",
           "stageFallback": "",
           "pimChecked": true,
-          "stage": "precheck"
+          "stage": "etc"
         },
         {
           "region": "EU",
@@ -537,7 +537,7 @@
           "stageForce": "",
           "stageFallback": "",
           "pimChecked": true,
-          "stage": "precheck"
+          "stage": "etc"
         },
         {
           "region": "EU",
@@ -556,10 +556,10 @@
           "liveUrl": "",
           "cmsLive": "STG만",
           "statusTip": "",
-          "stageForce": "",
+          "stageForce": "etc",
           "stageFallback": "",
           "pimChecked": true,
-          "stage": "precheck"
+          "stage": "etc"
         },
         {
           "region": "EU",
@@ -578,10 +578,10 @@
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
           "statusTip": "",
-          "stageForce": "",
+          "stageForce": "etc",
           "stageFallback": "",
           "pimChecked": true,
-          "stage": "precheck"
+          "stage": "etc"
         },
         {
           "region": "EU",
@@ -600,7 +600,7 @@
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
           "statusTip": "",
-          "stageForce": "",
+          "stageForce": "etc",
           "stageFallback": "",
           "pimChecked": true,
           "stage": "etc"
@@ -622,7 +622,7 @@
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
           "statusTip": "",
-          "stageForce": "",
+          "stageForce": "etc",
           "stageFallback": "",
           "pimChecked": true,
           "stage": "etc"
@@ -644,7 +644,7 @@
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
           "statusTip": "",
-          "stageForce": "",
+          "stageForce": "etc",
           "stageFallback": "",
           "pimChecked": true,
           "stage": "etc"
@@ -666,7 +666,7 @@
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
           "statusTip": "",
-          "stageForce": "",
+          "stageForce": "etc",
           "stageFallback": "",
           "pimChecked": true,
           "stage": "etc"
@@ -768,56 +768,6 @@
       ]
     },
     {
-      "status": "라이브",
-      "colorClass": "orange",
-      "rows": [
-        {
-          "region": "EU",
-          "sub": "LGEES",
-          "locale": "ES-es",
-          "model": "16Z90TL-G.AU88BN",
-          "salesModelKey": "ES-es-16Z90TL-G.AU88BN",
-          "pttId": "WR2259877AK",
-          "pttStatus": "[WPL] Change req. need close",
-          "targetStagingDate": "2026-06-15",
-          "detailKr": "기게시(라이브)",
-          "detailEn": "Already published (live)",
-          "expectedLocalTargetDate": "",
-          "pdpStatus": "N",
-          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/es/es/portatiles/gram/16z90tl-g.html?wcmmode=disabled",
-          "liveUrl": "",
-          "cmsLive": "등록·미게시",
-          "statusTip": "",
-          "stageForce": "live",
-          "stageFallback": "",
-          "pimChecked": true,
-          "stage": "live"
-        },
-        {
-          "region": "SEA",
-          "sub": "LGEJP",
-          "locale": "JP-ja",
-          "model": "16Z90TS-G.AU89J",
-          "salesModelKey": "JP-ja-16Z90TS-G",
-          "pttId": "#N/A",
-          "pttStatus": "#N/A",
-          "targetStagingDate": "",
-          "detailKr": "기게시(라이브)",
-          "detailEn": "Already published (live)",
-          "expectedLocalTargetDate": "",
-          "pdpStatus": "N",
-          "stgUrl": "",
-          "liveUrl": "https://www.lg.com/jp/mobile-pc/gram/16z90ts-gu89j/",
-          "cmsLive": "라이브",
-          "statusTip": "",
-          "stageForce": "live",
-          "stageFallback": "",
-          "pimChecked": true,
-          "stage": "live"
-        }
-      ]
-    },
-    {
       "status": "수정완료",
       "colorClass": "orange",
       "rows": [
@@ -898,6 +848,62 @@
           "liveUrl": "",
           "cmsLive": "PIM 미등록",
           "stage": "client_review"
+        }
+      ]
+    },
+    {
+      "status": "?",
+      "colorClass": "orange",
+      "rows": [
+        {
+          "region": "EU",
+          "sub": "LGEES",
+          "locale": "ES-es",
+          "model": "16Z90TL-G.AU88BN",
+          "salesModelKey": "ES-es-16Z90TL-G.AU88BN",
+          "pttId": "WR2259877AK",
+          "pttStatus": "[WPL] Change req. need close",
+          "targetStagingDate": "2026-06-15",
+          "detailKr": "PIM 등록 · Readiness 미노출",
+          "detailEn": "Registered in PIM, not shown in Readiness Check",
+          "expectedLocalTargetDate": "",
+          "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/es/es/portatiles/gram/16z90tl-g.html?wcmmode=disabled",
+          "liveUrl": "",
+          "cmsLive": "등록·미게시",
+          "statusTip": "4/27 오픈 전 제품은 Readiness Check에 미노출",
+          "stageForce": "",
+          "stageFallback": "",
+          "pimChecked": true,
+          "stage": "etc"
+        }
+      ]
+    },
+    {
+      "status": "라이브",
+      "colorClass": "orange",
+      "rows": [
+        {
+          "region": "SEA",
+          "sub": "LGEJP",
+          "locale": "JP-ja",
+          "model": "16Z90TS-G.AU89J",
+          "salesModelKey": "JP-ja-16Z90TS-G",
+          "pttId": "#N/A",
+          "pttStatus": "#N/A",
+          "targetStagingDate": "",
+          "detailKr": "기게시(라이브)",
+          "detailEn": "Already published (live)",
+          "expectedLocalTargetDate": "",
+          "pdpStatus": "N",
+          "stgUrl": "",
+          "liveUrl": "https://www.lg.com/jp/mobile-pc/gram/16z90ts-gu89j/",
+          "cmsLive": "라이브",
+          "statusTip": "",
+          "stageForce": "live",
+          "stageFallback": "",
+          "pimChecked": true,
+          "stage": "live"
         }
       ]
     }
