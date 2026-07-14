@@ -82,7 +82,7 @@ body{
   display:flex;align-items:center;gap:10px;
   padding:9px 12px;margin:1px 8px;border-radius:8px;
   cursor:pointer;transition:all .15s;
-  color:#6B7280;font-size:12px;font-weight:500;
+  color:#333333;font-size:12px;font-weight:600;
   white-space:nowrap;overflow:hidden;position:relative;
 }
 .nav-item:hover{background:#F5F6FA;color:#1A1D2E}
