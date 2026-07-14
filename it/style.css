@@ -1920,6 +1920,24 @@ button,input,select,textarea{font-family:inherit}
   border: 1.5px solid #E2E8F0;
   border-radius: 8px;
 }
+.npi-url-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid #D9DEE8;
+  border-radius: 7px;
+  color: #64748B;
+  background: #fff;
+  transition: all .15s;
+}
+.npi-url-icon:hover {
+  border-color: #2563EB;
+  color: #2563EB;
+  background: #EFF6FF;
+}
+
 .npi-detail-table {
   width: 100%;
   border-collapse: collapse;

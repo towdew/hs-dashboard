@@ -7,6 +7,7 @@ function npiPsFilterRows(flatRows, filter) {
   var q = (f.search || '').toLowerCase().trim();
   return (flatRows || []).filter(function (item) {
     var row = item.row || {};
+    if (f.excludeLive && item.stage === 'live') return false;
     if (f.stage && item.stage !== f.stage) return false;
     if (f.region && row.region !== f.region) return false;
     if (f.locale && row.locale !== f.locale) return false;
