@@ -1783,7 +1783,7 @@ body{
   display: flex;
   flex-wrap: wrap;
   align-items:center;
-  gap:5px;
+  gap: 3px;
   min-width:0;
   max-width:100%;
   color:#000000;
@@ -1806,7 +1806,7 @@ body{
   display:inline-flex;
   align-items:center;
   flex-wrap:wrap;
-  gap:4px 10px;
+  gap: 0 10px;
   min-width:0;
 }
 .weekly-update-url{
