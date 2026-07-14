@@ -1623,11 +1623,37 @@ function npiPsProcessFlowHtml(stageCounts) {
   var arrow = '<div style="color:#CBD5E1;font-size:20px;font-weight:800;padding:0 2px">→</div>';
   var branch = '<div style="display:inline-flex;flex-direction:column;gap:6px">' +
     box('client_review', 'Client Review') + box('clarify', 'Clarify') + '</div>';
-  return '<div style="margin-top:14px">' +
-    '<div style="font-size:var(--fs-caption);font-weight:700;color:#64748B;margin-bottom:8px">진행 프로세스</div>' +
-    '<div style="display:flex;align-items:center;gap:6px;flex-wrap:nowrap;padding:14px;background:#F8FAFC;border-radius:14px;overflow-x:auto">' +
+  return '<div style="display:flex;align-items:center;gap:6px;flex-wrap:nowrap;padding:14px;background:#F8FAFC;border-radius:14px;overflow-x:auto">' +
     box('precheck', 'Precheck') + arrow + box('in_progress', 'In Progress') + arrow + branch + arrow + box('live', 'Live') +
+    '</div>';
+}
+
+function npiPsOpenProcessModal() {
+  var d = _npiProductStatusData;
+  if (!d) return;
+  var stageCounts = npiPsStageCounts(npiPsFlatRows());
+  var html = '<div class="modal-overlay" id="npiPsProcessModal" onclick="if(event.target===this)closeNpiPsProcessModal()">' +
+    '<div class="modal-card" style="max-width:760px" onclick="event.stopPropagation()">' +
+      '<div class="country-modal-header"><div class="country-modal-info">' +
+        '<div class="country-modal-title">진행 프로세스</div>' +
+        '<div class="country-modal-meta"><span style="font-size:11px;color:#9BA3BF">Precheck → In Progress → Client Review / Clarify → Live</span></div>' +
+      '</div><button class="modal-close-btn" onclick="closeNpiPsProcessModal()">✕</button></div>' +
+      '<div style="padding:20px">' + npiPsProcessFlowHtml(stageCounts) + '</div>' +
     '</div></div>';
+  var wrap = document.createElement('div');
+  wrap.innerHTML = html;
+  document.body.appendChild(wrap.firstChild);
+  document.addEventListener('keydown', npiPsProcessModalEsc);
+}
+
+function npiPsProcessModalEsc(e) {
+  if (e.key === 'Escape') closeNpiPsProcessModal();
+}
+
+function closeNpiPsProcessModal() {
+  var m = document.getElementById('npiPsProcessModal');
+  if (m) m.remove();
+  document.removeEventListener('keydown', npiPsProcessModalEsc);
 }
 
 // groups(JSON) → 필터/집계용 평탄화 배열 [{status,colorClass,stage,row}]
@@ -1692,8 +1718,9 @@ function renderNpiProductStatusContent() {
       '<span class="npi-stage-dot" style="background:' + meta.color + '"></span>' +
       escapeHtmlSheet(s.label) + ' ' + cnt + '건</span>';
   });
+  // 진행 프로세스는 버튼 클릭 시 모달로 노출(2026-07-14 사용자 지시)
+  html += '<button onclick="npiPsOpenProcessModal()" style="margin-left:4px;cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:999px;padding:4px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">진행 프로세스 보기</button>';
   html += '</div>';
-  html += npiPsProcessFlowHtml(stageCounts);
 
   // 필터바 컨테이너 — 탭 진입 시 1회만 npiPsRenderFilterBar()로 채워지고, 이후 필터 변경 시
   // 재생성되지 않는다(입력 포커스/IME 조합 상태 유지 — url_library 탭과 동일한 부분 렌더 패턴).
@@ -1794,6 +1821,40 @@ function npiPsSyncFilterControls() {
   }
 }
 
+// ── 컬럼 정렬 상태 + 정의 (헤더 클릭 오름/내림차순) ──
+var _npiPsSort = { key: '', dir: 1 };
+var NPI_PS_COLUMNS = [
+  { key: 'region', label: 'Region' }, { key: 'sub', label: 'Sub' },
+  { key: 'country', label: 'Country' }, { key: 'model', label: 'Model' },
+  { key: 'stage', label: 'Stage' }, { key: 'status', label: 'Status' },
+  { key: 'detailKr', label: 'Detail KR' }, { key: 'detailEn', label: 'Detail English' },
+  { key: 'stg', label: 'STG' }, { key: 'live', label: 'Live URL' }, { key: 'ptt', label: 'PTT Task ID' }
+];
+// 스테이지 정렬은 프로세스 진행 순서(precheck→…→live)로. Clarify는 client_review와 동급.
+var NPI_PS_STAGE_RANK = { precheck: 1, in_progress: 2, client_review: 3, clarify: 3, live: 5, cancelled: 6, etc: 7 };
+function npiPsSortValue(item, key) {
+  var row = item.row;
+  switch (key) {
+    case 'region': return row.region || '';
+    case 'sub': return row.sub || '';
+    case 'country': return npiPsCountryName(row.locale);
+    case 'model': return row.model || '';
+    case 'stage': return NPI_PS_STAGE_RANK[item.stage] || 9;
+    case 'status': return item.status || '';
+    case 'detailKr': return row.detailKr || '';
+    case 'detailEn': return row.detailEn || '';
+    case 'stg': return (row.stgUrl || '').indexOf('http') === 0 ? 1 : 0;
+    case 'live': return (row.liveUrl || '').indexOf('http') === 0 ? 1 : 0;
+    case 'ptt': return row.pttId || '';
+    default: return '';
+  }
+}
+function npiPsToggleSort(key) {
+  if (_npiPsSort.key === key) _npiPsSort.dir = -_npiPsSort.dir;
+  else { _npiPsSort.key = key; _npiPsSort.dir = 1; }
+  npiPsRenderResults();
+}
+
 // ── 검색창: 상태/클리어버튼은 즉시, 결과 재렌더는 디바운스(포커스/IME 보존) ──
 var _npiPsDebouncedRenderResults = dashDebounce(function() { npiPsRenderResults(); }, 150);
 
@@ -1816,6 +1877,7 @@ function npiPsClearSearch() {
 // 초기화 — 필터 상태 전체 리셋 + select/입력값/칩 하이라이트 동기화 + 결과 재렌더(필터바 자체는 재생성 안 함)
 function npiPsResetFilter() {
   _npiPsFilter = { stage: '', region: '', locale: '', search: '' };
+  _npiPsSort = { key: '', dir: 1 };
   var input = document.getElementById('npiPsSearchInput');
   if (input) input.value = '';
   urlLibToggleClearBtn('npiPsSearchClear', '');
@@ -1852,26 +1914,33 @@ function npiPsRenderResults() {
   var d = _npiProductStatusData;
   var totalRows = (d && d.totalRows) || 0;
 
-  // ── 단일 통합 테이블 (Region → LOCALE 정렬, 원본 12컬럼 + Stage 컬럼) ──
+  // ── 단일 통합 테이블 (기본 Region → LOCALE 정렬, 컬럼 헤더 클릭 시 오름/내림차순) ──
   var allFlatRows = npiPsFlatRows();
   var flatRows = npiPsFilterRows(allFlatRows, _npiPsFilter);
-  flatRows.sort(function(a, b) {
-    var r = (a.row.region || '').localeCompare(b.row.region || '');
-    if (r !== 0) return r;
-    return (a.row.locale || '').localeCompare(b.row.locale || '');
-  });
+  if (_npiPsSort.key) {
+    flatRows.sort(function(a, b) {
+      var va = npiPsSortValue(a, _npiPsSort.key), vb = npiPsSortValue(b, _npiPsSort.key);
+      var r = (typeof va === 'number' && typeof vb === 'number') ? (va - vb) : String(va).localeCompare(String(vb));
+      return r * _npiPsSort.dir;
+    });
+  } else {
+    flatRows.sort(function(a, b) {
+      var r = (a.row.region || '').localeCompare(b.row.region || '');
+      if (r !== 0) return r;
+      return (a.row.locale || '').localeCompare(b.row.locale || '');
+    });
+  }
 
   var html = '<div style="padding:16px 24px">';
   html += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500;margin-bottom:8px">' + flatRows.length.toLocaleString() + '건 / 전체 ' + totalRows.toLocaleString() + '건</div>';
   html += '<div class="npi-detail-table-wrap" style="overflow-x:auto">';
   html += '<table class="npi-detail-table" style="min-width:1300px">';
-  // 컬럼 구성 2026-07-10 사용자 지시: Task Status in PTT·key_Sales Model Code 제외,
-  // PTT Task ID는 맨 오른쪽 — 원문 pttStatus는 PTT Task ID 툴팁으로만 유지
-  html += '<thead><tr>' +
-    '<th>Region</th><th>Sub</th><th>Country</th><th>Model</th>' +
-    '<th>Stage</th><th>Status</th><th>Detail KR</th><th>Detail English</th>' +
-    '<th>STG</th><th>Live URL</th><th>PTT Task ID</th>' +
-    '</tr></thead><tbody>';
+  html += '<thead><tr>' + NPI_PS_COLUMNS.map(function(c) {
+    var arrow = (_npiPsSort.key === c.key) ? (_npiPsSort.dir > 0 ? ' ▲' : ' ▼') : ' ⇅';
+    var arrowColor = (_npiPsSort.key === c.key) ? '#2563EB' : '#CBD5E1';
+    return '<th style="cursor:pointer;user-select:none;white-space:nowrap" onclick="npiPsToggleSort(\'' + c.key + '\')" title="클릭: 정렬">' +
+      escapeHtmlSheet(c.label) + '<span style="color:' + arrowColor + ';font-size:10px">' + arrow + '</span></th>';
+  }).join('') + '</tr></thead><tbody>';
   flatRows.forEach(function(item) {
     var row = item.row;
     var stageMeta = npiPsStageMeta(item.stage);
