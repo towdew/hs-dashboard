@@ -2172,7 +2172,12 @@ function renderUrlLibraryContent() {
   headerHtml += '<div class="ov-head-total"><div class="ov-head-total-num ov-head-total-sites">';
   headerHtml += '<strong>' + allModels.length.toLocaleString() + '</strong>개 모델 · ';
   headerHtml += '<strong>' + (_urlLibData.totalUrls || 0).toLocaleString() + '</strong>개 URL';
-  headerHtml += '<span style="color:#94A3B8;font-size:var(--fs-caption);font-weight:500;margin-left:8px">(' + (_urlLibData.cmsSource || '') + ')</span>';
+  // 파일명은 숨기고 업데이트 날짜만 표기(2026-07-14 사용자 지시) — cmsSource의 YYYYMMDD에서 파생
+  var urlLibUpdated = (function() {
+    var m = /(20\d{2})(\d{2})(\d{2})/.exec(_urlLibData.cmsSource || '');
+    return m ? (m[1] + '-' + m[2] + '-' + m[3]) : (_urlLibData.generatedAt || '');
+  })();
+  if (urlLibUpdated) headerHtml += '<span style="color:#94A3B8;font-size:var(--fs-caption);font-weight:500;margin-left:8px">업데이트: ' + escapeHtmlSheet(urlLibUpdated) + '</span>';
   headerHtml += '</div></div></div>';
 
   // 뷰 전환 탭
