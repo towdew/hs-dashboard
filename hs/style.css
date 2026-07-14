@@ -144,7 +144,7 @@ body{
   background:#A50034;color:#fff;margin-left:4px;
 }
 .topbar-badge.admin{background:#1A1D2E}
-.topbar-meta{font-size:11px;color:#9BA3BF;font-weight:400}
+.topbar-meta{font-size:14px;color:#000000;font-weight:800}
 .topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px}
 .topbar-btn{
   display:flex;align-items:center;gap:6px;padding:7px 14px;
