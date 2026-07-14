@@ -1643,6 +1643,11 @@ function npiPsOpenProcessModal() {
   var wrap = document.createElement('div');
   wrap.innerHTML = html;
   document.body.appendChild(wrap.firstChild);
+  // .modal-overlay는 기본 opacity:0 → modal-show 클래스로 페이드인(다른 모달과 동일 패턴)
+  setTimeout(function() {
+    var m = document.getElementById('npiPsProcessModal');
+    if (m) m.classList.add('modal-show');
+  }, 10);
   document.addEventListener('keydown', npiPsProcessModalEsc);
 }
 
@@ -1915,24 +1920,13 @@ function npiPsRenderResults() {
   var totalRows = (d && d.totalRows) || 0;
 
   // ── 단일 통합 테이블 (기본 Region → LOCALE 정렬, 컬럼 헤더 클릭 시 오름/내림차순) ──
-  var allFlatRows = npiPsFlatRows();
-  var flatRows = npiPsFilterRows(allFlatRows, _npiPsFilter);
-  if (_npiPsSort.key) {
-    flatRows.sort(function(a, b) {
-      var va = npiPsSortValue(a, _npiPsSort.key), vb = npiPsSortValue(b, _npiPsSort.key);
-      var r = (typeof va === 'number' && typeof vb === 'number') ? (va - vb) : String(va).localeCompare(String(vb));
-      return r * _npiPsSort.dir;
-    });
-  } else {
-    flatRows.sort(function(a, b) {
-      var r = (a.row.region || '').localeCompare(b.row.region || '');
-      if (r !== 0) return r;
-      return (a.row.locale || '').localeCompare(b.row.locale || '');
-    });
-  }
+  var flatRows = npiPsVisibleRows();
 
   var html = '<div style="padding:16px 24px">';
-  html += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500;margin-bottom:8px">' + flatRows.length.toLocaleString() + '건 / 전체 ' + totalRows.toLocaleString() + '건</div>';
+  html += '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px">';
+  html += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500">' + flatRows.length.toLocaleString() + '건 / 전체 ' + totalRows.toLocaleString() + '건</div>';
+  html += '<button onclick="npiPsDownloadExcel()" style="cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:8px;padding:5px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">⬇ 엑셀 다운로드</button>';
+  html += '</div>';
   html += '<div class="npi-detail-table-wrap" style="overflow-x:auto">';
   html += '<table class="npi-detail-table" style="min-width:1300px">';
   html += '<thead><tr>' + NPI_PS_COLUMNS.map(function(c) {
