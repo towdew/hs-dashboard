@@ -1054,15 +1054,32 @@
       border-left:2px solid rgba(255,255,255,0.5) !important;
       border-right:none !important;
     }
-    /* 리전 헤더 행 — 그레이 풀폭 */
-    .mx-table tr.mx-region-row td.mx-region-cell{
-      background:#EBEBEB; color:var(--lg-gray-6);
-      font-weight:800 !important; font-size:12px;
-      letter-spacing:.4px; padding:7px 12px;
-      position:sticky; left:0; z-index:5;
-      border-top:2px solid #B8B8B8; border-bottom:1px solid #D8D8D8;
+    /* 리전 헤더 행 — 리전명은 Country 열 너비로 좌측 고정, 오른쪽은 배경만 이어짐 */
+    .mx-table tr.mx-region-row td{
+      border-top:2px solid #B8B8B8;
+      border-bottom:1px solid #D8D8D8;
     }
-    .mx-table tr.mx-region-row td.mx-region-cell[data-shade="b"]{ background:#E4E4E4; }
+    .mx-table tr.mx-region-row td.mx-region-cell{
+      position:sticky;
+      left:0;
+      z-index:8;
+      width:120px !important;
+      min-width:120px !important;
+      max-width:120px !important;
+      padding:7px 12px;
+      background:#EBEBEB;
+      color:var(--lg-gray-6);
+      font-weight:800 !important;
+      font-size:12px;
+      letter-spacing:.4px;
+      white-space:nowrap;
+      box-shadow:1px 0 0 #D8D8D8;
+    }
+    .mx-table tr.mx-region-row td.mx-region-fill{
+      padding:0;
+      background:#EBEBEB;
+    }
+    .mx-table tr.mx-region-row td[data-shade="b"]{ background:#E4E4E4; }
     /* 국가 셀 — 좌측 고정 */
     .mx-table td.mx-country-cell{
       position:sticky; left:0; z-index:4;
@@ -3513,7 +3530,10 @@ function buildMatrixTable(visibleRows, visibleCountries){
   Object.keys(regionMap).sort().forEach(function(region){
     const shade = (shadeIdx % 2 === 0) ? 'a' : 'b';
     shadeIdx++;
-    tbody += '<tr class="mx-region-row"><td class="mx-region-cell" data-shade="' + shade + '" colspan="' + colCount + '">' + esc(region) + '</td></tr>';
+    tbody += '<tr class="mx-region-row">' +
+      '<td class="mx-region-cell" data-shade="' + shade + '">' + esc(region) + '</td>' +
+      '<td class="mx-region-fill" data-shade="' + shade + '" colspan="' + columns.length + '"></td>' +
+      '</tr>';
     regionMap[region].sort().forEach(function(c){
       tbody += '<tr class="mx-country-row" data-country="' + esc(c) + '">';
       tbody += '<td class="mx-country-cell">' + esc(getCountryName(c)) + '</td>';
