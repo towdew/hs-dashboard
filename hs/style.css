@@ -1611,7 +1611,7 @@ body{
 .sheet-empty{color:#CBD5E1}
 .sheet-link{color:#2563EB;text-decoration:none;font-weight:600}
 .sheet-link:hover{text-decoration:underline}
-.sheet-status-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:800;white-space:nowrap}
+.sheet-status-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:700;white-space:nowrap}
 .sheet-status-pill span{width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0}
 @media(max-width:768px){
   .sheet-filter-row{align-items:stretch;flex-direction:column}
@@ -1661,7 +1661,7 @@ body{
 .ov-head-total-stack{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
 .ov-head-total-chip{display:flex;align-items:baseline;gap:5px;padding:9px 12px;border-radius:6px;border:1px solid #E8EAF2;background:#fff;box-shadow:0 1px 2px rgba(15,18,30,.04);min-width:92px;justify-content:center}
 .ov-head-total-chip-sites{background:#FFFFFF;border-color:#F2F2F2;color:#000000}
-.ov-head-total-chip-pages{background:#FFFFFF;border-color:#F2F2F2;color:#1D4ED8}
+.ov-head-total-chip-pages{background:#FFFFFF;border-color:#F2F2F2;color:#EA1917}
 .ov-head-total-value{font-size:24px;font-weight:900;letter-spacing:-.7px;font-variant-numeric:tabular-nums;line-height:1}
 .ov-head-total-unit{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
 @media (max-width:768px){
@@ -1785,7 +1785,7 @@ body{
   gap:5px;
   min-width:0;
   max-width:100%;
-  color:#1E40AF;
+  color:#000000;
   font-size:12px;
   line-height:1.45;
   font-weight:600;
