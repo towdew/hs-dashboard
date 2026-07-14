@@ -1611,6 +1611,26 @@ function npiPsStageMeta(stageKey) {
 }
 
 // groups(JSON) → 필터/집계용 평탄화 배열 [{status,colorClass,stage,row}]
+// 스테이지 진행 프로세스 흐름도: Precheck → In Progress → (Client Review / Clarify) → Live
+function npiPsProcessFlowHtml(stageCounts) {
+  function box(key, label) {
+    var m = npiPsStageMeta(key);
+    var n = stageCounts[key] || 0;
+    return '<div style="display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:104px;padding:10px 12px;border-radius:12px;background:' + m.bg + ';color:' + m.tc + ';border:1px solid ' + m.color + '55">' +
+      '<div style="display:flex;align-items:center;gap:5px;font-size:var(--fs-caption);font-weight:700"><span style="width:7px;height:7px;border-radius:50%;background:' + m.color + '"></span>' + escapeHtmlSheet(label) + '</div>' +
+      '<div style="font-size:20px;font-weight:800;line-height:1.15">' + n + '</div></div>';
+  }
+  var arrow = '<div style="color:#CBD5E1;font-size:20px;font-weight:800;padding:0 2px">→</div>';
+  var branch = '<div style="display:inline-flex;flex-direction:column;gap:6px">' +
+    box('client_review', 'Client Review') + box('clarify', 'Clarify') + '</div>';
+  return '<div style="margin-top:14px">' +
+    '<div style="font-size:var(--fs-caption);font-weight:700;color:#64748B;margin-bottom:8px">진행 프로세스</div>' +
+    '<div style="display:flex;align-items:center;gap:6px;flex-wrap:nowrap;padding:14px;background:#F8FAFC;border-radius:14px;overflow-x:auto">' +
+    box('precheck', 'Precheck') + arrow + box('in_progress', 'In Progress') + arrow + branch + arrow + box('live', 'Live') +
+    '</div></div>';
+}
+
+// groups(JSON) → 필터/집계용 평탄화 배열 [{status,colorClass,stage,row}]
 function npiPsFlatRows() {
   var d = _npiProductStatusData;
   var groups = (d && d.groups) || [];
@@ -1673,6 +1693,7 @@ function renderNpiProductStatusContent() {
       escapeHtmlSheet(s.label) + ' ' + cnt + '건</span>';
   });
   html += '</div>';
+  html += npiPsProcessFlowHtml(stageCounts);
 
   // 필터바 컨테이너 — 탭 진입 시 1회만 npiPsRenderFilterBar()로 채워지고, 이후 필터 변경 시
   // 재생성되지 않는다(입력 포커스/IME 조합 상태 유지 — url_library 탭과 동일한 부분 렌더 패턴).
@@ -1851,12 +1872,8 @@ function npiPsRenderResults() {
     '<th>Stage</th><th>Status</th><th>Detail KR</th><th>Detail English</th>' +
     '<th>STG</th><th>Live URL</th><th>PTT Task ID</th>' +
     '</tr></thead><tbody>';
-  // status가 완료/라이브 계열이면 원본 색상(orange 등)과 무관하게 초록 칩으로 강제 표시.
-  var GREEN_STATUSES = { '수정완료': 1, '라이브': 1, '완료': 1, '등록완료': 1 };
   flatRows.forEach(function(item) {
     var row = item.row;
-    var meta = NPI_PS_COLOR_META[item.colorClass] || NPI_PS_COLOR_META.other;
-    if (GREEN_STATUSES[item.status]) meta = NPI_PS_COLOR_META.green || meta;
     var stageMeta = npiPsStageMeta(item.stage);
     var stageLabel = (function() {
       var found = (d.stages || []).filter(function(s) { return s.key === item.stage; })[0];
@@ -1864,10 +1881,10 @@ function npiPsRenderResults() {
     })();
     var stageCell = '<span class="sheet-status-pill" style="background:' + stageMeta.bg + ';color:' + stageMeta.tc + '">' +
       '<span style="background:' + stageMeta.color + '"></span>' + escapeHtmlSheet(stageLabel) + '</span>';
-    var statusTip = row.statusTip || (GREEN_STATUSES[item.status] ? '' : (meta.desc || ''));
-    var statusCell = '<span class="sheet-status-pill" style="background:' + meta.bg + ';color:' + meta.tc + '"' +
-      (statusTip ? ' title="' + escapeAttrSheet(statusTip) + '"' : '') + '>' +
-      '<span style="background:' + meta.dot + '"></span>' + escapeHtmlSheet(item.status) + '</span>';
+    // Status 칩 색상은 Stage와 동일 팔레트로 통일(2026-07-14 사용자 지시). statusTip은 '?' 등만.
+    var statusCell = '<span class="sheet-status-pill" style="background:' + stageMeta.bg + ';color:' + stageMeta.tc + '"' +
+      (row.statusTip ? ' title="' + escapeAttrSheet(row.statusTip) + '"' : '') + '>' +
+      '<span style="background:' + stageMeta.color + '"></span>' + escapeHtmlSheet(item.status) + '</span>';
     html += '<tr>';
     html += '<td>' + escapeHtmlSheet(row.region) + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#64748B">' + escapeHtmlSheet(row.sub || '-') + '</td>';
