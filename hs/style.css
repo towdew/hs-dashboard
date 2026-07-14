@@ -1760,11 +1760,7 @@ body{
   font-weight:600;
 }
 .weekly-update-items{
-  display:flex;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:8px 12px;
-  margin-top:7px;
+  margin-top: 12px;
 }
 .weekly-update-line{
   display:inline-flex;
@@ -1783,24 +1779,26 @@ body{
   display: flex;
   flex-wrap: wrap;
   align-items:center;
-  gap: 3px;
   min-width:0;
   max-width:100%;
   color:#000000;
   font-size:12px;
   line-height:1.45;
   font-weight:600;
+  margin-top: 12px;
 }
 .weekly-update-line-bullet{
   color:#A50034;
   font-weight:900;
-  width: 3px;
+  width: 5px;
+  line-height: 1;
 }
 .weekly-update-line-country{
   color:#000000;
   font-weight:700;
   white-space:nowrap;
-  width: calc(100% - 8px);
+  width: calc(100% - 5px);
+  line-height: 1;
 }
 .weekly-update-url-list{
   display:inline-flex;
