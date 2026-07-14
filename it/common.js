@@ -1587,7 +1587,8 @@ function toggleNpiMonth(month) {
 // NPI IT PRODUCT STATUS VIEW (1회성 스냅샷: 43 NPI for IT product status_20260707)
 // ══════════════════════════════════════════════════════════════════
 var _npiProductStatusData = null;
-var _npiPsFilter = { stage: '', region: '', locale: '', search: '', excludeLive: false };
+// excludeLive 기본 체크(2026-07-14 사용자 지시) — 기본 화면은 라이브 제외 목록
+var _npiPsFilter = { stage: '', region: '', locale: '', search: '', excludeLive: true };
 
 var NPI_PS_COLOR_META = {
   green: { label: '진행 중', desc: '6월 진행중(일부 컨텐츠 누락) 또는 7월 NPI 진행 예정 — 목표일정 내 delivery 필요', dot: '#10B981', bg: '#ECFDF5', tc: '#065F46' },
@@ -1930,7 +1931,7 @@ function npiPsClearSearch() {
 
 // 초기화 — 필터 상태 전체 리셋 + select/입력값/칩 하이라이트 동기화 + 결과 재렌더(필터바 자체는 재생성 안 함)
 function npiPsResetFilter() {
-  _npiPsFilter = { stage: '', region: '', locale: '', search: '', excludeLive: false };
+  _npiPsFilter = { stage: '', region: '', locale: '', search: '', excludeLive: true };
   _npiPsSort = { key: '', dir: 1 };
   var input = document.getElementById('npiPsSearchInput');
   if (input) input.value = '';
