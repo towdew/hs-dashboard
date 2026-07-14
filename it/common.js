@@ -1834,8 +1834,8 @@ function npiPsRenderResults() {
   // 컬럼 구성 2026-07-10 사용자 지시: Task Status in PTT·key_Sales Model Code 제외,
   // PTT Task ID는 맨 오른쪽 — 원문 pttStatus는 PTT Task ID 툴팁으로만 유지
   html += '<thead><tr>' +
-    '<th>Region</th><th>Sub</th><th>LOCALE</th><th>Model</th>' +
-    '<th>Stage</th><th>status</th><th>Detail KR</th><th>Detail English</th>' +
+    '<th>Region</th><th>Sub</th><th>Locale</th><th>Model</th>' +
+    '<th>Stage</th><th>Status</th><th>Detail KR</th><th>Detail English</th>' +
     '<th>STG</th><th>Live URL</th><th>PTT Task ID</th>' +
     '</tr></thead><tbody>';
   flatRows.forEach(function(item) {
