@@ -7402,7 +7402,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/notebooks/gram/16mr70/",
           "publishUpdateDate": ""
         },
@@ -8094,7 +8094,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/notebooks/gram-2-in-1/16t90tp-k-aa78g/",
           "publishUpdateDate": ""
         },
@@ -11253,7 +11253,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/laptops/gram/16z90s-h-aa75a9/",
           "publishUpdateDate": ""
         },
@@ -11267,14 +11267,14 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/laptops/gram/16z90s-h-ad78a9/",
           "publishUpdateDate": ""
         },
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/laptops/gram/16z90s-h-aa78a9/",
           "publishUpdateDate": ""
         },
@@ -12015,21 +12015,21 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/laptops/gram/16z90sp-e-aa75a9/",
           "publishUpdateDate": ""
         },
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/laptops/gram/16z90sp-k-aa75a9/",
           "publishUpdateDate": ""
         },
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/laptops/gram/16z90sp-a-ad78a9/",
           "publishUpdateDate": ""
         },
@@ -12043,28 +12043,28 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/laptops/gram/16z90sp-k-aa78a9/",
           "publishUpdateDate": ""
         },
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/laptops/gram/16z90sp-e-aa78a9/",
           "publishUpdateDate": ""
         },
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/laptops/gram/16z90sp-e-ad78a9/",
           "publishUpdateDate": ""
         },
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/laptops/gram/16z90sp-a-ad7ba9/",
           "publishUpdateDate": ""
         },
@@ -12770,7 +12770,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/laptops/gram/16z90tl-g-au75a9/",
           "publishUpdateDate": ""
         },
@@ -12784,7 +12784,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/laptops/gram/16z90tl-g-au78a9/",
           "publishUpdateDate": ""
         },
@@ -12877,6 +12877,27 @@
           "country": "FR : FR (FR)",
           "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/fr/pc-portables/gram/lg-16z90tl-g-17mt70-bundle/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "FR : FR (fr)",
+          "country": "FR : FR (FR)",
+          "status": "HIDDEN",
+          "prodUrl": "https://www.lg.com/fr/pc-portables/gram/16z90tl-g-au75fn/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "FR : FR (fr)",
+          "country": "FR : FR (FR)",
+          "status": "HIDDEN",
+          "prodUrl": "https://www.lg.com/fr/pc-portables/gram/16z90tl-g-au78fn/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "FR : FR (fr)",
+          "country": "FR : FR (FR)",
+          "status": "HIDDEN",
+          "prodUrl": "https://www.lg.com/fr/pc-portables/gram/16z90tl-g-au88fn/",
           "publishUpdateDate": ""
         },
         {
@@ -13016,7 +13037,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/laptops/gram/16z90tp-k-ad88a9/",
           "publishUpdateDate": ""
         },
@@ -18104,6 +18125,20 @@
           "publishUpdateDate": ""
         },
         {
+          "locale": "FR : FR (fr)",
+          "country": "FR : FR (FR)",
+          "status": "HIDDEN",
+          "prodUrl": "https://www.lg.com/fr/pc-portables/gram/17z90tl-g-au75fn/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "FR : FR (fr)",
+          "country": "FR : FR (FR)",
+          "status": "HIDDEN",
+          "prodUrl": "https://www.lg.com/fr/pc-portables/gram/17z90tl-g-au88fn/",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "GLOBAL : GLOBAL (en)",
           "country": "GLOBAL : GLOBAL (EN)",
           "status": "ACTIVE",
@@ -18122,6 +18157,13 @@
           "country": "IT : IT (IT)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/it/notebook/gram/17z90tl-gau75d/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "IT : IT (it)",
+          "country": "IT : IT (IT)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/it/notebook/gram/17z90tl-g-au88dn/",
           "publishUpdateDate": ""
         },
         {
@@ -22633,6 +22675,21 @@
       ]
     },
     {
+      "modelName": "EAD62246899",
+      "salesModelCode": "EAD62246899",
+      "salesSuffixCode": "ACC",
+      "category": "Laptops",
+      "locales": [
+        {
+          "locale": "JP : JP (ja)",
+          "country": "JP : JP (JA)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/jp/care-accessories/laptops/others/ead62246899/",
+          "publishUpdateDate": ""
+        }
+      ]
+    },
+    {
       "modelName": "EAD64046006",
       "salesModelCode": "EAD64046006",
       "salesSuffixCode": "ACC",
@@ -22930,8 +22987,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/africa/cell-phones/lg-V500",
           "publishUpdateDate": ""
@@ -28018,8 +28075,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-20M37A-B",
           "publishUpdateDate": ""
@@ -31966,8 +32023,8 @@
       "category": "Monitors",
       "locales": [
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-22M38H-B",
           "publishUpdateDate": ""
@@ -36317,8 +36374,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-22MP55HQ-P",
           "publishUpdateDate": ""
@@ -36493,8 +36550,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-22MP56HQ-S",
           "publishUpdateDate": ""
@@ -37883,7 +37940,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/fhd-qhd/22mr41a-b/",
           "publishUpdateDate": ""
         },
@@ -37905,7 +37962,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/fhd-qhd/22mr41s-b/",
           "publishUpdateDate": ""
         },
@@ -37961,8 +38018,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-22MT44A",
           "publishUpdateDate": ""
@@ -38026,8 +38083,8 @@
       "category": "Monitors",
       "locales": [
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-22MT44N",
           "publishUpdateDate": ""
@@ -41070,8 +41127,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-23MP65HQ-P",
           "publishUpdateDate": ""
@@ -41630,8 +41687,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-23MP75HM",
           "publishUpdateDate": ""
@@ -41798,14 +41855,14 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_en/monitors/fhd-qhd/24ba400-b/",
           "publishUpdateDate": ""
         },
         {
           "locale": "CA_FR : CA (fr)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_fr/moniteurs/pleine-hd-et-qhd/24ba400-b/",
           "publishUpdateDate": ""
         },
@@ -42607,7 +42664,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/fhd-qhd/24ba650-b/",
           "publishUpdateDate": ""
         },
@@ -42853,7 +42910,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/fhd-qhd/24ba750-b/",
           "publishUpdateDate": ""
         },
@@ -43064,7 +43121,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/uhd-4k-5k/24ba850-b/",
           "publishUpdateDate": ""
         },
@@ -46091,7 +46148,7 @@
         {
           "locale": "PE : PE (es)",
           "country": "PE : PE (ES)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/pe/monitores/fhd-y-qhd/24g411a-b/",
           "publishUpdateDate": ""
         },
@@ -46112,7 +46169,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/gaming/24g411a-b/",
           "publishUpdateDate": ""
         },
@@ -46202,10 +46259,24 @@
       "category": "Monitors",
       "locales": [
         {
+          "locale": "BR : BR (pt)",
+          "country": "BR : BR (PT)",
+          "status": "HIDDEN",
+          "prodUrl": "https://www.lg.com/br/monitores/monitores-ultragear/24g411b-b/",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "CN : CN (zh)",
           "country": "CN : CN (ZH)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/cn/monitors/lg-24g411b-b",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "ID : ID (in)",
+          "country": "ID : ID (IN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/id/monitor/gaming/24g411b-b/",
           "publishUpdateDate": ""
         },
         {
@@ -46244,6 +46315,13 @@
       "salesSuffixCode": "AJL",
       "category": "Monitors",
       "locales": [
+        {
+          "locale": "CA_EN : CA (en)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_en/monitors/gaming/24g414b-b/",
+          "publishUpdateDate": ""
+        },
         {
           "locale": "HK : HK (zh)",
           "country": "HK : HK (ZH)",
@@ -49362,7 +49440,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/gaming/24gs50f-b/",
           "publishUpdateDate": ""
         },
@@ -49454,7 +49532,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/gaming/24gs50fx-b/",
           "publishUpdateDate": ""
         },
@@ -49532,7 +49610,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/gaming/24gs60f-b/",
           "publishUpdateDate": ""
         },
@@ -50053,7 +50131,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/fhd-qhd/24lq520s-pu/",
           "publishUpdateDate": ""
         },
@@ -50683,8 +50761,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-24M38H-B",
           "publishUpdateDate": ""
@@ -55590,8 +55668,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-24MP56HQ-P",
           "publishUpdateDate": ""
@@ -57275,8 +57353,8 @@
       "category": "Monitors",
       "locales": [
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-24MP76HM-S",
           "publishUpdateDate": ""
@@ -58185,7 +58263,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/fhd-qhd/24mp400-b/24mr400-b/",
           "publishUpdateDate": ""
         },
@@ -58298,7 +58376,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/fhd-qhd/24mr41a-b/",
           "publishUpdateDate": ""
         },
@@ -58872,8 +58950,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-24MT44A",
           "publishUpdateDate": ""
@@ -58894,8 +58972,8 @@
       "category": "Monitors",
       "locales": [
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-24MT44N",
           "publishUpdateDate": ""
@@ -59252,8 +59330,8 @@
       "category": "Monitors",
       "locales": [
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-24MT48A",
           "publishUpdateDate": ""
@@ -59281,8 +59359,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-24MT48AF-PT",
           "publishUpdateDate": ""
@@ -59402,8 +59480,8 @@
       "category": "Monitors",
       "locales": [
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-24MT48AN-PT",
           "publishUpdateDate": ""
@@ -59537,8 +59615,8 @@
       "category": "Monitors",
       "locales": [
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-24MT48N",
           "publishUpdateDate": ""
@@ -59581,8 +59659,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/tvs/lg-24MT48VF-PT",
           "publishUpdateDate": ""
@@ -62579,7 +62657,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/fhd-qhd/24u411a-b/",
           "publishUpdateDate": ""
         },
@@ -62714,7 +62792,7 @@
         {
           "locale": "CZ : CZ (cs)",
           "country": "CZ : CZ (CS)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/cz/monitory/full-hd-qhd/24u41ya-b/",
           "publishUpdateDate": ""
         },
@@ -62799,7 +62877,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/fhd-qhd/24u421a-b/",
           "publishUpdateDate": ""
         },
@@ -63643,6 +63721,13 @@
           "publishUpdateDate": ""
         },
         {
+          "locale": "IT : IT (it)",
+          "country": "IT : IT (IT)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/it/monitor/gaming/25g523b/",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "JP : JP (ja)",
           "country": "JP : JP (JA)",
           "status": "ACTIVE",
@@ -63915,7 +64000,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/fhd-qhd/25ms500-b/",
           "publishUpdateDate": ""
         },
@@ -64006,7 +64091,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/fhd-qhd/25ms500-b/",
           "publishUpdateDate": ""
         },
@@ -64176,7 +64261,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/smart-monitors/25sr50f-w/",
           "publishUpdateDate": ""
         },
@@ -64345,8 +64430,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-25UM57-Pr",
           "publishUpdateDate": ""
@@ -66602,7 +66687,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/fhd-qhd/27ba750-b/",
           "publishUpdateDate": ""
         },
@@ -66919,7 +67004,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_en/monitors/fhd-qhd/27ba850-b/",
           "publishUpdateDate": ""
         },
@@ -66933,7 +67018,7 @@
         {
           "locale": "CA_FR : CA (fr)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_fr/moniteurs/pleine-hd-et-qhd/27ba850-b/",
           "publishUpdateDate": ""
         },
@@ -67127,7 +67212,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "SUSPENDED",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/fhd-qhd/27bk430h-b/",
           "publishUpdateDate": ""
         },
@@ -68220,7 +68305,7 @@
         {
           "locale": "JP : JP (ja)",
           "country": "JP : JP (JA)",
-          "status": "HIDDEN",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/jp/monitors/fhd-qhd/27bq410b-b/",
           "publishUpdateDate": ""
         }
@@ -68242,7 +68327,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/uhd-4k-5k/27bq65ub-b/",
           "publishUpdateDate": ""
         },
@@ -69711,7 +69796,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_en/monitors/gaming/27g411a-b/",
           "publishUpdateDate": ""
         },
@@ -69725,7 +69810,7 @@
         {
           "locale": "CA_FR : CA (fr)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_fr/moniteurs/de-jeu/27g411a-b/",
           "publishUpdateDate": ""
         },
@@ -69970,7 +70055,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/gaming/27g411a-b/",
           "publishUpdateDate": ""
         },
@@ -70088,10 +70173,24 @@
       "category": "Monitors",
       "locales": [
         {
+          "locale": "BR : BR (pt)",
+          "country": "BR : BR (PT)",
+          "status": "HIDDEN",
+          "prodUrl": "https://www.lg.com/br/monitores/monitores-ultragear/27g411b-b/",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "CN : CN (zh)",
           "country": "CN : CN (ZH)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/cn/monitors/lg-27g411b-b",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "ID : ID (in)",
+          "country": "ID : ID (IN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/id/monitor/gaming/27g411b/",
           "publishUpdateDate": ""
         },
         {
@@ -70388,6 +70487,50 @@
           "country": "VN : VN (VI)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/vn/man-hinh-may-tinh/man-hinh-gaming-ultragear/27g440a-b/",
+          "publishUpdateDate": ""
+        }
+      ]
+    },
+    {
+      "modelName": "27G520B-B",
+      "salesModelCode": "27G520B-B",
+      "salesSuffixCode": "AUS",
+      "category": "Monitors",
+      "locales": [
+        {
+          "locale": "CA_EN : CA (en)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_en/monitors/gaming/27g520b-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "CA_FR : CA (fr)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_fr/moniteurs/de-jeu/27g520b-b/",
+          "publishUpdateDate": ""
+        }
+      ]
+    },
+    {
+      "modelName": "27G521B-B",
+      "salesModelCode": "27G521B-B",
+      "salesSuffixCode": "AUSQ",
+      "category": "Monitors",
+      "locales": [
+        {
+          "locale": "CA_EN : CA (en)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_en/monitors/gaming/27g521b-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "MX : MX (es)",
+          "country": "MX : MX (ES)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/mx/monitores/monitores-gaming/27g521b-b/",
           "publishUpdateDate": ""
         }
       ]
@@ -71176,6 +71319,13 @@
           "locale": "PL : PL (pl)",
           "country": "PL : PL (PL)",
           "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/pl/monitory/ultragear-gaming/27g640a-b-27g6/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "PL : PL (pl)",
+          "country": "PL : PL (PL)",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/pl/monitory/ultragear-gaming/27g640a-b/",
           "publishUpdateDate": ""
         },
@@ -71329,6 +71479,13 @@
           "publishUpdateDate": ""
         },
         {
+          "locale": "AU : AU (en)",
+          "country": "AU : AU (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/au/monitors/ultragear-gaming/27g810a-b/",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "BE : BE (nl)",
           "country": "BE : BE (NL)",
           "status": "ACTIVE",
@@ -71401,7 +71558,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/monitore/gaming/27g810a-b/",
           "publishUpdateDate": ""
         },
@@ -71647,7 +71804,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/gaming/27g850a-b/",
           "publishUpdateDate": ""
         },
@@ -73405,9 +73562,23 @@
     {
       "modelName": "27GM950B-B",
       "salesModelCode": "27GM950B-B",
-      "salesSuffixCode": "ACN",
+      "salesSuffixCode": "AMA",
       "category": "Monitors",
       "locales": [
+        {
+          "locale": "AE : AE (en)",
+          "country": "AE : AE (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ae/consumer-monitors/lg-27gm950b-b",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "AE_AR : AE (ar)",
+          "country": "AE",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ae_ar/consumer-monitors/lg-27gm950b-b",
+          "publishUpdateDate": ""
+        },
         {
           "locale": "AU : AU (en)",
           "country": "AU : AU (EN)",
@@ -80213,7 +80384,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/gaming/27gs50f-b/",
           "publishUpdateDate": ""
         },
@@ -80607,7 +80778,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/gaming/27gs60f-b/",
           "publishUpdateDate": ""
         },
@@ -80979,7 +81150,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/gaming/27gs60qc-b/",
           "publishUpdateDate": ""
         },
@@ -81641,7 +81812,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/gaming/27gs75q-b/",
           "publishUpdateDate": ""
         },
@@ -82685,7 +82856,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/ultragear-gaming-oled/27gs95qe-b/",
           "publishUpdateDate": ""
         },
@@ -82981,7 +83152,7 @@
         {
           "locale": "ID : ID (in)",
           "country": "ID : ID (IN)",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/id/monitor/gaming/27gx700a-b/",
           "publishUpdateDate": ""
         },
@@ -83124,6 +83295,13 @@
           "country": "BE",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/be_fr/moniteurs/moniteurs-gaming-ultragear/27gx704a-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "BE_FR : BE (fr)",
+          "country": "BE",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/be_fr/moniteurs/moniteurs-gaming-ultragear/27gx704a-24g411a/",
           "publishUpdateDate": ""
         },
         {
@@ -83288,6 +83466,13 @@
           "publishUpdateDate": ""
         },
         {
+          "locale": "FR : FR (fr)",
+          "country": "FR : FR (FR)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fr/moniteurs/gaming/lg-27gx704a-b-moniteur-ultragear/",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "HK : HK (zh)",
           "country": "HK : HK (ZH)",
           "status": "ACTIVE",
@@ -83339,7 +83524,7 @@
         {
           "locale": "JP : JP (ja)",
           "country": "JP : JP (JA)",
-          "status": "HIDDEN",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/jp/monitors/gaming-monitors/27gx704a-bajp/",
           "publishUpdateDate": ""
         },
@@ -83381,7 +83566,7 @@
         {
           "locale": "NL : NL (nl)",
           "country": "NL : NL (NL)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/nl/monitoren/ultragear-gaming-monitoren/27gx704a-24g411a/",
           "publishUpdateDate": ""
         },
@@ -83865,7 +84050,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/gaming/27gx790a-b-outlet/",
           "publishUpdateDate": ""
         },
@@ -84146,7 +84331,7 @@
         {
           "locale": "PE : PE (es)",
           "country": "PE : PE (ES)",
-          "status": "HIDDEN",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/pe/monitores/ultragear-gaming-oled/27gx790b-b/",
           "publishUpdateDate": ""
         },
@@ -84155,6 +84340,20 @@
           "country": "PL : PL (PL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/pl/monitory/ultragear-gaming/27gx790b-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "SA : SA (ar)",
+          "country": "SA : SA (AR)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa/monitors/ultragear-gaming-oled/27gx790b-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "SA_EN : SA (en)",
+          "country": "SA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa_en/monitors/ultragear-gaming-oled/27gx790b-b/",
           "publishUpdateDate": ""
         },
         {
@@ -91884,8 +92083,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-27MP75HM-P",
           "publishUpdateDate": ""
@@ -92716,7 +92915,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/fhd-qhd/27mr400-b/",
           "publishUpdateDate": ""
         },
@@ -92836,7 +93035,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/fhd-qhd/27mr41a-b/",
           "publishUpdateDate": ""
         },
@@ -95024,28 +95223,28 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/smart-monitors/27sr50f-p/",
           "publishUpdateDate": ""
         },
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/smart-monitors/27sr50f-g/",
           "publishUpdateDate": ""
         },
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/smart-monitors/27sr50f-b/",
           "publishUpdateDate": ""
         },
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/smart-monitors/27sr50f-e/",
           "publishUpdateDate": ""
         },
@@ -95628,7 +95827,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/smart-monitors/27sr75u-w/",
           "publishUpdateDate": ""
         },
@@ -95699,7 +95898,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/monitore/tv-monitore/27tq615s-pz/",
           "publishUpdateDate": ""
         },
@@ -96254,7 +96453,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/fhd-qhd/27u411a-b/",
           "publishUpdateDate": ""
         },
@@ -96305,7 +96504,7 @@
     {
       "modelName": "27U411B-B",
       "salesModelCode": "27U411B-B",
-      "salesSuffixCode": "ATV",
+      "salesSuffixCode": "AEU",
       "category": "Monitors",
       "locales": [
         {
@@ -96334,6 +96533,13 @@
           "country": "ID : ID (IN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/id/monitor/fhd-qhd/27u411b-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "IT : IT (it)",
+          "country": "IT : IT (IT)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/it/monitor/fhd-qhd/27u411b-b-aeu/",
           "publishUpdateDate": ""
         },
         {
@@ -97034,6 +97240,13 @@
           "publishUpdateDate": ""
         },
         {
+          "locale": "ID : ID (in)",
+          "country": "ID : ID (IN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/id/monitor/smart-monitors/27u511sb/",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "IN : IN (en)",
           "country": "IN : IN (EN)",
           "status": "ACTIVE",
@@ -97443,6 +97656,13 @@
           "publishUpdateDate": ""
         },
         {
+          "locale": "PH : PH (en)",
+          "country": "PH : PH (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ph/monitors/ultra-fine-uhd-4k/27u711b-b/",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "VN : VN (vi)",
           "country": "VN : VN (VI)",
           "status": "ACTIVE",
@@ -97767,6 +97987,13 @@
           "publishUpdateDate": ""
         },
         {
+          "locale": "JP : JP (ja)",
+          "country": "JP : JP (JA)",
+          "status": "HIDDEN",
+          "prodUrl": "https://www.lg.com/jp/monitors/4k-5k-monitors/27u730b-bajp/",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "PE : PE (es)",
           "country": "PE : PE (ES)",
           "status": "ACTIVE",
@@ -97812,7 +98039,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_en/monitors/smart-monitors/27u730sa-w/",
           "publishUpdateDate": ""
         },
@@ -104649,7 +104876,7 @@
           "locale": "BE : BE (nl)",
           "country": "BE : BE (NL)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/be/monitoren/ultrafine-uhd-4k-5k-monitoren/27up850k-w-aeu/",
+          "prodUrl": "https://www.lg.com/be/monitoren/ultrafine-uhd-4k-5k-monitoren/27up850k-w/",
           "publishUpdateDate": ""
         },
         {
@@ -104893,7 +105120,7 @@
         {
           "locale": "NL : NL (nl)",
           "country": "NL : NL (NL)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/nl/monitoren/ultrafine-uhd-4k-5k-monitoren/27up850k-w-27up/",
           "publishUpdateDate": ""
         },
@@ -105406,7 +105633,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/monitore/uhd-4k-5k/27up85np-w-aeu/",
           "publishUpdateDate": ""
         },
@@ -106468,7 +106695,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/uhd-4k-5k/27us500-w/",
           "publishUpdateDate": ""
         },
@@ -108090,8 +108317,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-28MT49VF-PT",
           "publishUpdateDate": ""
@@ -110077,8 +110304,8 @@
       "category": "Monitors",
       "locales": [
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-29EA93",
           "publishUpdateDate": ""
@@ -111017,7 +111244,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/monitore/monitor-bundles/29u511a-b-29u50011/",
           "publishUpdateDate": ""
         },
@@ -111180,6 +111407,13 @@
           "country": "PA : PA (ES)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/pa/monitores/ultrawide-monitores/29u511a-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "PE : PE (es)",
+          "country": "PE : PE (ES)",
+          "status": "HIDDEN",
+          "prodUrl": "https://www.lg.com/pe/monitores/ultrawide/29u511a-b/",
           "publishUpdateDate": ""
         },
         {
@@ -113250,8 +113484,8 @@
       "category": "Monitors",
       "locales": [
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-29UM68-P",
           "publishUpdateDate": ""
@@ -116076,14 +116310,14 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_en/monitors/ultrawide/29wq500-b/",
           "publishUpdateDate": ""
         },
         {
           "locale": "CA_FR : CA (fr)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_fr/moniteurs/ultra-large/29wq500-b/",
           "publishUpdateDate": ""
         },
@@ -117884,9 +118118,23 @@
     {
       "modelName": "32G403B-B",
       "salesModelCode": "32G403B-B",
-      "salesSuffixCode": "BTR",
+      "salesSuffixCode": "AUS",
       "category": "Monitors",
       "locales": [
+        {
+          "locale": "CA_EN : CA (en)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_en/monitors/gaming/32g403b-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "CA_FR : CA (fr)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_fr/moniteurs/de-jeu/32g403b-b/",
+          "publishUpdateDate": ""
+        },
         {
           "locale": "IN : IN (en)",
           "country": "IN : IN (EN)",
@@ -117897,7 +118145,7 @@
         {
           "locale": "JP : JP (ja)",
           "country": "JP : JP (JA)",
-          "status": "HIDDEN",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/jp/monitors/gaming-monitors/32g403b-b/",
           "publishUpdateDate": ""
         },
@@ -118439,7 +118687,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/monitore/gaming/32g810sa-w/",
           "publishUpdateDate": ""
         },
@@ -122859,7 +123107,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/gaming/32gs60qc-b/",
           "publishUpdateDate": ""
         },
@@ -123057,14 +123305,14 @@
         {
           "locale": "CZ : CZ (cs)",
           "country": "CZ : CZ (CS)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/cz/business/byznys/komercni-monitory/32gs75q-b/",
           "publishUpdateDate": ""
         },
         {
           "locale": "CZ : CZ (cs)",
           "country": "CZ : CZ (CS)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/cz/monitory/ultragear-gaming/32gs75q-b/",
           "publishUpdateDate": ""
         },
@@ -123253,7 +123501,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/gaming/32gs75q-b/",
           "publishUpdateDate": ""
         },
@@ -123373,7 +123621,7 @@
         {
           "locale": "CA_FR : CA (fr)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_fr/moniteurs/de-jeu/32gs75qn-b/",
           "publishUpdateDate": ""
         },
@@ -125332,6 +125580,13 @@
           "country": "CN : CN (ZH)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/cn/monitors/lg-32gx870b-b",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "CO : CO (es)",
+          "country": "CO : CO (ES)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/co/monitores/gaming/32gx870b-b/",
           "publishUpdateDate": ""
         },
         {
@@ -131402,7 +131657,7 @@
         {
           "locale": "JP : JP (ja)",
           "country": "JP : JP (JA)",
-          "status": "HIDDEN",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/jp/monitors/fhd-qhd/32u401b-b/",
           "publishUpdateDate": ""
         },
@@ -131426,6 +131681,13 @@
           "country": "AE : AE (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ae/business/monitors/lg-32u501sb-b-ama",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "ID : ID (in)",
+          "country": "ID : ID (IN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/id/monitor/smart-monitors/32u501sb/",
           "publishUpdateDate": ""
         },
         {
@@ -131732,6 +131994,20 @@
           "publishUpdateDate": ""
         },
         {
+          "locale": "CA_EN : CA (en)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_en/monitors/uhd-4k-5k/32u700b-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "CA_FR : CA (fr)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_fr/moniteurs/uhd-4k-et-5k/32u700b-b/",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "CN : CN (zh)",
           "country": "CN : CN (ZH)",
           "status": "ACTIVE",
@@ -131741,8 +132017,15 @@
         {
           "locale": "JP : JP (ja)",
           "country": "JP : JP (JA)",
-          "status": "HIDDEN",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/jp/monitors/4k-5k-monitors/32u700b-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "PE : PE (es)",
+          "country": "PE : PE (ES)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/pe/monitores/gamer/32u700b-b/",
           "publishUpdateDate": ""
         }
       ]
@@ -131754,9 +132037,23 @@
       "category": "Monitors",
       "locales": [
         {
+          "locale": "CA_EN : CA (en)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_en/monitors/uhd-4k-5k/32u701b-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "CA_FR : CA (fr)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_fr/moniteurs/uhd-4k-et-5k/32u701b-b/",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "JP : JP (ja)",
           "country": "JP : JP (JA)",
-          "status": "HIDDEN",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/jp/monitors/4k-5k-monitors/32u701b-b/",
           "publishUpdateDate": ""
         }
@@ -132060,7 +132357,7 @@
         {
           "locale": "JP : JP (ja)",
           "country": "JP : JP (JA)",
-          "status": "HIDDEN",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/jp/monitors/4k-5k-monitors/32u720b-b/",
           "publishUpdateDate": ""
         }
@@ -138771,7 +139068,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/monitore/uhd-4k-5k/32uq850v-w/",
           "publishUpdateDate": ""
         },
@@ -139363,7 +139660,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/monitore/uhd-4k-5k/32ur500k-b/",
           "publishUpdateDate": ""
         },
@@ -139475,7 +139772,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/uhd-4k-5k/32ur500k-b/",
           "publishUpdateDate": ""
         },
@@ -140004,7 +140301,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_en/monitors/ultrawide/34ba75qe-b/",
           "publishUpdateDate": ""
         },
@@ -140018,7 +140315,7 @@
         {
           "locale": "CA_FR : CA (fr)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_fr/moniteurs/ultra-large/34ba75qe-b/",
           "publishUpdateDate": ""
         },
@@ -140039,7 +140336,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/monitore/business-monitore/34ba75qe-b_aeu/",
           "publishUpdateDate": ""
         },
@@ -143082,7 +143379,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/gaming/34gp63ap-b/",
           "publishUpdateDate": ""
         },
@@ -143484,7 +143781,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/monitore/gaming/34gs95qe-b/",
           "publishUpdateDate": ""
         },
@@ -143715,7 +144012,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/gaming/34gs95qe-b/",
           "publishUpdateDate": ""
         },
@@ -144056,6 +144353,13 @@
           "country": "PA : PA (ES)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/pa/monitores/ultragear-monitores/34gx900a-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "PL : PL (pl)",
+          "country": "PL : PL (PL)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/pl/monitory/ultragear-gaming/34gx900a-b-29u5/",
           "publishUpdateDate": ""
         },
         {
@@ -144488,6 +144792,20 @@
       "category": "Monitors",
       "locales": [
         {
+          "locale": "HK : HK (zh)",
+          "country": "HK : HK (ZH)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/hk/monitors/gaming/34gx90sb-w/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "HK_EN : HK (en)",
+          "country": "HK",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/hk_en/monitors/gaming/34gx90sb-w/",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "JP : JP (ja)",
           "country": "JP : JP (JA)",
           "status": "ACTIVE",
@@ -144619,7 +144937,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/monitore/smarte-monitore/34sr65qc-b/",
           "publishUpdateDate": ""
         },
@@ -144774,7 +145092,7 @@
         {
           "locale": "CZ : CZ (cs)",
           "country": "CZ : CZ (CS)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/cz/monitory/ultrawide-sirokouhle-monitory/34u511a-b/",
           "publishUpdateDate": ""
         },
@@ -145124,6 +145442,20 @@
           "publishUpdateDate": ""
         },
         {
+          "locale": "CA_EN : CA (en)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_en/monitors/ultrawide/34u601b-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "CA_FR : CA (fr)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_fr/moniteurs/ultra-large/34u601b-b/",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "CN : CN (zh)",
           "country": "CN : CN (ZH)",
           "status": "ACTIVE",
@@ -145345,7 +145677,7 @@
         {
           "locale": "JP : JP (ja)",
           "country": "JP : JP (JA)",
-          "status": "HIDDEN",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/jp/monitors/21-9-ultra-wide-monitors/34u60zb-b/",
           "publishUpdateDate": ""
         }
@@ -145462,6 +145794,27 @@
           "country": "AE : AE (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ae/business/monitors/lg-34u640b-b",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "CA_EN : CA (en)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_en/monitors/ultrawide/34u640b-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "CA_EN : CA (en)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_en/business/it-products/monitors/ultrawide-monitors/34u640b-b/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "CA_FR : CA (fr)",
+          "country": "CA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ca_fr/moniteurs/ultra-large/34u640b-b/",
           "publishUpdateDate": ""
         },
         {
@@ -145974,8 +146327,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-34UC79G-B",
           "publishUpdateDate": ""
@@ -148108,8 +148461,8 @@
       "category": "Monitors",
       "locales": [
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-34UM65",
           "publishUpdateDate": ""
@@ -148341,8 +148694,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-34UM68-P",
           "publishUpdateDate": ""
@@ -149332,8 +149685,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/africa/monitors/lg-34UM95",
           "publishUpdateDate": ""
@@ -155662,7 +156015,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/ultrawide/34wq500-b/",
           "publishUpdateDate": ""
         },
@@ -157168,7 +157521,7 @@
         {
           "locale": "CZ : CZ (cs)",
           "country": "CZ : CZ (CS)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/cz/monitory/ultrawide-sirokouhle-monitory/34wr50qk-b/",
           "publishUpdateDate": ""
         },
@@ -157371,7 +157724,7 @@
         {
           "locale": "NL : NL (nl)",
           "country": "NL : NL (NL)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/nl/monitoren/ultrawide-monitoren/34wr50qk-b-34wr/",
           "publishUpdateDate": ""
         },
@@ -157947,7 +158300,7 @@
         {
           "locale": "CZ : CZ (cs)",
           "country": "CZ : CZ (CS)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/cz/monitory/ultrawide-sirokouhle-monitory/34wr55qk-b/",
           "publishUpdateDate": ""
         },
@@ -158108,7 +158461,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/ultrawide/34wr55qk-b/",
           "publishUpdateDate": ""
         },
@@ -159099,7 +159452,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/monitore/ultrawide/35wn75cp-b/",
           "publishUpdateDate": ""
         },
@@ -159501,7 +159854,7 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_en/monitors/smart-monitors/37u730sa-w/",
           "publishUpdateDate": ""
         },
@@ -159515,7 +159868,7 @@
         {
           "locale": "CA_FR : CA (fr)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_fr/moniteurs/moniteurs-intelligents/37u730sa-w/",
           "publishUpdateDate": ""
         },
@@ -162253,7 +162606,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/ultrawide/38wr85qc-w/",
           "publishUpdateDate": ""
         },
@@ -162450,7 +162803,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/monitore/gaming/39gs95qe-b/",
           "publishUpdateDate": ""
         },
@@ -163160,7 +163513,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/gaming/39gx90sa-w-outlet/",
           "publishUpdateDate": ""
         },
@@ -163232,9 +163585,23 @@
     {
       "modelName": "39GX90SB-W",
       "salesModelCode": "39GX90SB-W",
-      "salesSuffixCode": "AJL",
+      "salesSuffixCode": "AHK",
       "category": "Monitors",
       "locales": [
+        {
+          "locale": "HK : HK (zh)",
+          "country": "HK : HK (ZH)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/hk/monitors/gaming/39gx90sb-w/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "HK_EN : HK (en)",
+          "country": "HK",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/hk_en/monitors/gaming/39gx90sb-w/",
+          "publishUpdateDate": ""
+        },
         {
           "locale": "JP : JP (ja)",
           "country": "JP : JP (JA)",
@@ -163408,7 +163775,7 @@
           "locale": "PL : PL (pl)",
           "country": "PL : PL (PL)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/pl/monitory/39gx950b-b/",
+          "prodUrl": "https://www.lg.com/pl/monitory/ultragear-gaming-oled/39gx950b-b/",
           "publishUpdateDate": ""
         },
         {
@@ -163689,7 +164056,7 @@
         {
           "locale": "ID : ID (in)",
           "country": "ID : ID (IN)",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/id/monitor/uhd-4k/40u990a/",
           "publishUpdateDate": ""
         },
@@ -166180,7 +166547,7 @@
         {
           "locale": "PE : PE (es)",
           "country": "PE : PE (ES)",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/pe/monitores/ultrawide/45GR75DC-B/",
           "publishUpdateDate": ""
         },
@@ -167114,7 +167481,7 @@
         {
           "locale": "PT : PT (pt)",
           "country": "PT : PT (PT)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/pt/monitores/gaming/45gs95qe-b/",
           "publishUpdateDate": ""
         },
@@ -167855,7 +168222,7 @@
         {
           "locale": "PE : PE (es)",
           "country": "PE : PE (ES)",
-          "status": "ACTIVE",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/pe/monitores/ultragear-gaming-oled/45gx90sb-b/",
           "publishUpdateDate": ""
         }
@@ -167954,14 +168321,14 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/ca_en/monitors/gaming/45gx950a-b/",
           "publishUpdateDate": ""
         },
         {
           "locale": "CA_FR : CA (fr)",
           "country": "CA",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/ca_fr/moniteurs/de-jeu/45gx950a-b/",
           "publishUpdateDate": ""
         },
@@ -179073,7 +179440,7 @@
           "locale": "VN : VN (vi)",
           "country": "VN : VN (VI)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/vn/phu-kien-khac/eay62768625/",
+          "prodUrl": "https://www.lg.com/vn/phu-kien/man-hinh-may-tinh/bo-doi-nguon-day-nguon/eay62768625/",
           "publishUpdateDate": ""
         }
       ]
@@ -186199,6 +186566,13 @@
           "country": "DE : DE (DE)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/de/monitore/smarte-monitore/sta33p/",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "JP : JP (ja)",
+          "country": "JP : JP (JA)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/jp/care-accessories/monitors/others/sta33p/",
           "publishUpdateDate": ""
         },
         {
@@ -193914,8 +194288,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/africa/projectors/lg-BG630",
           "publishUpdateDate": ""
@@ -193964,8 +194338,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/africa/projectors/lg-BG650",
           "publishUpdateDate": ""
@@ -196598,14 +196972,14 @@
         {
           "locale": "CA_EN : CA (en)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_en/projectors/portable-lifestyle-projectors/cqs710pb/",
           "publishUpdateDate": ""
         },
         {
           "locale": "CA_FR : CA (fr)",
           "country": "CA",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ca_fr/projecteur/portable-lifestlye-projecteurs/cqs710pb/",
           "publishUpdateDate": ""
         },
@@ -199375,7 +199749,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/beamer/heimkinoprojektoren/hu710pw/",
           "publishUpdateDate": ""
         },
@@ -200215,7 +200589,7 @@
         {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/de/beamer/heimkinoprojektoren/hu810pw/",
           "publishUpdateDate": ""
         },
@@ -201209,8 +201583,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/africa/projectors/lg-PA1000",
           "publishUpdateDate": ""
@@ -201336,8 +201710,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/africa/projectors/lg-PA70G",
           "publishUpdateDate": ""
@@ -201500,8 +201874,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/africa/projectors/lg-PB60G",
           "publishUpdateDate": ""
@@ -203025,8 +203399,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/africa/projectors/lg-PG60G",
           "publishUpdateDate": ""
@@ -203335,8 +203709,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/africa/projectors/lg-PH300",
           "publishUpdateDate": ""
@@ -205852,8 +206226,8 @@
           "publishUpdateDate": ""
         },
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/africa/projectors/lg-PW600G",
           "publishUpdateDate": ""
@@ -206128,8 +206502,8 @@
       "category": "Projectors",
       "locales": [
         {
-          "locale": "AFRICA : AC (en)",
-          "country": "AFRICA : AC (EN)",
+          "locale": "AFRICA : NG (en)",
+          "country": "AFRICA : NG (EN)",
           "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/africa/projectors/lg-PW800G",
           "publishUpdateDate": ""
@@ -206403,8 +206777,8 @@
     "Monitors",
     "Projectors"
   ],
-  "totalModels": 2004,
-  "totalUrls": 27195,
-  "generatedAt": "2026-07-09",
-  "cmsSource": "cms_merged_view_20260706_124714.csv"
+  "totalModels": 2007,
+  "totalUrls": 27245,
+  "generatedAt": "2026-07-14",
+  "cmsSource": "cms_merged_view_20260713_190952.csv"
 }
