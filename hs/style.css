@@ -1780,7 +1780,8 @@ body{
 }
 .weekly-update-line:hover .weekly-update-line-text{text-decoration:underline}
 .weekly-update-group{
-  display:inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   align-items:center;
   gap:5px;
   min-width:0;
@@ -1793,11 +1794,13 @@ body{
 .weekly-update-line-bullet{
   color:#A50034;
   font-weight:900;
+  width: 3px;
 }
 .weekly-update-line-country{
   color:#000000;
   font-weight:700;
   white-space:nowrap;
+  width: calc(100% - 8px);
 }
 .weekly-update-url-list{
   display:inline-flex;
