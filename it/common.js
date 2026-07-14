@@ -1675,6 +1675,42 @@ function npiPsFlatRows() {
   return flatRows;
 }
 
+// 스테이지 요약 칩 HTML — stage 자신을 제외한 현재 필터(faceted)를 반영해 카운트.
+// (stage 칩을 눌러도 다른 칩 숫자가 0으로 무너지지 않고 비교 가능하게 유지)
+function npiPsBuildSummaryChipsHtml() {
+  var d = _npiProductStatusData;
+  if (!d) return '';
+  var facet = Object.assign({}, _npiPsFilter, { stage: '' });
+  var counts = npiPsStageCounts(npiPsFilterRows(npiPsFlatRows(), facet));
+  var html = '';
+  (d.stages || []).forEach(function(s) {
+    var cnt = counts[s.key] || 0;
+    if (!cnt) return;
+    var meta = npiPsStageMeta(s.key);
+    var isActive = _npiPsFilter.stage === s.key;
+    html += '<span class="npi-stage-chip npi-ps-stage-chip' + (isActive ? ' npi-ps-stage-chip-active' : '') +
+      '" data-stage="' + escapeAttrSheet(s.key) + '" style="background:' + meta.bg + ';color:' + meta.tc + ';font-weight:700" onclick="npiPsToggleStageChip(\'' + escapeAttrSheet(s.key) + '\')">' +
+      '<span class="npi-stage-dot" style="background:' + meta.color + '"></span>' +
+      escapeHtmlSheet(s.label) + ' ' + cnt + '건</span>';
+  });
+  return html;
+}
+
+// 상단 숫자(총 건수·스테이지 칩)를 현재 필터에 맞춰 갱신 — npiPsRenderResults에서 호출.
+function npiPsUpdateSummary(filteredCount) {
+  var d = _npiProductStatusData;
+  if (!d) return;
+  var totalEl = document.getElementById('npiPsTotalNum');
+  if (totalEl) {
+    var all = d.totalRows || 0;
+    totalEl.innerHTML = (filteredCount === all)
+      ? '총 <strong>' + all + '</strong>건'
+      : '총 <strong>' + filteredCount + '</strong>건 <span style="font-size:var(--fs-caption);font-weight:500;color:#94A3B8">/ 전체 ' + all + '</span>';
+  }
+  var chipsEl = document.getElementById('npiPsSummaryChips');
+  if (chipsEl) chipsEl.innerHTML = npiPsBuildSummaryChipsHtml();
+}
+
 function renderNpiProductStatusContent() {
   updateTopbarTitle();
   const wrap = document.getElementById('contentWrap');
@@ -1704,26 +1740,13 @@ function renderNpiProductStatusContent() {
     html += '<div style="font-size:var(--fs-caption);font-weight:500;color:#94A3B8;margin-top:2px">업데이트: ' + escapeHtmlSheet(d.generatedAt) + '</div>';
   }
   html += '</div>';
-  html += '<div class="ov-head-total"><div class="ov-head-total-num ov-head-total-sites">총 <strong>' + (d.totalRows || 0) + '</strong>건</div></div>';
+  html += '<div class="ov-head-total"><div class="ov-head-total-num ov-head-total-sites" id="npiPsTotalNum">총 <strong>' + (d.totalRows || 0) + '</strong>건</div></div>';
   html += '</div>';
 
-  // 요약 칩: 표준 stage 체계로 재구성(엑셀 원본 초록/주황 분류는 테이블의 status 컬럼으로 이동).
-  // 칩은 이 헤더 블록 안에서 탭 진입 시 1회만 빌드되며, 이후 클릭/필터 변경 시에는
-  // npiPsSyncFilterControls()가 active 클래스만 직접 토글한다(재렌더 아님).
-  var allFlatRows = npiPsFlatRows();
-  var stageCounts = npiPsStageCounts(allFlatRows);
-  var stages = d.stages || [];
+  // 요약 칩: 상단 숫자는 필터에 따라 갱신(2026-07-14 사용자 지시) — npiPsUpdateSummary()가
+  // 결과 재렌더 때마다 이 컨테이너(#npiPsSummaryChips)와 총 건수(#npiPsTotalNum)를 다시 그린다.
   html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center">';
-  stages.forEach(function(s) {
-    var cnt = stageCounts[s.key] || 0;
-    if (!cnt) return;
-    var meta = npiPsStageMeta(s.key);
-    var isActive = _npiPsFilter.stage === s.key;
-    html += '<span class="npi-stage-chip npi-ps-stage-chip' + (isActive ? ' npi-ps-stage-chip-active' : '') +
-      '" data-stage="' + escapeAttrSheet(s.key) + '" style="background:' + meta.bg + ';color:' + meta.tc + ';font-weight:700" onclick="npiPsToggleStageChip(\'' + escapeAttrSheet(s.key) + '\')">' +
-      '<span class="npi-stage-dot" style="background:' + meta.color + '"></span>' +
-      escapeHtmlSheet(s.label) + ' ' + cnt + '건</span>';
-  });
+  html += '<span id="npiPsSummaryChips" style="display:contents">' + npiPsBuildSummaryChipsHtml() + '</span>';
   // 진행 프로세스는 버튼 클릭 시 모달로 노출(2026-07-14 사용자 지시)
   html += '<button onclick="npiPsOpenProcessModal()" style="margin-left:4px;cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:999px;padding:4px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">진행 프로세스 보기</button>';
   html += '</div>';
@@ -2022,6 +2045,7 @@ function npiPsRenderResults() {
   html += '</tbody></table></div></div>';
 
   resultsEl.innerHTML = html;
+  npiPsUpdateSummary(flatRows.length);
   syncNavBadges();
 }
 
