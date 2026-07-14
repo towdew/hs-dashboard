@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14 09:51",
+  "generatedAt": "2026-07-14 10:03",
   "pttRawFile": "raw-data-20260714.xlsb",
   "cmsFile": "cms_merged_view_20260713_190952.csv",
   "sourceFile": "43 NPI for IT product status_20260707.xlsx",
@@ -807,48 +807,6 @@
       ]
     },
     {
-      "status": "마무리 작업 요청중",
-      "colorClass": "orange",
-      "rows": [
-        {
-          "region": "EU",
-          "sub": "LGEES",
-          "locale": "ES-es",
-          "model": "16U55U-G.AU88BN",
-          "salesModelKey": "ES-es-16U55U-G.AU88BN",
-          "pttId": "WR2271028AK",
-          "pttStatus": "[WPL] Client Review",
-          "targetStagingDate": "",
-          "detailKr": "6월 NPI - 마무리중",
-          "detailEn": "proceeding as a part of Jun NPI\n(contents were missing in June)",
-          "expectedLocalTargetDate": "",
-          "pdpStatus": "N",
-          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/es/es/business/informatica/ordenadores/portatiles-para-creadores/16u55u-g-au88bn.html?wcmmode=disabled",
-          "liveUrl": "",
-          "cmsLive": "등록·미게시",
-          "stage": "client_review"
-        },
-        {
-          "region": "SEA",
-          "sub": "LGEAP",
-          "locale": "AU-en",
-          "model": "16Z90U-G.AU75AP",
-          "salesModelKey": "AU-en-16Z90U-G.AU75AP",
-          "pttId": "WR2294601MM",
-          "pttStatus": "[WPL] Client Review",
-          "targetStagingDate": "",
-          "detailKr": "6월 NPI - 마무리중",
-          "detailEn": "proceeding as a part of Jun NPI\n(contents were missing in June)\ntask is under Client Review, waiting for final approval from local.",
-          "expectedLocalTargetDate": "",
-          "pdpStatus": "N",
-          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/au/en/laptops/gram-pro/16z90u-g-au75ap.html?wcmmode=disabled",
-          "liveUrl": "",
-          "cmsLive": "PIM 미등록",
-          "stage": "client_review"
-        }
-      ]
-    },
-    {
       "status": "수정완료",
       "colorClass": "orange",
       "rows": [
@@ -887,6 +845,48 @@
           "liveUrl": "https://www.lg.com/ca_fr/computing/purchase-guide/laptops/17Z90ur-p/",
           "cmsLive": "PIM 미등록",
           "stage": "live"
+        }
+      ]
+    },
+    {
+      "status": "클라이언트 리뷰중",
+      "colorClass": "orange",
+      "rows": [
+        {
+          "region": "EU",
+          "sub": "LGEES",
+          "locale": "ES-es",
+          "model": "16U55U-G.AU88BN",
+          "salesModelKey": "ES-es-16U55U-G.AU88BN",
+          "pttId": "WR2271028AK",
+          "pttStatus": "[WPL] Client Review",
+          "targetStagingDate": "",
+          "detailKr": "6월 NPI - 마무리중",
+          "detailEn": "proceeding as a part of Jun NPI\n(contents were missing in June)",
+          "expectedLocalTargetDate": "",
+          "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/es/es/business/informatica/ordenadores/portatiles-para-creadores/16u55u-g-au88bn.html?wcmmode=disabled",
+          "liveUrl": "",
+          "cmsLive": "등록·미게시",
+          "stage": "client_review"
+        },
+        {
+          "region": "SEA",
+          "sub": "LGEAP",
+          "locale": "AU-en",
+          "model": "16Z90U-G.AU75AP",
+          "salesModelKey": "AU-en-16Z90U-G.AU75AP",
+          "pttId": "WR2294601MM",
+          "pttStatus": "[WPL] Client Review",
+          "targetStagingDate": "",
+          "detailKr": "6월 NPI - 마무리중",
+          "detailEn": "proceeding as a part of Jun NPI\n(contents were missing in June)\ntask is under Client Review, waiting for final approval from local.",
+          "expectedLocalTargetDate": "",
+          "pdpStatus": "N",
+          "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/au/en/laptops/gram-pro/16z90u-g-au75ap.html?wcmmode=disabled",
+          "liveUrl": "",
+          "cmsLive": "PIM 미등록",
+          "stage": "client_review"
         }
       ]
     }
