@@ -1646,11 +1646,10 @@ function renderNpiProductStatusContent() {
   var html = '<div style="padding:16px 24px 0"><div class="ov-card-new">';
   html += '<div class="ov-head-new"><div class="ov-head-title">';
   html += '<div class="ov-head-eyebrow">NPI · IT Product Status</div>';
-  html += '<div class="ov-head-name">IT 제품 현황 <span style="font-size:var(--fs-caption);font-weight:500;color:#94A3B8">(' + escapeHtmlSheet(d.sourceFile || '') + ')</span></div>';
+  html += '<div class="ov-head-name">IT 제품 현황</div>';
   if (d.generatedAt) {
-    html += '<div style="font-size:var(--fs-caption);font-weight:500;color:#94A3B8;margin-top:2px">업데이트: ' + escapeHtmlSheet(d.generatedAt) +
-      (d.pttRawFile ? ' · PTT: ' + escapeHtmlSheet(d.pttRawFile) : '') +
-      (d.cmsFile ? ' · CMS: ' + escapeHtmlSheet(d.cmsFile) : '') + '</div>';
+    // 참고 파일명은 표시하지 않음(2026-07-14 사용자 지시) — 갱신 시각만 노출
+    html += '<div style="font-size:var(--fs-caption);font-weight:500;color:#94A3B8;margin-top:2px">업데이트: ' + escapeHtmlSheet(d.generatedAt) + '</div>';
   }
   html += '</div>';
   html += '<div class="ov-head-total"><div class="ov-head-total-num ov-head-total-sites">총 <strong>' + (d.totalRows || 0) + '</strong>건</div></div>';
@@ -1811,6 +1810,20 @@ function npiPsUrlCell(url) {
     '" style="color:#2563EB;font-weight:600;text-decoration:none">링크</a>';
 }
 
+// locale(예: 'IT-it','ca_en','UK-en') → 국가명. 언어별 사이트는 'Canada (en)'처럼 언어 병기.
+var NPI_PS_COUNTRY_NAMES = {
+  AU: 'Australia', BD: 'Bangladesh', CA: 'Canada', CN: 'China', DE: 'Germany',
+  ES: 'Spain', FR: 'France', IT: 'Italy', JP: 'Japan', UK: 'United Kingdom',
+  GB: 'United Kingdom', US: 'United States', NL: 'Netherlands', SE: 'Sweden'
+};
+function npiPsCountryName(locale) {
+  var parts = String(locale || '').split(/[-_]/);
+  var code = (parts[0] || '').toUpperCase();
+  var lang = (parts[1] || '').toLowerCase();
+  var name = NPI_PS_COUNTRY_NAMES[code] || code || '-';
+  return lang ? name + ' (' + lang + ')' : name;
+}
+
 function npiPsRenderResults() {
   var resultsEl = document.getElementById('npiPsResults');
   if (!resultsEl) return;
@@ -1834,13 +1847,16 @@ function npiPsRenderResults() {
   // 컬럼 구성 2026-07-10 사용자 지시: Task Status in PTT·key_Sales Model Code 제외,
   // PTT Task ID는 맨 오른쪽 — 원문 pttStatus는 PTT Task ID 툴팁으로만 유지
   html += '<thead><tr>' +
-    '<th>Region</th><th>Sub</th><th>Locale</th><th>Model</th>' +
+    '<th>Region</th><th>Sub</th><th>Country</th><th>Model</th>' +
     '<th>Stage</th><th>Status</th><th>Detail KR</th><th>Detail English</th>' +
     '<th>STG</th><th>Live URL</th><th>PTT Task ID</th>' +
     '</tr></thead><tbody>';
+  // status가 완료/라이브 계열이면 원본 색상(orange 등)과 무관하게 초록 칩으로 강제 표시.
+  var GREEN_STATUSES = { '수정완료': 1, '라이브': 1, '완료': 1, '등록완료': 1 };
   flatRows.forEach(function(item) {
     var row = item.row;
     var meta = NPI_PS_COLOR_META[item.colorClass] || NPI_PS_COLOR_META.other;
+    if (GREEN_STATUSES[item.status]) meta = NPI_PS_COLOR_META.green || meta;
     var stageMeta = npiPsStageMeta(item.stage);
     var stageLabel = (function() {
       var found = (d.stages || []).filter(function(s) { return s.key === item.stage; })[0];
@@ -1848,12 +1864,14 @@ function npiPsRenderResults() {
     })();
     var stageCell = '<span class="sheet-status-pill" style="background:' + stageMeta.bg + ';color:' + stageMeta.tc + '">' +
       '<span style="background:' + stageMeta.color + '"></span>' + escapeHtmlSheet(stageLabel) + '</span>';
-    var statusCell = '<span class="sheet-status-pill" style="background:' + meta.bg + ';color:' + meta.tc + '" title="' + escapeAttrSheet(meta.desc || '') + '">' +
+    var statusTip = row.statusTip || (GREEN_STATUSES[item.status] ? '' : (meta.desc || ''));
+    var statusCell = '<span class="sheet-status-pill" style="background:' + meta.bg + ';color:' + meta.tc + '"' +
+      (statusTip ? ' title="' + escapeAttrSheet(statusTip) + '"' : '') + '>' +
       '<span style="background:' + meta.dot + '"></span>' + escapeHtmlSheet(item.status) + '</span>';
     html += '<tr>';
     html += '<td>' + escapeHtmlSheet(row.region) + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#64748B">' + escapeHtmlSheet(row.sub || '-') + '</td>';
-    html += '<td>' + escapeHtmlSheet(row.locale) + '</td>';
+    html += '<td title="' + escapeAttrSheet(row.locale || '') + '">' + escapeHtmlSheet(npiPsCountryName(row.locale)) + '</td>';
     html += '<td style="font-weight:600" title="' + escapeAttrSheet(row.salesModelKey || '') + '">' + escapeHtmlSheet(row.model) + '</td>';
     html += '<td>' + stageCell + '</td>';
     html += '<td>' + statusCell + '</td>';
