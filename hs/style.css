@@ -639,7 +639,7 @@ body{
   display:flex;align-items:center;gap:6px;margin-bottom:8px;
 }
 .stat-new-dot{
-  width:13px;height:13px;border-radius:50%;flex-shrink:0;
+  width:16px;height:16px;border-radius:50%;flex-shrink:0;
 }
 .stat-new-label{
   font-size:11.5px;color:#6B7280;font-weight:600;
