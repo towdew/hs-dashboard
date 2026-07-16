@@ -1627,7 +1627,7 @@ body{
 .sheet-table-scroll{overflow:auto; border: 1px solid #E8EAF2; border-radius: 10px;}
 .sheet-data-table{width:100%;border-collapse:separate;border-spacing:0;font-size:11px;color:#1A1D2E;min-width:900px;}
 .sheet-data-table thead th{position:sticky;top:0;z-index:2;background:#F1F3F5;color:#1A1D2E;font-size:10.5px;font-weight:800;text-align:left;padding:9px 10px;border-bottom:1px solid #D9DEE8;border-right:1px solid #E4E8F0;white-space:nowrap;vertical-align:middle}
-.sheet-data-table tbody td{padding:8px 5px;border-bottom:1px solid #EEF1F6;border-right:1px solid #F0F2F7;vertical-align:middle;line-height:1.45;max-width:260px;word-break: auto-phrase;}
+.sheet-data-table tbody td{padding:8px 5px;border-bottom:1px solid #EEF1F6;border-right:1px solid #F0F2F7;vertical-align:middle;line-height:1.45;max-width:260px;word-break:auto-phrase;}
 .sheet-data-table tbody tr:hover td{background:#FAFBFD}
 .sheet-data-table tbody tr:last-child td{border-bottom:none}
 .sheet-empty{color:#CBD5E1}
@@ -1667,7 +1667,12 @@ body{
 .sheet-region-cell.region-india{background:#F5F3FF!important;color:#6D28D9!important}
 .sheet-region-cell.region-na{background:#F8FAFC!important;color:#334155!important}
 .sheet-region-cell.region-etc{background:#F1F5F9!important;color:#64748B!important}
-.sheet-region-cell.region-cis{background:#EEF2FF!important;color:#3730A3!important}
+.sheet-region-cell.region-cis{background:#eefdff !important;color:#127e89!important}
+.sheet-region-cell.region-europe{background:#e9f2ff!important;color:#1D4ED8!important}
+.sheet-region-cell.region-nac{background:#e8e9ed!important;color:#525d6f!important}
+.sheet-region-cell.region-china{background:#FFF1F2!important;color:#BE123C!important}
+.sheet-region-cell.region-japan{background:#F0F9FF!important;color:#0369A1!important}
+.sheet-region-cell.region-global{background:#F3F4F6!important;color:#4B5563!important}
 
 /* v20: keep Country column readable */
 .sheet-data-table th.sheet-country-col,
@@ -1892,48 +1897,54 @@ body{
 @keyframes initialLoadingMove{0%{left:-38%;width:38%}50%{width:54%}100%{left:100%;width:38%}}
 
 
-/* ── MS Model Type Tabs (Audio / TV) ───────────── */
-.model-type-tabs{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  min-height:48px;
-  padding:7px 24px 0;
-  background:#fff;
-  border-bottom:1px solid #E8EAF2;
+#sheetNavList .nav-item[hidden]{display:none!important}
+
+/* ── MS Model Type Filter inside #sheetNavList ───────────── */
+.sidebar-model-type-tabs{
+  display:grid;
+  position:sticky;
+  top:0;
+  z-index:4;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:3px;
+  min-height:36px;
+  margin:0 8px 9px;
+  padding:3px;
+  background:#F5F6FA;
+  border:1px solid #E8EAF2;
+  border-radius:8px;
   flex-shrink:0;
 }
 .model-type-tab{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  gap:5px;
-  min-width:104px;
-  height:40px;
-  padding:0 18px;
+  gap:3px;
+  min-width:0;
+  height:28px;
+  padding:0 5px;
   border:0;
-  border-bottom:3px solid transparent;
+  border-radius:6px;
   background:transparent;
   color:#8B93AA;
   font-family:inherit;
-  font-size:13px;
-  font-weight:700;
+  font-size:10.5px;
+  font-weight:750;
   cursor:pointer;
-  transition:color .15s,border-color .15s,background .15s;
+  transition:color .15s,background .15s,box-shadow .15s;
+  white-space:nowrap;
 }
-.model-type-tab:hover{color:#1A1D2E;background:#FAFAFC}
+.model-type-tab:hover{color:#1A1D2E;background:#FFFFFF}
 .model-type-tab.active{
   color:#A50034;
-  border-bottom-color:#A50034;
-  background:#FFF8FA;
+  background:#FFFFFF;
+  box-shadow:0 1px 4px rgba(18,24,40,.08);
 }
 .model-type-tab-count{
   color:inherit;
-  font-size:11px;
+  font-size:9px;
   font-weight:800;
   font-variant-numeric:tabular-nums;
 }
-@media(max-width:768px){
-  .model-type-tabs{padding-left:12px;padding-right:12px}
-  .model-type-tab{min-width:92px;padding:0 14px}
-}
+.sidebar.collapsed .sidebar-model-type-tabs{display:none}
+

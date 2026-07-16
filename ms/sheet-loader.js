@@ -1545,8 +1545,12 @@ function initBaseGlobals(activeKeys, sourceMap) {
   window.COL_FULL = {};
   window.STALLED_DAYS = {};
   window.LOCALE_MAP = {};
-  window.REGION_CFG = { EU:{label:'EU'}, ASIA:{label:'ASIA'}, CIS:{label:'CIS'}, LATAM:{label:'LATAM'}, MEA:{label:'MEA'}, INDIA:{label:'INDIA'}, NA:{label:'NA'}, ETC:{label:'ETC'} };
-  window.REGION_ORDER = ['EU','ASIA','CIS','LATAM','MEA','INDIA','NA','ETC'];
+  window.REGION_CFG = {
+    EUROPE:{label:'EUROPE'}, MEA:{label:'MEA'}, Asia:{label:'Asia'}, LATAM:{label:'LATAM'},
+    CIS:{label:'CIS'}, NAC:{label:'NAC'}, China:{label:'China'}, India:{label:'India'},
+    Japan:{label:'Japan'}, Global:{label:'Global'}, ETC:{label:'ETC'}
+  };
+  window.REGION_ORDER = ['EUROPE','MEA','Asia','LATAM','CIS','NAC','China','India','Japan','Global','ETC'];
   window.ART_ABBR = {};
   window.REPORT_KEYS = activeKeys.slice();
   window.DATA = {};
@@ -1611,10 +1615,14 @@ function prepareRegionFirstTable(table) {
   const rows = (table.rows || []).map(function(row) {
     const country = pickCountryValue(row);
     const existingRegion = pickValue(row, ['Region', 'region', 'PDP Region']);
-    const region = normalizeRegionLabel(existingRegion) || inferRegionFromCountry(country) || 'ETC';
+    // MS flat data already has the authoritative Region value. Preserve it exactly
+    // (including labels such as EUROPE, NAC, Asia, China, India, Japan and Global).
+    const region = String(existingRegion || '').trim() || inferRegionFromCountry(country) || 'ETC';
     const out = { Region: region };
     const sourceStyles = row.__styles || {};
-    out.__styles = { Region: '' };
+    out.__styles = {
+      Region: normalizeFillColor(sourceStyles.Region || sourceStyles.region || sourceStyles['PDP Region'] || '')
+    };
     headersWithoutRegion.forEach(function(h) {
       const value = row[h] || '';
       out[h] = isCountryHeaderName(h) ? displayCountryName(value) : value;
@@ -1874,7 +1882,12 @@ function updateModelTypeTabs(keys) {
 
 function applyModelTypeNavVisibility(type) {
   document.querySelectorAll('#sheetNavList .nav-item[data-model-type]').forEach(function(item) {
-    item.hidden = item.getAttribute('data-model-type') !== type;
+    var matches = item.getAttribute('data-model-type') === type;
+    // Author CSS sets .nav-item { display:flex }, which can override the browser's
+    // default [hidden] rule. Set display directly so the filter always hide/shows rows.
+    item.hidden = !matches;
+    item.style.display = matches ? 'flex' : 'none';
+    item.setAttribute('aria-hidden', matches ? 'false' : 'true');
   });
 }
 
@@ -1884,9 +1897,17 @@ function switchModelTypeTab(type, button) {
   document.querySelectorAll('.model-type-tab').forEach(function(btn) {
     btn.classList.toggle('active', btn === button || btn.getAttribute('data-model-type') === type);
   });
+
+  // This control is a filter for the entire #sheetNavList, not a separate page tab.
   applyModelTypeNavVisibility(type);
 
-  var first = document.querySelector('#sheetNavList .nav-item[data-model-type="' + type + '"]:not([hidden])');
+  var current = document.querySelector('#sheetNavList .nav-item.active');
+  if (current && !current.hidden && current.getAttribute('data-model-type') === type) return;
+
+  var first = Array.prototype.find.call(
+    document.querySelectorAll('#sheetNavList .nav-item[data-model-type="' + type + '"]'),
+    function(item) { return item.style.display !== 'none' && !item.hidden; }
+  );
   if (!first) return;
   window.__DEFAULT_DASHBOARD_KEY = first.getAttribute('data-key') || '';
   if (typeof window.switchMenu === 'function') {
@@ -1902,7 +1923,17 @@ window.switchModelTypeTab = switchModelTypeTab;
 function renderSidebarNavFromSheets(keys) {
   const section = document.getElementById('sheetNavList') || document.querySelector('.sb-section');
   if (!section) return;
-  const html = ['<div class="sb-section-label">Contents</div>'];
+  const html = [
+    '<div class="sb-section-label">Contents</div>',
+    '<div class="model-type-tabs sidebar-model-type-tabs" id="modelTypeTabs" aria-label="Model type filter">' +
+      '<button type="button" class="model-type-tab active" data-model-type="Audio" onclick="switchModelTypeTab(\'Audio\', this)">' +
+        '<span>Audio</span><span class="model-type-tab-count" id="modelTypeAudioCount">(0)</span>' +
+      '</button>' +
+      '<button type="button" class="model-type-tab" data-model-type="TV" onclick="switchModelTypeTab(\'TV\', this)">' +
+        '<span>TV</span><span class="model-type-tab-count" id="modelTypeTvCount">(0)</span>' +
+      '</button>' +
+    '</div>'
+  ];
   keys.forEach(function(key, idx) {
     const d = window.DATA && window.DATA[key];
     const title = (d && (d.displayTitle || d.sheetTabName || d.sheetTitle || d.title)) || key;
