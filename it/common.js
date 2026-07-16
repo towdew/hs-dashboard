@@ -1590,12 +1590,6 @@ var _npiProductStatusData = null;
 // excludeLive 기본 체크(2026-07-14 사용자 지시) — 기본 화면은 라이브 제외 목록
 var _npiPsFilter = { category: '', stage: '', region: '', locale: '', search: '', excludeLive: true };
 
-// 대분류(NPI/Modification) 칩 팔레트 — NPI=파랑, MOD=보라 (2026-07-16 사용자 지시)
-var NPI_PS_CATEGORY_META = {
-  NPI: { bg: '#EFF6FF', tc: '#1D4ED8', dot: '#3B82F6', label: 'NPI' },
-  MOD: { bg: '#F5F3FF', tc: '#6D28D9', dot: '#8B5CF6', label: 'MOD' }
-};
-
 var NPI_PS_COLOR_META = {
   green: { label: '진행 중', desc: '6월 진행중(일부 컨텐츠 누락) 또는 7월 NPI 진행 예정 — 목표일정 내 delivery 필요', dot: '#10B981', bg: '#ECFDF5', tc: '#065F46' },
   orange: { label: '법인 액션 필요', desc: 'PIM2.0 등록·Target Month 지정·Contents Readiness 확인 필요 (법인 액션)', dot: '#F59E0B', bg: '#FFFBEB', tc: '#92400E' },
@@ -2139,14 +2133,14 @@ function npiPsRenderResults() {
     })();
     var stageCell = '<span class="sheet-status-pill" style="background:' + stageMeta.bg + ';color:' + stageMeta.tc + '">' +
       '<span style="background:' + stageMeta.color + '"></span>' + escapeHtmlSheet(stageLabel) + '</span>';
-    // Status 칩 색상은 Stage와 동일 팔레트로 통일(2026-07-14 사용자 지시). statusTip은 '?' 등만.
-    var statusCell = '<span class="sheet-status-pill" style="background:' + stageMeta.bg + ';color:' + stageMeta.tc + '"' +
+    // Status는 칩 없이 일반 텍스트로(2026-07-16 사용자 지시). statusTip('?' 등)은 title 유지.
+    var statusEmpty = !item.status || item.status === '-';
+    var statusCell = '<span style="font-weight:600;color:' + (statusEmpty ? '#CBD5E1' : '#334155') + '"' +
       (row.statusTip ? ' title="' + escapeAttrSheet(row.statusTip) + '"' : '') + '>' +
-      '<span style="background:' + stageMeta.color + '"></span>' + escapeHtmlSheet(item.status) + '</span>';
-    // 구분(대분류) 칩 — NPI/MOD
-    var catMeta = NPI_PS_CATEGORY_META[row.category || 'NPI'] || NPI_PS_CATEGORY_META.NPI;
-    var catCell = '<span class="sheet-status-pill" style="background:' + catMeta.bg + ';color:' + catMeta.tc + '">' +
-      '<span style="background:' + catMeta.dot + '"></span>' + escapeHtmlSheet(catMeta.label) + '</span>';
+      escapeHtmlSheet(item.status || '-') + '</span>';
+    // 구분(대분류) — 칩 없이 일반 텍스트 (2026-07-16 사용자 지시)
+    var catCell = '<span style="font-size:var(--fs-caption);font-weight:600;color:#64748B">' +
+      escapeHtmlSheet(row.category || 'NPI') + '</span>';
     html += '<tr>';
     html += '<td>' + catCell + '</td>';
     html += '<td>' + statusCell + '</td>';

@@ -1499,7 +1499,7 @@
    ]
   },
   {
-   "status": "수정완료",
+   "status": "-",
    "colorClass": "orange",
    "rows": [
     {
@@ -1657,7 +1657,7 @@
    ]
   },
   {
-   "status": "라이브",
+   "status": "?",
    "colorClass": "orange",
    "rows": [
     {
@@ -1676,7 +1676,7 @@
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/jp/mobile-pc/gram/16z90ts-gu89j/",
      "cmsLive": "라이브",
-     "statusTip": "",
+     "statusTip": "4/27 오픈 전 제품은 Readiness Check에 미노출",
      "stageForce": "live",
      "stageFallback": "",
      "pimChecked": true,
