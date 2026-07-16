@@ -1588,7 +1588,13 @@ function toggleNpiMonth(month) {
 // ══════════════════════════════════════════════════════════════════
 var _npiProductStatusData = null;
 // excludeLive 기본 체크(2026-07-14 사용자 지시) — 기본 화면은 라이브 제외 목록
-var _npiPsFilter = { stage: '', region: '', locale: '', search: '', excludeLive: true };
+var _npiPsFilter = { category: '', stage: '', region: '', locale: '', search: '', excludeLive: true };
+
+// 대분류(NPI/Modification) 칩 팔레트 — NPI=파랑, MOD=보라 (2026-07-16 사용자 지시)
+var NPI_PS_CATEGORY_META = {
+  NPI: { bg: '#EFF6FF', tc: '#1D4ED8', dot: '#3B82F6', label: 'NPI' },
+  MOD: { bg: '#F5F3FF', tc: '#6D28D9', dot: '#8B5CF6', label: 'MOD' }
+};
 
 var NPI_PS_COLOR_META = {
   green: { label: '진행 중', desc: '6월 진행중(일부 컨텐츠 누락) 또는 7월 NPI 진행 예정 — 목표일정 내 delivery 필요', dot: '#10B981', bg: '#ECFDF5', tc: '#065F46' },
@@ -1611,15 +1617,33 @@ function npiPsStageMeta(stageKey) {
   return NPI_PS_STAGE_META[stageKey] || NPI_PS_STAGE_META.etc;
 }
 
-// groups(JSON) → 필터/집계용 평탄화 배열 [{status,colorClass,stage,row}]
-// 스테이지 진행 프로세스 흐름도: Precheck → In Progress → (Client Review / Clarify) → Live
+// 프로세스 박스 1개 (대분류 공용) — meta/label/count로 렌더
+function npiPsFlowBox(m, label, n) {
+  return '<div style="display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:104px;padding:10px 12px;border-radius:12px;background:' + m.bg + ';color:' + m.tc + ';border:1px solid ' + m.color + '55">' +
+    '<div style="display:flex;align-items:center;gap:5px;font-size:var(--fs-caption);font-weight:700"><span style="width:7px;height:7px;border-radius:50%;background:' + m.color + '"></span>' + escapeHtmlSheet(label) + '</div>' +
+    '<div style="font-size:20px;font-weight:800;line-height:1.15">' + n + '</div></div>';
+}
+
+// Modification 진행 프로세스: 수정요청 → 수정중 → 수정완료 (stage 매핑: live→완료, in_progress→수정중, 그 외→요청)
+function npiPsModFlowHtml(modRows) {
+  var counts = { request: 0, working: 0, done: 0 };
+  (modRows || []).forEach(function(item) {
+    if (item.stage === 'live') counts.done++;
+    else if (item.stage === 'in_progress') counts.working++;
+    else counts.request++;
+  });
+  var arrow = '<div style="color:#CBD5E1;font-size:20px;font-weight:800;padding:0 2px">→</div>';
+  return '<div style="display:flex;align-items:center;gap:6px;flex-wrap:nowrap;padding:14px;background:#F8FAFC;border-radius:14px;overflow-x:auto">' +
+    npiPsFlowBox(npiPsStageMeta('precheck'), '수정요청', counts.request) + arrow +
+    npiPsFlowBox(npiPsStageMeta('in_progress'), '수정중', counts.working) + arrow +
+    npiPsFlowBox(npiPsStageMeta('live'), '수정완료', counts.done) +
+    '</div>';
+}
+
+// NPI 진행 프로세스 흐름도: Precheck → In Progress → (Client Review / Clarify) → Live
 function npiPsProcessFlowHtml(stageCounts) {
   function box(key, label) {
-    var m = npiPsStageMeta(key);
-    var n = stageCounts[key] || 0;
-    return '<div style="display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:104px;padding:10px 12px;border-radius:12px;background:' + m.bg + ';color:' + m.tc + ';border:1px solid ' + m.color + '55">' +
-      '<div style="display:flex;align-items:center;gap:5px;font-size:var(--fs-caption);font-weight:700"><span style="width:7px;height:7px;border-radius:50%;background:' + m.color + '"></span>' + escapeHtmlSheet(label) + '</div>' +
-      '<div style="font-size:20px;font-weight:800;line-height:1.15">' + n + '</div></div>';
+    return npiPsFlowBox(npiPsStageMeta(key), label, stageCounts[key] || 0);
   }
   var arrow = '<div style="color:#CBD5E1;font-size:20px;font-weight:800;padding:0 2px">→</div>';
   var branch = '<div style="display:inline-flex;flex-direction:column;gap:6px">' +
@@ -1632,14 +1656,25 @@ function npiPsProcessFlowHtml(stageCounts) {
 function npiPsOpenProcessModal() {
   var d = _npiProductStatusData;
   if (!d) return;
-  var stageCounts = npiPsStageCounts(npiPsFlatRows());
+  // 대분류(NPI/Modification)별로 플로우 분리 (2026-07-16 사용자 지시)
+  var flatRows = npiPsFlatRows();
+  var npiRows = flatRows.filter(function(it) { return (it.row.category || 'NPI') === 'NPI'; });
+  var modRows = flatRows.filter(function(it) { return (it.row.category || 'NPI') === 'MOD'; });
+  var sectionTitle = function(label, n) {
+    return '<div style="margin:2px 0 8px;font-size:var(--fs-caption);font-weight:800;color:#334155">' +
+      escapeHtmlSheet(label) + ' <span style="color:#94A3B8;font-weight:600">' + n + '건</span></div>';
+  };
+  var body = sectionTitle('NPI', npiRows.length) + npiPsProcessFlowHtml(npiPsStageCounts(npiRows));
+  if (modRows.length) {
+    body += '<div style="height:14px"></div>' + sectionTitle('Modification', modRows.length) + npiPsModFlowHtml(modRows);
+  }
   var html = '<div class="modal-overlay" id="npiPsProcessModal" onclick="if(event.target===this)closeNpiPsProcessModal()">' +
     '<div class="modal-card" style="max-width:760px" onclick="event.stopPropagation()">' +
       '<div class="country-modal-header"><div class="country-modal-info">' +
         '<div class="country-modal-title">진행 프로세스</div>' +
-        '<div class="country-modal-meta"><span style="font-size:11px;color:#9BA3BF">Precheck → In Progress → Client Review / Clarify → Live</span></div>' +
+        '<div class="country-modal-meta"><span style="font-size:11px;color:#9BA3BF">NPI: Precheck → In Progress → Client Review / Clarify → Live · Modification: 수정요청 → 수정중 → 수정완료</span></div>' +
       '</div><button class="modal-close-btn" onclick="closeNpiPsProcessModal()">✕</button></div>' +
-      '<div style="padding:20px">' + npiPsProcessFlowHtml(stageCounts) + '</div>' +
+      '<div style="padding:20px">' + body + '</div>' +
     '</div></div>';
   var wrap = document.createElement('div');
   wrap.innerHTML = html;
@@ -1848,6 +1883,12 @@ function npiPsRenderFilterBar() {
 
   var html = '<div class="url-lib-filter-bar">';
 
+  html += '<select class="url-lib-select" id="npiPsCategorySelect" onchange="npiPsSetFilter(\'category\', this.value)">';
+  html += '<option value="">전체 구분</option>';
+  html += '<option value="NPI"' + (_npiPsFilter.category === 'NPI' ? ' selected' : '') + '>NPI</option>';
+  html += '<option value="MOD"' + (_npiPsFilter.category === 'MOD' ? ' selected' : '') + '>Modification</option>';
+  html += '</select>';
+
   html += '<select class="url-lib-select" id="npiPsStageSelect" onchange="npiPsSetFilter(\'stage\', this.value)">';
   html += '<option value="">전체 Stage</option>';
   stages.forEach(function(s) {
@@ -1900,6 +1941,8 @@ function npiPsToggleStageChip(stageKey) {
 
 // select 값 + 칩 active 하이라이트를 직접 DOM 조작으로 동기화(필터바/헤더 HTML 재생성 없이).
 function npiPsSyncFilterControls() {
+  var catSel = document.getElementById('npiPsCategorySelect');
+  if (catSel) catSel.value = _npiPsFilter.category;
   var stageSel = document.getElementById('npiPsStageSelect');
   if (stageSel) stageSel.value = _npiPsFilter.stage;
   var regionSel = document.getElementById('npiPsRegionSelect');
@@ -1918,8 +1961,9 @@ function npiPsSyncFilterControls() {
 
 // ── 컬럼 정렬 상태 + 정의 (헤더 클릭 오름/내림차순) ──
 var _npiPsSort = { key: '', dir: 1 };
-// Status(NPI Type+Month 조합)를 맨 왼쪽으로 (2026-07-16 사용자 지시)
+// 구분(NPI/MOD 대분류) → Status(NPI Type+Month 조합) 순으로 맨 왼쪽 (2026-07-16 사용자 지시)
 var NPI_PS_COLUMNS = [
+  { key: 'category', label: '구분' },
   { key: 'status', label: 'Status' },
   { key: 'region', label: 'Region' }, { key: 'sub', label: 'Sub' },
   { key: 'country', label: 'Country' }, { key: 'model', label: 'Model' },
@@ -1933,6 +1977,7 @@ var NPI_PS_STAGE_RANK = { precheck: 1, in_progress: 2, client_review: 3, clarify
 function npiPsSortValue(item, key) {
   var row = item.row;
   switch (key) {
+    case 'category': return (row.category || 'NPI') === 'NPI' ? 0 : 1;
     case 'region': return row.region || '';
     case 'sub': return row.sub || '';
     case 'country': return npiPsCountryName(row.locale);
@@ -1993,6 +2038,7 @@ function npiPsDownloadExcel() {
     var detail = (row.detailKr || '') + ((row.detailKr && row.detailEn) ? '\n' : '') + (row.detailEn || '');
     var rf = row.readinessFields || {};
     aoa.push([
+      row.category || 'NPI',
       item.status || '',
       row.region || '', row.sub || '', npiPsCountryName(row.locale), row.model || '',
       stageLabel, row.readinessCheck || '', detail,
@@ -2027,7 +2073,7 @@ function npiPsClearSearch() {
 
 // 초기화 — 필터 상태 전체 리셋 + select/입력값/칩 하이라이트 동기화 + 결과 재렌더(필터바 자체는 재생성 안 함)
 function npiPsResetFilter() {
-  _npiPsFilter = { stage: '', region: '', locale: '', search: '', excludeLive: true };
+  _npiPsFilter = { category: '', stage: '', region: '', locale: '', search: '', excludeLive: true };
   _npiPsSort = { key: '', dir: 1 };
   var input = document.getElementById('npiPsSearchInput');
   if (input) input.value = '';
@@ -2097,7 +2143,12 @@ function npiPsRenderResults() {
     var statusCell = '<span class="sheet-status-pill" style="background:' + stageMeta.bg + ';color:' + stageMeta.tc + '"' +
       (row.statusTip ? ' title="' + escapeAttrSheet(row.statusTip) + '"' : '') + '>' +
       '<span style="background:' + stageMeta.color + '"></span>' + escapeHtmlSheet(item.status) + '</span>';
+    // 구분(대분류) 칩 — NPI/MOD
+    var catMeta = NPI_PS_CATEGORY_META[row.category || 'NPI'] || NPI_PS_CATEGORY_META.NPI;
+    var catCell = '<span class="sheet-status-pill" style="background:' + catMeta.bg + ';color:' + catMeta.tc + '">' +
+      '<span style="background:' + catMeta.dot + '"></span>' + escapeHtmlSheet(catMeta.label) + '</span>';
     html += '<tr>';
+    html += '<td>' + catCell + '</td>';
     html += '<td>' + statusCell + '</td>';
     html += '<td>' + escapeHtmlSheet(row.region) + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#64748B">' + escapeHtmlSheet(row.sub || '-') + '</td>';

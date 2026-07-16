@@ -8,6 +8,8 @@ function npiPsFilterRows(flatRows, filter) {
   return (flatRows || []).filter(function (item) {
     var row = item.row || {};
     if (f.excludeLive && item.stage === 'live') return false;
+    // 대분류(NPI/MOD) 필터 — category 미기재 행은 NPI로 간주 (2026-07-16)
+    if (f.category && (row.category || 'NPI') !== f.category) return false;
     if (f.stage && item.stage !== f.stage) return false;
     if (f.region && row.region !== f.region) return false;
     if (f.locale && row.locale !== f.locale) return false;

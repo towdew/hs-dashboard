@@ -55,8 +55,8 @@
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/de/notebooks/gram-pro/16z90u-g-au78gn/",
      "cmsLive": "등록·미게시",
-     "readinessCheck": "Not Ready",
-     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Need Assign · LAR 미기재",
+     "readinessCheck": "Ready",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Need Assign · LAR 미기재",
      "readinessFields": {
       "Channel DAM Workflow": "",
       "PDR Use": "Y",
@@ -75,7 +75,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "live"
+     "stage": "live",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -113,7 +114,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "clarify"
+     "stage": "clarify",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -151,7 +153,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "clarify"
+     "stage": "clarify",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -169,8 +172,8 @@
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/de/notebooks/gram-pro/17z90u-g-au8bgn/",
      "cmsLive": "등록·미게시",
-     "readinessCheck": "Not Ready",
-     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Need Assign · LAR 미기재",
+     "readinessCheck": "Ready",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Need Assign · LAR 미기재",
      "readinessFields": {
       "Channel DAM Workflow": "",
       "PDR Use": "Y",
@@ -189,7 +192,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "live"
+     "stage": "live",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -207,8 +211,8 @@
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/de/notebooks/gram-2-in-1/16t95tp-k-aa78gn/",
      "cmsLive": "등록·미게시",
-     "readinessCheck": "Not Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
+     "readinessCheck": "Ready",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
      "readinessFields": {
       "Channel DAM Workflow": "",
       "PDR Use": "Y",
@@ -227,7 +231,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "live"
+     "stage": "live",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -245,8 +250,8 @@
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/de/notebooks/gram-2-in-1/16t95tp-k-ad8bgn/",
      "cmsLive": "등록·미게시",
-     "readinessCheck": "Not Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
+     "readinessCheck": "Ready",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
      "readinessFields": {
       "Channel DAM Workflow": "",
       "PDR Use": "Y",
@@ -265,7 +270,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "live"
+     "stage": "live",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -283,8 +289,8 @@
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/it/notebook/gram/17z90tl-g-au88dn/",
      "cmsLive": "라이브",
-     "readinessCheck": "Not Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
+     "readinessCheck": "Ready",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
      "readinessFields": {
       "Channel DAM Workflow": "",
       "PDR Use": "Y",
@@ -303,7 +309,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "live"
+     "stage": "live",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -341,7 +348,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "precheck"
+     "stage": "precheck",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -379,7 +387,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "client_review"
+     "stage": "client_review",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -417,7 +426,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "client_review"
+     "stage": "client_review",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -455,7 +465,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "client_review"
+     "stage": "client_review",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -493,7 +504,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "client_review"
+     "stage": "client_review",
+     "category": "NPI"
     }
    ]
   },
@@ -537,7 +549,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "client_review"
+     "stage": "client_review",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -575,7 +588,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "client_review"
+     "stage": "client_review",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -613,7 +627,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "client_review"
+     "stage": "client_review",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -651,7 +666,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "client_review"
+     "stage": "client_review",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -689,7 +705,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "client_review"
+     "stage": "client_review",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -727,7 +744,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "client_review"
+     "stage": "client_review",
+     "category": "NPI"
     }
    ]
   },
@@ -771,7 +789,8 @@
      "stageFallback": "",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "etc"
+     "stage": "etc",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -809,7 +828,8 @@
      "stageFallback": "",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "etc"
+     "stage": "etc",
+     "category": "NPI"
     }
    ]
   },
@@ -833,8 +853,8 @@
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/es/business/informatica/ordenadores/portatiles-para-creadores/14z95u-g-au88bn/",
      "cmsLive": "라이브",
-     "readinessCheck": "Not Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
+     "readinessCheck": "Ready",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
      "readinessFields": {
       "Channel DAM Workflow": "",
       "PDR Use": "Y",
@@ -853,7 +873,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "live"
+     "stage": "live",
+     "category": "NPI"
     }
    ]
   },
@@ -897,7 +918,8 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "etc"
+     "stage": "etc",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -935,7 +957,8 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "etc"
+     "stage": "etc",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -973,7 +996,8 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "etc"
+     "stage": "etc",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -1011,7 +1035,8 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "etc"
+     "stage": "etc",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -1033,7 +1058,8 @@
      "stageForce": "",
      "stageFallback": "",
      "pimChecked": true,
-     "stage": "etc"
+     "stage": "etc",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -1071,7 +1097,8 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "etc"
+     "stage": "etc",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -1109,7 +1136,8 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "etc"
+     "stage": "etc",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -1147,7 +1175,8 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "etc"
+     "stage": "etc",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -1185,7 +1214,8 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "etc"
+     "stage": "etc",
+     "category": "NPI"
     },
     {
      "region": "SEA",
@@ -1223,7 +1253,8 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "etc"
+     "stage": "etc",
+     "category": "NPI"
     },
     {
      "region": "SEA",
@@ -1261,7 +1292,8 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "etc"
+     "stage": "etc",
+     "category": "NPI"
     },
     {
      "region": "SEA",
@@ -1299,7 +1331,8 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "etc"
+     "stage": "etc",
+     "category": "NPI"
     }
    ]
   },
@@ -1343,7 +1376,8 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "live"
+     "stage": "live",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -1381,7 +1415,8 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "live"
+     "stage": "live",
+     "category": "NPI"
     },
     {
      "region": "EU",
@@ -1419,7 +1454,8 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "precheck"
+     "stage": "precheck",
+     "category": "NPI"
     },
     {
      "region": "SEA",
@@ -1457,7 +1493,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "client_review"
+     "stage": "client_review",
+     "category": "NPI"
     }
    ]
   },
@@ -1481,8 +1518,8 @@
      "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/ca/en/laptops/all-laptops/17z90u-g78.html?wcmmode=disabled",
      "liveUrl": "https://www.lg.com/ca_en/laptops/all-laptops/17z90u-g78/",
      "cmsLive": "PIM 미등록",
-     "readinessCheck": "Not Ready",
-     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Need Assign · LAR 미기재",
+     "readinessCheck": "Ready",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Need Assign · LAR 미기재",
      "readinessFields": {
       "Channel DAM Workflow": "",
       "PDR Use": "Y",
@@ -1501,7 +1538,8 @@
      "stageFallback": "",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "live"
+     "stage": "live",
+     "category": "MOD"
     },
     {
      "region": "NA",
@@ -1519,8 +1557,8 @@
      "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/ca/fr/ordinateurs-portables/gram/17z90ur-p.html?wcmmode=disabled",
      "liveUrl": "https://www.lg.com/ca_fr/computing/purchase-guide/laptops/17Z90ur-p/",
      "cmsLive": "PIM 미등록",
-     "readinessCheck": "Not Ready",
-     "readinessTip": "Spec Y · KF 2 · UFN ✓ · Need Assign · LAR 미기재",
+     "readinessCheck": "Ready",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 2 · UFN ✓ · Need Assign · LAR 미기재",
      "readinessFields": {
       "Channel DAM Workflow": "",
       "PDR Use": "Y",
@@ -1539,7 +1577,8 @@
      "stageFallback": "",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "live"
+     "stage": "live",
+     "category": "MOD"
     }
    ]
   },
@@ -1567,7 +1606,8 @@
      "stageForce": "",
      "stageFallback": "",
      "pimChecked": true,
-     "stage": "client_review"
+     "stage": "client_review",
+     "category": "NPI"
     }
    ]
   },
@@ -1611,7 +1651,8 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "live"
+     "stage": "live",
+     "category": "NPI"
     }
    ]
   },
@@ -1639,7 +1680,8 @@
      "stageForce": "live",
      "stageFallback": "",
      "pimChecked": true,
-     "stage": "live"
+     "stage": "live",
+     "category": "NPI"
     }
    ]
   }
