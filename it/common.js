@@ -1662,6 +1662,68 @@ function closeNpiPsProcessModal() {
   document.removeEventListener('keydown', npiPsProcessModalEsc);
 }
 
+// ── Readiness Check 상세 모달 (2026-07-16): 칩 클릭 시 판정 근거 + 원본 12필드 표시 ──
+function npiPsOpenReadinessModal(locale, model) {
+  var hit = npiPsFlatRows().filter(function(it) {
+    return it.row.locale === locale && it.row.model === model;
+  })[0];
+  if (!hit) return;
+  var row = hit.row;
+  var rf = row.readinessFields || {};
+  var verdict = row.readinessCheck || '-';
+  var vMeta = verdict === '완료'
+    ? { bg: '#ECFDF5', tc: '#047857', dot: '#10B981' }
+    : { bg: '#F1F5F9', tc: '#64748B', dot: '#94A3B8' };
+  var FIELDS = ['Channel DAM Workflow', 'PDR Use', 'Spec Status', 'UFN', 'Key Feature',
+    'Spec Assignment', 'Local Asset Review', 'Live URL B2C', 'Live URL SMB',
+    'Live URL D2B2C', 'Live URL Partners', 'Live URL Education'];
+  // 판정에 쓰이는 5개 필드는 굵게 강조
+  var JUDGE = { 'Spec Status': 1, 'Key Feature': 1, 'UFN': 1, 'Spec Assignment': 1, 'Local Asset Review': 1 };
+  var rowsHtml = FIELDS.map(function(f) {
+    var v = rf[f] || '';
+    var vHtml = /^https?:\/\//i.test(v)
+      ? '<a href="' + escapeAttrSheet(v) + '" target="_blank" rel="noopener" style="color:#2563EB;word-break:break-all">' + escapeHtmlSheet(v) + '</a>'
+      : (v ? escapeHtmlSheet(v) : '<span style="color:#CBD5E1">-</span>');
+    return '<tr><td style="padding:7px 12px;color:#64748B;font-size:var(--fs-caption);white-space:nowrap;' +
+      (JUDGE[f] ? 'font-weight:700;color:#334155' : '') + '">' + escapeHtmlSheet(f) + (JUDGE[f] ? ' *' : '') + '</td>' +
+      '<td style="padding:7px 12px;font-size:var(--fs-caption);color:#334155">' + vHtml + '</td></tr>';
+  }).join('');
+  var html = '<div class="modal-overlay" id="npiPsReadinessModal" onclick="if(event.target===this)closeNpiPsReadinessModal()">' +
+    '<div class="modal-card" style="max-width:620px" onclick="event.stopPropagation()">' +
+      '<div class="country-modal-header"><div class="country-modal-info">' +
+        '<div class="country-modal-title">Readiness Check — ' + escapeHtmlSheet(model) + '</div>' +
+        '<div class="country-modal-meta"><span style="font-size:11px;color:#9BA3BF">' + escapeHtmlSheet(npiPsCountryName(locale)) + ' · ' + escapeHtmlSheet(locale) + '</span></div>' +
+      '</div><button class="modal-close-btn" onclick="closeNpiPsReadinessModal()">✕</button></div>' +
+      '<div style="padding:16px 20px 20px">' +
+        '<div style="margin-bottom:12px;display:flex;align-items:center;gap:10px">' +
+          '<span class="sheet-status-pill" style="background:' + vMeta.bg + ';color:' + vMeta.tc + '"><span style="background:' + vMeta.dot + '"></span>' + escapeHtmlSheet(verdict) + '</span>' +
+          (row.readinessTip ? '<span style="font-size:var(--fs-caption);color:#94A3B8">' + escapeHtmlSheet(row.readinessTip) + '</span>' : '') +
+        '</div>' +
+        '<div style="border:1px solid #E2E8F0;border-radius:10px;overflow:hidden;max-height:52vh;overflow-y:auto">' +
+          '<table style="width:100%;border-collapse:collapse">' + rowsHtml + '</table>' +
+        '</div>' +
+        '<div style="margin-top:8px;font-size:11px;color:#9BA3BF">* 판정 기준 필드 — 완료 = Spec Y · Key Feature &gt; 0 · UFN 입력 · Assigned · LAR Confirmed</div>' +
+      '</div></div></div>';
+  var wrap = document.createElement('div');
+  wrap.innerHTML = html;
+  document.body.appendChild(wrap.firstChild);
+  setTimeout(function() {
+    var m = document.getElementById('npiPsReadinessModal');
+    if (m) m.classList.add('modal-show');
+  }, 10);
+  document.addEventListener('keydown', npiPsReadinessModalEsc);
+}
+
+function npiPsReadinessModalEsc(e) {
+  if (e.key === 'Escape') closeNpiPsReadinessModal();
+}
+
+function closeNpiPsReadinessModal() {
+  var m = document.getElementById('npiPsReadinessModal');
+  if (m) m.remove();
+  document.removeEventListener('keydown', npiPsReadinessModalEsc);
+}
+
 // groups(JSON) → 필터/집계용 평탄화 배열 [{status,colorClass,stage,row}]
 function npiPsFlatRows() {
   var d = _npiProductStatusData;
@@ -1856,10 +1918,12 @@ function npiPsSyncFilterControls() {
 
 // ── 컬럼 정렬 상태 + 정의 (헤더 클릭 오름/내림차순) ──
 var _npiPsSort = { key: '', dir: 1 };
+// Status(NPI Type+Month 조합)를 맨 왼쪽으로 (2026-07-16 사용자 지시)
 var NPI_PS_COLUMNS = [
+  { key: 'status', label: 'Status' },
   { key: 'region', label: 'Region' }, { key: 'sub', label: 'Sub' },
   { key: 'country', label: 'Country' }, { key: 'model', label: 'Model' },
-  { key: 'stage', label: 'Stage' }, { key: 'status', label: 'Status' },
+  { key: 'stage', label: 'Stage' },
   { key: 'readiness', label: 'Readiness Check' },
   { key: 'detail', label: 'Detail' },
   { key: 'stg', label: 'STG URL' }, { key: 'live', label: 'Live URL' }, { key: 'ptt', label: 'PTT Task ID' }
@@ -1875,8 +1939,8 @@ function npiPsSortValue(item, key) {
     case 'model': return row.model || '';
     case 'stage': return NPI_PS_STAGE_RANK[item.stage] || 9;
     case 'status': return item.status || '';
-    case 'readiness': return { '완료': 0, 'Local Asset Review 확인필요': 1, 'not ready': 2 }[row.readinessCheck] !== undefined
-      ? { '완료': 0, 'Local Asset Review 확인필요': 1, 'not ready': 2 }[row.readinessCheck] : 3;
+    case 'readiness': return { '완료': 0, 'not ready': 1 }[row.readinessCheck] !== undefined
+      ? { '완료': 0, 'not ready': 1 }[row.readinessCheck] : 2;
     case 'detail': return ((row.detailKr || '') + ' ' + (row.detailEn || '')).trim();
     case 'stg': return (row.stgUrl || '').indexOf('http') === 0 ? 1 : 0;
     case 'live': return (row.liveUrl || '').indexOf('http') === 0 ? 1 : 0;
@@ -1929,8 +1993,9 @@ function npiPsDownloadExcel() {
     var detail = (row.detailKr || '') + ((row.detailKr && row.detailEn) ? '\n' : '') + (row.detailEn || '');
     var rf = row.readinessFields || {};
     aoa.push([
+      item.status || '',
       row.region || '', row.sub || '', npiPsCountryName(row.locale), row.model || '',
-      stageLabel, item.status || '', row.readinessCheck || '', detail,
+      stageLabel, row.readinessCheck || '', detail,
       row.stgUrl || '', row.liveUrl || '', row.pttId || ''
     ].concat(RC_FIELDS.map(function(f) { return rf[f] || ''; })));
   });
@@ -2033,21 +2098,20 @@ function npiPsRenderResults() {
       (row.statusTip ? ' title="' + escapeAttrSheet(row.statusTip) + '"' : '') + '>' +
       '<span style="background:' + stageMeta.color + '"></span>' + escapeHtmlSheet(item.status) + '</span>';
     html += '<tr>';
+    html += '<td>' + statusCell + '</td>';
     html += '<td>' + escapeHtmlSheet(row.region) + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#64748B">' + escapeHtmlSheet(row.sub || '-') + '</td>';
     html += '<td title="' + escapeAttrSheet(row.locale || '') + '">' + escapeHtmlSheet(npiPsCountryName(row.locale)) + '</td>';
     html += '<td style="font-weight:600" title="' + escapeAttrSheet(row.salesModelKey || '') + '">' + escapeHtmlSheet(row.model) + '</td>';
     html += '<td>' + stageCell + '</td>';
-    html += '<td>' + statusCell + '</td>';
-    // Readiness Check 판정 칩(2026-07-16): 완료=초록/확인필요=주황/not ready=회색, 툴팁=판정 필드 요약
+    // Readiness Check 판정 칩(2026-07-16): 완료=초록/not ready=회색 2단계. 클릭 시 상세 모달(툴팁 대체)
     var rcMeta = {
       '완료': { bg: '#ECFDF5', tc: '#047857', dot: '#10B981', label: '완료' },
-      'Local Asset Review 확인필요': { bg: '#FFFBEB', tc: '#92400E', dot: '#F59E0B', label: 'LAR 확인필요' },
       'not ready': { bg: '#F1F5F9', tc: '#64748B', dot: '#94A3B8', label: 'not ready' }
     }[row.readinessCheck];
     var rcCell = rcMeta
-      ? '<span class="sheet-status-pill" style="background:' + rcMeta.bg + ';color:' + rcMeta.tc + '"' +
-        (row.readinessTip ? ' title="' + escapeAttrSheet(row.readinessTip) + '"' : '') +
+      ? '<span class="sheet-status-pill" style="background:' + rcMeta.bg + ';color:' + rcMeta.tc + ';cursor:pointer" title="클릭: Readiness 상세" ' +
+        'onclick="npiPsOpenReadinessModal(\'' + escapeAttrSheet(row.locale || '') + '\',\'' + escapeAttrSheet(row.model || '') + '\')"' +
         '><span style="background:' + rcMeta.dot + '"></span>' + escapeHtmlSheet(rcMeta.label) + '</span>'
       : '<span style="color:#CBD5E1">-</span>';
     html += '<td style="text-align:center">' + rcCell + '</td>';
