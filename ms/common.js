@@ -2767,14 +2767,17 @@ function resetFilters() {
 
 function getRegions() {
   if (window.__SHEET_DRIVEN_NAV && DATA[currentKey] && Array.isArray(DATA[currentKey].tableRows)) {
-    var preferred = ['EU', 'ASIA', 'CIS', 'LATAM', 'MEA', 'INDIA', 'NA', 'ETC'];
-    var seen = {};
+    var seen = Object.create(null);
+    var out = [];
     (DATA[currentKey].tableRows || []).forEach(function(row) {
-      var r = normalizeDisplayRegion(row.Region || row.region || 'ETC');
-      if (r) seen[r] = true;
+      var r = String(row.Region || row.region || '').trim();
+      if (!r) r = 'ETC';
+      var key = r.toLowerCase();
+      if (!seen[key]) {
+        seen[key] = true;
+        out.push(r);
+      }
     });
-    var out = preferred.filter(function(r) { return seen[r]; });
-    Object.keys(seen).sort().forEach(function(r) { if (out.indexOf(r) < 0) out.push(r); });
     return out;
   }
   return REGION_ORDER.slice();
@@ -4830,7 +4833,7 @@ function renderSheetDrivenTable(area, d) {
 
   if (filterRegion) {
     rows = rows.filter(function(row) {
-      return normalizeDisplayRegion(row.Region || row.region || '') === filterRegion;
+      return String(row.Region || row.region || '').trim().toLowerCase() === String(filterRegion).trim().toLowerCase();
     });
   }
 
@@ -4895,7 +4898,9 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
         var value = row[h] || '';
         if (!disableRegion && colIdx === 0 && h === 'Region') {
           if (rowIdx > 0) return '';
-          return '<td class="sheet-region-cell region-' + escapeAttrSheet(String(group.region || 'ETC').toLowerCase()) + '" rowspan="' + group.rows.length + '">' + escapeHtmlSheet(group.region || 'ETC') + '</td>';
+          var regionBg = normalizeSheetCellBg(row.__styles && row.__styles.Region);
+          var regionStyle = regionBg ? ' style="background:' + escapeAttrSheet(regionBg) + '"' : '';
+          return '<td class="sheet-region-cell region-' + escapeAttrSheet(String(group.region || 'ETC').toLowerCase().replace(/[^a-z0-9]+/g, '-')) + '" rowspan="' + group.rows.length + '"' + regionStyle + '>' + escapeHtmlSheet(group.region || 'ETC') + '</td>';
         }
         var cellClasses = [];
         if (isCountryDisplayHeader(h) || (countryDisplayHeader && h === countryDisplayHeader)) {
@@ -4908,6 +4913,8 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
         }
         var html = renderSheetCell(value, h, row, d);
         var bg = normalizeSheetCellBg(row.__styles && row.__styles[h]);
+        // Cells with no source fill still receive a subtle background so blank-style
+        // areas do not appear visually disconnected from the formatted cells.
         var styleAttr = bg ? ' style="background:' + escapeAttrSheet(bg) + '"' : '';
         var classAttr = cellClasses.length ? ' class="' + cellClasses.join(' ') + '"' : '';
         return '<td' + classAttr + styleAttr + '>' + html + '</td>';
@@ -4934,33 +4941,28 @@ function ensureRegionFirstHeaders(headers) {
 }
 
 function groupRowsByRegion(rows, headers) {
-  var order = ['EU', 'ASIA', 'CIS', 'LATAM', 'MEA', 'INDIA', 'NA', 'ETC'];
   var countryHeader = findCountryHeader(headers);
-  var enriched = (rows || []).map(function(row, idx) {
+  var groups = [];
+  var groupMap = Object.create(null);
+
+  // Use the Region column from the workbook as-is. Group order follows the first
+  // appearance in the selected Model Name data, which keeps the spreadsheet order.
+  (rows || []).forEach(function(row, idx) {
     var copy = Object.assign({}, row);
     var country = countryHeader ? copy[countryHeader] : '';
-    var region = normalizeDisplayRegion(copy.Region || inferRegionForDisplay(country) || 'ETC');
+    var region = String(copy.Region || '').trim();
+    if (!region) region = inferRegionForDisplay(country) || 'ETC';
     copy.Region = region;
     copy.__idx = idx;
-    return copy;
-  });
 
-  enriched.sort(function(a, b) {
-    var ai = order.indexOf(a.Region); if (ai < 0) ai = 999;
-    var bi = order.indexOf(b.Region); if (bi < 0) bi = 999;
-    if (ai !== bi) return ai - bi;
-    return a.__idx - b.__idx;
-  });
-
-  var groups = [];
-  enriched.forEach(function(row) {
-    var region = row.Region || 'ETC';
-    var last = groups[groups.length - 1];
-    if (!last || last.region !== region) {
-      last = { region: region, rows: [] };
-      groups.push(last);
+    var key = region.toLowerCase();
+    var group = groupMap[key];
+    if (!group) {
+      group = { region: region, rows: [] };
+      groupMap[key] = group;
+      groups.push(group);
     }
-    last.rows.push(row);
+    group.rows.push(copy);
   });
   return groups;
 }
