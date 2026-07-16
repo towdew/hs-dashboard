@@ -2027,7 +2027,12 @@ button,input,select,textarea{font-family:inherit}
   cursor: pointer;
 }
 .url-lib-select:focus { border-color: #A50034; }
-.url-lib-model-list { display: flex; flex-direction: column; gap: 6px; }
+/* 공간 효율화(2026-07-16): 세로 1열 → 반응형 카드 그리드. 펼친 카드는 전체 폭 사용 */
+.url-lib-model-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 6px;
+}
 .url-lib-model-row {
   background: #fff;
   border: 1.5px solid #E2E8F0;
@@ -2035,6 +2040,7 @@ button,input,select,textarea{font-family:inherit}
   overflow: hidden;
   transition: border-color .15s, box-shadow .15s;
 }
+.url-lib-model-row-active { grid-column: 1 / -1; }
 .url-lib-model-row:hover, .url-lib-model-row-active {
   border-color: #A50034;
   box-shadow: 0 1px 6px rgba(165,0,52,.1);
@@ -2043,7 +2049,8 @@ button,input,select,textarea{font-family:inherit}
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 11px 14px;
+  gap: 8px;
+  padding: 8px 12px;
   cursor: pointer;
 }
 .url-lib-model-name {

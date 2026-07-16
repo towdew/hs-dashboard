@@ -57,11 +57,24 @@ function urlLibDisplayUrl(prodUrl) {
   return displayUrl;
 }
 
+// 같은 국가의 언어별 사이트(CA-en/CA-fr 등)는 1개국으로 집계 — 사이트 수(locales.length)와 구분.
+function urlLibCountryCount(model) {
+  var seen = {};
+  var n = 0;
+  ((model && model.locales) || []).forEach(function (l) {
+    var cc = String(l.locale || '').split(':')[0].trim().split(/[-_]/)[0].toUpperCase();
+    if (cc && !seen[cc]) { seen[cc] = 1; n++; }
+  });
+  return n;
+}
+
 function urlLibFilterModels(allModels, filter) {
   var q = (filter.search || '').toLowerCase().trim();
   var localeTok = filter.locale || '';
   var countRange = filter.countRange || '';
   return (allModels || []).filter(function (m) {
+    // Active 모델만(기본 체크): ACTIVE 로케일이 하나도 없는 모델은 숨김 (2026-07-16 사용자 지시)
+    if (filter.activeOnly && !m.locales.some(function (l) { return l.status === 'ACTIVE'; })) return false;
     if (q) {
       var nameHit = m.modelName.toLowerCase().includes(q);
       var codeHit = m.salesModelCode.toLowerCase().includes(q);
@@ -74,7 +87,7 @@ function urlLibFilterModels(allModels, filter) {
     if (filter.status && !m.locales.some(function (l) { return l.status === filter.status; })) return false;
     if (localeTok && !m.locales.some(function (l) { return urlLibLocaleToken(l.locale) === localeTok; })) return false;
     if (countRange) {
-      var n = m.locales.length;
+      var n = urlLibCountryCount(m); // '개국' 필터는 국가 수 기준(사이트 수 아님)
       if (countRange === '1' && n !== 1) return false;
       if (countRange === '2-9' && (n < 2 || n > 9)) return false;
       if (countRange === '10+' && n < 10) return false;
@@ -115,6 +128,7 @@ if (typeof module !== 'undefined' && module.exports) {
     urlLibLocaleMatchesQuery: urlLibLocaleMatchesQuery,
     buildUrlLibLocaleIndex: buildUrlLibLocaleIndex,
     urlLibDisplayUrl: urlLibDisplayUrl,
+    urlLibCountryCount: urlLibCountryCount,
     urlLibFilterModels: urlLibFilterModels,
     urlLibSortModels: urlLibSortModels,
     urlLibPaginate: urlLibPaginate,

@@ -2073,7 +2073,8 @@ function npiPsRenderResults() {
 // LIVE URL LIBRARY VIEW
 // ══════════════════════════════════════════════════════════════════
 var _urlLibData = null;
-var _urlLibFilter = { search: '', category: '', status: '', locale: '', countRange: '', sort: 'name', page: 1 };
+// activeOnly 기본 체크(2026-07-16 사용자 지시) — 기본 화면은 ACTIVE 로케일 보유 모델만
+var _urlLibFilter = { search: '', category: '', status: '', locale: '', countRange: '', sort: 'name', page: 1, activeOnly: true };
 var _urlLibExpandedModel = null;
 var _urlLibViewMode = 'model'; // 'model' | 'country'
 var _urlLibCountryQuery = '';
@@ -2276,6 +2277,8 @@ function renderUrlLibraryContent() {
       headerHtml += '<option value="' + opt.value + '"' + (_urlLibFilter.sort === opt.value ? ' selected' : '') + '>' + opt.label + '</option>';
     });
     headerHtml += '</select>';
+    headerHtml += '<label style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-caption);color:#475569;cursor:pointer;white-space:nowrap">' +
+      '<input type="checkbox" id="urlLibActiveOnly"' + (_urlLibFilter.activeOnly ? ' checked' : '') + ' onchange="urlLibSetFilter(\'activeOnly\', this.checked)">Active만</label>';
     headerHtml += '<button type="button" class="url-lib-page-btn" id="urlLibResetBtn" onclick="urlLibResetFilter()">초기화</button>';
   }
   headerHtml += '</div>';
@@ -2331,9 +2334,10 @@ function renderUrlLibModelView(allModels) {
     listHtml += '<span class="url-lib-model-name">' + escapeHtmlSheet(model.modelName) + '</span>';
     listHtml += '<span class="url-lib-model-cat">' + escapeHtmlSheet(model.category) + '</span>';
     listHtml += '</div>';
-    listHtml += '<div style="display:flex;align-items:center;gap:12px">';
-    listHtml += '<span style="font-size:var(--fs-caption);color:#10B981">ACTIVE ' + activeCount + '</span>';
-    listHtml += '<span style="font-size:var(--fs-caption);color:#64748B">' + model.locales.length + '개국</span>';
+    listHtml += '<div style="display:flex;align-items:center;gap:10px">';
+    listHtml += '<span style="font-size:var(--fs-caption);color:#10B981;font-weight:700">ACTIVE ' + activeCount + '</span>';
+    // 같은 국가의 언어별 사이트는 1개국으로 — "N개국 · M개 사이트" (2026-07-16 사용자 지시)
+    listHtml += '<span style="font-size:var(--fs-caption);color:#64748B">' + urlLibCountryCount(model) + '개국 · ' + model.locales.length + '개 사이트</span>';
     listHtml += '<span style="color:#94A3B8">' + (isExpanded ? '▲' : '▼') + '</span>';
     listHtml += '</div></div>';
 
@@ -2457,7 +2461,7 @@ function urlLibSetFilter(key, value) {
 
 // 초기화 — 검색/카테고리/상태/로케일/국가수/정렬/페이지 전체 리셋 + 입력값/select 동기화 + 결과 재렌더(필터바 자체는 재생성 안 함)
 function urlLibResetFilter() {
-  _urlLibFilter = { search: '', category: '', status: '', locale: '', countRange: '', sort: 'name', page: 1 };
+  _urlLibFilter = { search: '', category: '', status: '', locale: '', countRange: '', sort: 'name', page: 1, activeOnly: true };
   var searchInput = document.getElementById('urlLibSearchInput');
   if (searchInput) searchInput.value = '';
   urlLibToggleClearBtn('urlLibSearchClear', '');
@@ -2471,6 +2475,8 @@ function urlLibResetFilter() {
   if (countRangeSel) countRangeSel.value = '';
   var sortSel = document.getElementById('urlLibSortSelect');
   if (sortSel) sortSel.value = 'name';
+  var activeChk = document.getElementById('urlLibActiveOnly');
+  if (activeChk) activeChk.checked = true;
   urlLibRenderResults();
 }
 
