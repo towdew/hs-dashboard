@@ -1456,7 +1456,6 @@ function renderWeeklyUpdateSection(d) {
     }).join('');
 
     return '<div class="weekly-update-group">' +
-      '<span class="weekly-update-line-bullet">•</span>' +
       '<span class="weekly-update-line-country">' + escapeHtmlSheet(displayCountry) + '</span>' +
       '<span class="weekly-update-url-list">' + links + '</span>' +
     '</div>';
