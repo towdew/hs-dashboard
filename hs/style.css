@@ -642,7 +642,7 @@ body{
   width:16px;height:16px;border-radius:50%;flex-shrink:0;
 }
 .stat-new-label{
-  font-size:11.5px;color:#6B7280;font-weight:600;
+  font-size:12px;color:#646464;font-weight:600;
 }
 .stat-new-num{
   font-size:26px;font-weight:800;color:#1A1D2E;
@@ -1612,7 +1612,7 @@ body{
 .sheet-link{color:#2563EB;text-decoration:none;font-weight:600}
 .sheet-link:hover{text-decoration:underline}
 .sheet-status-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:700;white-space:nowrap}
-.sheet-status-pill span{width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0}
+.sheet-status-pill span{width:10px;height:10px;border-radius:50%;display:inline-block;flex-shrink:0}
 @media(max-width:768px){
   .sheet-filter-row{align-items:stretch;flex-direction:column}
   .sheet-filter-left strong{max-width:100%}
