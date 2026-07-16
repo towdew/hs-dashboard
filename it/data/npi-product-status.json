@@ -53,7 +53,7 @@
      "expectedLocalTargetDate": "",
      "pdpStatus": "N",
      "stgUrl": "",
-     "liveUrl": "",
+     "liveUrl": "https://www.lg.com/de/notebooks/gram-pro/16z90u-g-au78gn/",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Not Ready",
      "readinessTip": "Spec Y · KF 5 · UFN ✓ · Need Assign · LAR 미기재",
@@ -71,11 +71,11 @@
       "Live URL Partners": "N",
       "Live URL Education": "N"
      },
-     "stageForce": "",
+     "stageForce": "live",
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "clarify"
+     "stage": "live"
     },
     {
      "region": "EU",
@@ -167,7 +167,7 @@
      "expectedLocalTargetDate": "",
      "pdpStatus": "N",
      "stgUrl": "",
-     "liveUrl": "",
+     "liveUrl": "https://www.lg.com/de/notebooks/gram-pro/17z90u-g-au8bgn/",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Not Ready",
      "readinessTip": "Spec Y · KF 5 · UFN ✓ · Need Assign · LAR 미기재",
@@ -185,11 +185,11 @@
       "Live URL Partners": "N",
       "Live URL Education": "N"
      },
-     "stageForce": "",
+     "stageForce": "live",
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "clarify"
+     "stage": "live"
     },
     {
      "region": "EU",
@@ -205,7 +205,7 @@
      "expectedLocalTargetDate": "",
      "pdpStatus": "N",
      "stgUrl": "",
-     "liveUrl": "",
+     "liveUrl": "https://www.lg.com/de/notebooks/gram-2-in-1/16t95tp-k-aa78gn/",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Not Ready",
      "readinessTip": "Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
@@ -223,11 +223,11 @@
       "Live URL Partners": "N",
       "Live URL Education": "N"
      },
-     "stageForce": "",
+     "stageForce": "live",
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "in_progress"
+     "stage": "live"
     },
     {
      "region": "EU",
@@ -243,7 +243,7 @@
      "expectedLocalTargetDate": "",
      "pdpStatus": "N",
      "stgUrl": "",
-     "liveUrl": "",
+     "liveUrl": "https://www.lg.com/de/notebooks/gram-2-in-1/16t95tp-k-ad8bgn/",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Not Ready",
      "readinessTip": "Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
@@ -261,11 +261,11 @@
       "Live URL Partners": "N",
       "Live URL Education": "N"
      },
-     "stageForce": "",
+     "stageForce": "live",
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "clarify"
+     "stage": "live"
     },
     {
      "region": "EU",
@@ -299,11 +299,11 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stageForce": "",
+     "stageForce": "live",
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "precheck"
+     "stage": "live"
     },
     {
      "region": "EU",
@@ -1324,7 +1324,7 @@
      "liveUrl": "https://www.lg.com/fr/pc-portables/gram/17z90tl-g-au75fn/",
      "cmsLive": "라이브",
      "statusTip": "",
-     "stageForce": "",
+     "stageForce": "live",
      "stageFallback": "precheck",
      "pimChecked": true,
      "readinessCheck": "Ready",
@@ -1343,7 +1343,7 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "precheck"
+     "stage": "live"
     },
     {
      "region": "EU",
@@ -1362,7 +1362,7 @@
      "liveUrl": "https://www.lg.com/fr/pc-portables/gram/17z90tl-g-au88fn/",
      "cmsLive": "라이브",
      "statusTip": "",
-     "stageForce": "",
+     "stageForce": "live",
      "stageFallback": "precheck",
      "pimChecked": true,
      "readinessCheck": "Ready",
@@ -1381,7 +1381,7 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "precheck"
+     "stage": "live"
     },
     {
      "region": "EU",
@@ -1589,7 +1589,7 @@
      "expectedLocalTargetDate": "",
      "pdpStatus": "N",
      "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/es/es/business/informatica/ordenadores/portatiles-para-creadores/16u55u-g-au88bn.html?wcmmode=disabled",
-     "liveUrl": "",
+     "liveUrl": "https://www.lg.com/es/portatiles/gram-book/16u55u-g-au88bn/",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Ready",
      "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed",
@@ -1607,11 +1607,11 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stageForce": "",
+     "stageForce": "live",
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "client_review"
+     "stage": "live"
     }
    ]
   },
