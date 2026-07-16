@@ -2027,10 +2027,11 @@ button,input,select,textarea{font-family:inherit}
   cursor: pointer;
 }
 .url-lib-select:focus { border-color: #A50034; }
-/* 공간 효율화(2026-07-16): 세로 1열 → 반응형 카드 그리드. 펼친 카드는 전체 폭 사용 */
+/* 공간 효율화(2026-07-16): 세로 1열 → 반응형 카드 그리드. 펼친 카드는 전체 폭 사용.
+   카드 내부는 전부 nowrap — 모델명만 말줄임, 우측 통계는 고정폭 유지(줄바꿈 금지) */
 .url-lib-model-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(430px, 1fr));
   gap: 6px;
 }
 .url-lib-model-row {
@@ -2052,14 +2053,26 @@ button,input,select,textarea{font-family:inherit}
   gap: 8px;
   padding: 8px 12px;
   cursor: pointer;
+  min-width: 0;
 }
-.url-lib-model-name {
+/* 좌측(모델명+카테고리): 넘치면 모델명 말줄임 / 우측(ACTIVE·개국): 절대 줄바꿈·축소 금지 */
+.url-lib-model-main > div:first-child {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.url-lib-model-main > div:first-child .url-lib-model-name {
   font-weight: 700;
   font-size: var(--fs-section);
   color: #1A1D2E;
   margin-right: 8px;
 }
 .url-lib-model-cat {
+  flex-shrink: 0;
+  white-space: nowrap;
   font-size: var(--fs-badge);
   color: #64748B;
   background: #F1F5F9;
