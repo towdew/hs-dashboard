@@ -1671,7 +1671,7 @@ function npiPsOpenReadinessModal(locale, model) {
   var row = hit.row;
   var rf = row.readinessFields || {};
   var verdict = row.readinessCheck || '-';
-  var vMeta = verdict === '완료'
+  var vMeta = verdict === 'Ready'
     ? { bg: '#ECFDF5', tc: '#047857', dot: '#10B981' }
     : { bg: '#F1F5F9', tc: '#64748B', dot: '#94A3B8' };
   var FIELDS = ['Channel DAM Workflow', 'PDR Use', 'Spec Status', 'UFN', 'Key Feature',
@@ -1702,7 +1702,7 @@ function npiPsOpenReadinessModal(locale, model) {
         '<div style="border:1px solid #E2E8F0;border-radius:10px;overflow:hidden;max-height:52vh;overflow-y:auto">' +
           '<table style="width:100%;border-collapse:collapse">' + rowsHtml + '</table>' +
         '</div>' +
-        '<div style="margin-top:8px;font-size:11px;color:#9BA3BF">* 판정 기준 필드 — 완료 = Spec Y · Key Feature &gt; 0 · UFN 입력 · Assigned · LAR Confirmed</div>' +
+        '<div style="margin-top:8px;font-size:11px;color:#9BA3BF">* 판정 기준 필드 — Ready = Spec Y · Key Feature &gt; 0 · UFN 입력 · Assigned · LAR Confirmed 또는 미기재</div>' +
       '</div></div></div>';
   var wrap = document.createElement('div');
   wrap.innerHTML = html;
@@ -1939,8 +1939,8 @@ function npiPsSortValue(item, key) {
     case 'model': return row.model || '';
     case 'stage': return NPI_PS_STAGE_RANK[item.stage] || 9;
     case 'status': return item.status || '';
-    case 'readiness': return { '완료': 0, 'not ready': 1 }[row.readinessCheck] !== undefined
-      ? { '완료': 0, 'not ready': 1 }[row.readinessCheck] : 2;
+    case 'readiness': return { 'Ready': 0, 'Not Ready': 1 }[row.readinessCheck] !== undefined
+      ? { 'Ready': 0, 'Not Ready': 1 }[row.readinessCheck] : 2;
     case 'detail': return ((row.detailKr || '') + ' ' + (row.detailEn || '')).trim();
     case 'stg': return (row.stgUrl || '').indexOf('http') === 0 ? 1 : 0;
     case 'live': return (row.liveUrl || '').indexOf('http') === 0 ? 1 : 0;
@@ -2104,10 +2104,10 @@ function npiPsRenderResults() {
     html += '<td title="' + escapeAttrSheet(row.locale || '') + '">' + escapeHtmlSheet(npiPsCountryName(row.locale)) + '</td>';
     html += '<td style="font-weight:600" title="' + escapeAttrSheet(row.salesModelKey || '') + '">' + escapeHtmlSheet(row.model) + '</td>';
     html += '<td>' + stageCell + '</td>';
-    // Readiness Check 판정 칩(2026-07-16): 완료=초록/not ready=회색 2단계. 클릭 시 상세 모달(툴팁 대체)
+    // Readiness Check 판정 칩(2026-07-16): Ready=초록/Not Ready=회색 2단계. 클릭 시 상세 모달(툴팁 대체)
     var rcMeta = {
-      '완료': { bg: '#ECFDF5', tc: '#047857', dot: '#10B981', label: '완료' },
-      'not ready': { bg: '#F1F5F9', tc: '#64748B', dot: '#94A3B8', label: 'not ready' }
+      'Ready': { bg: '#ECFDF5', tc: '#047857', dot: '#10B981', label: 'Ready' },
+      'Not Ready': { bg: '#F1F5F9', tc: '#64748B', dot: '#94A3B8', label: 'Not Ready' }
     }[row.readinessCheck];
     var rcCell = rcMeta
       ? '<span class="sheet-status-pill" style="background:' + rcMeta.bg + ';color:' + rcMeta.tc + ';cursor:pointer" title="클릭: Readiness 상세" ' +
