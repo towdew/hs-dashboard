@@ -1860,6 +1860,7 @@ var NPI_PS_COLUMNS = [
   { key: 'region', label: 'Region' }, { key: 'sub', label: 'Sub' },
   { key: 'country', label: 'Country' }, { key: 'model', label: 'Model' },
   { key: 'stage', label: 'Stage' }, { key: 'status', label: 'Status' },
+  { key: 'readiness', label: 'Readiness Check' },
   { key: 'detail', label: 'Detail' },
   { key: 'stg', label: 'STG URL' }, { key: 'live', label: 'Live URL' }, { key: 'ptt', label: 'PTT Task ID' }
 ];
@@ -1874,6 +1875,8 @@ function npiPsSortValue(item, key) {
     case 'model': return row.model || '';
     case 'stage': return NPI_PS_STAGE_RANK[item.stage] || 9;
     case 'status': return item.status || '';
+    case 'readiness': return { '완료': 0, 'Local Asset Review 확인필요': 1, 'not ready': 2 }[row.readinessCheck] !== undefined
+      ? { '완료': 0, 'Local Asset Review 확인필요': 1, 'not ready': 2 }[row.readinessCheck] : 3;
     case 'detail': return ((row.detailKr || '') + ' ' + (row.detailEn || '')).trim();
     case 'stg': return (row.stgUrl || '').indexOf('http') === 0 ? 1 : 0;
     case 'live': return (row.liveUrl || '').indexOf('http') === 0 ? 1 : 0;
@@ -1912,7 +1915,11 @@ function npiPsDownloadExcel() {
   var d = _npiProductStatusData;
   if (!d) return;
   var rows = npiPsVisibleRows();
-  var aoa = [NPI_PS_COLUMNS.map(function(c) { return c.label; })];
+  // 엑셀에는 Readiness 원본 12필드 전체를 포함(2026-07-16 사용자 지시)
+  var RC_FIELDS = ['Channel DAM Workflow', 'PDR Use', 'Spec Status', 'UFN', 'Key Feature',
+    'Spec Assignment', 'Local Asset Review', 'Live URL B2C', 'Live URL SMB',
+    'Live URL D2B2C', 'Live URL Partners', 'Live URL Education'];
+  var aoa = [NPI_PS_COLUMNS.map(function(c) { return c.label; }).concat(RC_FIELDS)];
   rows.forEach(function(item) {
     var row = item.row;
     var stageLabel = (function() {
@@ -1920,11 +1927,12 @@ function npiPsDownloadExcel() {
       return found ? found.label : item.stage;
     })();
     var detail = (row.detailKr || '') + ((row.detailKr && row.detailEn) ? '\n' : '') + (row.detailEn || '');
+    var rf = row.readinessFields || {};
     aoa.push([
       row.region || '', row.sub || '', npiPsCountryName(row.locale), row.model || '',
-      stageLabel, item.status || '', detail,
+      stageLabel, item.status || '', row.readinessCheck || '', detail,
       row.stgUrl || '', row.liveUrl || '', row.pttId || ''
-    ]);
+    ].concat(RC_FIELDS.map(function(f) { return rf[f] || ''; })));
   });
   var ws = XLSX.utils.aoa_to_sheet(aoa);
   var wb = XLSX.utils.book_new();
@@ -2031,6 +2039,18 @@ function npiPsRenderResults() {
     html += '<td style="font-weight:600" title="' + escapeAttrSheet(row.salesModelKey || '') + '">' + escapeHtmlSheet(row.model) + '</td>';
     html += '<td>' + stageCell + '</td>';
     html += '<td>' + statusCell + '</td>';
+    // Readiness Check 판정 칩(2026-07-16): 완료=초록/확인필요=주황/not ready=회색, 툴팁=판정 필드 요약
+    var rcMeta = {
+      '완료': { bg: '#ECFDF5', tc: '#047857', dot: '#10B981', label: '완료' },
+      'Local Asset Review 확인필요': { bg: '#FFFBEB', tc: '#92400E', dot: '#F59E0B', label: 'LAR 확인필요' },
+      'not ready': { bg: '#F1F5F9', tc: '#64748B', dot: '#94A3B8', label: 'not ready' }
+    }[row.readinessCheck];
+    var rcCell = rcMeta
+      ? '<span class="sheet-status-pill" style="background:' + rcMeta.bg + ';color:' + rcMeta.tc + '"' +
+        (row.readinessTip ? ' title="' + escapeAttrSheet(row.readinessTip) + '"' : '') +
+        '><span style="background:' + rcMeta.dot + '"></span>' + escapeHtmlSheet(rcMeta.label) + '</span>'
+      : '<span style="color:#CBD5E1">-</span>';
+    html += '<td style="text-align:center">' + rcCell + '</td>';
     // Detail: KR/EN 통합 단일 컬럼 — KR(기본) + EN(작은 회색 서브줄)
     var detKr = row.detailKr || '', detEn = row.detailEn || '';
     var detailCell = detKr ? '<span style="color:#334155">' + escapeHtmlSheet(detKr) + '</span>' : '';
