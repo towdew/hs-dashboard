@@ -6257,6 +6257,9 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
         }
         var cellClasses = [];
         var isCountryCell = isCountryDisplayHeader(h) || (countryDisplayHeader && h === countryDisplayHeader);
+        // 국가 셀 rowspan: Status별 서브행 분리 시 첫 서브행만 국가 셀을 그리고 나머지는 생략
+        if (isCountryCell && row.__ctrySpan === 0) return '';
+        var ctrySpanAttr = (isCountryCell && row.__ctrySpan > 1) ? ' rowspan="' + row.__ctrySpan + '"' : '';
         if (isCountryCell) {
           value = displayCountryFullName(value);
           cellClasses.push('sheet-country-col');
@@ -6284,7 +6287,7 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
         var bg = isGrSheet ? '' : normalizeSheetCellBg(row.__styles && row.__styles[h]);
         var styleAttr = bg ? ' style="background:' + escapeAttrSheet(bg) + '"' : '';
         var classAttr = cellClasses.length ? ' class="' + cellClasses.join(' ') + '"' : '';
-        return '<td' + classAttr + styleAttr + clickAttr + '>' + html + '</td>';
+        return '<td' + classAttr + styleAttr + clickAttr + ctrySpanAttr + '>' + html + '</td>';
       }).join('');
       tbody += '<tr' + (isNewRow ? ' class="sheet-row-new"' : '') + '>' + tds + '</tr>';
     });
@@ -6350,46 +6353,50 @@ function grDisplayStatusRank(v) {
 // Remark에는 병합된 행들의 모델 토큰(Remark 첫 토큰)을 중복 제거해 나열.
 function collapseRowsByCountry(rows, countryHeader, remarkHeader, statusHeader, pageHeader) {
   if (!countryHeader) return rows || [];
-  var byKey = {}, out = [];
+  var dispOrder = { '완료': 0, '법인리뷰': 1, '작업중': 2, '사전검토': 3, '취소': 4 };
+  var byCountry = {}, seq = [], out = [];
   (rows || []).forEach(function(row) {
     var ckey = String(row[countryHeader] || '').trim().toLowerCase();
-    if (!ckey) { out.push(row); return; }
-    if (!byKey[ckey]) {
-      var copy = Object.assign({}, row);
-      copy.__st = []; copy.__rm = []; copy.__pg = [];
-      byKey[ckey] = copy;
-      out.push(copy);
-    }
-    var agg = byKey[ckey];
-    if (statusHeader) agg.__st.push(String(row[statusHeader] || '').trim());
-    if (remarkHeader) { var rm = String(row[remarkHeader] || '').trim(); if (rm) agg.__rm.push(rm); }
-    if (pageHeader) agg.__pg.push(row[pageHeader]);
+    if (!ckey) { var solo = Object.assign({}, row); solo.__ctrySpan = 1; out.push(solo); return; }
+    if (!byCountry[ckey]) { byCountry[ckey] = []; seq.push(ckey); }
+    byCountry[ckey].push(row);
   });
-  out.forEach(function(row) {
-    var st = row.__st || [], rm = row.__rm || [], pg = row.__pg || [];
-    delete row.__st; delete row.__rm; delete row.__pg;
-    if (pageHeader && pg.length > 1) {
+  function mergeGroup(members) {
+    var base = Object.assign({}, members[0]);
+    if (pageHeader && members.length > 1) {
       var sum = 0, numeric = true;
-      pg.forEach(function(v) { var n = parseFloat(String(v == null ? '' : v).replace(/[^0-9.]/g, '')); if (isNaN(n)) numeric = false; else sum += n; });
-      if (numeric && sum > 0) row[pageHeader] = sum;
+      members.forEach(function(m) { var n = parseFloat(String(m[pageHeader] == null ? '' : m[pageHeader]).replace(/[^0-9.]/g, '')); if (isNaN(n)) numeric = false; else sum += n; });
+      if (numeric && sum > 0) base[pageHeader] = sum;
     }
-    if (statusHeader && st.length) {
-      var nonCancel = st.filter(function(s) { return s !== '취소'; });
-      if (nonCancel.length === 0) { row[statusHeader] = '취소'; }
-      else {
-        var pick = nonCancel[0], best = grDisplayStatusRank(nonCancel[0]);
-        nonCancel.forEach(function(s) { var r = grDisplayStatusRank(s); if (r < best) { best = r; pick = s; } });
-        row[statusHeader] = pick;
-      }
-    }
-    if (remarkHeader && rm.length) {
+    if (remarkHeader) {
       var seen = {}, models = [];
-      rm.forEach(function(x) {
-        var m = x.split(/[\s·(]/)[0].trim();
-        if (m && !seen[m]) { seen[m] = 1; models.push(m); }
+      members.forEach(function(m) {
+        var t = String(m[remarkHeader] || '').split(/[\s·(]/)[0].trim();
+        if (t && !seen[t]) { seen[t] = 1; models.push(t); }
       });
-      row[remarkHeader] = models.join(', ');
+      if (models.length) base[remarkHeader] = models.join(', ');
     }
+    return base;
+  }
+  seq.forEach(function(ckey) {
+    var members = byCountry[ckey];
+    if (!statusHeader) { var one = mergeGroup(members); one.__ctrySpan = 1; out.push(one); return; }
+    var byStatus = {}, stSeq = [];
+    members.forEach(function(m) {
+      var st = String(m[statusHeader] || '').trim() || '-';
+      if (!byStatus[st]) { byStatus[st] = []; stSeq.push(st); }
+      byStatus[st].push(m);
+    });
+    stSeq.sort(function(a, b) {
+      var ra = dispOrder.hasOwnProperty(a) ? dispOrder[a] : 9;
+      var rb = dispOrder.hasOwnProperty(b) ? dispOrder[b] : 9;
+      return ra - rb;
+    });
+    stSeq.forEach(function(st, i) {
+      var sub = mergeGroup(byStatus[st]);
+      sub.__ctrySpan = (i === 0) ? stSeq.length : 0;
+      out.push(sub);
+    });
   });
   return out;
 }
