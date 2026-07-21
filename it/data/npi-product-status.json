@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-07-21 13:49",
+ "generatedAt": "2026-07-21 14:14",
  "pttRawFile": "raw-data-20260721.xlsb",
  "cmsFile": "cms_merged_view_20260721_125812.csv",
  "sourceFile": "43 NPI for IT product status_20260707.xlsx",
@@ -261,10 +261,10 @@
       "Spec Assignment": "Assigned",
       "Local Asset Review": "",
       "Live URL B2C": "/de/notebooks/gram-2-in-1/16t95tp-k-ad8bgn/",
-      "Live URL SMB": "N",
+      "Live URL SMB": "/de/small-medium-business/notebooks/gram-2-in-1/16t95tp-k-ad8bgn/",
       "Live URL D2B2C": "-",
-      "Live URL Partners": "N",
-      "Live URL Education": "N"
+      "Live URL Partners": "/de/partnerstore/notebooks/gram-2-in-1/16t95tp-k-ad8bgn/",
+      "Live URL Education": "/de/edustore/notebooks/gram-2-in-1/16t95tp-k-ad8bgn/"
      },
      "stageForce": "live",
      "stageFallback": "precheck",
@@ -834,7 +834,7 @@
    ]
   },
   {
-   "status": "NPI 6월",
+   "status": "NPI 8월",
    "colorClass": "green",
    "rows": [
     {
@@ -846,8 +846,8 @@
      "pttId": "WR2283109AK",
      "pttStatus": "[WPL] Create Request",
      "targetStagingDate": "2026-06-15",
-     "detailKr": "PIM 등록 · 6월 NPI 배정",
-     "detailEn": "Registered in PIM, NPI month 6",
+     "detailKr": "PIM 등록 · 8월 NPI 배정",
+     "detailEn": "Registered in PIM, NPI month 8",
      "expectedLocalTargetDate": "6/23 퍼블리싱",
      "pdpStatus": "N",
      "stgUrl": "",
