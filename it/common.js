@@ -526,6 +526,72 @@ function showCountryModal(locale) {
   const cfg = SC[status] || SC['Pre-Review'];
 
   if (!isBG) {
+    // ── 국가 통합 대응: 같은 국가에 여러 모델 아이템이 묶이면 모델별 신호등 다중 도트 + 집계 상태로 표시.
+    //    (테이블은 병합 집계 상태를 보여주므로, 첫 아이템만 읽어 '작업중인데 완료'로 어긋나던 문제 해소) ──
+    var countryItems = allItems.filter(function(x) { return x.locale === locale; });
+    if (countryItems.length > 1) {
+      var TLM = {
+        'Done':         { color: '#10B981', glow: 'rgba(16,185,129,.35)', pulse: false },
+        'Corp. Review': { color: '#EF4444', glow: 'rgba(239,68,68,.35)',  pulse: true  },
+        'In Progress':  { color: '#F59E0B', glow: 'rgba(245,158,11,.35)', pulse: false },
+        'Pre-Review':   { color: '#D1D5DB', glow: 'transparent',          pulse: false },
+        'Cancel':       { color: '#CBD5E1', glow: 'transparent',          pulse: false }
+      };
+      var rankM = { 'Pre-Review': 0, 'In Progress': 1, 'Corp. Review': 2, 'Done': 3 };
+      var istatusM = function(x) { return x.status || x.overall || 'Pre-Review'; };
+      var cntM = { Done: 0, 'Corp. Review': 0, 'In Progress': 0, 'Pre-Review': 0, Cancel: 0 };
+      countryItems.forEach(function(x) { var s = istatusM(x); if (cntM[s] !== undefined) cntM[s]++; });
+      var totalM = countryItems.length;
+      var nonCancelM = countryItems.filter(function(x) { return istatusM(x) !== 'Cancel'; });
+      var aggStM = 'Cancel';
+      if (nonCancelM.length) {
+        aggStM = istatusM(nonCancelM[0]);
+        nonCancelM.forEach(function(x) { var s = istatusM(x); if (rankM[s] !== undefined && rankM[s] < rankM[aggStM]) aggStM = s; });
+      }
+      var aggCfgM = SC[aggStM] || SC['Pre-Review'];
+      var donePctM = totalM ? Math.round(cntM.Done / totalM * 100) : 0;
+      var dotsM = countryItems.map(function(x) {
+        var s = istatusM(x), t = TLM[s] || TLM['Pre-Review'];
+        var mdl = String(x.remark || '').split(/[\s·(]/)[0] || '-';
+        return '<div class="tl-dot-wrap"><div class="tl-dot ' + (t.pulse ? 'tl-dot-pulse' : '') + '" style="background:' + t.color + ';box-shadow:0 2px 8px ' + t.glow + '"></div><div class="tl-dot-label">' + escapeHtmlSheet(mdl) + '</div></div>';
+      }).join('');
+      var rowsM = countryItems.map(function(x) {
+        var s = istatusM(x), c = SC[s] || SC['Pre-Review'];
+        var lbl = { 'Done': '✓ 완료', 'Corp. Review': '법인리뷰', 'In Progress': '작업중', 'Pre-Review': '○ 사전검토', 'Cancel': '취소' }[s] || s;
+        var urlV = (x.url && String(x.url).indexOf('http') === 0) ? x.url : '';
+        var urlH = urlV ? '<a href="' + escapeAttrSheet(urlV) + '" target="_blank" rel="noopener" style="font-size:10px;color:#3B82F6;margin-right:8px">링크</a>' : '';
+        return '<div class="country-cell-row"><div class="country-cell-left"><span class="country-cell-fullname">' + escapeHtmlSheet(String(x.remark || '-')) + '</span></div><div class="country-cell-right-wrap">' + urlH + '<span class="country-cell-badge" style="background:' + c.bg + ';color:' + c.tc + '">' + lbl + '</span></div></div>';
+      }).join('');
+      var closeSvgM = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>';
+      var multiHtml =
+        '<div class="modal-overlay" id="countryModal" onclick="if(event.target===this)closeCountryModal()">' +
+          '<div class="modal-card" style="max-width:500px" onclick="event.stopPropagation()">' +
+            '<div class="country-modal-header"><div class="country-modal-info">' +
+              '<div class="country-modal-title">' + escapeHtmlSheet(locale) + '</div>' +
+              '<div class="country-modal-meta">' +
+                (item && item.region ? '<span class="country-modal-region">' + escapeHtmlSheet(item.region) + '</span>' : '') +
+                '<span class="country-modal-status" style="background:' + aggCfgM.bg + ';color:' + aggCfgM.tc + '">' + aggCfgM.label + '</span>' +
+                '<span style="font-size:11px;color:#9BA3BF">' + totalM + '개 모델</span>' +
+              '</div></div>' +
+              '<button class="modal-close-btn" onclick="closeCountryModal()">' + closeSvgM + '</button>' +
+            '</div>' +
+            '<div class="country-modal-progress"><div class="country-prog-row"><span class="country-prog-label">모델 진행률</span>' +
+              '<span class="country-prog-stat">' + cntM.Done + '/' + totalM + '<span style="color:' + aggCfgM.tc + ';font-weight:800;font-size:15px;margin-left:6px">' + donePctM + '%</span></span></div>' +
+              buildSegmentedBar(cntM, { showNumbers: true, showIcons: true }) +
+              '<div style="font-size:11px;color:#9BA3BF;margin-top:8px">' +
+                (cntM.Done ? '완료 ' + cntM.Done + '건 · ' : '') + (cntM['Corp. Review'] ? '법인리뷰 ' + cntM['Corp. Review'] + '건 · ' : '') + (cntM['In Progress'] ? '작업중 ' + cntM['In Progress'] + '건 · ' : '') + (cntM['Pre-Review'] ? '사전검토 ' + cntM['Pre-Review'] + '건 · ' : '') + (cntM.Cancel ? '취소 ' + cntM.Cancel + '건' : '') +
+              '</div>' +
+            '</div>' +
+            '<div class="tl-section"><div class="tl-header"><span class="tl-title">신호등 현황</span></div><div class="tl-dots-grid">' + dotsM + '</div></div>' +
+            '<div class="country-modal-cells"><div class="country-cells-title">모델별 현황 (' + totalM + '개)</div>' + rowsM + '</div>' +
+          '</div>' +
+        '</div>';
+      var existingM = document.getElementById('countryModal');
+      if (existingM) existingM.remove();
+      document.body.insertAdjacentHTML('beforeend', multiHtml);
+      requestAnimationFrame(function() { setTimeout(function() { var m = document.getElementById('countryModal'); if (m) m.classList.add('modal-show'); }, 10); });
+      return;
+    }
     // ═══ Simple 탭용 모달 — BG 완전 동일 구조 ═══
     const TL_S = {
       'Done':        { color:'#10B981', glow:'rgba(16,185,129,.35)',  label:'완료',    pulse:false },
@@ -6143,6 +6209,16 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
     ? [{ region: '', rows: rows || [] }]
     : groupRowsByRegion(rows, displayHeaders);
   var countryDisplayHeader = findCountryHeader(displayHeaders);
+  // 국가 통합: 같은 국가를 (모델 무관) 1행으로 병합하고 모델들을 Remark에 나열.
+  // 렌더 전용 — 완료율(getSheetPageCountInfo)은 원본 rows로 계산되므로 집계엔 영향 없음.
+  // 복수 URL은 국가 셀 클릭 시 기존 상세 모달(showCountryModal)이 로케일 단위로 그대로 노출.
+  if (!disableRegion && countryDisplayHeader) {
+    var mergeStatusHeader = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h) === 'status'; })[0] || null;
+    var mergeRemarkHeader = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h) === 'remark'; })[0] || null;
+    groupedRows = groupedRows.map(function(group) {
+      return { region: group.region, rows: collapseRowsByCountry(group.rows, countryDisplayHeader, mergeRemarkHeader, mergeStatusHeader) };
+    });
+  }
   var headerRowsForDisplay = disableRegion ? [] : (d.tableHeaderRows || []);
   // body에서 URL 컬럼을 숨겼으므로 헤더(tableHeaderRows)에서도 URL 셀 제거 → 컬럼 정렬 유지.
   headerRowsForDisplay = headerRowsForDisplay.map(function(hr) {
@@ -6260,6 +6336,55 @@ function groupRowsByRegion(rows, headers) {
     last.rows.push(row);
   });
   return groups;
+}
+
+function grDisplayStatusRank(v) {
+  var order = { '사전검토': 0, '작업중': 1, '법인리뷰': 2, '완료': 3 };
+  var k = String(v || '').trim();
+  return order.hasOwnProperty(k) ? order[k] : 99;
+}
+
+// 같은 국가(countryHeader) 행들을 모델 무관 첫 행으로 병합(렌더 전용).
+// 병합 행 Status는 취소 제외 최소진행도(가장 덜 완료된 상태), 전부 취소면 취소.
+// Remark에는 병합된 행들의 모델 토큰(Remark 첫 토큰)을 중복 제거해 나열.
+function collapseRowsByCountry(rows, countryHeader, remarkHeader, statusHeader) {
+  if (!countryHeader) return rows || [];
+  var byKey = {}, out = [];
+  (rows || []).forEach(function(row) {
+    var ckey = String(row[countryHeader] || '').trim().toLowerCase();
+    if (!ckey) { out.push(row); return; }
+    if (!byKey[ckey]) {
+      var copy = Object.assign({}, row);
+      copy.__st = []; copy.__rm = [];
+      byKey[ckey] = copy;
+      out.push(copy);
+    }
+    var agg = byKey[ckey];
+    if (statusHeader) agg.__st.push(String(row[statusHeader] || '').trim());
+    if (remarkHeader) { var rm = String(row[remarkHeader] || '').trim(); if (rm) agg.__rm.push(rm); }
+  });
+  out.forEach(function(row) {
+    var st = row.__st || [], rm = row.__rm || [];
+    delete row.__st; delete row.__rm;
+    if (statusHeader && st.length) {
+      var nonCancel = st.filter(function(s) { return s !== '취소'; });
+      if (nonCancel.length === 0) { row[statusHeader] = '취소'; }
+      else {
+        var pick = nonCancel[0], best = grDisplayStatusRank(nonCancel[0]);
+        nonCancel.forEach(function(s) { var r = grDisplayStatusRank(s); if (r < best) { best = r; pick = s; } });
+        row[statusHeader] = pick;
+      }
+    }
+    if (remarkHeader && rm.length) {
+      var seen = {}, models = [];
+      rm.forEach(function(x) {
+        var m = x.split(/[\s·(]/)[0].trim();
+        if (m && !seen[m]) { seen[m] = 1; models.push(m); }
+      });
+      row[remarkHeader] = models.join(', ');
+    }
+  });
+  return out;
 }
 
 function findCountryHeader(headers) {
