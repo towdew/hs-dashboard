@@ -6215,8 +6215,9 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
   if (!disableRegion && countryDisplayHeader) {
     var mergeStatusHeader = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h) === 'status'; })[0] || null;
     var mergeRemarkHeader = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h) === 'remark'; })[0] || null;
+    var mergePageHeader = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h).indexOf('page') === 0; })[0] || null;
     groupedRows = groupedRows.map(function(group) {
-      return { region: group.region, rows: collapseRowsByCountry(group.rows, countryDisplayHeader, mergeRemarkHeader, mergeStatusHeader) };
+      return { region: group.region, rows: collapseRowsByCountry(group.rows, countryDisplayHeader, mergeRemarkHeader, mergeStatusHeader, mergePageHeader) };
     });
   }
   var headerRowsForDisplay = disableRegion ? [] : (d.tableHeaderRows || []);
@@ -6347,7 +6348,7 @@ function grDisplayStatusRank(v) {
 // 같은 국가(countryHeader) 행들을 모델 무관 첫 행으로 병합(렌더 전용).
 // 병합 행 Status는 취소 제외 최소진행도(가장 덜 완료된 상태), 전부 취소면 취소.
 // Remark에는 병합된 행들의 모델 토큰(Remark 첫 토큰)을 중복 제거해 나열.
-function collapseRowsByCountry(rows, countryHeader, remarkHeader, statusHeader) {
+function collapseRowsByCountry(rows, countryHeader, remarkHeader, statusHeader, pageHeader) {
   if (!countryHeader) return rows || [];
   var byKey = {}, out = [];
   (rows || []).forEach(function(row) {
@@ -6355,17 +6356,23 @@ function collapseRowsByCountry(rows, countryHeader, remarkHeader, statusHeader) 
     if (!ckey) { out.push(row); return; }
     if (!byKey[ckey]) {
       var copy = Object.assign({}, row);
-      copy.__st = []; copy.__rm = [];
+      copy.__st = []; copy.__rm = []; copy.__pg = [];
       byKey[ckey] = copy;
       out.push(copy);
     }
     var agg = byKey[ckey];
     if (statusHeader) agg.__st.push(String(row[statusHeader] || '').trim());
     if (remarkHeader) { var rm = String(row[remarkHeader] || '').trim(); if (rm) agg.__rm.push(rm); }
+    if (pageHeader) agg.__pg.push(row[pageHeader]);
   });
   out.forEach(function(row) {
-    var st = row.__st || [], rm = row.__rm || [];
-    delete row.__st; delete row.__rm;
+    var st = row.__st || [], rm = row.__rm || [], pg = row.__pg || [];
+    delete row.__st; delete row.__rm; delete row.__pg;
+    if (pageHeader && pg.length > 1) {
+      var sum = 0, numeric = true;
+      pg.forEach(function(v) { var n = parseFloat(String(v == null ? '' : v).replace(/[^0-9.]/g, '')); if (isNaN(n)) numeric = false; else sum += n; });
+      if (numeric && sum > 0) row[pageHeader] = sum;
+    }
     if (statusHeader && st.length) {
       var nonCancel = st.filter(function(s) { return s !== '취소'; });
       if (nonCancel.length === 0) { row[statusHeader] = '취소'; }

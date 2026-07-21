@@ -1,7 +1,7 @@
 {
- "generatedAt": "2026-07-21 09:11",
+ "generatedAt": "2026-07-21 13:49",
  "pttRawFile": "raw-data-20260721.xlsb",
- "cmsFile": "cms_merged_view_20260713_190952.csv",
+ "cmsFile": "cms_merged_view_20260721_125812.csv",
  "sourceFile": "43 NPI for IT product status_20260707.xlsx",
  "totalRows": 42,
  "stages": [
@@ -54,7 +54,7 @@
      "pdpStatus": "N",
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/de/notebooks/gram-pro/16z90u-g-au78gn/",
-     "cmsLive": "등록·미게시",
+     "cmsLive": "라이브",
      "readinessCheck": "Ready",
      "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Assigned · LAR 미기재",
      "readinessFields": {
@@ -93,7 +93,7 @@
      "pdpStatus": "N",
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/de/notebooks/gram-pro/16z90u-k-aub8gn/",
-     "cmsLive": "등록·미게시",
+     "cmsLive": "라이브",
      "readinessCheck": "Ready",
      "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Need Assign · Confirmed",
      "readinessFields": {
@@ -171,7 +171,7 @@
      "pdpStatus": "N",
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/de/notebooks/gram-pro/17z90u-g-au8bgn/",
-     "cmsLive": "등록·미게시",
+     "cmsLive": "라이브",
      "readinessCheck": "Ready",
      "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Assigned · LAR 미기재",
      "readinessFields": {
@@ -210,7 +210,7 @@
      "pdpStatus": "N",
      "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/de/de/laptops/16t95tp-k_aa78gneedgdec.html?wcmmode=disabled",
      "liveUrl": "https://www.lg.com/de/notebooks/gram-2-in-1/16t95tp-k-aa78gn/",
-     "cmsLive": "등록·미게시",
+     "cmsLive": "라이브",
      "readinessCheck": "Ready",
      "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재",
      "readinessFields": {
@@ -249,7 +249,7 @@
      "pdpStatus": "N",
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/de/notebooks/gram-2-in-1/16t95tp-k-ad8bgn/",
-     "cmsLive": "등록·미게시",
+     "cmsLive": "라이브",
      "readinessCheck": "Ready",
      "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재",
      "readinessFields": {
@@ -768,7 +768,7 @@
      "pdpStatus": "N",
      "stgUrl": "",
      "liveUrl": "",
-     "cmsLive": "PIM 미등록",
+     "cmsLive": "등록·미게시",
      "readinessCheck": "Not Ready",
      "readinessTip": "Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
      "readinessFields": {
@@ -807,7 +807,7 @@
      "pdpStatus": "N",
      "stgUrl": "",
      "liveUrl": "",
-     "cmsLive": "PIM 미등록",
+     "cmsLive": "등록·미게시",
      "readinessCheck": "Not Ready",
      "readinessTip": "Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
      "readinessFields": {
@@ -1154,7 +1154,7 @@
      "pdpStatus": "N",
      "stgUrl": "",
      "liveUrl": "",
-     "cmsLive": "PIM 미등록",
+     "cmsLive": "등록·미게시",
      "statusTip": "",
      "stageForce": "etc",
      "stageFallback": "",
@@ -1630,7 +1630,7 @@
      "pdpStatus": "N",
      "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/es/es/portatiles/gram/16z90tl-g.html?wcmmode=disabled",
      "liveUrl": "",
-     "cmsLive": "등록·미게시",
+     "cmsLive": "라이브",
      "statusTip": "4/27 오픈 전 제품은 Readiness Check에 미노출",
      "stageForce": "",
      "stageFallback": "",
@@ -1659,7 +1659,7 @@
      "pdpStatus": "N",
      "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/es/es/business/informatica/ordenadores/portatiles-para-creadores/16u55u-g-au88bn.html?wcmmode=disabled",
      "liveUrl": "https://www.lg.com/es/portatiles/gram-book/16u55u-g-au88bn/",
-     "cmsLive": "등록·미게시",
+     "cmsLive": "라이브",
      "readinessCheck": "Ready",
      "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed",
      "readinessFields": {
