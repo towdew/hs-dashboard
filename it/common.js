@@ -549,7 +549,8 @@ function showCountryModal(locale) {
         nonCancelM.forEach(function(x) { var s = istatusM(x); if (rankM[s] !== undefined && rankM[s] < rankM[aggStM]) aggStM = s; });
       }
       var aggCfgM = SC[aggStM] || SC['Pre-Review'];
-      var donePctM = totalM ? Math.round(cntM.Done / totalM * 100) : 0;
+      var effTotalM = Math.max(totalM - (cntM.Cancel || 0), 0);
+      var donePctM = effTotalM ? Math.round(cntM.Done / effTotalM * 100) : 0;
       var dotsM = countryItems.map(function(x) {
         var s = istatusM(x), t = TLM[s] || TLM['Pre-Review'];
         var mdl = String(x.remark || '').split(/[\s·(]/)[0] || '-';
@@ -576,7 +577,7 @@ function showCountryModal(locale) {
               '<button class="modal-close-btn" onclick="closeCountryModal()">' + closeSvgM + '</button>' +
             '</div>' +
             '<div class="country-modal-progress"><div class="country-prog-row"><span class="country-prog-label">모델 진행률</span>' +
-              '<span class="country-prog-stat">' + cntM.Done + '/' + totalM + '<span style="color:' + aggCfgM.tc + ';font-weight:800;font-size:15px;margin-left:6px">' + donePctM + '%</span></span></div>' +
+              '<span class="country-prog-stat">' + cntM.Done + '/' + effTotalM + '<span style="color:' + aggCfgM.tc + ';font-weight:800;font-size:15px;margin-left:6px">' + donePctM + '%</span></span></div>' +
               buildSegmentedBar(cntM, { showNumbers: true, showIcons: true }) +
               '<div style="font-size:11px;color:#9BA3BF;margin-top:8px">' +
                 (cntM.Done ? '완료 ' + cntM.Done + '건 · ' : '') + (cntM['Corp. Review'] ? '법인리뷰 ' + cntM['Corp. Review'] + '건 · ' : '') + (cntM['In Progress'] ? '작업중 ' + cntM['In Progress'] + '건 · ' : '') + (cntM['Pre-Review'] ? '사전검토 ' + cntM['Pre-Review'] + '건 · ' : '') + (cntM.Cancel ? '취소 ' + cntM.Cancel + '건' : '') +
@@ -2675,7 +2676,10 @@ function renderContent() {
   const cs = contentStats(currentKey);
   const s = cs;
   const done = cs.Done || 0, total = cs.total || 1;
-  const pct = Math.round(done/total*100);
+  // 완료율 분모는 취소 제외(2026-07-22 사용자 지시) — 취소 건은 진행 대상이 아니므로 %에서 뺀다
+  const cancelCnt = cs.Cancel || 0;
+  const effTotal = Math.max((cs.total || 0) - cancelCnt, 0);
+  const pct = effTotal > 0 ? Math.round(done/effTotal*100) : 0;
   // 블록형 통계: 국가 수 / 콘텐츠(항목) 수
   var _list = (currentKey==='article_list') ? (d.articles||[]) : (d.items||[]);
   var _ctryset = {};
@@ -2688,7 +2692,7 @@ function renderContent() {
   const statBoxes = stats4.map(k => {
     const v = s[k] || 0;
     const cfg = SC[k];
-    const sharePct = total > 0 ? Math.round(v/total*100) : 0;
+    const sharePct = effTotal > 0 ? Math.round(v/effTotal*100) : 0;
     // 로케일/국가 수 계산 (overall 또는 status 기준)
     const localeCount = d.items
       ? d.items.filter(x => (x.overall || x.status) === k).length
@@ -2735,7 +2739,7 @@ function renderContent() {
           <span class="ov-progress-pct-new">${pct}<span style="font-size:14px;font-weight:700">%</span></span>
         </div>
         ${buildSegmentedBar(s, {showNumbers:true, showIcons:true})}
-        <div class="ov-progress-sub-new">전체 ${total.toLocaleString()}건 중 <strong style="color:#1A1D2E">${done.toLocaleString()}건 등록 완료</strong> · 잔여 ${(total-done).toLocaleString()}건 — 사전검토 → 작업중 → 법인검토 → 등록 완료</div>
+        <div class="ov-progress-sub-new">전체 ${effTotal.toLocaleString()}건 중 <strong style="color:#1A1D2E">${done.toLocaleString()}건 등록 완료</strong> · 잔여 ${Math.max(effTotal-done,0).toLocaleString()}건${cancelCnt ? ' · 취소 ' + cancelCnt.toLocaleString() + '건 제외' : ''} — 사전검토 → 작업중 → 법인검토 → 등록 완료</div>
       </div>
 
       <!-- Stat Cards -->
@@ -3715,7 +3719,8 @@ function syncNavBadges() {
     if (!DATA[key]) return;
     if (DATA[key]._custom) return; // 커스텀 탭(NPI/제품현황/URL Library)은 텍스트 배지 유지 — %로 덮어쓰지 않음
     var cs = contentStats(key);
-    var pct = cs.total > 0 ? Math.round((cs.Done || 0) / cs.total * 100) : 0;
+    var effNav = Math.max((cs.total || 0) - (cs.Cancel || 0), 0);
+    var pct = effNav > 0 ? Math.round((cs.Done || 0) / effNav * 100) : 0;
     var badge = el.querySelector('.ni-badge');
     if (!badge) return;
     badge.textContent = pct + '%';
@@ -3789,13 +3794,14 @@ function buildRegionSummary(items, opts) {
   }
 
   // 전체 합계
-  var grand = { total: 0, Done: 0, 'Corp. Review': 0, 'In Progress': 0, 'Pre-Review': 0 };
+  var grand = { total: 0, Done: 0, 'Corp. Review': 0, 'In Progress': 0, 'Pre-Review': 0, 'Cancel': 0 };
   for (var gk in groups) {
     if (!groups.hasOwnProperty(gk)) continue;
     grand.total += groups[gk].total;
     grand.Done += groups[gk].Done;
     grand['Corp. Review'] += groups[gk]['Corp. Review'];
     grand['In Progress'] += groups[gk]['In Progress'];
+    grand['Cancel'] += groups[gk]['Cancel'] || 0;
     grand['Pre-Review'] += groups[gk]['Pre-Review'];
   }
 
@@ -3805,7 +3811,8 @@ function buildRegionSummary(items, opts) {
     var rgnName = regionList[ri];
     var gg = groups[rgnName];
     var rcfg = REGION_CFG[rgnName] || { label: rgnName, bg: '#F5F6FA', tc: '#6B7280', border: '#E0E4F0' };
-    var pct = gg.total > 0 ? Math.round(gg.Done / gg.total * 100) : 0;
+    var ggEff = Math.max(gg.total - (gg.Cancel || 0), 0);
+    var pct = ggEff > 0 ? Math.round(gg.Done / ggEff * 100) : 0;
 
     var chips = [];
     var order = ['Done', 'Corp. Review', 'In Progress', 'Pre-Review'];
@@ -3827,7 +3834,7 @@ function buildRegionSummary(items, opts) {
       '<div style="background:#fff;border:1px solid #E8EAF2;border-left:3px solid ' + rcfg.tc + ';border-radius:10px;padding:12px 14px">' +
         '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">' +
           '<span style="font-size:11px;font-weight:800;color:' + rcfg.tc + ';background:' + rcfg.bg + ';padding:2px 8px;border-radius:5px">' + rcfg.label + '</span>' +
-          '<span style="font-size:13px;font-weight:800;color:#1A1D2E">' + gg.Done + '<span style="color:#9BA3BF;font-weight:500">/' + gg.total + '</span> <span style="color:' + rcfg.tc + ';font-size:11px">(' + pct + '%)</span></span>' +
+          '<span style="font-size:13px;font-weight:800;color:#1A1D2E">' + gg.Done + '<span style="color:#9BA3BF;font-weight:500">/' + ggEff + '</span> <span style="color:' + rcfg.tc + ';font-size:11px">(' + pct + '%)</span></span>' +
         '</div>' +
         bar +
         '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:9px">' + chips.join('') + '</div>' +
@@ -3835,7 +3842,8 @@ function buildRegionSummary(items, opts) {
     );
   }
 
-  var grandPct = grand.total > 0 ? Math.round(grand.Done / grand.total * 100) : 0;
+  var grandEff = Math.max(grand.total - (grand.Cancel || 0), 0);
+  var grandPct = grandEff > 0 ? Math.round(grand.Done / grandEff * 100) : 0;
 
   return '<div style="background:#fff;border:1px solid #E8EAF2;border-radius:14px;padding:16px 20px;margin-bottom:14px">' +
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">' +
