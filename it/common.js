@@ -1966,10 +1966,13 @@ function npiPsRenderFilterBar() {
   });
   html += '</select>';
 
+  // Country 필터 — 값은 원본 locale 유지(필터 로직 무변경), 표시만 국가명 (2026-07-22 사용자 지시)
   html += '<select class="url-lib-select" id="npiPsLocaleSelect" onchange="npiPsSetFilter(\'locale\', this.value)">';
-  html += '<option value="">전체 LOCALE</option>';
-  locales.forEach(function(locale) {
-    html += '<option value="' + escapeAttrSheet(locale) + '"' + (_npiPsFilter.locale === locale ? ' selected' : '') + '>' + escapeHtmlSheet(locale) + '</option>';
+  html += '<option value="">전체 Country</option>';
+  locales.slice().sort(function(a, b) {
+    return npiPsCountryName(a).localeCompare(npiPsCountryName(b));
+  }).forEach(function(locale) {
+    html += '<option value="' + escapeAttrSheet(locale) + '"' + (_npiPsFilter.locale === locale ? ' selected' : '') + '>' + escapeHtmlSheet(npiPsCountryName(locale)) + '</option>';
   });
   html += '</select>';
 
@@ -2185,7 +2188,8 @@ function npiPsRenderResults() {
   html += '</div>';
   html += '<div class="npi-detail-table-wrap" style="overflow-x:auto">';
   html += '<table class="npi-detail-table" style="min-width:1300px">';
-  html += '<thead><tr>' + NPI_PS_COLUMNS.map(function(c) {
+  // PTT Task ID는 테이블에서 숨김 — 엑셀 다운로드(NPI_PS_COLUMNS 전체)에만 포함 (2026-07-22 사용자 지시)
+  html += '<thead><tr>' + NPI_PS_COLUMNS.filter(function(c) { return c.key !== 'ptt'; }).map(function(c) {
     var arrow = (_npiPsSort.key === c.key) ? (_npiPsSort.dir > 0 ? ' ▲' : ' ▼') : ' ⇅';
     var arrowColor = (_npiPsSort.key === c.key) ? '#2563EB' : '#CBD5E1';
     return '<th style="cursor:pointer;user-select:none;white-space:nowrap" onclick="npiPsToggleSort(\'' + c.key + '\')" title="클릭: 정렬">' +
@@ -2235,7 +2239,6 @@ function npiPsRenderResults() {
     html += '<td style="font-size:var(--fs-caption);max-width:280px">' + detailCell + '</td>';
     html += '<td style="text-align:center">' + npiPsUrlCell(row.stgUrl) + '</td>';
     html += '<td style="text-align:center">' + npiPsUrlCell(row.liveUrl) + '</td>';
-    html += '<td style="font-size:var(--fs-caption);color:#64748B" title="' + escapeAttrSheet(row.pttStatus || '') + '">' + escapeHtmlSheet(row.pttId || '-') + '</td>';
     html += '</tr>';
   });
   html += '</tbody></table></div></div>';
