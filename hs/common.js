@@ -1300,13 +1300,40 @@ function getWeeklyUpdateItems(d) {
     var country = String(item && item.country || '').trim();
     var url = String(item && item.url || '').trim();
     var text = String(item && (item.text || item.label || item.title) || '').trim();
+    var isCancelled = !!(item && item.isCancelled);
+    var cancelCount = isCancelled ? Math.max(1, Number(item && item.cancelCount) || getWeeklyUpdateCancelCount(text)) : 0;
     if (!text && url) text = url;
     if (isWeeklyNA(text) && !url) return null;
-    var key = country + '|' + url + '|' + text;
+    var key = country + '|' + url + '|' + text + '|' + (isCancelled ? 'cancelled' : 'completed');
     if (seen[key]) return null;
     seen[key] = true;
-    return { country: country || '신규 항목', url: url, text: text };
+    return {
+      country: country || '신규 항목',
+      url: url,
+      text: text,
+      isCancelled: isCancelled,
+      cancelCount: cancelCount
+    };
   }).filter(Boolean);
+}
+
+function getWeeklyUpdateCancelMeta(value) {
+  var raw = String(value == null ? '' : value).replace(/\u00a0/g, ' ').trim();
+  var match = raw.match(/^(취소|cancel(?:led)?)(?:\s*[-:：]\s*|\s+|$)(.*)$/i);
+  if (!match) return { isCancelled: false, text: raw, cancelCount: 0 };
+
+  var text = String(match[2] || '').trim();
+  return {
+    isCancelled: true,
+    text: text,
+    cancelCount: getWeeklyUpdateCancelCount(text || raw)
+  };
+}
+
+function getWeeklyUpdateCancelCount(value) {
+  var match = String(value == null ? '' : value).match(/(\d+)\s*건/);
+  var count = match ? parseInt(match[1], 10) : 1;
+  return (!isNaN(count) && count > 0) ? count : 1;
 }
 
 function splitWeeklyUpdateDisplayChunks(raw) {
@@ -1365,11 +1392,13 @@ function parseWeeklyUpdateTextForDisplay(value) {
     var text = String(part || '').trim();
     if (!text) return;
 
-    // 국가 : URL1, URL2 형태를 지원합니다.
+    // 국가 : URL 또는 국가 : 취소 - 설명 형태를 지원합니다.
     var kv = text.match(/^([^:：]{1,40})\s*[：:]\s*(.+)$/);
     if (kv) {
       var country = kv[1].trim() || '신규 항목';
-      var body = kv[2].trim();
+      var rawBody = kv[2].trim();
+      var cancelMeta = getWeeklyUpdateCancelMeta(rawBody);
+      var body = cancelMeta.text;
       var urlRe = /https?:\/\/[^\s,;]+/ig;
       var matches = [];
       var m;
@@ -1377,11 +1406,35 @@ function parseWeeklyUpdateTextForDisplay(value) {
 
       if (matches.length) {
         matches.forEach(function(url) {
-          out.push({ country: country, url: url, text: url });
+          out.push({
+            country: country,
+            url: url,
+            text: url,
+            isCancelled: cancelMeta.isCancelled,
+            cancelCount: cancelMeta.isCancelled ? 1 : 0
+          });
         });
       } else {
-        out.push({ country: country, url: '', text: body || text });
+        out.push({
+          country: country,
+          url: '',
+          text: body || rawBody || text,
+          isCancelled: cancelMeta.isCancelled,
+          cancelCount: cancelMeta.cancelCount
+        });
       }
+      return;
+    }
+
+    var singleCancelMeta = getWeeklyUpdateCancelMeta(text);
+    if (singleCancelMeta.isCancelled) {
+      out.push({
+        country: '신규 항목',
+        url: '',
+        text: singleCancelMeta.text || text,
+        isCancelled: true,
+        cancelCount: singleCancelMeta.cancelCount
+      });
       return;
     }
 
@@ -1389,16 +1442,15 @@ function parseWeeklyUpdateTextForDisplay(value) {
     if (singleUrl) {
       var url = singleUrl[0].replace(/[),.;]+$/g, '');
       var before = text.slice(0, singleUrl.index).replace(/[：:>-]+\s*$/g, '').trim();
-      out.push({ country: before || '신규 항목', url: url, text: url });
+      out.push({ country: before || '신규 항목', url: url, text: url, isCancelled: false, cancelCount: 0 });
       return;
     }
 
-    out.push({ country: '신규 항목', url: '', text: text });
+    out.push({ country: '신규 항목', url: '', text: text, isCancelled: false, cancelCount: 0 });
   });
 
   return out.filter(Boolean);
 }
-
 
 function getRequestWeekFromSheetData(d) {
   var v = d && (d.requestWeek || d.requestWeekB4 || (d.metaCells && d.metaCells.B4));
@@ -1419,6 +1471,11 @@ function renderRequestWeekMeta(d) {
 function renderWeeklyUpdateSection(d) {
   var items = getWeeklyUpdateItems(d);
   if (!items.length) return '';
+
+  // 취소 문구는 완료 카운트에서 제외하고, 목록에는 취소 항목으로 별도 표시합니다.
+  var completedCount = items.filter(function(item) {
+    return !item.isCancelled;
+  }).length;
 
   // 같은 국가에 URL이 여러 개 있는 경우, 국가는 한 번만 노출하고 URL만 옆으로 나열합니다.
   var groups = [];
@@ -1446,6 +1503,14 @@ function renderWeeklyUpdateSection(d) {
     var displayCountry = /^(신규|new|update|공지|항목)/i.test(country) ? country : displayCountryFullName(country);
     var links = group.items.map(function(item) {
       var text = shortUrlLabel(item.url, item.text || item.url || '');
+
+      if (item.isCancelled) {
+        return '<span class="weekly-update-url weekly-update-url-cancelled" title="취소된 항목">' +
+          '<span class="weekly-update-cancel-badge">취소</span>' +
+          '<span class="weekly-update-line-text">' + escapeHtmlSheet(text) + '</span>' +
+        '</span>';
+      }
+
       if (item.url) {
         return '<a class="weekly-update-url" href="' + escapeAttrSheet(item.url) + '" target="_blank" rel="noopener" title="' + escapeAttrSheet(item.url) + '">' +
           '<span class="weekly-update-line-text">' + escapeHtmlSheet(text) + '</span>' +
@@ -1455,7 +1520,11 @@ function renderWeeklyUpdateSection(d) {
       return '<span class="weekly-update-url weekly-update-url-text">' + escapeHtmlSheet(text) + '</span>';
     }).join('');
 
-    return '<div class="weekly-update-group">' +
+    var cancelOnlyClass = group.items.length && group.items.every(function(item) {
+      return !!item.isCancelled;
+    }) ? ' is-cancel-only' : '';
+
+    return '<div class="weekly-update-group' + cancelOnlyClass + '">' +
       '<span class="weekly-update-line-country">' + escapeHtmlSheet(displayCountry) + '</span>' +
       '<span class="weekly-update-url-list">' + links + '</span>' +
     '</div>';
@@ -1466,7 +1535,7 @@ function renderWeeklyUpdateSection(d) {
       '<div class="weekly-update-notice">' +
         '<div class="weekly-update-mainline">' +
           '<span class="weekly-update-new-badge">NEW</span>' +
-          '<span class="weekly-update-desc">이번 주에 새로 완료된 항목 ' + items.length.toLocaleString() + '건입니다.</span>' +
+          '<span class="weekly-update-desc">이번 주에 새로 완료된 항목 ' + completedCount.toLocaleString() + '건입니다.</span>' +
         '</div>' +
         '<div class="weekly-update-items">' + list + '</div>' +
       '</div>' +
