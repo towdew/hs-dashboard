@@ -7,7 +7,8 @@ function npiPsFilterRows(flatRows, filter) {
   var q = (f.search || '').toLowerCase().trim();
   return (flatRows || []).filter(function (item) {
     var row = item.row || {};
-    if (f.excludeLive && item.stage === 'live') return false;
+    // Stage를 명시적으로 'live'로 고른 경우엔 라이브 제외를 적용하지 않음 (드롭다운 Live(N) 선택 시 실제 표시)
+    if (f.excludeLive && f.stage !== 'live' && item.stage === 'live') return false;
     // 대분류(NPI/MOD) 필터 — category 미기재 행은 NPI로 간주 (2026-07-16)
     if (f.category && (row.category || 'NPI') !== f.category) return false;
     if (f.stage && item.stage !== f.stage) return false;
