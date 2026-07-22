@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LG.com GEO Content Status Dashboard</title>
+  <title>LG.com GEO Content Coverage Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
@@ -610,7 +610,8 @@
     
     .workflow-step{
       grid-template-columns:64px 1fr;
-      gap:10px;
+      gap:5px;
+      max-height: fit-content;
     }
     
     .workflow-todo{
@@ -619,7 +620,7 @@
     }
     
     .color-list{
-      grid-template-columns:1fr;
+      grid-template-columns:1fr 1fr;
     }
     }
     
@@ -1729,9 +1730,7 @@
       pointer-events:none;
     }
     @media(max-width:900px){
-      .topbar,.summary-head,.detail-head{flex-direction:column}
       .load-area{justify-content:flex-start}
-      .summary-grid{grid-template-columns:1fr 1fr}
       .guide-grid{grid-template-columns:1fr}
       th.division,td.division{min-width:110px;width:110px;max-width:110px}
       th.model,td.model{min-width:220px;width:220px;max-width:220px}
@@ -2235,6 +2234,62 @@
       100%{ transform:translateX(250%); }
     }
 
+  
+
+    /* ── Responsive matrix table + mouse drag scrolling ── */
+    .matrix-card{
+      max-width:100%;
+    }
+    .matrix-wrap{
+      display:block;
+      width:100%;
+      max-width:100%;
+      overflow-x:auto !important;
+      overflow-y:visible;
+      cursor:grab;
+      -webkit-overflow-scrolling:touch;
+      overscroll-behavior-x:contain;
+      scrollbar-gutter:stable;
+    }
+    .matrix-wrap.is-dragging{
+      cursor:grabbing;
+      user-select:none;
+    }
+    .matrix-wrap.is-dragging *{
+      user-select:none !important;
+    }
+    .mx-table{
+      table-layout:fixed !important;
+      width:max-content;
+      max-width:none !important;
+    }
+    /* Country column is fixed; every request/data column stays compact. */
+    .mx-table th.mx-country-head,
+    .mx-table td.mx-country-cell{
+      min-width:110px !important;
+      width:110px !important;
+      max-width:110px !important;
+    }
+    .mx-table th.mx-req-head,
+    .mx-table td.mx-cell{
+      min-width:65px !important;
+      width:88px !important;
+      max-width:120px !important;
+      box-sizing:border-box;
+      overflow-wrap:anywhere;
+    }
+    .mx-table td.mx-cell{
+      overflow:hidden;
+    }
+    .mx-table th.mx-req-head.mx-req-article,
+    .mx-table td.mx-article,
+    .mx-table th.mx-req-head.mx-req-authority,
+    .mx-table td.mx-authority{
+      min-width:65px !important;
+      width:88px !important;
+      max-width:120px !important;
+    }
+
   </style>
 </head>
 <body class="is-loading">
@@ -2242,7 +2297,7 @@
     <div class="topbar">
       <div class="title-block">
         <div class="title-row">
-          <h1>LG.com GEO Content Status Dashboard</h1>
+          <h1>LG.com GEO Content Coverage Dashboard</h1>
           <div class="week-tabs"></div>
         </div>
       </div>
@@ -3760,7 +3815,14 @@ function renderDashboard(rows, clickedCountry=null){
 
   // 매트릭스(교차표) HTML 사전 생성
   const _mx = buildMatrixTable(visibleRows, visibleCountries);
-  const matrixTableHtml = '<table class="mx-table"><thead>' + _mx.thead + '</thead><tbody>' + _mx.tbody + '</tbody></table>';
+  const _mxCountryColWidth = 110;
+  const _mxDataColWidth = 88;
+  const _mxTableWidth = _mxCountryColWidth + (_mx.modelCount * _mxDataColWidth);
+  const _mxColgroup = '<colgroup><col style="width:' + _mxCountryColWidth + 'px">' +
+    Array.from({length:_mx.modelCount}, function(){ return '<col style="width:' + _mxDataColWidth + 'px">'; }).join('') +
+    '</colgroup>';
+  const matrixTableHtml = '<table class="mx-table" style="width:' + _mxTableWidth + 'px;min-width:' + _mxTableWidth + 'px;max-width:' + _mxTableWidth + 'px;table-layout:fixed">' +
+    _mxColgroup + '<thead>' + _mx.thead + '</thead><tbody>' + _mx.tbody + '</tbody></table>';
 
   // Build dropdown checkbox options grouped by Region from Row Data.
   const regionMap = {};
@@ -4097,6 +4159,12 @@ function renderDashboard(rows, clickedCountry=null){
   const matrixWrap = document.querySelector('#matrixTableArea .matrix-wrap');
   if(matrixWrap){
     matrixWrap.addEventListener('click', function(e){
+      // A real horizontal drag creates a browser click on mouseup. Ignore only that one click.
+      if(matrixWrap.dataset.dragMoved === '1'){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+      }
       const td = e.target.closest('.cst-clickable');
       if(!td) return;
       // LG Experience Articles 셀: 국가/제품별 Done/Total 팝업
@@ -4118,6 +4186,53 @@ function renderDashboard(rows, clickedCountry=null){
       // 기존 방식
       const tr = td.closest('tr');
       if(tr) showRowDetail(tr);
+    });
+
+    // Desktop mouse-drag horizontal scrolling.
+    // Normal clicks remain untouched, so clickable cells still open their modal.
+    let dragMouseDown = false;
+    let dragStarted = false;
+    let dragStartX = 0;
+    let dragStartScrollLeft = 0;
+    const DRAG_THRESHOLD = 6;
+
+    matrixWrap.addEventListener('mousedown', function(e){
+      if(e.button !== 0) return;
+      if(e.target.closest('a,button,input,select,textarea,label')) return;
+      dragMouseDown = true;
+      dragStarted = false;
+      dragStartX = e.clientX;
+      dragStartScrollLeft = matrixWrap.scrollLeft;
+    });
+
+    document.addEventListener('mousemove', function(e){
+      if(!dragMouseDown) return;
+      const deltaX = e.clientX - dragStartX;
+      if(!dragStarted && Math.abs(deltaX) < DRAG_THRESHOLD) return;
+
+      dragStarted = true;
+      matrixWrap.classList.add('is-dragging');
+      matrixWrap.scrollLeft = dragStartScrollLeft - deltaX;
+      e.preventDefault();
+    });
+
+    document.addEventListener('mouseup', function(){
+      if(!dragMouseDown) return;
+      dragMouseDown = false;
+      matrixWrap.classList.remove('is-dragging');
+
+      if(dragStarted){
+        matrixWrap.dataset.dragMoved = '1';
+        // The synthetic click fires immediately after mouseup. Clear on the next task.
+        setTimeout(function(){
+          delete matrixWrap.dataset.dragMoved;
+        }, 0);
+      }
+      dragStarted = false;
+    });
+
+    matrixWrap.addEventListener('mouseleave', function(){
+      if(!dragMouseDown) matrixWrap.classList.remove('is-dragging');
     });
   }
 }
