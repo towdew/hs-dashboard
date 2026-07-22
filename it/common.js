@@ -1685,7 +1685,7 @@ function npiPsFlowBox(m, label, n) {
     '<div style="font-size:20px;font-weight:800;line-height:1.15">' + n + '</div></div>';
 }
 
-// Modification 진행 프로세스: 수정요청 → 수정중 → 수정완료 (stage 매핑: live→완료, in_progress→수정중, 그 외→요청)
+// Modification 진행 프로세스: Request → In Progress → Completed (stage 매핑: live→Completed, in_progress→In Progress, 그 외→Request)
 function npiPsModFlowHtml(modRows) {
   var counts = { request: 0, working: 0, done: 0 };
   (modRows || []).forEach(function(item) {
@@ -1695,13 +1695,12 @@ function npiPsModFlowHtml(modRows) {
   });
   var arrow = '<div style="color:#CBD5E1;font-size:20px;font-weight:800;padding:0 2px">→</div>';
   return '<div style="display:flex;align-items:center;gap:6px;flex-wrap:nowrap;padding:14px;background:#F8FAFC;border-radius:14px;overflow-x:auto">' +
-    npiPsFlowBox(npiPsStageMeta('precheck'), '수정요청', counts.request) + arrow +
-    npiPsFlowBox(npiPsStageMeta('in_progress'), '수정중', counts.working) + arrow +
-    npiPsFlowBox(npiPsStageMeta('live'), '수정완료', counts.done) +
+    npiPsFlowBox(npiPsStageMeta('precheck'), 'Request', counts.request) + arrow +
+    npiPsFlowBox(npiPsStageMeta('in_progress'), 'In Progress', counts.working) + arrow +
+    npiPsFlowBox(npiPsStageMeta('live'), 'Completed', counts.done) +
     '</div>';
 }
 
-// NPI 진행 프로세스 흐름도: Precheck → In Progress → (Client Review / Clarify) → Live
 function npiPsProcessFlowHtml(stageCounts) {
   function box(key, label) {
     return npiPsFlowBox(npiPsStageMeta(key), label, stageCounts[key] || 0);
@@ -1710,10 +1709,11 @@ function npiPsProcessFlowHtml(stageCounts) {
   var branch = '<div style="display:inline-flex;flex-direction:column;gap:6px">' +
     box('client_review', 'Client Review') + box('clarify', 'Clarify') + '</div>';
   return '<div style="display:flex;align-items:center;gap:6px;flex-wrap:nowrap;padding:14px;background:#F8FAFC;border-radius:14px;overflow-x:auto">' +
-    box('precheck', 'Precheck') + arrow + box('in_progress', 'In Progress') + arrow + branch + arrow + box('live', 'Live') +
+    box('etc', 'Etc') + arrow + box('precheck', 'Precheck') + arrow + box('in_progress', 'In Progress') + arrow + branch + arrow + box('live', 'Live') +
     '</div>';
 }
 
+// Modification 진행 프로세스: Request → In Progress → Completed (stage 매핑: live→Completed, in_progress→In Progress, 그 외→Request)
 function npiPsOpenProcessModal() {
   var d = _npiProductStatusData;
   if (!d) return;
@@ -1733,7 +1733,7 @@ function npiPsOpenProcessModal() {
     '<div class="modal-card" style="max-width:760px" onclick="event.stopPropagation()">' +
       '<div class="country-modal-header"><div class="country-modal-info">' +
         '<div class="country-modal-title">진행 프로세스</div>' +
-        '<div class="country-modal-meta"><span style="font-size:11px;color:#9BA3BF">NPI: Precheck → In Progress → Client Review / Clarify → Live · Modification: 수정요청 → 수정중 → 수정완료</span></div>' +
+        '<div class="country-modal-meta"><span style="font-size:11px;color:#9BA3BF">NPI: Etc → Precheck → In Progress → Client Review / Clarify → Live · Modification: Request → In Progress → Completed</span></div>' +
       '</div><button class="modal-close-btn" onclick="closeNpiPsProcessModal()">✕</button></div>' +
       '<div style="padding:20px">' + body + '</div>' +
     '</div></div>';
