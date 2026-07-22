@@ -1,65 +1,3 @@
-// ════════ 🔒 ACCESS CONTROL ════════
-const ACCESS_KEY = 'lg_hs_ops_authed';
-const ACCESS_PWD = 'lg1234';
-
-/* 로그인 화면 제거됨 — 인증 없이 바로 대시보드 표시 */
-
-function centerLockCard() {
-  const card = document.querySelector('.lock-card');
-  if (!card) return;
-  const vh = window.innerHeight || document.documentElement.clientHeight;
-  const vw = window.innerWidth || document.documentElement.clientWidth;
-
-  // 좌우 여백 강제 적용 (최대폭 460px, 양쪽 24px 마진)
-  const sideMargin = 24;
-  const maxW = 460;
-  const availW = Math.max(0, vw - sideMargin * 2);
-  const cardW = Math.min(availW, maxW);
-  const horizSpace = (vw - cardW) / 2;
-  card.style.width = cardW + 'px';
-  card.style.marginLeft = horizSpace + 'px';
-  card.style.marginRight = horizSpace + 'px';
-  card.style.boxSizing = 'border-box';
-
-  // 상하 중앙 정렬
-  const cardH = card.offsetHeight;
-  if (cardH < vh) {
-    const vSpace = Math.max(0, (vh - cardH) / 2);
-    card.style.marginTop = vSpace + 'px';
-    card.style.marginBottom = vSpace + 'px';
-  }
-}
-
-function checkPassword() {
-  const input = document.getElementById('lockPassword');
-  const wrap  = document.getElementById('lockInputWrap');
-  const error = document.getElementById('lockError');
-  const val   = input.value.trim();
-
-  if (val === ACCESS_PWD) {
-    try { sessionStorage.setItem(ACCESS_KEY, 'true'); } catch(e) {}
-    const lock = document.getElementById('lockScreen');
-    const app  = document.querySelector('.app');
-    if (app) app.style.display = '';  // 대시보드 다시 표시
-    if (lock) lock.classList.add('hidden');
-    setTimeout(() => {
-      if (lock) lock.style.display = 'none';
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-    }, 400);
-  } else {
-    wrap.classList.add('error');
-    error.classList.add('show');
-    input.value = '';
-    setTimeout(() => wrap.classList.remove('error'), 500);
-    setTimeout(() => input.focus(), 100);
-  }
-}
-
-function clearLockError() {
-  document.getElementById('lockError').classList.remove('show');
-}
-
 /* ===== moved from inline <script> block 2 ===== */
 
 // ── DATA ─────────────────────────────────────────────────────
@@ -978,30 +916,6 @@ function closeModal() {
   if (!m) return;
   m.classList.remove('modal-show');
   setTimeout(() => { if (m.parentNode) m.remove(); }, 280);
-}
-
-// ── LOGOUT ───────────────────────────────────────────────────
-function logout(){
-  try {
-    // 1. 세션 인증 정보 즉시 삭제
-    try { sessionStorage.removeItem(ACCESS_KEY); } catch(e) {}
-    try { localStorage.removeItem(ACCESS_KEY); } catch(e) {} // 혹시 모를 잔존 데이터까지 정리
-
-    // 2. 모바일 사이드바/백드롭 즉시 닫기
-    const sb = document.getElementById('sidebar');
-    const bd = document.getElementById('sbBackdrop');
-    if (sb) sb.classList.remove('mobile-open');
-    if (bd) bd.classList.remove('show');
-    document.body.style.overflow = '';
-  } catch(e) {
-    // 무시 — 다음 단계 reload가 모든 것을 해결
-  }
-
-  // 3. 페이지 리로드 → 잠금 화면 자동 노출 (가장 확실한 방법)
-  // setTimeout으로 약간 지연하여 모바일 환경에서도 확실히 실행
-  setTimeout(function(){
-    window.location.reload();
-  }, 50);
 }
 
 
@@ -4444,25 +4358,6 @@ window.COUNTRY_FULLNAME_DISPLAY_MAP = COUNTRY_FULLNAME_DISPLAY_MAP;
 function dashboardInit() {
   if (window.__dashboardInitDone) return;
   window.__dashboardInitDone = true;
-  // 접근 인증 체크
-  (function(){
-    var lock = document.getElementById('lockScreen');
-    var app = document.querySelector('.app');
-    var authed = false;
-    try { authed = sessionStorage.getItem(ACCESS_KEY) === 'true'; } catch(e){}
-    if (authed) {
-      if (lock) { lock.classList.add('hidden'); lock.style.display = 'none'; }
-      if (app) app.style.display = '';
-    } else {
-      if (app) app.style.display = 'none';
-      if (lock) {
-        lock.classList.remove('hidden');
-        lock.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      }
-      setTimeout(function(){ var p=document.getElementById('lockPassword'); if(p) p.focus(); }, 200);
-    }
-  })();
   if (window.__DASHBOARD_KEYS && window.__DASHBOARD_KEYS.length) {
     currentKey = window.__DEFAULT_DASHBOARD_KEY || window.__DASHBOARD_KEYS[0];
     document.querySelectorAll('#sheetNavList .nav-item').forEach(function(n) {
@@ -4481,18 +4376,6 @@ if (document.readyState === 'loading') {
   dashboardInit();
 }
 
-// 로그아웃 버튼: onclick 외에 직접 이벤트 리스너 추가 (iOS Safari/webview 호환)
-(function attachLogoutHandler(){
-  const btn = document.getElementById('logoutBtn');
-  if (!btn) return;
-  ['click','touchend'].forEach(function(evt){
-    btn.addEventListener(evt, function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      logout();
-    }, { passive: false });
-  });
-})();
 
 /* ===== moved from inline <script> block 2 ===== */
 
