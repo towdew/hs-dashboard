@@ -17,27 +17,6 @@
   </div>
 </div>
 
-<!-- 로그인(접근 잠금) 화면 -->
-
-<div id="lockScreen" style="display: none !important;">
-  <div class="lock-card">
-    <div class="lock-badge">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-    </div>
-    <div class="lock-logo">Request Status Dashboard</div>
-    <div class="lock-sub">Enter password to continue</div>
-    <div class="lock-label">Password</div>
-    <div class="lock-input-wrap" id="lockInputWrap">
-      <input type="password" id="lockPassword" onkeydown="if(event.key==='Enter')checkPassword()">
-    </div>
-    <div class="lock-error" id="lockError">비밀번호가 올바르지 않습니다.</div>
-    <button class="lock-btn" onclick="checkPassword()">Access Dashboard</button>
-    <div class="lock-footer">LG Electronics Dashboard - Authorized Access Only</div>
-  </div>
-</div>
-
-
-
 <div class="app" style="display: flex;">
 
 <!-- ══════════════════ SIDEBAR ══════════════════ -->
@@ -259,7 +238,6 @@
 
 
 <script>
-  try { sessionStorage.setItem('lg_ms_ops_authed', 'true'); } catch(e) {}
   function hideInitialLoadingOverlay() {
     var overlay = document.getElementById('initialLoadingOverlay');
     if (!overlay) return;
