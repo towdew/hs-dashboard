@@ -1869,3 +1869,72 @@ body{
 .initial-loading-bar{position:relative;margin-top:22px;height:8px;border-radius:999px;background:#EEF0F5;overflow:hidden}
 .initial-loading-bar span{position:absolute;top:0;bottom:0;left:-38%;width:38%;border-radius:999px;background:#A50034;animation:initialLoadingMove 1.08s ease-in-out infinite}
 @keyframes initialLoadingMove{0%{left:-38%;width:38%}50%{width:54%}100%{left:100%;width:38%}}
+
+/* Weekly update cancellation item */
+.weekly-update-url-cancelled{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-width:0;
+  max-width:100%;
+  color:#A50034;
+  text-decoration:none;
+}
+.weekly-update-cancel-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:18px;
+  padding:0 7px;
+  border-radius:20px;
+  background:#ebebeb;
+  color:#8a8a8a;
+  font-size:10px;
+  font-weight:800;
+  line-height:1;
+  flex-shrink:0;
+}
+.weekly-update-url-cancelled .weekly-update-line-text{
+  font-weight:700;
+  text-decoration:none !important;
+}
+
+
+/* 취소 항목만 있는 국가는 국가명 + 취소 내용이 한 줄에 표시됩니다. */
+.weekly-update-group.is-cancel-only{
+  flex-wrap:nowrap;
+  align-items:center;
+  gap:8px;
+}
+.weekly-update-group.is-cancel-only .weekly-update-line-country{
+  width:auto;
+  flex:0 0 auto;
+  line-height:1.45;
+}
+.weekly-update-group.is-cancel-only .weekly-update-url-list{
+  display:inline-flex;
+  flex:0 1 auto;
+  flex-direction:row;
+  align-items:center;
+  min-width:0;
+}
+.weekly-update-group.is-cancel-only .weekly-update-url-cancelled{
+  white-space:nowrap;
+}
+
+@media (max-width:768px){
+  .weekly-update-group.is-cancel-only{
+    width:100%;
+    flex-direction:row;
+    align-items:center;
+  }
+  .weekly-update-group.is-cancel-only .weekly-update-url-list{
+    display:inline-flex;
+    flex-direction:row;
+    align-items:center;
+    gap:0;
+  }
+  .weekly-update-group.is-cancel-only .weekly-update-line-text{
+    white-space:nowrap;
+  }
+}
