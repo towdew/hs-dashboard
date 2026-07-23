@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-07-23 09:54",
+ "generatedAt": "2026-07-23 13:33",
  "pttRawFile": "raw-data-20260723.xlsb",
  "cmsFile": "cms_merged_view_20260721_125812.csv",
  "sourceFile": "43 NPI for IT product status_20260707.xlsx",
@@ -1624,18 +1624,18 @@
      "pttId": "WR2259877AK",
      "pttStatus": "[WPL] Change req. need close",
      "targetStagingDate": "2026-06-15",
-     "detailKr": "6월 NPI · 변경요청 검토중",
-     "detailEn": "June NPI (transfer), change request under review",
+     "detailKr": "라이브 게시 확인 (base 슬러그 URL · AU88BN 페이지, 2026-07-23 사용자 확인)",
+     "detailEn": "Publication verified via base-slug URL (AU88BN page confirmed)",
      "expectedLocalTargetDate": "",
      "pdpStatus": "N",
      "stgUrl": "https://author-p86205-e734304.adobeaemcloud.com/content/lge/es/es/portatiles/gram/16z90tl-g.html?wcmmode=disabled",
-     "liveUrl": "",
+     "liveUrl": "https://www.lg.com/es/portatiles/gram/16z90tl-g/",
      "cmsLive": "라이브",
      "statusTip": "4/27 오픈 전 제품은 Readiness Check에 미노출",
-     "stageForce": "",
+     "stageForce": "live",
      "stageFallback": "",
      "pimChecked": true,
-     "stage": "client_review",
+     "stage": "live",
      "category": "NPI"
     }
    ]
