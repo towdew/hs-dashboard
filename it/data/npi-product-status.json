@@ -516,13 +516,13 @@
      "pttId": "WR2297310IP",
      "pttStatus": "[WPL] Cancelled",
      "targetStagingDate": "",
-     "detailKr": "법인 Spec Assign 필요",
-     "detailEn": "Subsidiary: Spec assignment required",
+     "detailKr": "라이브 게시 확인 (실측 200, 2026-07-24)",
+     "detailEn": "Publication verified (HTTP 200)",
      "expectedLocalTargetDate": "",
      "pdpStatus": "N",
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/it/notebook/gram/17z90tl-g-au75dn/",
-     "cmsLive": "등록·미게시",
+     "cmsLive": "라이브",
      "readinessCheck": "Not Ready",
      "readinessTip": "Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
      "readinessFields": {
@@ -543,7 +543,7 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "etc",
+     "stage": "live",
      "category": "NPI"
     },
     {
@@ -555,13 +555,13 @@
      "pttId": "WR2297310IP",
      "pttStatus": "[WPL] Cancelled",
      "targetStagingDate": "",
-     "detailKr": "법인 Spec Assign 필요",
-     "detailEn": "Subsidiary: Spec assignment required",
+     "detailKr": "라이브 게시 확인 (실측 200, 2026-07-24)",
+     "detailEn": "Publication verified (HTTP 200)",
      "expectedLocalTargetDate": "",
      "pdpStatus": "N",
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/it/notebook/gram/17z90tl-g-au78dn/",
-     "cmsLive": "등록·미게시",
+     "cmsLive": "라이브",
      "readinessCheck": "Not Ready",
      "readinessTip": "Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
      "readinessFields": {
@@ -582,7 +582,7 @@
      "stageFallback": "precheck",
      "statusTip": "",
      "pimChecked": true,
-     "stage": "etc",
+     "stage": "live",
      "category": "NPI"
     }
    ]
@@ -1164,13 +1164,13 @@
      "pttId": "#N/A",
      "pttStatus": "#N/A",
      "targetStagingDate": "",
-     "detailKr": "제작 착수 가능",
-     "detailEn": "Ready to start production",
+     "detailKr": "라이브 게시 확인 (실측 200, 2026-07-24)",
+     "detailEn": "Publication verified (HTTP 200)",
      "expectedLocalTargetDate": "",
      "pdpStatus": "N",
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/it/notebook/gram/16zb90s-g-aa5dn/",
-     "cmsLive": "등록·미게시",
+     "cmsLive": "라이브",
      "statusTip": "",
      "stageForce": "live",
      "stageFallback": "precheck",
@@ -1191,7 +1191,7 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "etc",
+     "stage": "live",
      "category": "NPI"
     },
     {
