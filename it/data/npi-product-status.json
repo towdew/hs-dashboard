@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-07-27 10:28",
+ "generatedAt": "2026-07-27 10:37",
  "pttRawFile": "raw-data-20260725.xlsb",
  "cmsFile": "cms_merged_view_20260721_125812.csv",
  "sourceFile": "43 NPI for IT product status_20260707.xlsx",
@@ -523,8 +523,8 @@
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/it/notebook/gram/17z90tl-g-au75dn/",
      "cmsLive": "라이브",
-     "readinessCheck": "Not Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
+     "readinessCheck": "Ready",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -562,8 +562,8 @@
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/it/notebook/gram/17z90tl-g-au78dn/",
      "cmsLive": "라이브",
-     "readinessCheck": "Not Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
+     "readinessCheck": "Ready",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Need Assign · LAR 미기재",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -1679,5 +1679,6 @@
     }
    ]
   }
- ]
+ ],
+ "readinessFile": "Readiness_Check_AllLocales_20260724_104909.xlsx"
 }
