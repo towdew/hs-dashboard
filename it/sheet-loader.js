@@ -1647,18 +1647,59 @@ function renderSidebarNavFromSheets(keys) {
 
   var html = [];
 
-  // ── Global Request 섹션 ──
-  html.push('<div class="sb-section-label">Global Request</div>');
-  grKeys.forEach(function(key, idx) {
+  // ── Global Request 섹션 — 진행/완료 2분할 (태스크가 많아져 현재 작업이 묻히는 문제) ──
+  // 완료율은 contentStats(취소 제외 분모)를 쓴다. 이 함수는 applySheetData 이후에 호출되므로
+  // DATA가 이미 채워져 있다. 로드 순서 예외 시에는 단일 목록으로 폴백한다.
+  function grTabPct(key) {
+    if (typeof contentStats !== 'function') return null;
+    try {
+      var cs = contentStats(key);
+      var eff = Math.max((cs.total || 0) - (cs.Cancel || 0), 0);
+      return eff > 0 ? Math.round((cs.Done || 0) / eff * 100) : 0;
+    } catch (e) { return null; }
+  }
+  var stateMap = (window._grTaskState && window._grTaskState.state) || {};
+  var canGroup = (typeof contentStats === 'function' && typeof grTaskGroupOf === 'function');
+  var groups = { in_progress: [], done: [] };
+  grKeys.forEach(function(key) {
+    var d0 = window.DATA && window.DATA[key];
+    // 커스텀 탭(IT 제품 현황·URL Library)은 GR 그룹에서 제외. 라이브는 CUSTOM_NAV_TABS 구성이
+    // 달라(npi_product_status가 게이트 밖 등록) grKeys에 섞여 들어오므로 _custom으로 방어한다.
+    if (d0 && d0._custom) return;
+    if (!canGroup) { groups.in_progress.push(key); return; }
     var d = window.DATA && window.DATA[key];
     var title = (d && (d.displayTitle || d.sheetTabName || d.sheetTitle || d.title)) || key;
-    var abbr = makeNavAbbr(title, idx);
-    var total = d && d.stats ? (d.stats.Total || 0) : 0;
-    html.push('<div class="nav-item ' + (idx === 0 ? 'active' : '') + '" data-key="' + escapeAttrForLoader(key) + '" onclick="switchMenu(this)">' +
-      '<span class="ni-text" data-abbr="' + escapeAttrForLoader(abbr) + '">' + escapeHtmlForLoader(title) + '</span>' +
-      '<span class="ni-badge" style="background:rgba(148,163,184,.16);color:#64748B">' + total.toLocaleString() + '</span>' +
-      '</div>');
+    var override = stateMap[typeof grTaskKeyOf === 'function' ? grTaskKeyOf(title) : title];
+    groups[grTaskGroupOf(grTabPct(key), override) === 'done' ? 'done' : 'in_progress'].push(key);
   });
+
+  var navIdx = 0;
+  function pushGrSection(label, keys, extraStyle) {
+    if (!keys.length) return;
+    html.push('<div class="sb-section-label"' + (extraStyle || '') + '>' + escapeHtmlForLoader(label) +
+      ' <span class="sb-section-count">(' + keys.length + ')</span></div>');
+    keys.forEach(function(key) {
+      var d = window.DATA && window.DATA[key];
+      var title = (d && (d.displayTitle || d.sheetTabName || d.sheetTitle || d.title)) || key;
+      var abbr = makeNavAbbr(title, navIdx);
+      var total = d && d.stats ? (d.stats.Total || 0) : 0;
+      html.push('<div class="nav-item ' + (navIdx === 0 ? 'active' : '') + '" data-key="' + escapeAttrForLoader(key) + '" onclick="switchMenu(this)">' +
+        '<span class="ni-text" data-abbr="' + escapeAttrForLoader(abbr) + '">' + escapeHtmlForLoader(title) + '</span>' +
+        '<span class="ni-badge" style="background:rgba(148,163,184,.16);color:#64748B">' + total.toLocaleString() + '</span>' +
+        '</div>');
+      navIdx++;
+    });
+  }
+  if (canGroup) {
+    window.__grNavNeedsRegroup = false;
+    pushGrSection('In Progress', groups.in_progress);
+    pushGrSection('Done', groups.done, ' style="margin-top:10px"');
+  } else {
+    // 이 함수는 common.js(contentStats)보다 먼저 로드되는 sheet-loader.js에 있어, 최초 호출
+    // 시점엔 그룹핑이 불가능할 수 있다. 플래그를 남겨 common.js 로드 후 재렌더하게 한다.
+    window.__grNavNeedsRegroup = true;
+    pushGrSection('Global Request', grKeys);
+  }
 
   // ── NPI 섹션: IT 제품 현황 (항상 표시) ──
   html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">NPI</div>');

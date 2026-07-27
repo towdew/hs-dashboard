@@ -6006,6 +6006,19 @@ function ensureGrDataLoaded() {
     window._grTitleToTask = titleToTask;
     if (titleToTask) maybeRerenderGrTab();
   }).catch(function() { window._grTitles = null; window._grTitleToTask = null; });
+  // 사이드바 In Progress/Done 그룹의 수동 오버라이드. 사이드바는 이 파일이 오기 전에 이미
+  // 자동 판정(완료율)으로 렌더돼 있으므로, 도착 후 nav만 다시 그려 보정한다(404면 조용히 무시).
+  fetch('data/gr-task-state.json' + bust).then(function(r) { return r.ok ? r.json() : null; }).then(function(data) {
+    window._grTaskState = data || null;
+    var hasOverride = !!(data && data.state && Object.keys(data.state).length);
+    if ((hasOverride || window.__grNavNeedsRegroup) &&
+        typeof renderSidebarNavFromSheets === 'function' && window.__DASHBOARD_KEYS) {
+      renderSidebarNavFromSheets(window.__DASHBOARD_KEYS);
+      if (typeof syncNavBadges === 'function') syncNavBadges();  // 재렌더로 지워진 % 배지 복원
+      var active = document.querySelector('.nav-item[data-key="' + currentKey + '"]');
+      if (active) active.classList.add('active');
+    }
+  }).catch(function() { window._grTaskState = null; });
 }
 
 // 국가 셀(header)의 원문 raw 값을 row 객체에서 찾는다(__로 시작하는 메타 키 제외).

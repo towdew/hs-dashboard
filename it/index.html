@@ -4,7 +4,7 @@
 <title>LG IT Dashboard</title>
 <link rel="icon" type="image/x-icon" href="./favicon.ico"><text y='.9em' font-size='90'>📊</text></svg>">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=0.6.45">
+<link rel="stylesheet" href="style.css?v=0.6.47">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body style="">
@@ -270,11 +270,11 @@
     }, 360);
   }
 </script>
-<script>var __BUILD_V = '0.6.45';</script>
-<script src="./sheet-loader.js?v=0.6.45"></script>
-<script src="./js-lib/gr-meta.js?v=0.6.45"></script>
-<script src="./js-lib/url-lib-locale.js?v=0.6.45"></script>
-<script src="./js-lib/npi-product-status.js?v=0.6.45"></script>
+<script>var __BUILD_V = '0.6.47';</script>
+<script src="./sheet-loader.js?v=0.6.47"></script>
+<script src="./js-lib/gr-meta.js?v=0.6.47"></script>
+<script src="./js-lib/url-lib-locale.js?v=0.6.47"></script>
+<script src="./js-lib/npi-product-status.js?v=0.6.47"></script>
 <script>
   function loadScript(src) {
     return new Promise(function (resolve, reject) {
@@ -287,11 +287,11 @@
   }
 
   loadDashboardFromPublishedHtml().then(function () {
-    return loadScript('./sheet-exceptions.js?v=0.6.45')
+    return loadScript('./sheet-exceptions.js?v=0.6.47')
       .catch(function (err) {
         console.warn('[sheet-exceptions-load-warning]', err);
       })
-      .then(function () { return loadScript('./common.js?v=0.6.45'); });
+      .then(function () { return loadScript('./common.js?v=0.6.47'); });
   }).then(function () {
     if (typeof dashboardInit === 'function') {
       dashboardInit();
