@@ -128,9 +128,20 @@ function grLookup(dict, taskKey, code) {
   return null;
 }
 
+// 사이드바 GR 탭을 In Progress / Done 두 그룹으로 나눈다.
+// pct는 완료율(취소 제외 분모, contentStats 기준). override는 data/gr-task-state.json의
+// 수동 지정('done' | 'in_progress')으로 자동 판정보다 우선한다.
+// 국가행이 없는 신규 태스크는 pct=0 → in_progress (완료로 오분류되지 않게).
+function grTaskGroupOf(pct, override) {
+  if (override === 'done' || override === 'in_progress') return override;
+  var n = Number(pct);
+  return (isFinite(n) && n >= 100) ? 'done' : 'in_progress';
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     grNormalizeCountryCode: grNormalizeCountryCode,
+    grTaskGroupOf: grTaskGroupOf,
     grTaskKeyOf: grTaskKeyOf,
     grLookup: grLookup,
     grNormTitleKey: grNormTitleKey,

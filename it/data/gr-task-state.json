@@ -1,0 +1,5 @@
+{
+  "generatedAt": "2026-07-27",
+  "comment": "GR 태스크 사이드바 그룹 수동 오버라이드. 키는 grTaskKeyOf(표시 타이틀) 결과(= gr-titles.json의 태스크 키). 값은 'done' | 'in_progress'. 비어 있으면 완료율 100%(취소 제외) 자동 판정만 적용된다.",
+  "state": {}
+}
