@@ -414,6 +414,16 @@
       "type": "status",
       "from": "작업중",
       "to": "완료"
+    },
+    "GNB Structure|IT": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "GNB Structure|SE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
     }
   },
   "taskSummary": {
@@ -422,7 +432,7 @@
       "new": 0
     },
     "GNB Structure": {
-      "changed": 2,
+      "changed": 4,
       "new": 0
     },
     "FAQ Request (UltraGear PLP)": {
