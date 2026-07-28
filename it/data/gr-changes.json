@@ -1,51 +1,382 @@
 {
-  "baseDate": "20260708",
-  "prevDate": "20260630",
+  "baseDate": "20260727",
+  "prevDate": "20260716",
   "changes": {
-    "Copilot+ Filter Creation|GLOBAL": {
+    "Microsoft PDP Gallery Card|CN": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "완료"
+    },
+    "Microsoft PDP Gallery Card|GLOBAL": {
       "type": "status",
       "from": "작업중",
       "to": "완료"
     },
-    "Microsoft PDP Gallery Card|AU": {
-      "type": "url"
-    },
-    "Microsoft PDP Gallery Card|CN": {
+    "GNB Structure|IN": {
       "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "GNB Structure|CZ": {
-      "type": "status",
-      "from": "작업중",
+      "from": "법인리뷰",
       "to": "완료"
     },
     "GNB Structure|TR": {
       "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "FAQ Request (UltraGear PLP)|JP": {
+      "type": "url"
+    },
+    "UltraGear Buying Guide|CP": {
+      "type": "status",
+      "from": "작업중",
+      "to": "취소"
+    },
+    "UltraGear Buying Guide|JP": {
+      "type": "status",
       "from": "법인리뷰",
       "to": "작업중"
     },
-    "FAQ Request (UltraGear PLP)|NL": {
-      "type": "url"
+    "AI Upscaling Disclaimer|AE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "취소"
     },
-    "FAQ Request (UltraGear PLP)|SE": {
-      "type": "url"
+    "AI Upscaling Disclaimer|AE_AR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "취소"
     },
-    "UltraGear OLED FAQ Update|CA_EN": {
-      "type": "url"
+    "AI Upscaling Disclaimer|AU": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
-    "UltraGear OLED FAQ Update|NL": {
-      "type": "url"
+    "AI Upscaling Disclaimer|CA_EN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
-    "UltraGear OLED FAQ Update|SE": {
-      "type": "url"
+    "AI Upscaling Disclaimer|CA_FR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|CN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|DE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|FR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|IL": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|IT": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|JP": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|NL": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|SE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|UK": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|BE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|ES": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|HK": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|HK_EN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|HU": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|ID": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|PE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|PL": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|SA": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|SA_EN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|SG": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|TH": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|TR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|TW": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|CO": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "AI Upscaling Disclaimer|VN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|AU": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|BG": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|CA_EN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|CA_FR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|CN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|DE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|DK": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|FI": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|GR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|HK": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|HK_EN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|HR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|HU": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|ID": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|IL": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|IT": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|JP": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|KZ": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|NO": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|PL": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|RO": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|RS": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|RU": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|SE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|TR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료/취소"
+    },
+    "UL Verified Eye Comfort|UK": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|FR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|AE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|AE_AR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|BE_FR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|BR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|ES": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|NL": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|SG": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|VN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|PE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료/취소"
+    },
+    "UL Verified Eye Comfort|TH": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UL Verified Eye Comfort|TW": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     }
   },
   "taskSummary": {
-    "Copilot+ Filter Creation": {
-      "changed": 1,
-      "new": 0
-    },
     "Microsoft PDP Gallery Card": {
       "changed": 2,
       "new": 0
@@ -55,13 +386,45 @@
       "new": 0
     },
     "FAQ Request (UltraGear PLP)": {
+      "changed": 1,
+      "new": 0
+    },
+    "UltraGear Buying Guide": {
       "changed": 2,
       "new": 0
     },
-    "UltraGear OLED FAQ Update": {
-      "changed": 3,
+    "Copilot+ Hero Banner": {
+      "changed": 0,
+      "new": 1
+    },
+    "AI Upscaling Disclaimer": {
+      "changed": 30,
       "new": 0
+    },
+    "UL Verified Eye Comfort": {
+      "changed": 38,
+      "new": 0
+    },
+    "SmartMonitor ScreenShare": {
+      "changed": 0,
+      "new": 1
+    },
+    "UltraGear 1000Hz FAQ": {
+      "changed": 0,
+      "new": 1
+    },
+    "gram Secure Lock": {
+      "changed": 0,
+      "new": 1
+    },
+    "Windows 11 Landing": {
+      "changed": 0,
+      "new": 1
+    },
+    "PDP Gallery Win11 Pro": {
+      "changed": 0,
+      "new": 1
     }
   },
-  "generatedAt": "2026-07-13"
+  "generatedAt": "2026-07-28"
 }

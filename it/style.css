@@ -89,6 +89,18 @@ button,input,select,textarea{font-family:inherit}
 }
 .sidebar.collapsed .sb-section-label{opacity:0;pointer-events:none}
 
+/* 접히는 섹션(Done) — 캐럿은 음수 마진으로 빼서 다른 섹션 라벨과 텍스트 시작선을 맞춘다 */
+.sb-section-label-toggle{cursor:pointer;user-select:none}
+.sb-section-label-toggle:hover{color:#8A94B4}
+.sb-section-label-toggle:focus-visible{outline:2px solid #A50034;outline-offset:2px;border-radius:3px}
+.sb-section-caret{
+  display:inline-block;width:11px;margin-left:-11px;
+  font-size:11px;line-height:1;opacity:.8;
+  transition:transform .18s;transform-origin:50% 50%;
+}
+.sb-section-label-toggle.is-collapsed .sb-section-caret{transform:rotate(-90deg)}
+.sb-section-body.is-collapsed{display:none}
+
 /* Nav item */
 .nav-item{
   display:flex;align-items:center;gap:10px;
