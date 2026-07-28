@@ -424,6 +424,11 @@
       "type": "status",
       "from": "작업중",
       "to": "법인리뷰"
+    },
+    "UltraGear Buying Guide|FR": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "완료"
     }
   },
   "taskSummary": {
@@ -440,7 +445,7 @@
       "new": 0
     },
     "UltraGear Buying Guide": {
-      "changed": 1,
+      "changed": 2,
       "new": 0
     },
     "Copilot+ Hero Banner": {
