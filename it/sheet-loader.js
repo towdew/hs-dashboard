@@ -1637,6 +1637,12 @@ var CUSTOM_NAV_TABS = [
   { key: 'url_library', label: 'Live URL Library', abbr: 'UL', section: 'Live URL' },
 ];
 
+// 사이드바 표시용 제목: "GR26-" 접두 제거(원본 title은 헤더·조회 키로 그대로 쓴다).
+function grNavShortTitle(title) {
+  return String(title == null ? '' : title).replace(/^GR\d{2}\s*-\s*/i, '').trim() ||
+    String(title == null ? '' : title);
+}
+
 // ── 사이드바 GR 섹션 접기 상태 (기본 열림, localStorage 유지) ──
 function grNavCollapseStorageKey(id) { return 'grNavCollapsed:' + id; }
 function grNavSectionCollapsed(id) {
@@ -1713,10 +1719,13 @@ function renderSidebarNavFromSheets(keys) {
     keys.forEach(function(key) {
       var d = window.DATA && window.DATA[key];
       var title = (d && (d.displayTitle || d.sheetTabName || d.sheetTitle || d.title)) || key;
-      var abbr = makeNavAbbr(title, navIdx);
+      // 사이드바는 폭이 좁아 "GR26-" 접두가 정작 태스크명을 밀어낸다. 표시용으로만 떼고
+      // 상단 헤더·모달·grTaskKeyOf 조회는 원본 title을 그대로 쓴다.
+      var navTitle = grNavShortTitle(title);
+      var abbr = makeNavAbbr(navTitle, navIdx);
       var total = d && d.stats ? (d.stats.Total || 0) : 0;
-      html.push('<div class="nav-item ' + (navIdx === 0 ? 'active' : '') + '" data-key="' + escapeAttrForLoader(key) + '" onclick="switchMenu(this)">' +
-        '<span class="ni-text" data-abbr="' + escapeAttrForLoader(abbr) + '">' + escapeHtmlForLoader(title) + '</span>' +
+      html.push('<div class="nav-item ' + (navIdx === 0 ? 'active' : '') + '" data-key="' + escapeAttrForLoader(key) + '" onclick="switchMenu(this)" title="' + escapeAttrForLoader(title) + '">' +
+        '<span class="ni-text" data-abbr="' + escapeAttrForLoader(abbr) + '">' + escapeHtmlForLoader(navTitle) + '</span>' +
         '<span class="ni-badge" style="background:rgba(148,163,184,.16);color:#64748B">' + total.toLocaleString() + '</span>' +
         '</div>');
       navIdx++;
