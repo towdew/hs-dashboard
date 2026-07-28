@@ -1637,10 +1637,16 @@ var CUSTOM_NAV_TABS = [
   { key: 'url_library', label: 'Live URL Library', abbr: 'UL', section: 'Live URL' },
 ];
 
-// 사이드바 표시용 제목: "GR26-" 접두 제거(원본 title은 헤더·조회 키로 그대로 쓴다).
+// 사이드바 표시용 제목: "GR26-" 접두와 주차 뒤 조직·채널 코드(MS/IT/ITB2C/B2C/B2B/PC)를 걷어내
+// 태스크명이 먼저 보이게 한다. 주차(W16…)는 식별에 필요해 남기고, PDP·모델명처럼 의미 있는
+// 토큰도 남긴다. 원본 title은 헤더·모달·grTaskKeyOf 조회에 그대로 쓴다.
+// 예) "GR26-W16-MS-IT-PC PDP Gallery Card Addition" → "W16 PDP Gallery Card Addition"
 function grNavShortTitle(title) {
-  return String(title == null ? '' : title).replace(/^GR\d{2}\s*-\s*/i, '').trim() ||
-    String(title == null ? '' : title);
+  var s = String(title == null ? '' : title).replace(/^GR\d{2}\s*-\s*/i, '').trim();
+  // ITB2C를 IT보다 먼저 둬야 "ITB2C"가 "IT"로만 먹히고 "B2C-"가 남는 일이 없다.
+  var out = s.replace(/^(W\d+)[\s-]*((?:(?:MS|ITB2C|IT|B2C|B2B|PC)(?:[\s-]+|$))*)/i,
+    function (_, wk) { return wk + ' '; }).trim();
+  return out || s;
 }
 
 // ── 사이드바 GR 섹션 접기 상태 (기본 열림, localStorage 유지) ──
