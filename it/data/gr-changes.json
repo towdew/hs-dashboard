@@ -364,6 +364,56 @@
       "type": "status",
       "from": "작업중",
       "to": "완료"
+    },
+    "SmartMonitor ScreenShare|MX": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "SmartMonitor ScreenShare|IN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "SmartMonitor ScreenShare|CO": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "SmartMonitor ScreenShare|SG": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "SmartMonitor ScreenShare|ID": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "SmartMonitor ScreenShare|PE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "SmartMonitor ScreenShare|HK_EN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "SmartMonitor ScreenShare|HK": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "SmartMonitor ScreenShare|ES": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "SmartMonitor ScreenShare|TR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     }
   },
   "taskSummary": {
@@ -396,8 +446,8 @@
       "new": 0
     },
     "SmartMonitor ScreenShare": {
-      "changed": 0,
-      "new": 1
+      "changed": 10,
+      "new": 0
     },
     "UltraGear 1000Hz FAQ": {
       "changed": 0,
