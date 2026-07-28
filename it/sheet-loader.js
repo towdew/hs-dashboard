@@ -1637,6 +1637,25 @@ var CUSTOM_NAV_TABS = [
   { key: 'url_library', label: 'Live URL Library', abbr: 'UL', section: 'Live URL' },
 ];
 
+// ── 사이드바 GR 섹션 접기 상태 (기본 열림, localStorage 유지) ──
+function grNavCollapseStorageKey(id) { return 'grNavCollapsed:' + id; }
+function grNavSectionCollapsed(id) {
+  try { return window.localStorage.getItem(grNavCollapseStorageKey(id)) === '1'; }
+  catch (e) { return false; }   // 사파리 프라이빗 등 localStorage 차단 시 항상 펼침
+}
+function toggleGrNavSection(id) {
+  const next = !grNavSectionCollapsed(id);
+  try { window.localStorage.setItem(grNavCollapseStorageKey(id), next ? '1' : '0'); } catch (e) {}
+  const body = document.querySelector('[data-gr-section="' + id + '"]');
+  if (body) body.classList.toggle('is-collapsed', next);
+  const label = body && body.previousElementSibling;
+  if (label && label.classList.contains('sb-section-label-toggle')) {
+    label.classList.toggle('is-collapsed', next);
+    label.setAttribute('aria-expanded', next ? 'false' : 'true');
+  }
+}
+if (typeof window !== 'undefined') window.toggleGrNavSection = toggleGrNavSection;
+
 function renderSidebarNavFromSheets(keys) {
   const section = document.getElementById('sheetNavList') || document.querySelector('.sb-section');
   if (!section) return;
@@ -1674,10 +1693,23 @@ function renderSidebarNavFromSheets(keys) {
   });
 
   var navIdx = 0;
-  function pushGrSection(label, keys, extraStyle) {
+  // collapseId를 주면 라벨 클릭으로 접히는 아코디언이 된다(기본 열림, 상태는 localStorage 유지).
+  function pushGrSection(label, keys, extraStyle, collapseId) {
     if (!keys.length) return;
-    html.push('<div class="sb-section-label"' + (extraStyle || '') + '>' + escapeHtmlForLoader(label) +
-      ' <span class="sb-section-count">(' + keys.length + ')</span></div>');
+    if (collapseId) {
+      var collapsed = grNavSectionCollapsed(collapseId);
+      html.push('<div class="sb-section-label sb-section-label-toggle' + (collapsed ? ' is-collapsed' : '') + '"' +
+        (extraStyle || '') + ' role="button" tabindex="0" aria-expanded="' + (collapsed ? 'false' : 'true') + '"' +
+        ' onclick="toggleGrNavSection(\'' + escapeAttrForLoader(collapseId) + '\')"' +
+        ' onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();toggleGrNavSection(\'' + escapeAttrForLoader(collapseId) + '\')}">' +
+        '<span class="sb-section-caret" aria-hidden="true">▾</span>' + escapeHtmlForLoader(label) +
+        ' <span class="sb-section-count">(' + keys.length + ')</span></div>');
+      html.push('<div class="sb-section-body' + (collapsed ? ' is-collapsed' : '') +
+        '" data-gr-section="' + escapeAttrForLoader(collapseId) + '">');
+    } else {
+      html.push('<div class="sb-section-label"' + (extraStyle || '') + '>' + escapeHtmlForLoader(label) +
+        ' <span class="sb-section-count">(' + keys.length + ')</span></div>');
+    }
     keys.forEach(function(key) {
       var d = window.DATA && window.DATA[key];
       var title = (d && (d.displayTitle || d.sheetTabName || d.sheetTitle || d.title)) || key;
@@ -1689,11 +1721,12 @@ function renderSidebarNavFromSheets(keys) {
         '</div>');
       navIdx++;
     });
+    if (collapseId) html.push('</div>');
   }
   if (canGroup) {
     window.__grNavNeedsRegroup = false;
     pushGrSection('In Progress', groups.in_progress);
-    pushGrSection('Done', groups.done, ' style="margin-top:10px"');
+    pushGrSection('Done', groups.done, ' style="margin-top:10px"', 'done');
   } else {
     // 이 함수는 common.js(contentStats)보다 먼저 로드되는 sheet-loader.js에 있어, 최초 호출
     // 시점엔 그룹핑이 불가능할 수 있다. 플래그를 남겨 common.js 로드 후 재렌더하게 한다.
