@@ -25,11 +25,6 @@
     "FAQ Request (UltraGear PLP)|JP": {
       "type": "url"
     },
-    "UltraGear Buying Guide|CP": {
-      "type": "status",
-      "from": "작업중",
-      "to": "취소"
-    },
     "UltraGear Buying Guide|JP": {
       "type": "status",
       "from": "법인리뷰",
@@ -390,7 +385,7 @@
       "new": 0
     },
     "UltraGear Buying Guide": {
-      "changed": 2,
+      "changed": 1,
       "new": 0
     },
     "Copilot+ Hero Banner": {
