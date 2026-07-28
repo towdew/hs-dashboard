@@ -369,11 +369,23 @@
       "type": "status",
       "from": "작업중",
       "to": "완료"
+    },
+    "Microsoft PDP Gallery Card|DE": {
+      "type": "url"
+    },
+    "Microsoft PDP Gallery Card|ES": {
+      "type": "url"
+    },
+    "Microsoft PDP Gallery Card|IN": {
+      "type": "url"
+    },
+    "Microsoft PDP Gallery Card|SG": {
+      "type": "url"
     }
   },
   "taskSummary": {
     "Microsoft PDP Gallery Card": {
-      "changed": 2,
+      "changed": 6,
       "new": 0
     },
     "GNB Structure": {
