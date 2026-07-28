@@ -2,11 +2,6 @@
   "baseDate": "20260727",
   "prevDate": "20260716",
   "changes": {
-    "Microsoft PDP Gallery Card|CN": {
-      "type": "status",
-      "from": "법인리뷰",
-      "to": "완료"
-    },
     "Microsoft PDP Gallery Card|GLOBAL": {
       "type": "status",
       "from": "작업중",
@@ -369,23 +364,11 @@
       "type": "status",
       "from": "작업중",
       "to": "완료"
-    },
-    "Microsoft PDP Gallery Card|DE": {
-      "type": "url"
-    },
-    "Microsoft PDP Gallery Card|ES": {
-      "type": "url"
-    },
-    "Microsoft PDP Gallery Card|IN": {
-      "type": "url"
-    },
-    "Microsoft PDP Gallery Card|SG": {
-      "type": "url"
     }
   },
   "taskSummary": {
     "Microsoft PDP Gallery Card": {
-      "changed": 6,
+      "changed": 1,
       "new": 0
     },
     "GNB Structure": {
