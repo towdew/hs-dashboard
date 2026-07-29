@@ -429,6 +429,11 @@
       "type": "status",
       "from": "법인리뷰",
       "to": "완료"
+    },
+    "gram Secure Lock|CN": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "취소"
     }
   },
   "taskSummary": {
@@ -469,8 +474,8 @@
       "new": 1
     },
     "gram Secure Lock": {
-      "changed": 0,
-      "new": 1
+      "changed": 1,
+      "new": 0
     },
     "Windows 11 Landing": {
       "changed": 0,
