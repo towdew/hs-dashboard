@@ -5113,10 +5113,47 @@ function buildSheetTableHead(headers, tableHeaderRows, sheetData) {
   return '<thead><tr>' + thead + '</tr></thead>';
 }
 
+function splitSheetCellLines(value) {
+  return String(value == null ? '' : value)
+    .replace(/\u00a0/g, ' ')
+    .replace(/_x000D_/gi, '\n')
+    .replace(/_x000A_/gi, '\n')
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .split(/\n+/)
+    .map(function(line) { return String(line || '').trim(); })
+    .filter(Boolean);
+}
+
+function renderSheetUrlList(urlItems) {
+  return '<div class="sheet-url-list">' + urlItems.map(function(u) {
+    return '<a class="sheet-link" href="' + escapeAttrSheet(u) + '" target="_blank" rel="noopener">' + escapeHtmlSheet(shortenUrlSheet(u)) + '</a>';
+  }).join('') + '</div>';
+}
+
 function renderSheetCell(value, header, row, sheetData) {
   if (isCountryDisplayHeader(header)) value = displayCountryFullName(value);
   var text = String(value || '').trim();
   var exceptionRules = window.SHEET_EXCEPTION_RULES || null;
+
+  // 줄바꿈된 URL은 한 셀 안에서 모두 개별 링크로 표시합니다.
+  // 예외 시트는 기존 완료 pill 규칙을 각 URL에 각각 적용합니다.
+  var lines = splitSheetCellLines(text);
+  var urlItems = lines.filter(function(line) { return /^https?:\/\//i.test(line); });
+  var allLinesAreUrls = lines.length > 0 && urlItems.length === lines.length;
+  if (allLinesAreUrls && urlItems.length > 1) {
+    if (exceptionRules && typeof exceptionRules.isExceptionSheet === 'function' &&
+        typeof exceptionRules.isUrlHeader === 'function' &&
+        exceptionRules.isExceptionSheet(sheetData || DATA[currentKey] || {}) &&
+        exceptionRules.isUrlHeader(header) &&
+        typeof exceptionRules.renderDonePill === 'function') {
+      return '<div class="sheet-url-list sheet-url-pill-list">' + urlItems.map(function(u) {
+        return exceptionRules.renderDonePill(u);
+      }).join('') + '</div>';
+    }
+    return renderSheetUrlList(urlItems);
+  }
+
   if (exceptionRules && typeof exceptionRules.renderCell === 'function') {
     var customHtml = exceptionRules.renderCell({
       value: value,
@@ -5132,12 +5169,6 @@ function renderSheetCell(value, header, row, sheetData) {
   if (!text) return '<span class="sheet-empty">—</span>';
 
   if (/^https?:\/\//i.test(text)) {
-    var urlItems = text.split(/\r?\n+/).map(function(u) { return String(u || '').trim(); }).filter(function(u) { return /^https?:\/\//i.test(u); });
-    if (urlItems.length > 1) {
-      return '<div style="display:flex;flex-direction:column;gap:5px">' + urlItems.map(function(u) {
-        return '<a class="sheet-link" href="' + escapeAttrSheet(u) + '" target="_blank" rel="noopener">' + escapeHtmlSheet(shortenUrlSheet(u)) + '</a>';
-      }).join('') + '</div>';
-    }
     if (exceptionRules && typeof exceptionRules.isExceptionSheet === 'function' &&
         typeof exceptionRules.isUrlHeader === 'function' &&
         exceptionRules.isExceptionSheet(sheetData || DATA[currentKey] || {}) &&
@@ -5145,7 +5176,7 @@ function renderSheetCell(value, header, row, sheetData) {
         typeof exceptionRules.renderDonePill === 'function') {
       return exceptionRules.renderDonePill(text);
     }
-    return '<a class="sheet-link" href="' + escapeAttrSheet(text) + '" target="_blank" rel="noopener">' + escapeHtmlSheet(shortenUrlSheet(text)) + '</a>';
+    return renderSheetUrlList([text]);
   }
 
   var status = normalizeSheetRendererStatus(text);
@@ -5169,7 +5200,8 @@ function normalizeSheetRendererStatus(value) {
 }
 
 function shortenUrlSheet(url) {
-  return url.length > 54 ? url.slice(0, 28) + '…' + url.slice(-18) : url;
+  // URL은 가운데를 생략하지 않고 전체 문자열을 표시합니다.
+  return String(url == null ? '' : url);
 }
 
 function escapeHtmlSheet(value) {
