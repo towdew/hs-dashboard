@@ -1428,7 +1428,7 @@ body{
 .sheet-data-table tbody tr:hover td{background:#FAFBFD}
 .sheet-data-table tbody tr:last-child td{border-bottom:none}
 .sheet-empty{color:#CBD5E1}
-.sheet-url-list{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;max-width:100%}
+.sheet-url-list{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;max-width:100%; max-height: 85px; overflow-y: auto;}
 .sheet-url-pill-list{gap:5px}
 .sheet-link{display:block;max-width:100%;color:#2563EB;text-decoration:none;font-weight:600;white-space:normal;overflow-wrap:anywhere;word-break:break-all}
 .sheet-link:hover{text-decoration:underline}
