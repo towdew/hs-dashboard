@@ -1698,7 +1698,8 @@ body{
 
 /* ── MS Division Filter inside #sheetNavList ─────────────── */
 .sidebar-model-type-tabs{
-  display:grid;
+  display:flex;
+  flex-wrap: wrap;
   position:sticky;
   top:0;
   z-index:4;
@@ -1718,7 +1719,7 @@ body{
   justify-content:center;
   gap:3px;
   min-width:0;
-  height:28px;
+  height:24px;
   padding:0 5px;
   border:0;
   border-radius:6px;
@@ -1731,6 +1732,8 @@ body{
   transition:color .15s,background .15s,box-shadow .15s;
   white-space:nowrap;
   overflow:hidden;
+  flex: 1;
+  min-width: calc(50% - 2px);
 }
 .model-type-tab-label{
   min-width:0;
