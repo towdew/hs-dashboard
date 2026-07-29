@@ -356,6 +356,7 @@ async function loadDashboardFromPublishedHtml() {
           virtualSheets.push({
             payload: payload,
             displayTitle: group.title,
+            division: group.division,
             table: group.table,
             originalSheetName: (payload.originalSheetName || ('sheet_' + (payloadIdx + 1))) + '_model_' + (groupIdx + 1)
           });
@@ -385,6 +386,7 @@ async function loadDashboardFromPublishedHtml() {
       dashboardData.displayTitle = displayTitle;
       dashboardData.sheetTitle = displayTitle;
       dashboardData.sheetTabName = displayTitle;
+      dashboardData.division = normalizeMsDivision(entry.division);
       dashboardData.originalSheetName = entry.originalSheetName || key;
       dashboardData.sourceUrl = payload.sourceUrl || '';
       dashboardData.matrix = payload.matrix || [];
@@ -400,6 +402,7 @@ async function loadDashboardFromPublishedHtml() {
         source: {
           sheetName: displayTitle,
           displayTitle: displayTitle,
+          division: dashboardData.division,
           originalSheetName: dashboardData.originalSheetName,
           url: payload.sourceUrl || ''
         },
@@ -416,12 +419,18 @@ async function loadDashboardFromPublishedHtml() {
     throw new Error('로드 가능한 데이터가 없습니다. 엑셀의 Model Name과 필수 헤더를 확인해주세요.\n' + loadErrors.join('\n'));
   }
 
-  // Model Name 패턴(W##-Audio / W##-TV)을 기준으로 Audio를 먼저 배치합니다.
+  // 엑셀의 Division 열에 나타난 순서를 유지하며, 같은 Division 안에서는 Model Name으로 정렬합니다.
+  // Division 값이 새로 추가되어도 별도 코드 수정 없이 새로운 탭/그룹으로 표시됩니다.
+  var divisionOrder = Object.create(null);
+  var nextDivisionOrder = 0;
+  validSheets.forEach(function(sheet) {
+    var division = getMsDashboardDivision(sheet && sheet.data);
+    if (divisionOrder[division] == null) divisionOrder[division] = nextDivisionOrder++;
+  });
   validSheets.sort(function(a, b) {
-    var at = getMsModelType(a && a.data && a.data.displayTitle);
-    var bt = getMsModelType(b && b.data && b.data.displayTitle);
-    var order = { Audio: 0, TV: 1, Other: 2 };
-    var diff = (order[at] == null ? 9 : order[at]) - (order[bt] == null ? 9 : order[bt]);
+    var ad = getMsDashboardDivision(a && a.data);
+    var bd = getMsDashboardDivision(b && b.data);
+    var diff = divisionOrder[ad] - divisionOrder[bd];
     if (diff) return diff;
     return String(a && a.data && a.data.displayTitle || '').localeCompare(String(b && b.data && b.data.displayTitle || ''), undefined, { numeric: true });
   });
@@ -444,7 +453,7 @@ async function loadDashboardFromPublishedHtml() {
   });
 
   renderSidebarNavFromSheets(keys);
-  forceCurrentSheetTitle(keys[0]);
+  forceCurrentSheetTitle(window.__DEFAULT_DASHBOARD_KEY || keys[0]);
 }
 async function loadSheetsFromPublishedXlsx(xlsxUrl) {
   if (!window.XLSX) throw new Error('XLSX 라이브러리가 로드되지 않았습니다. index.html의 xlsx.full.min.js를 확인해주세요.');
@@ -533,7 +542,8 @@ function getMsFlatRequestColumnMap(matrix) {
     status: col('Task Status in PTT'),
     model: col('Model Name'),
     pages: col('Pg#'),
-    url: col('Live URL')
+    url: col('Live URL'),
+    division: col('division')
   };
 }
 
@@ -555,15 +565,18 @@ function extractMsFlatRequestGroups(matrix, styles) {
     const status = getMsFlatCell(sourceRow, cols.status);
     const pages = getMsFlatCell(sourceRow, cols.pages);
     const url = getMsFlatCell(sourceRow, cols.url);
+    const rawDivision = getMsFlatCell(sourceRow, cols.division);
 
     // 완전히 빈 행은 제외합니다. Model Name이 비어 있는 데이터는 별도 그룹으로 보존합니다.
-    if (!modelName && !region && !country && !status && !pages && !url) continue;
+    if (!modelName && !region && !country && !status && !pages && !url && !rawDivision) continue;
+    const division = normalizeMsDivision(rawDivision);
     const title = modelName || 'No Model Name';
 
     let group = groupByTitle[title];
     if (!group) {
       group = {
         title: title,
+        division: division,
         table: {
           headers: tableHeaders.slice(),
           rows: [],
@@ -573,6 +586,10 @@ function extractMsFlatRequestGroups(matrix, styles) {
       };
       groupByTitle[title] = group;
       groups.push(group);
+    } else if (division && group.division === 'Unassigned') {
+      group.division = division;
+    } else if (division && group.division !== division) {
+      console.warn('[sheet-loader] one Model Name has multiple Division values; first value is used:', title, group.division, division);
     }
 
     const row = {
@@ -1812,6 +1829,7 @@ function applySheetData(key, data) {
   target.displayTitle = title;
   target.sheetTitle = title;
   target.sheetTabName = title;
+  target.division = normalizeMsDivision(data.division || target.division);
   target.originalSheetName = data.originalSheetName || target.originalSheetName || '';
   target.tableHeaders = data.tableHeaders;
   target.tableRows = data.tableRows;
@@ -1836,53 +1854,82 @@ function applySheetData(key, data) {
   target.matrix = data.matrix || target.matrix || [];
 }
 
-function getMsModelType(title) {
-  var value = String(title || '').trim();
-  if (/^W\d+\s*-\s*Audio(?:\s*-|$)/i.test(value)) return 'Audio';
-  if (/^W\d+\s*-\s*TV(?:\s*-|$)/i.test(value)) return 'TV';
-  return 'Other';
+function normalizeMsDivision(value) {
+  var division = String(value == null ? '' : value)
+    .replace(/\u00a0/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return division || 'Unassigned';
 }
 
-function getFirstDashboardKeyForModelType(type, keys) {
+function getMsDashboardDivision(data) {
+  return normalizeMsDivision(data && data.division);
+}
+
+function getFirstDashboardKeyForDivision(division, keys) {
   keys = keys || window.__DASHBOARD_KEYS || [];
+  division = normalizeMsDivision(division);
   for (var i = 0; i < keys.length; i++) {
     var d = window.DATA && window.DATA[keys[i]];
-    var title = d && (d.displayTitle || d.sheetTabName || d.sheetTitle || d.title);
-    if (getMsModelType(title) === type) return keys[i];
+    if (getMsDashboardDivision(d) === division) return keys[i];
   }
   return keys[0] || '';
 }
 
-function updateModelTypeTabs(keys) {
+function getDivisionTabSummary(keys) {
   keys = keys || window.__DASHBOARD_KEYS || [];
-  var counts = { Audio: 0, TV: 0 };
+  var summary = [];
+  var byName = Object.create(null);
   keys.forEach(function(key) {
     var d = window.DATA && window.DATA[key];
-    var title = d && (d.displayTitle || d.sheetTabName || d.sheetTitle || d.title);
-    var type = getMsModelType(title);
-    if (counts[type] != null) counts[type]++;
+    var division = getMsDashboardDivision(d);
+    if (!byName[division]) {
+      byName[division] = { name: division, count: 0 };
+      summary.push(byName[division]);
+    }
+    byName[division].count++;
   });
-
-  var audioCount = document.getElementById('modelTypeAudioCount');
-  var tvCount = document.getElementById('modelTypeTvCount');
-  if (audioCount) audioCount.textContent = '(' + counts.Audio.toLocaleString() + ')';
-  if (tvCount) tvCount.textContent = '(' + counts.TV.toLocaleString() + ')';
-
-  var active = counts.Audio > 0 ? 'Audio' : (counts.TV > 0 ? 'TV' : 'Other');
-  window.__MODEL_TYPE_ACTIVE = window.__MODEL_TYPE_ACTIVE && counts[window.__MODEL_TYPE_ACTIVE] > 0
-    ? window.__MODEL_TYPE_ACTIVE
-    : active;
-  window.__DEFAULT_DASHBOARD_KEY = getFirstDashboardKeyForModelType(window.__MODEL_TYPE_ACTIVE, keys);
-
-  document.querySelectorAll('.model-type-tab').forEach(function(btn) {
-    btn.classList.toggle('active', btn.getAttribute('data-model-type') === window.__MODEL_TYPE_ACTIVE);
-  });
-  applyModelTypeNavVisibility(window.__MODEL_TYPE_ACTIVE);
+  return summary;
 }
 
-function applyModelTypeNavVisibility(type) {
+function renderDivisionTabButtons(keys) {
+  var tabs = document.getElementById('modelTypeTabs');
+  if (!tabs) return [];
+  var summary = getDivisionTabSummary(keys);
+  tabs.innerHTML = summary.map(function(item) {
+    var label = escapeHtmlForLoader(item.name);
+    var attr = escapeAttrForLoader(item.name);
+    return '<button type="button" class="model-type-tab" data-model-type="' + attr + '" ' +
+      'title="' + attr + '" onclick="switchModelTypeTab(this.getAttribute(\'data-model-type\'), this)">' +
+      '<span class="model-type-tab-label">' + label + '</span>' +
+      '<span class="model-type-tab-count">(' + item.count.toLocaleString() + ')</span>' +
+      '</button>';
+  }).join('');
+  tabs.hidden = summary.length === 0;
+  return summary;
+}
+
+function updateModelTypeTabs(keys) {
+  keys = keys || window.__DASHBOARD_KEYS || [];
+  var summary = renderDivisionTabButtons(keys);
+  var available = summary.map(function(item) { return item.name; });
+  var active = available.indexOf(window.__MODEL_TYPE_ACTIVE) >= 0
+    ? window.__MODEL_TYPE_ACTIVE
+    : (available[0] || 'Unassigned');
+
+  window.__MODEL_TYPE_ACTIVE = active;
+  window.__DEFAULT_DASHBOARD_KEY = getFirstDashboardKeyForDivision(active, keys);
+
+  document.querySelectorAll('.model-type-tab').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('data-model-type') === active);
+  });
+  applyModelTypeNavVisibility(active);
+}
+
+function applyModelTypeNavVisibility(division) {
+  division = normalizeMsDivision(division);
   document.querySelectorAll('#sheetNavList .nav-item[data-model-type]').forEach(function(item) {
-    var matches = item.getAttribute('data-model-type') === type;
+    var matches = normalizeMsDivision(item.getAttribute('data-model-type')) === division;
     // Author CSS sets .nav-item { display:flex }, which can override the browser's
     // default [hidden] rule. Set display directly so the filter always hide/shows rows.
     item.hidden = !matches;
@@ -1891,22 +1938,30 @@ function applyModelTypeNavVisibility(type) {
   });
 }
 
-function switchModelTypeTab(type, button) {
-  if (type !== 'Audio' && type !== 'TV') return;
-  window.__MODEL_TYPE_ACTIVE = type;
+function switchModelTypeTab(division, button) {
+  division = normalizeMsDivision(division);
+  var exists = Array.prototype.some.call(document.querySelectorAll('.model-type-tab'), function(btn) {
+    return normalizeMsDivision(btn.getAttribute('data-model-type')) === division;
+  });
+  if (!exists) return;
+
+  window.__MODEL_TYPE_ACTIVE = division;
   document.querySelectorAll('.model-type-tab').forEach(function(btn) {
-    btn.classList.toggle('active', btn === button || btn.getAttribute('data-model-type') === type);
+    btn.classList.toggle('active', btn === button || normalizeMsDivision(btn.getAttribute('data-model-type')) === division);
   });
 
-  // This control is a filter for the entire #sheetNavList, not a separate page tab.
-  applyModelTypeNavVisibility(type);
+  // Division 탭은 전체 #sheetNavList를 필터링합니다.
+  applyModelTypeNavVisibility(division);
 
   var current = document.querySelector('#sheetNavList .nav-item.active');
-  if (current && !current.hidden && current.getAttribute('data-model-type') === type) return;
+  if (current && !current.hidden && normalizeMsDivision(current.getAttribute('data-model-type')) === division) return;
 
   var first = Array.prototype.find.call(
-    document.querySelectorAll('#sheetNavList .nav-item[data-model-type="' + type + '"]'),
-    function(item) { return item.style.display !== 'none' && !item.hidden; }
+    document.querySelectorAll('#sheetNavList .nav-item[data-model-type]'),
+    function(item) {
+      return normalizeMsDivision(item.getAttribute('data-model-type')) === division &&
+        item.style.display !== 'none' && !item.hidden;
+    }
   );
   if (!first) return;
   window.__DEFAULT_DASHBOARD_KEY = first.getAttribute('data-key') || '';
@@ -1925,22 +1980,15 @@ function renderSidebarNavFromSheets(keys) {
   if (!section) return;
   const html = [
     '<div class="sb-section-label">Contents</div>',
-    '<div class="model-type-tabs sidebar-model-type-tabs" id="modelTypeTabs" aria-label="Model type filter">' +
-      '<button type="button" class="model-type-tab active" data-model-type="Audio" onclick="switchModelTypeTab(\'Audio\', this)">' +
-        '<span>Audio</span><span class="model-type-tab-count" id="modelTypeAudioCount">(0)</span>' +
-      '</button>' +
-      '<button type="button" class="model-type-tab" data-model-type="TV" onclick="switchModelTypeTab(\'TV\', this)">' +
-        '<span>TV</span><span class="model-type-tab-count" id="modelTypeTvCount">(0)</span>' +
-      '</button>' +
-    '</div>'
+    '<div class="model-type-tabs sidebar-model-type-tabs" id="modelTypeTabs" aria-label="Division filter"></div>'
   ];
   keys.forEach(function(key, idx) {
     const d = window.DATA && window.DATA[key];
     const title = (d && (d.displayTitle || d.sheetTabName || d.sheetTitle || d.title)) || key;
     const abbr = makeNavAbbr(title, idx);
     const total = d && d.stats ? (d.stats.Total || 0) : 0;
-    const modelType = getMsModelType(title);
-    html.push('<div class="nav-item" data-key="' + escapeAttrForLoader(key) + '" data-model-type="' + escapeAttrForLoader(modelType) + '" data-nav-tooltip="' + escapeAttrForLoader(title) + '" aria-label="' + escapeAttrForLoader(title) + '" onclick="switchMenu(this)">' +
+    const division = getMsDashboardDivision(d);
+    html.push('<div class="nav-item" data-key="' + escapeAttrForLoader(key) + '" data-model-type="' + escapeAttrForLoader(division) + '" data-nav-tooltip="' + escapeAttrForLoader(title) + '" aria-label="' + escapeAttrForLoader(title) + '" onclick="switchMenu(this)">' +
       '<span class="ni-text" data-abbr="' + escapeAttrForLoader(abbr) + '">' + escapeHtmlForLoader(title) + '</span>' +
       '<span class="ni-badge" style="background:rgba(148,163,184,.16);color:#64748B">' + total.toLocaleString() + '</span>' +
       '</div>');
