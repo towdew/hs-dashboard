@@ -1428,7 +1428,9 @@ body{
 .sheet-data-table tbody tr:hover td{background:#FAFBFD}
 .sheet-data-table tbody tr:last-child td{border-bottom:none}
 .sheet-empty{color:#CBD5E1}
-.sheet-link{color:#2563EB;text-decoration:none;font-weight:600}
+.sheet-url-list{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;max-width:100%}
+.sheet-url-pill-list{gap:5px}
+.sheet-link{display:block;max-width:100%;color:#2563EB;text-decoration:none;font-weight:600;white-space:normal;overflow-wrap:anywhere;word-break:break-all}
 .sheet-link:hover{text-decoration:underline}
 .sheet-status-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:800;white-space:nowrap}
 .sheet-status-pill span{width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0}
@@ -1698,12 +1700,11 @@ body{
 
 /* ── MS Division Filter inside #sheetNavList ─────────────── */
 .sidebar-model-type-tabs{
-  display:flex;
-  flex-wrap: wrap;
+  display:grid;
   position:sticky;
   top:0;
   z-index:4;
-  /* grid-template-columns:repeat(3,minmax(0,1fr)); */
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:3px;
   min-height:36px;
   margin:0 8px 9px;
@@ -1719,8 +1720,9 @@ body{
   justify-content:center;
   gap:3px;
   min-width:0;
-  height:24px;
-  padding:0 5px;
+  min-height:28px;
+  height:auto;
+  padding:5px;
   border:0;
   border-radius:6px;
   background:transparent;
@@ -1730,15 +1732,15 @@ body{
   font-weight:750;
   cursor:pointer;
   transition:color .15s,background .15s,box-shadow .15s;
-  white-space:nowrap;
-  overflow:hidden;
-  flex: 1;
-  min-width: calc(50% - 2px);
+  white-space:normal;
+  overflow:visible;
 }
 .model-type-tab-label{
   min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.2;
 }
 .model-type-tab:hover{color:#1A1D2E;background:#FFFFFF}
 .model-type-tab.active{

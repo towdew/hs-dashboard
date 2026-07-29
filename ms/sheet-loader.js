@@ -351,7 +351,10 @@ async function loadDashboardFromPublishedHtml() {
     const fallbackTitle = getPayloadDisplayTitle(payload, payloadIdx);
     try {
       if (!hasHeadMarker(payload.matrix) && isMsFlatRequestMatrix(payload.matrix)) {
-        const modelGroups = extractMsFlatRequestGroups(payload.matrix, payload.styles || []);
+        // URL 셀의 줄바꿈을 보존하기 위해 정규화 전 원본 matrix를 사용합니다.
+        // payload.matrix는 cleanText() 과정에서 줄바꿈이 공백으로 합쳐질 수 있습니다.
+        const sourceMatrix = payload.rawMatrix || payload.matrix;
+        const modelGroups = extractMsFlatRequestGroups(sourceMatrix, payload.styles || []);
         modelGroups.forEach(function(group, groupIdx) {
           virtualSheets.push({
             payload: payload,
@@ -548,7 +551,14 @@ function getMsFlatRequestColumnMap(matrix) {
 }
 
 function getMsFlatCell(sourceRow, colIndex) {
-  return colIndex >= 0 ? String(sourceRow[colIndex] == null ? '' : sourceRow[colIndex]).trim() : '';
+  if (colIndex < 0) return '';
+  // Excel sharedStrings에 줄바꿈이 _x000D_ / _x000A_ 형태로 남는 경우까지 복원합니다.
+  return String(sourceRow[colIndex] == null ? '' : sourceRow[colIndex])
+    .replace(/_x000D_/gi, '\n')
+    .replace(/_x000A_/gi, '\n')
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .trim();
 }
 
 function extractMsFlatRequestGroups(matrix, styles) {
