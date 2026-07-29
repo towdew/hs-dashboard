@@ -245,8 +245,22 @@
       }
 
       // 예외시트 1, 2에서 URL 값은 raw URL 링크가 아니라 완료 pill 링크로 표시합니다.
-      if (text && isUrl(text) && isUrlHeader(header)) {
-        return getDonePill(text);
+      // 한 셀에 줄바꿈으로 URL이 여러 개 있으면 각각 별도의 pill로 모두 노출합니다.
+      if (text && isUrlHeader(header)) {
+        var urls = text
+          .replace(/_x000D_/gi, '\n')
+          .replace(/_x000A_/gi, '\n')
+          .replace(/\r\n/g, '\n')
+          .replace(/\r/g, '\n')
+          .split(/\n+/)
+          .map(function (value) { return String(value || '').trim(); })
+          .filter(function (value) { return isUrl(value); });
+        if (urls.length > 1) {
+          return '<div class="sheet-url-list sheet-url-pill-list">' +
+            urls.map(function (url) { return getDonePill(url); }).join('') +
+            '</div>';
+        }
+        if (urls.length === 1) return getDonePill(urls[0]);
       }
 
       return null;
