@@ -2609,10 +2609,18 @@ function renderContent() {
     const v = s[k] || 0;
     const cfg = SC[k];
     const sharePct = effTotal > 0 ? Math.round(v/effTotal*100) : 0;
-    // 로케일/국가 수 계산 (overall 또는 status 기준)
-    const localeCount = d.items
-      ? d.items.filter(x => (x.overall || x.status) === k).length
-      : 0;
+    // 상태별 "N개국" — 항목(행) 수가 아니라 고유 국가 수를 센다.
+    // 국가당 페이지가 여러 개인 시트(예: gram Secure Lock SG 20건)에서 행 수를 세면
+    // "99개국"처럼 실제 국가 수(12)와 크게 어긋난다. 위 _ctryset과 같은 키 추출 규칙을 쓴다.
+    const localeCount = (function(){
+      var set = {};
+      (d.items || []).forEach(function(x){
+        if ((x.overall || x.status) !== k) return;
+        var c = x.country || x.locale;
+        if (c) set[c] = 1;
+      });
+      return Object.keys(set).length;
+    })();
     return `
     <div class="stat-new" style="--sc:${cfg.dot}" >
       <div class="stat-new-head">
