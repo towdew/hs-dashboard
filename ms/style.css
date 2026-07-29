@@ -1696,13 +1696,13 @@ body{
 
 #sheetNavList .nav-item[hidden]{display:none!important}
 
-/* ── MS Model Type Filter inside #sheetNavList ───────────── */
+/* ── MS Division Filter inside #sheetNavList ─────────────── */
 .sidebar-model-type-tabs{
   display:grid;
   position:sticky;
   top:0;
   z-index:4;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  /* grid-template-columns:repeat(3,minmax(0,1fr)); */
   gap:3px;
   min-height:36px;
   margin:0 8px 9px;
@@ -1730,6 +1730,12 @@ body{
   cursor:pointer;
   transition:color .15s,background .15s,box-shadow .15s;
   white-space:nowrap;
+  overflow:hidden;
+}
+.model-type-tab-label{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 .model-type-tab:hover{color:#1A1D2E;background:#FFFFFF}
 .model-type-tab.active{
