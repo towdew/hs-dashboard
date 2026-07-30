@@ -46,11 +46,24 @@ tr:hover td{background:#FAFAFC}
 .page-btn{min-width:32px;height:32px;border:1px solid #E2E5EC;border-radius:7px;background:#fff;color:#555;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit}
 .page-btn:hover:not(:disabled),.page-btn.active{background:#A50034;border-color:#A50034;color:#fff}
 .page-btn:disabled{opacity:.45;cursor:not-allowed}
+.loading-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(245,246,250,.94);transition:opacity .2s ease,visibility .2s ease}
+.loading-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loading-box{width:min(360px,calc(100vw - 48px));padding:22px 24px;border:1px solid #E8EAF2;border-radius:14px;background:#fff;box-shadow:0 10px 35px rgba(26,29,46,.12);text-align:center}
+.loading-text{margin-bottom:14px;color:#555;font-size:13px;font-weight:800}
+.loading-track{height:5px;overflow:hidden;border-radius:999px;background:#ECEEF4}
+.loading-bar{width:45%;height:100%;border-radius:999px;background:#A50034;animation:loadingMove 1.05s ease-in-out infinite}
+@keyframes loadingMove{0%{transform:translateX(-115%)}50%{transform:translateX(115%)}100%{transform:translateX(250%)}}
 @media(max-width:900px){.topbar{display:block}.controls{justify-content:flex-start;margin-top:14px}.dashboard{grid-template-columns:repeat(2,minmax(0,1fr))}.search{width:100%}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
+<div id="loadingOverlay" class="loading-overlay" role="status" aria-live="polite" aria-label="데이터 로딩 중">
+  <div class="loading-box">
+    <div class="loading-text">테이블을 불러오는 중입니다.</div>
+    <div class="loading-track"><div class="loading-bar"></div></div>
+  </div>
+</div>
 <div class="app">
   <div class="topbar">
     <div>
@@ -270,11 +283,28 @@ async function loadRowsFromExcelFile(file){
   if(!rows.length) throw new Error(`${file.name}에서 URL 데이터를 찾지 못했습니다.`);
   return rows;
 }
+function showLoading(message='테이블을 불러오는 중입니다.') {
+  const overlay = document.getElementById('loadingOverlay');
+  if(!overlay) return;
+  const textEl = overlay.querySelector('.loading-text');
+  if(textEl) textEl.textContent = message;
+  overlay.classList.remove('hidden');
+  overlay.setAttribute('aria-hidden', 'false');
+}
+function hideLoading(){
+  const overlay = document.getElementById('loadingOverlay');
+  if(!overlay) return;
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    overlay.classList.add('hidden');
+    overlay.setAttribute('aria-hidden', 'true');
+  }));
+}
 async function switchExcelFile(fileName){
   const file = excelFiles.find(item => item.name === fileName);
   if(!file) return;
   const tabsEl = getExcelTabsEl();
   if(tabsEl) tabsEl.classList.add('loading');
+  showLoading(`${file.label || file.name} 데이터를 불러오는 중입니다.`);
   try{
     const rows = await loadRowsFromExcelFile(file);
     ROWS = rows;
@@ -288,9 +318,11 @@ async function switchExcelFile(fileName){
     alert(`${file.name} 파일을 불러오지 못했습니다.`);
   }finally{
     if(tabsEl) tabsEl.classList.remove('loading');
+    hideLoading();
   }
 }
 async function init(){
+  showLoading();
   try{
     excelFiles = await discoverExcelFiles();
     if(excelFiles.length){
@@ -311,6 +343,7 @@ async function init(){
   renderExcelTabs();
   fillFilters();
   render();
+  hideLoading();
 }
 
 const PAGE_SIZE = 50;
