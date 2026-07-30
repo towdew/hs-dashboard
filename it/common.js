@@ -1948,7 +1948,7 @@ var NPI_PS_COLUMNS = [
   { key: 'stage', label: 'Stage' },
   { key: 'readiness', label: 'Readiness Check' },
   { key: 'detail', label: 'Detail' },
-  { key: 'stg', label: 'STG URL' }, { key: 'live', label: 'Live URL' }, { key: 'ptt', label: 'PTT Task ID' }
+  { key: 'live', label: 'Live URL' }, { key: 'ptt', label: 'PTT Task ID' }
 ];
 // 스테이지 정렬은 프로세스 진행 순서(precheck→…→live)로. Clarify는 client_review와 동급.
 var NPI_PS_STAGE_RANK = { precheck: 1, in_progress: 2, client_review: 3, clarify: 3, live: 5, cancelled: 6, etc: 7 };
@@ -1966,7 +1966,6 @@ function npiPsSortValue(item, key) {
     case 'readiness': return { 'Ready': 0, 'Not Ready': 1 }[row.readinessCheck] !== undefined
       ? { 'Ready': 0, 'Not Ready': 1 }[row.readinessCheck] : 2;
     case 'detail': return ((row.detailKr || '') + ' ' + (row.detailEn || '')).trim();
-    case 'stg': return (row.stgUrl || '').indexOf('http') === 0 ? 1 : 0;
     case 'live': return (row.liveUrl || '').indexOf('http') === 0 ? 1 : 0;
     case 'ptt': return row.pttId || '';
     default: return '';
@@ -2022,7 +2021,7 @@ function npiPsDownloadExcel() {
       row.targetLaunchDate || '',
       row.region || '', row.sub || '', npiPsCountryName(row.locale), row.model || '',
       stageLabel, row.readinessCheck || '', detail,
-      row.stgUrl || '', row.liveUrl || '', row.pttId || ''
+      row.liveUrl || '', row.pttId || ''
     ].concat(RC_FIELDS.map(function(f) { return rf[f] || ''; })));
   });
   var ws = XLSX.utils.aoa_to_sheet(aoa);
@@ -2157,7 +2156,6 @@ function npiPsRenderResults() {
     if (detEn) detailCell += (detKr ? '<br>' : '') + '<span style="color:#94A3B8">' + escapeHtmlSheet(detEn) + '</span>';
     if (!detailCell) detailCell = '-';
     html += '<td style="font-size:var(--fs-caption);max-width:280px">' + detailCell + '</td>';
-    html += '<td style="text-align:center">' + npiPsUrlCell(row.stgUrl) + '</td>';
     html += '<td style="text-align:center">' + npiPsUrlCell(row.liveUrl) + '</td>';
     html += '</tr>';
   });
