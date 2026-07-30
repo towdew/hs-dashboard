@@ -1942,7 +1942,7 @@ var _npiPsSort = { key: '', dir: 1 };
 var NPI_PS_COLUMNS = [
   { key: 'category', label: '구분' },
   { key: 'status', label: 'Status' },
-  { key: 'launch', label: '타겟 일정' },   // Readiness Check의 Target Launch Date
+  { key: 'launch', label: 'Target Launch Date' },   // Readiness Check 원본 컬럼명 그대로
   { key: 'region', label: 'Region' }, { key: 'sub', label: 'Sub' },
   { key: 'country', label: 'Country' }, { key: 'model', label: 'Model' },
   { key: 'stage', label: 'Stage' },
@@ -2131,7 +2131,7 @@ function npiPsRenderResults() {
     html += '<tr>';
     html += '<td>' + catCell + '</td>';
     html += '<td>' + statusCell + '</td>';
-    // 타겟 일정 — Readiness Check의 Target Launch Date(YYYY-MM-DD). 미매칭 행은 '-'
+    // Target Launch Date — Readiness Check 원본값(YYYY-MM-DD). 미매칭 행은 '-'
     var launch = row.targetLaunchDate || '';
     html += '<td style="white-space:nowrap;font-size:var(--fs-caption);color:' + (launch ? '#334155' : '#CBD5E1') + '">' +
       escapeHtmlSheet(launch || '-') + '</td>';
