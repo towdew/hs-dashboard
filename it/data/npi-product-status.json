@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-07-30 14:22",
+ "generatedAt": "2026-07-30 15:32",
  "pttRawFile": "raw-data-20260730-v1.xlsb",
  "cmsFile": "cms_merged_view_20260727_103526.csv",
  "sourceFile": "43 NPI for IT product status_20260707.xlsx",
@@ -76,7 +76,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "live",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -115,7 +116,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "live",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -154,7 +156,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "clarify",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -193,7 +196,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "live",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -232,7 +236,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "live",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -271,7 +276,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "live",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -310,7 +316,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "live",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -349,7 +356,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "precheck",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -388,7 +396,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "client_review",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -427,7 +436,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "client_review",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -466,7 +476,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "client_review",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -505,7 +516,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "client_review",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -544,7 +556,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "live",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -583,7 +596,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "live",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     }
    ]
   },
@@ -628,7 +642,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "client_review",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -667,7 +682,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "client_review",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -706,7 +722,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "client_review",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -745,7 +762,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "client_review",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -784,7 +802,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "client_review",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -823,7 +842,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "client_review",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     }
    ]
   },
@@ -868,7 +888,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "live",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-08-31"
     }
    ]
   },
@@ -913,7 +934,8 @@
       "Live URL Education": "-"
      },
      "stage": "precheck",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-08-31"
     },
     {
      "region": "EU",
@@ -952,7 +974,8 @@
       "Live URL Education": "-"
      },
      "stage": "precheck",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-08-31"
     },
     {
      "region": "EU",
@@ -991,7 +1014,8 @@
       "Live URL Education": "-"
      },
      "stage": "precheck",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-08-31"
     },
     {
      "region": "EU",
@@ -1030,7 +1054,8 @@
       "Live URL Education": "-"
      },
      "stage": "precheck",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-08-31"
     },
     {
      "region": "EU",
@@ -1069,7 +1094,8 @@
       "Live URL Education": "-"
      },
      "stage": "precheck",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-08-31"
     },
     {
      "region": "EU",
@@ -1108,7 +1134,8 @@
       "Live URL Education": "-"
      },
      "stage": "precheck",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-08-31"
     },
     {
      "region": "EU",
@@ -1147,7 +1174,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "live",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-08-31"
     },
     {
      "region": "EU",
@@ -1186,7 +1214,8 @@
       "Live URL Education": "-"
      },
      "stage": "etc",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-08-31"
     }
    ]
   },
@@ -1231,7 +1260,8 @@
       "Live URL Education": "-"
      },
      "stage": "live",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -1270,7 +1300,8 @@
       "Live URL Education": "-"
      },
      "stage": "live",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -1309,7 +1340,8 @@
       "Live URL Education": "-"
      },
      "stage": "live",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "EU",
@@ -1348,7 +1380,8 @@
       "Live URL Education": "-"
      },
      "stage": "precheck",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     },
     {
      "region": "SEA",
@@ -1387,7 +1420,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "live",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": "2026-07-31"
     }
    ]
   },
@@ -1432,7 +1466,8 @@
       "Live URL D2B2C": "-",
       "Live URL Partners": "-",
       "Live URL Education": "-"
-     }
+     },
+     "targetLaunchDate": "2026-08-31"
     },
     {
      "region": "SEA",
@@ -1471,7 +1506,8 @@
       "Live URL Education": "-"
      },
      "stage": "etc",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": ""
     },
     {
      "region": "SEA",
@@ -1510,7 +1546,8 @@
       "Live URL Education": "-"
      },
      "stage": "etc",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": ""
     },
     {
      "region": "SEA",
@@ -1549,7 +1586,8 @@
       "Live URL Education": "-"
      },
      "stage": "etc",
-     "category": "NPI"
+     "category": "NPI",
+     "targetLaunchDate": ""
     }
    ]
   },
@@ -1594,7 +1632,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "live",
-     "category": "MOD"
+     "category": "MOD",
+     "targetLaunchDate": ""
     },
     {
      "region": "NA",
@@ -1633,7 +1672,8 @@
      "statusTip": "",
      "pimChecked": true,
      "stage": "live",
-     "category": "MOD"
+     "category": "MOD",
+     "targetLaunchDate": ""
     }
    ]
   },
