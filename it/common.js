@@ -1940,7 +1940,7 @@ function npiPsSyncFilterControls() {
 var _npiPsSort = { key: '', dir: 1 };
 // 구분(NPI/MOD 대분류) → Status(NPI Type+Month 조합) 순으로 맨 왼쪽 (2026-07-16 사용자 지시)
 var NPI_PS_COLUMNS = [
-  { key: 'category', label: '구분' },
+  { key: 'category', label: 'Type' },
   { key: 'status', label: 'Status' },
   { key: 'launch', label: 'Target Launch Date' },   // Readiness Check 원본 컬럼명 그대로
   { key: 'region', label: 'Region' }, { key: 'sub', label: 'Sub' },
