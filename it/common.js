@@ -1942,6 +1942,7 @@ var _npiPsSort = { key: '', dir: 1 };
 var NPI_PS_COLUMNS = [
   { key: 'category', label: '구분' },
   { key: 'status', label: 'Status' },
+  { key: 'launch', label: '타겟 일정' },   // Readiness Check의 Target Launch Date
   { key: 'region', label: 'Region' }, { key: 'sub', label: 'Sub' },
   { key: 'country', label: 'Country' }, { key: 'model', label: 'Model' },
   { key: 'stage', label: 'Stage' },
@@ -1961,6 +1962,7 @@ function npiPsSortValue(item, key) {
     case 'model': return row.model || '';
     case 'stage': return NPI_PS_STAGE_RANK[item.stage] || 9;
     case 'status': return item.status || '';
+    case 'launch': return row.targetLaunchDate || '';
     case 'readiness': return { 'Ready': 0, 'Not Ready': 1 }[row.readinessCheck] !== undefined
       ? { 'Ready': 0, 'Not Ready': 1 }[row.readinessCheck] : 2;
     case 'detail': return ((row.detailKr || '') + ' ' + (row.detailEn || '')).trim();
@@ -2017,6 +2019,7 @@ function npiPsDownloadExcel() {
     aoa.push([
       row.category || 'NPI',
       item.status || '',
+      row.targetLaunchDate || '',
       row.region || '', row.sub || '', npiPsCountryName(row.locale), row.model || '',
       stageLabel, row.readinessCheck || '', detail,
       row.stgUrl || '', row.liveUrl || '', row.pttId || ''
@@ -2128,6 +2131,10 @@ function npiPsRenderResults() {
     html += '<tr>';
     html += '<td>' + catCell + '</td>';
     html += '<td>' + statusCell + '</td>';
+    // 타겟 일정 — Readiness Check의 Target Launch Date(YYYY-MM-DD). 미매칭 행은 '-'
+    var launch = row.targetLaunchDate || '';
+    html += '<td style="white-space:nowrap;font-size:var(--fs-caption);color:' + (launch ? '#334155' : '#CBD5E1') + '">' +
+      escapeHtmlSheet(launch || '-') + '</td>';
     html += '<td>' + escapeHtmlSheet(row.region) + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#64748B">' + escapeHtmlSheet(row.sub || '-') + '</td>';
     html += '<td title="' + escapeAttrSheet(row.locale || '') + '">' + escapeHtmlSheet(npiPsCountryName(row.locale)) + '</td>';
