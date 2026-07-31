@@ -1090,21 +1090,21 @@
       background:#fff;
     }
     .mx-status-block + .mx-status-block{
-      border-top:1px solid #E2E2E2;
+      border-top:0;
+      padding-top:4px;
     }
-    /* 혼합 상태 셀에서는 각 상태가 자신의 색상과 도트를 유지합니다. */
+    /* Pending 계열만 상태색을 사용합니다. 비-Pending 상태는 기본 텍스트색으로 표시합니다. */
     .mx-status-block.red .mx-status-lbl{ color:var(--s-red) !important; }
     .mx-status-block.orange .mx-status-lbl{ color:var(--s-orange) !important; }
-    .mx-status-block.green .mx-status-lbl{ color:var(--s-green) !important; }
-    .mx-status-block.grey .mx-status-lbl{ color:var(--s-grey) !important; }
-    .mx-status-block.blue .mx-status-lbl{ color:var(--s-blue) !important; }
-    .mx-status-block.mx-complete-primary .mx-status-lbl{
-      font-size:14px;
-      font-weight:800 !important;
-    }
+    .mx-status-block.green .mx-status-lbl,
+    .mx-status-block.grey .mx-status-lbl,
+    .mx-status-block.blue .mx-status-lbl{ color:var(--lg-gray-6) !important; }
+    .mx-status-block.green .mx-aging,
+    .mx-status-block.grey .mx-aging,
+    .mx-status-block.blue .mx-aging{ color:var(--lg-gray-6) !important; }
     .mx-cancel-summary{
-      padding:5px 6px 7px;
-      border-top:1px solid #E2E2E2;
+      padding:3px 6px 7px;
+      border-top:0;
       color:var(--s-grey);
       font-size:10px;
       font-weight:600;
@@ -1141,8 +1141,8 @@
     .mx-table td.mx-article.orange .mx-art-done,
     .mx-table td.mx-article.red .mx-art-done{ color:#1A1A1A !important; }
     .article-url-list{ display:flex; flex-direction:column; gap:6px; }
-    .article-url-list a{ color:var(--lg-heritage-red); font-weight:700; text-decoration:none; word-break:break-all; }
-    .article-url-list a:hover{ text-decoration:underline; }
+    .article-url-list a{text-decoration:none; word-break:break-all; font-weight: 400; color: var(--lg-gray-6);}
+    .article-url-list a:hover{ text-decoration:underline; color: var(--lg-heritage-red);}
     /* 신호등 색상 — aging 숫자에 적용 */
     .mx-table td.mx-data.red .mx-aging{ color:var(--s-red); }
     .mx-table td.mx-data.orange .mx-aging{ color:var(--s-orange); }
@@ -1204,6 +1204,10 @@
       position:sticky;
       left:130px;
       z-index:6;
+      width:120px;
+      max-width:120px;
+      white-space:normal;
+      overflow-wrap:anywhere;
       background-clip:padding-box;
     }
     .matrix-card th.col-region,
@@ -1233,9 +1237,6 @@
       min-width:0;
     }
     .dam-copy-row{
-      display:flex;
-      align-items:center;
-      justify-content:center;
       width:100%;
       min-width:0;
     }
@@ -1461,6 +1462,17 @@
     .modal-row:last-child{
       border-bottom:0;
     }
+    .modal-row.stacked{
+      display:block;
+    }
+    .modal-row.stacked .k{
+      width:auto;
+      margin-bottom:8px;
+      padding-top:0;
+    }
+    .modal-row.stacked .v{
+      width:100%;
+    }
     .modal-row .k{
       flex:none;
       width:120px;
@@ -1485,9 +1497,7 @@
       font-weight:500;
     }
     .modal-row .v a{
-      color:var(--lg-heritage-red);
       text-decoration:none;
-      font-weight:700;
     }
     .modal-row .v a:hover{ text-decoration:underline }
     .modal-reason{
@@ -2146,6 +2156,7 @@
     .detail-modal-table{
       width:100%;
       border-collapse:collapse;
+      border-bottom:1px solid var(--lg-gray-1);
     }
     .detail-modal-table th{
       background:#fff !important;
@@ -2164,15 +2175,15 @@
       font-size:14px;
       color:var(--lg-gray-6);
     }
-    .detail-modal-table tr:last-child td{ border-bottom:none !important; }
-    .detail-modal-aging{
+    .detail-modal-table tr:last-child td{ border-bottom:1px solid var(--lg-gray-1) !important; }
+    .detail-modal-status{
       display:flex;
       align-items:center;
       gap:9px;
       font-weight:500;
       color:var(--lg-gray-6);
     }
-    .detail-modal-aging .dot{
+    .detail-modal-status .dot{
       width:12px !important;
       height:12px !important;
     }
@@ -2330,7 +2341,7 @@
     .mx-table td.mx-country-cell{
       min-width:110px !important;
       width:var(--mx-country-width, 110px) !important;
-      max-width:180px !important;
+      max-width:120px !important;
     }
     .mx-table th.mx-req-head,
     .mx-table td.mx-cell{
@@ -2858,10 +2869,8 @@ function mergeLiveUrls(target, value){
 function liveUrlListHtml(urls){
   const list = extractUrls(urls);
   if(!list.length) return '<span class="muted">-</span>';
-  const hasMultiple = list.length > 1;
-  return '<div class="article-url-list">' + list.map(function(url, idx){
-    const label = hasMultiple ? ('Live URL ' + (idx + 1) + ' ↗') : 'Live URL ↗';
-    return '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(label) + '</a>';
+  return '<div class="article-url-list">' + list.map(function(url){
+    return '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(url) + '</a>';
   }).join('') + '</div>';
 }
 function normalizeDamPath(value){
@@ -3037,17 +3046,25 @@ function statusFor(r){
     return { signal:'Orange', title:'Pre-check', aging:ldmAssignedAge, periodText:elapsedText(ldmAssignedAge), reason:`LDM assigned date (${ldmAssignedDate}) is ${ldmAssignedAge} days old (≥7)` };
   }
 
-  // 기준 일수 미만이거나 기준 날짜가 없어도 현재 PTT 단계명은 유지합니다.
+  // 7일 미만은 신호등 도트 없이 현재 단계명과 경과일만 표시합니다.
   if(isClientReviewTask){
-    return { signal:'None', title:'Subsidiary Review', aging:'', periodText:'', reason:`Task Status = ${task}; The Date of Client Review = ${clientReviewDate}` };
+    const aging = clientReviewAge !== null && clientReviewAge >= 0 ? clientReviewAge : '';
+    return { signal:'None', title:'Subsidiary Review', aging:aging, periodText:aging === '' ? '' : elapsedText(aging), reason:`Task Status = ${task}; The Date of Client Review = ${clientReviewDate}` };
   }
   if(isClarificationTask){
-    return { signal:'None', title:'Request Clarification', aging:'', periodText:'', reason:'Task Status = ' + task };
+    const aging = commentAge !== null && commentAge >= 0 ? commentAge : '';
+    return { signal:'None', title:'Request Clarification', aging:aging, periodText:aging === '' ? '' : elapsedText(aging), reason:'Task Status = ' + task };
   }
   if(isNewRequestTask){
-    return { signal:'None', title:'Pre-check', aging:'', periodText:'', reason:`Task Status = ${task}; LDM assigned date = ${ldmAssignedDate}` };
+    const aging = ldmAssignedAge !== null && ldmAssignedAge >= 0 ? ldmAssignedAge : '';
+    return { signal:'None', title:'Pre-check', aging:aging, periodText:aging === '' ? '' : elapsedText(aging), reason:`Task Status = ${task}; LDM assigned date = ${ldmAssignedDate}` };
   }
-  return { signal:'None', title:'', aging:'', periodText:'', reason:'No matching condition' };
+
+  // 코드에 별도로 정의되지 않은 모든 PTT 상태는 In Progress로 표시합니다.
+  if(task){
+    return { signal:'Blue', title:'In Progress', aging:'', periodText:'', reason:'Unmapped Task Status = ' + task };
+  }
+  return { signal:'None', title:'', aging:'', periodText:'', reason:'Task Status is empty' };
 }
 function worse(a,b){ return PRIORITY[b.signal] > PRIORITY[a.signal] ? b : a; }
 
@@ -3111,13 +3128,9 @@ function openRowDetailModal(detailObjs){
 
   const rows = detailObjs.map(function(r){
     const sc = COLORS[r.signal] || 'blue';
-    const aging = (r.aging !== '' && r.aging !== undefined && r.aging !== null)
-      ? r.aging + ' Days'
-      : (r.signal === 'Green' ? 'Complete' : '—');
     const pages = r.pgTotal ? r.pgTotal.toLocaleString() + ' Pages' : '—';
     return '<tr>'
-      + '<td><div class="detail-modal-aging"><i class="dot ' + sc + '"></i>' + esc(r.title) + '</div></td>'
-      + '<td>' + esc(aging) + '</td>'
+      + '<td><div class="detail-modal-status"><i class="dot ' + sc + '"></i>' + esc(r.title) + '</div></td>'
       + '<td class="detail-modal-pages">' + esc(pages) + '</td>'
       + '</tr>';
   }).join('');
@@ -3133,7 +3146,7 @@ function openRowDetailModal(detailObjs){
     detailObjs.forEach(function(r){
       mergeLiveUrls(liveUrls, r.liveUrls && r.liveUrls.length ? r.liveUrls : (r.liveUrl || ''));
     });
-    linkSection = rowHtml('Live URL', liveUrlListHtml(liveUrls), false);
+    linkSection = rowHtml('Live URL', liveUrlListHtml(liveUrls), false, true);
   } else {
     const damValue = detailObjs.map(function(r){ return r.dam || ''; }).filter(Boolean).join('\n');
     linkSection = rowHtml('DAM', damButtons(damValue), !extractDamPaths(damValue).length);
@@ -3143,7 +3156,7 @@ function openRowDetailModal(detailObjs){
   statusModalBody.innerHTML =
     '<div class="detail-modal-info">' + esc(first.division) + ' · ' + esc(first.country) + '</div>'
     + '<table class="detail-modal-table">'
-    + '<thead><tr><th>Status</th><th>Aging</th><th>Pages</th></tr></thead>'
+    + '<thead><tr><th>Status</th><th>Pages</th></tr></thead>'
     + '<tbody>' + rows + '</tbody>'
     + '</table>'
     + '<div style="margin-top:14px">' + linkSection + '</div>';
@@ -3723,7 +3736,7 @@ function buildMatrixTable(visibleRows, visibleCountries){
     const cell = cellMap[r.country][columnKey];
     const pgNum = Number(String(r.pg || '').replace(/,/g,'').trim());
     cell.pgTotal += !isNaN(pgNum) ? pgNum : 0;
-    if(r.status.signal !== 'None'){
+    if(r.status && (r.status.signal !== 'None' || r.status.title)){
       cell.items.push(Object.assign({}, r.status, { pgValue: !isNaN(pgNum) ? pgNum : 0 }));
     }
     const cp = PRIORITY[cell.signal] || 0;
@@ -3806,7 +3819,7 @@ function openArticleStatusModal(detail){
 
   const urls = Array.isArray(detail.urls) ? detail.urls.filter(Boolean) : [];
   if(doneCount > 0 && urls.length){
-    rows += rowHtml('URL List', liveUrlListHtml(urls), false);
+    rows += rowHtml('URL List', liveUrlListHtml(urls), false, true);
   }
 
   document.getElementById('statusModalBody').innerHTML = rows;
@@ -3947,14 +3960,22 @@ function buildMatrixCell(cell, country, model, extraClass){
     const primaryClass = completeCancelledOnly && (group.signal === 'Green' || String(statusLabel).toLowerCase() === 'complete')
       ? ' mx-complete-primary' : '';
     let block = '<div class="mx-status-block ' + sc + primaryClass + '">';
+    const agingNumber = Number(group.aging);
+    const hasAging = group.aging !== '' && group.aging !== null && group.aging !== undefined && !isNaN(agingNumber);
+    const isSevenDaysOrLess = hasAging && agingNumber >= 0 && agingNumber <= 7;
+    const hasNoSignal = group.signal === 'None';
 
-    // Complete와 다른 상태가 섞인 경우에도 모든 상태에 도트를 표시합니다.
-    block += '<div class="mx-cell-dot"><i class="dot ' + sc + ' mx-dot"></i></div>';
+    // 경과일이 7일 이하이면 도트와 Page 수 없이 상태 + 경과일만 표시합니다.
+    // 날짜가 없는 None 상태도 잘못된 파란 도트가 생기지 않도록 도트를 숨깁니다.
+    const isInProgress = group.signal === 'Blue' || String(statusLabel || '').toLowerCase().replace(/[\s_-]+/g, '') === 'inprogress';
+    if(!isSevenDaysOrLess && !hasNoSignal && !isInProgress){
+      block += '<div class="mx-cell-dot"><i class="dot ' + sc + ' mx-dot"></i></div>';
+    }
     block += '<div class="mx-cell-label"><span class="mx-status-lbl">' + displayLabel + '</span></div>';
-    if(group.aging !== '' && group.aging !== null && group.aging !== undefined){
+    if(hasAging){
       block += '<div class="mx-cell-bot"><span class="mx-aging">' + esc(String(group.aging)) + ' days</span></div>';
     }
-    if(pgText){
+    if(pgText && !isSevenDaysOrLess){
       block += '<div class="mx-cell-bot"><span class="mx-pg">' + pgText + '</span></div>';
     }
     block += '</div>';
@@ -4005,7 +4026,7 @@ function fitMatrixTableToContainer(){
   if(!modelCount) return;
 
   const COUNTRY_MIN = 110;
-  const COUNTRY_MAX = 180;
+  const COUNTRY_MAX = 120;
   const DATA_MIN = 88;
   const DATA_MAX = 320;
   const available = Math.max(0, Math.floor(wrap.clientWidth));
@@ -4113,7 +4134,7 @@ function renderDashboard(rows, clickedCountry=null){
     cell.pgTotal += pgValue;
     mergeLiveUrls(cell.liveUrls, r.liveUrl);
 
-    if(r.status.signal !== 'None'){
+    if(r.status && (r.status.signal !== 'None' || r.status.title)){
       cell.items.push({
         ...r.status,
         pgTotal:pgValue
@@ -4813,9 +4834,10 @@ const SIGNAL_LABEL = {
   None:'Pre-check'
 };
 
-function rowHtml(key, value, muted){
+function rowHtml(key, value, muted, stacked){
   const cls = muted ? 'v muted' : 'v';
-  return `<div class="modal-row"><div class="k">${esc(key)}</div><div class="${cls}">${value}</div></div>`;
+  const rowCls = stacked ? 'modal-row stacked' : 'modal-row';
+  return `<div class="${rowCls}"><div class="k">${esc(key)}</div><div class="${cls}">${value}</div></div>`;
 }
 
 function openStatusModal(detail){
@@ -4869,7 +4891,7 @@ function openStatusModal(detail){
     rowHtml('Status',         esc(detail.title    || '-'),  !detail.title),
     rowHtml(periodKey,        periodVal,                     periodMuted),
     rowHtml('Page Count',     esc(pageVal),                  !detail.pgTotal),
-    rowHtml(linkKey,          linkVal,                       false)
+    rowHtml(linkKey,          linkVal,                       false, linkKey === 'Live URL')
   ].join('');
 
   const statusModalBody = document.getElementById('statusModalBody');
