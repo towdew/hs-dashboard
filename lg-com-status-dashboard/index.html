@@ -655,6 +655,18 @@
       grid-template-columns:repeat(4,1fr);
       gap:8px;
     }
+    .summary-inprogress-text{
+      margin-top:8px;
+      color:var(--lg-gray-5);
+      font-size:12px;
+      line-height:1.4;
+      text-align:right;
+    }
+    .summary-inprogress-text strong{
+      margin-left:4px;
+      color:var(--lg-gray-6);
+      font-weight:700;
+    }
     .status-chip{
       min-height:46px;
       border:1px solid var(--lg-gray-2);
@@ -1140,7 +1152,7 @@
     .mx-table td.mx-article.green .mx-art-done,
     .mx-table td.mx-article.orange .mx-art-done,
     .mx-table td.mx-article.red .mx-art-done{ color:#1A1A1A !important; }
-    .article-url-list{ display:flex; flex-direction:column; gap:6px; max-height: 200px; overflow-y: auto;}
+    .article-url-list{ display:flex; flex-direction:column; gap:6px; }
     .article-url-list a{text-decoration:none; word-break:break-all; font-weight: 400; color: var(--lg-gray-6);}
     .article-url-list a:hover{ text-decoration:underline; color: var(--lg-heritage-red);}
     /* 신호등 색상 — aging 숫자에 적용 */
@@ -3838,33 +3850,53 @@ function buildArticleCell(country, product){
   function getArticleDataForCountry(ctry, prod){
     var raw = String(ctry || '').trim();
     var base = raw.split('-')[0].split('_')[0].toUpperCase();
-    var variants = [];
-    function addVariant(v){
-      v = String(v || '').trim();
-      if(v && variants.indexOf(v) < 0) variants.push(v);
+    var sourceKeys = Object.keys(src || {});
+
+    function normalizedCountryKey(value){
+      return String(value || '').trim().replace(/_/g,'-').toLowerCase();
     }
-    addVariant(raw);
-    addVariant(raw.toUpperCase());
-    addVariant(base);
-    // If the status matrix is not language-split but Global Request has language split keys,
-    // merge those language rows so counts still show under the base country.
-    if(raw === base){
-      Object.keys(src || {}).forEach(function(k){
-        if(String(k).split('-')[0].split('_')[0].toUpperCase() === base && variants.indexOf(k) < 0) variants.push(k);
+    function findExactKey(value){
+      var wanted = normalizedCountryKey(value);
+      return sourceKeys.find(function(k){ return normalizedCountryKey(k) === wanted; }) || '';
+    }
+    function baseOf(value){
+      return String(value || '').split('-')[0].split('_')[0].toUpperCase();
+    }
+    function mergeKeys(keys){
+      var merged = null;
+      var used = [];
+      (keys || []).forEach(function(k){
+        if(!k || used.indexOf(k) >= 0) return;
+        used.push(k);
+        var d = src[k] && src[k][prod];
+        if(!d && prod === 'REF' && src[k] && src[k]['FRE']) d = src[k]['FRE'];
+        if(!d) return;
+        if(!merged) merged = { c:0, t:0, x:0, urls:[] };
+        merged.c += Number(d.c || 0);
+        merged.t += Number(d.t || 0);
+        merged.x += Number(d.x || 0);
+        (Array.isArray(d.urls) ? d.urls : []).forEach(function(u){
+          if(u && merged.urls.indexOf(u) < 0) merged.urls.push(u);
+        });
       });
+      return merged;
     }
-    var merged = null;
-    variants.forEach(function(k){
-      var d = src[k] && src[k][prod];
-      if(!d && prod === 'REF' && src[k] && src[k]['FRE']) d = src[k]['FRE'];
-      if(!d) return;
-      if(!merged) merged = { c:0, t:0, x:0, urls:[] };
-      merged.c += Number(d.c || 0);
-      merged.t += Number(d.t || 0);
-      merged.x += Number(d.x || 0);
-      (Array.isArray(d.urls) ? d.urls : []).forEach(function(u){ if(u && merged.urls.indexOf(u) < 0) merged.urls.push(u); });
-    });
-    return merged;
+
+    var exactKey = findExactKey(raw);
+    var baseKey = findExactKey(base);
+
+    // 언어 코드가 있는 국가는 정확히 일치하는 언어 데이터를 우선 사용합니다.
+    // 예: SA-en은 SA-en만 사용하고 SA를 다시 더하지 않습니다.
+    if(normalizedCountryKey(raw) !== normalizedCountryKey(base)){
+      if(exactKey) return mergeKeys([exactKey]);
+      return baseKey ? mergeKeys([baseKey]) : null;
+    }
+
+    // 언어 구분이 없는 국가코드는 동일한 기본 키가 있으면 그 값만 사용합니다.
+    if(baseKey) return mergeKeys([baseKey]);
+
+    // 기본 키가 없을 때만 같은 국가의 언어별 키를 합쳐 fallback 처리합니다.
+    return mergeKeys(sourceKeys.filter(function(k){ return baseOf(k) === base; }));
   }
   const data = getArticleDataForCountry(country, product);
   if(!data || !data.t){
@@ -4193,6 +4225,8 @@ function renderDashboard(rows, clickedCountry=null){
   });
 
   const counts = buildCounts(visibleRows);
+  // 기존 In Progress(Blue)와 Pending 기준 미만(None)을 한 개의 In Progress 카운트로 표시합니다.
+  const inProgressCount = Number(counts.Blue || 0) + Number(counts.None || 0);
   // Total Request = 선택된 국가 기준 콘텐츠 건수 (필터 연동)
   const totalModel = visibleRows.length;
 
@@ -4319,6 +4353,7 @@ function renderDashboard(rows, clickedCountry=null){
           ${statusChip('Complete','Green',counts.Green)}
           ${statusChip('Cancelled','Grey',counts.Grey)}
         </div>
+        <div class="summary-inprogress-text">In Progress <strong>${inProgressCount}</strong></div>
 
         <div class="filter-panel">
           <div class="filter-help">
