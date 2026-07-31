@@ -1,15 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LG.com GEO Content Coverage Dashboard</title>
+  <title>LG.com GEO Content Status Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
-  <style>
+   <style>
     /* ── LG.com GP1 Design Tokens ── */
     :root{
       /* Brand */
@@ -167,7 +166,7 @@
       border-color:var(--lg-gray-3);
       box-shadow:0 1px 3px rgba(0,0,0,.05);
     }
-    .help-dot{
+     .help-dot{
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -277,7 +276,7 @@
       cursor:pointer;
       transition:border-color .15s, background .15s;
     }
-    .file-drop:hover{
+     .file-drop:hover{
       border-color:var(--lg-heritage-red);
       background:#FFF5F7;
     }
@@ -325,7 +324,7 @@
       margin-bottom:14px;
       box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
     }
-    
+
     .guide-card{
       background:linear-gradient(135deg,#fff 0%,#fff 58%,#F8FBF9 100%);
       border:1px solid #E3E8E5;
@@ -336,7 +335,7 @@
       max-height:300px;
       overflow:hidden;
     }
-    
+
     .guide-hero{
       display:flex;
       align-items:center;
@@ -345,7 +344,7 @@
       margin-bottom:12px;
       border-bottom:1px solid #DDE5E0;
     }
-    
+
     .guide-hero-icon{
       width:42px;
       height:42px;
@@ -358,12 +357,11 @@
       color:#07883E;
       box-shadow:inset 0 0 0 1px rgba(7,136,62,.08);
     }
-    
+
     .guide-hero-icon svg{
       width:22px;
       height:22px;
     }
-    
     .guide-main-title{
       margin:0;
       font-size:18px;
@@ -372,7 +370,7 @@
       letter-spacing:-.04em;
       color:#0F172A;
     }
-    
+
     .guide-subtitle{
       margin-top:4px;
       font-size:12px;
@@ -380,14 +378,13 @@
       font-weight:600;
       color:#536075;
     }
-    
     .guide-layout{
       display:grid;
       grid-template-columns:minmax(0,1fr) 300px;
       gap:22px;
       align-items:start;
     }
-    
+
     .guide-panel-title{
       display:flex;
       align-items:center;
@@ -399,20 +396,20 @@
       text-transform:uppercase;
       color:#9b9b9b;
     }
-    
+
     .guide-panel-title svg{
       width:14px;
       height:14px;
       flex:0 0 auto;
       stroke:#7c7c7c;
     }
-    
+
     .workflow-list{
       display:flex;
       flex-direction:column;
       gap:6px;
     }
-    
+
     .workflow-step{
       display:grid;
       grid-template-columns:64px minmax(240px,1fr) minmax(320px,420px);
@@ -425,7 +422,7 @@
       box-shadow:0 1px 3px rgba(17,24,39,.04);
       max-height: 68px;
     }
-    
+
     .workflow-step-badge{
       display:inline-flex;
       align-items:center;
@@ -441,12 +438,12 @@
       text-transform:uppercase;
       white-space:nowrap;
     }
-    
+
     .workflow-copy{
       min-width:0;
       padding-right:4px;
     }
-    
+
     .workflow-name{
       margin:0 0 3px;
       font-size:15px;
@@ -455,7 +452,7 @@
       letter-spacing:-.025em;
       color:#0F172A;
     }
-    
+
     .workflow-desc{
       margin:0;
       font-size:12px;
@@ -463,7 +460,7 @@
       font-weight:600;
       color:#1F2937;
     }
-    
+
     .workflow-todo{
       position:relative;
       display:grid;
@@ -476,7 +473,7 @@
       border-radius:8px;
       background:#fbfffd;
     }
-    
+
     .todo-check{
       width:28px;
       height:28px;
@@ -487,13 +484,12 @@
       background:#fff;
       color:#07883E;
       box-shadow:inset 0 0 0 1px rgba(7,136,62,.16);
-    }
-    
-    .todo-check svg{
+    }    
+     .todo-check svg{
       width:18px;
       height:18px;
     }
-    
+
     .todo-label{
       display:block;
       margin-bottom:1px;
@@ -503,7 +499,7 @@
       font-weight:900;
       letter-spacing:-.01em;
     }
-    
+
     .todo-text{
       display:block;
       color:#0F172A;
@@ -511,18 +507,18 @@
       line-height:1.22;
       font-weight:600;
     }
-    
+
     .guide-color-panel{
       padding-left:22px;
       border-left:1px solid #DDE5E0;
     }
-    
+
     .color-list{
       display:flex;
       flex-direction:column;
       gap:7px;
     }
-    
+
     .color-card{
       display:grid;
       grid-template-columns:26px 1fr;
@@ -534,30 +530,30 @@
       background:#fff;
       box-shadow:0 1px 3px rgba(17,24,39,.04);
     }
-    
+
     .color-dot-lg{
       width:18px;
       height:18px;
       border-radius:999px;
       box-shadow:0 4px 10px rgba(0,0,0,.12);
     }
-    
+
     .color-dot-lg.red{
       background:#B00035;
     }
-    
+
     .color-dot-lg.orange{
       background:#F59E0B;
     }
-    
+
     .color-dot-lg.green{
       background:#009A44;
     }
-    
+
     .color-dot-lg.grey{
       background:#7A7A7A;
     }
-    
+
     .color-name{
       display:block;
       margin-bottom:2px;
@@ -567,7 +563,7 @@
       letter-spacing:-.02em;
       color:#0F172A;
     }
-    
+
     .color-desc{
       display:block;
       font-size:12px;
@@ -575,45 +571,43 @@
       font-weight:600;
       color:#475569;
     }
-    
+
     @media (max-width:1180px){
     .guide-card{
       max-height:none;
     }
-    
+
     .guide-layout{
       grid-template-columns:1fr;
       gap:18px;
     }
-    
+
     .guide-color-panel{
       padding-left:0;
       border-left:0;
       border-top:1px solid #DDE5E0;
       padding-top:14px;
     }
-    
+
     .color-list{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
     }
     }
-    
+
     @media (max-width:860px){
     .guide-card{
       padding:18px 16px;
     }
-    
+
     .guide-hero{
       align-items:flex-start;
-    }
-    
+    }    
     .workflow-step{
       grid-template-columns:64px 1fr;
       gap:5px;
       max-height: fit-content;
     }
-    
     .workflow-todo{
       grid-column:1 / -1;
       border-left:0;
@@ -2391,7 +2385,7 @@ function formatStatusDateLabel(mmdd){
   const month = parseInt(m[1], 10);
   const day = parseInt(m[2], 10);
   if(month < 1 || month > 12 || day < 1 || day > 31) return '';
-  const dt = new Date(2026, month - 1, day);
+  const dt = new Date(2000, month - 1, day);
   if((dt.getMonth() + 1) !== month || dt.getDate() !== day) return '';
   return STATUS_DATE_MONTHS[month - 1] + ' ' + String(day).padStart(2, '0');
 }
@@ -2399,7 +2393,7 @@ function getStatusDateLabelFromFileName(fileName){
   const name = decodeHtmlEntities(String(fileName || '').trim());
   const base = name.split(/[\/]/).pop().split('?')[0].split('#')[0];
   const decoded = (() => { try { return decodeURIComponent(base); } catch(e) { return base; } })();
-  const m = decoded.match(/(?:^|[-_\s])(\d{4})(?=\.[^.]+$|$)/);
+  const m = decoded.match(/(?:^|[-_\s])(\d{4})(?=(?:\(\d+\))?\.[^.]+$|$)/);
   return m ? formatStatusDateLabel(m[1]) : '';
 }
 function getStatusDateLabelFromUrl(url){
@@ -2454,27 +2448,58 @@ let EMBEDDED_DATA = (WEEK_DATASETS[latestDatasetKey()] || {rows:[]}).rows;
 let EMBEDDED_DATE = 'Google Sheet CSV';
 // ──────────────────────────────────────────────────────────────────
 
-const STATUS_BOARD_LOCAL_XLSX_FILE = '신호등data-0624.xlsx';
+// Row 파일은 매번 `신호등data-MMDD.xlsx` 형식으로 교체됩니다.
+// 오늘 기준 7일 뒤부터 120일 전까지 날짜를 최신순으로 확인하여
+// 가장 최신 파일을 자동으로 불러옵니다. 예: 신호등data-0801.xlsx
+const STATUS_BOARD_FILE_PREFIX = '신호등data-';
+const STATUS_BOARD_LOOKAHEAD_DAYS = 7;
+const STATUS_BOARD_LOOKBACK_DAYS = 120;
 const STATUS_BOARD_LOCAL_XLSX_FALLBACK_FILES = [
-  STATUS_BOARD_LOCAL_XLSX_FILE,
-  '신호등 data-0701.xlsx',
-  '신호등data-0624(7).xlsx',
   '신호등data.xlsx',
   '신호등 data.xlsx'
 ];
 
+function statusBoardPad2(value){
+  return String(value).padStart(2, '0');
+}
+
+function getStatusBoardDatedFileNames(){
+  const files = [];
+  const baseDate = new Date();
+  // DST 경계에서도 날짜가 밀리지 않도록 정오를 기준으로 계산합니다.
+  baseDate.setHours(12, 0, 0, 0);
+
+  // 가까운 미래 날짜도 먼저 확인합니다.
+  // 월말에 다음 달 파일을 미리 올리는 운영 방식(예: 7/31에 0801 업로드)을 지원합니다.
+  for(let offset = STATUS_BOARD_LOOKAHEAD_DAYS; offset >= -STATUS_BOARD_LOOKBACK_DAYS; offset--){
+    const date = new Date(baseDate);
+    date.setDate(baseDate.getDate() + offset);
+    const mmdd = statusBoardPad2(date.getMonth() + 1) + statusBoardPad2(date.getDate());
+
+    // 기본 운영 파일명을 우선 사용하고, 다운로드 중 생길 수 있는 (1) 파일명도 보조 지원합니다.
+    files.push(STATUS_BOARD_FILE_PREFIX + mmdd + '.xlsx');
+    files.push(STATUS_BOARD_FILE_PREFIX + mmdd + '(1).xlsx');
+  }
+
+  STATUS_BOARD_LOCAL_XLSX_FALLBACK_FILES.forEach(function(fileName){
+    if(files.indexOf(fileName) < 0) files.push(fileName);
+  });
+  return files;
+}
+
 function getStatusBoardLocalXlsxCandidateUrls(){
-  var urls = [];
+  const urls = [];
   function add(url){
     if(url && urls.indexOf(url) < 0) urls.push(url);
   }
   function addFile(fileName){
+    // index와 같은 폴더를 우선 확인합니다.
     try { add(new URL(fileName, window.location.href).href); } catch(e) {}
+    // 기존 배포 구조 호환용 경로입니다.
     try { add(new URL('../' + fileName, window.location.href).href); } catch(e) {}
     try { add(new URL('/' + fileName, window.location.origin).href); } catch(e) {}
-    if(!urls.length) add('./' + encodeURIComponent(fileName));
   }
-  STATUS_BOARD_LOCAL_XLSX_FALLBACK_FILES.forEach(addFile);
+  getStatusBoardDatedFileNames().forEach(addFile);
   return urls;
 }
 
@@ -2521,9 +2546,15 @@ async function loadLocalStatusBoardXlsxData(){
   for (let i = 0; i < urls.length; i++) {
     const url = urls[i];
     try {
-      const res = await fetch(url, { cache:'default' });
+      const requestUrl = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_status_ts=' + Date.now();
+      const res = await fetch(requestUrl, { cache:'no-store' });
       if(!res.ok) throw new Error('Local XLSX fetch failed: ' + res.status + ' / ' + url);
       const buf = await res.arrayBuffer();
+      const signature = new Uint8Array(buf, 0, Math.min(4, buf.byteLength));
+      // 일부 서버는 없는 파일 경로에 index.html을 200으로 반환하므로 XLSX ZIP 시그니처를 확인합니다.
+      if(signature.length < 2 || signature[0] !== 0x50 || signature[1] !== 0x4B){
+        throw new Error('응답이 XLSX 파일이 아닙니다: ' + url);
+      }
       const wb = XLSX.read(buf, { type:'array', cellDates:false, raw:false });
       const sheetName = (wb.SheetNames || [])[0];
       if(!sheetName) throw new Error('신호등 data.xlsx에 시트가 없습니다.');
@@ -3415,59 +3446,111 @@ async function loadGlobalRequestArticleData(){
 }
 window.ARTICLE_DATA = ARTICLE_DATA;
 
-// ── 리퀘스트 그룹 정의 (2단 헤더용) ─────────────────────────────────
-const REQUEST_GROUPS = [
-  { title: 'Authority & Trust', requests: ["'Reliable LG' Microsite", 'CMR Article', 'CMR Gallery/Award Banner'] },
-  { title: 'LG Experience Articles', requests: ARTICLE_PRODUCTS, type: 'article' },
-  { title: 'Intent & Context - Why LG', requests: ['Category Page', 'Buying Guide', 'Installation Guide', 'Ice Solution Microsite', 'Appliances FAQ Hub'] },
-  { title: 'Tech Optimization', requests: ['PDP Gallery Image Alt Text Update', 'CMR Gallery Alt Text Update'] }
+// ── division 기준 2단 헤더 생성 ─────────────────────────────────────
+// 첫 번째 헤더 행은 엑셀의 division 값을 사용하고,
+// 같은 division에 속한 Request Name 열 수만큼 colspan으로 병합합니다.
+const DIVISION_HEADER_ORDER = [
+  'Authority & Trust',
+  'LG Experience Articles',
+  'Intent & Context - Why LG',
+  'GEO Enhancement',
+  'Tech Optimization',
+  'Others'
 ];
 
-function groupRequestsForHeader(models){
-  const used = new Set();
-  const groups = REQUEST_GROUPS.map(function(g){
-    if(g.type === 'article'){
-      // article 그룹: ARTICLE_DATA에 실제 존재하는 제품만 열로
-      const present = g.requests.filter(function(prod){
-        var src = Object.keys(ARTICLE_DATA || {}).length ? ARTICLE_DATA : (EMBEDDED_ARTICLE_DATA || {});
-        return Object.keys(src).some(function(ctry){ return src[ctry] && src[ctry][prod]; });
-      });
-      return { title: g.title, requests: present, type: 'article' };
-    }
-    const cols = g.requests.filter(function(name){ return models.indexOf(name) !== -1; });
-    cols.forEach(function(name){ used.add(name); });
-    return { title: g.title, requests: cols };
-  }).filter(function(g){ return g.requests.length; });
-  // 그룹에 없는 나머지 → Others
-  const others = models.filter(function(m){ return !used.has(m); });
-  if(others.length){ groups.push({ title: 'Others', requests: others }); }
+function groupRequestsForHeader(rows){
+  const divisionMap = new Map();
+
+  rows.forEach(function(r){
+    const division = r.matrixDivision || 'Others';
+    if(!divisionMap.has(division)) divisionMap.set(division, []);
+    const models = divisionMap.get(division);
+    if(r.model && models.indexOf(r.model) < 0) models.push(r.model);
+  });
+
+  const divisionRank = function(title){
+    const idx = DIVISION_HEADER_ORDER.indexOf(title);
+    return idx >= 0 ? idx : DIVISION_HEADER_ORDER.length;
+  };
+
+  const groups = Array.from(divisionMap.keys())
+    .sort(function(a, b){
+      return divisionRank(a) - divisionRank(b) || a.localeCompare(b);
+    })
+    .map(function(division){
+      return { title: division, requests: divisionMap.get(division), type: 'status' };
+    })
+    .filter(function(g){ return g.requests.length; });
+
+  // LG Experience Articles는 별도 Global Request.xlsx 데이터이므로
+  // division 열이 없어도 기존과 동일하게 독립 그룹으로 유지합니다.
+  const articleSource = Object.keys(ARTICLE_DATA || {}).length ? ARTICLE_DATA : (EMBEDDED_ARTICLE_DATA || {});
+  const articleRequests = ARTICLE_PRODUCTS.filter(function(prod){
+    return Object.keys(articleSource).some(function(ctry){
+      return articleSource[ctry] && articleSource[ctry][prod];
+    });
+  });
+
+  if(articleRequests.length){
+    const articleGroup = { title:'LG Experience Articles', requests:articleRequests, type:'article' };
+    const authorityIndex = groups.findIndex(function(g){ return g.title === 'Authority & Trust'; });
+    if(authorityIndex >= 0) groups.splice(authorityIndex + 1, 0, articleGroup);
+    else groups.unshift(articleGroup);
+  }
+
   return groups;
 }
 
 // ── 매트릭스(교차표) 구조: 국가(행) × 리퀘스트명(열) ───────────────────
 function buildMatrixTable(visibleRows, visibleCountries){
-  // 1. 열 = 고유 Request Name(model)
-  const modelSet = new Set();
-  visibleRows.forEach(function(r){ if(r.model) modelSet.add(r.model); });
-  const allModels = Array.from(modelSet);
+  // 1. division + Request Name 조합을 고유 열 키로 사용합니다.
+  // division이 비어 있는 행은 같은 Request Name의 단일 division을 찾아 보완합니다.
+  const modelDivisionMap = {};
+  visibleRows.forEach(function(r){
+    const model = norm(r.model);
+    const division = norm(r.division);
+    if(!model || !division) return;
+    if(!modelDivisionMap[model]) modelDivisionMap[model] = new Set();
+    modelDivisionMap[model].add(division);
+  });
 
-  // 그룹 순서대로 열 정렬 (article 타입 포함)
-  const grouped = groupRequestsForHeader(allModels);
-  const columns = [];  // { model, isArticle, groupTitle }
-  grouped.forEach(function(g){
-    g.requests.forEach(function(m){
-      columns.push({ model: m, isArticle: g.type === 'article', groupTitle: g.title });
+  const matrixRows = visibleRows.map(function(r){
+    const model = norm(r.model);
+    let division = norm(r.division);
+    const knownDivisions = modelDivisionMap[model];
+    if(!division && knownDivisions && knownDivisions.size === 1){
+      division = Array.from(knownDivisions)[0];
+    }
+    if(!division) division = 'Others';
+    return Object.assign({}, r, {
+      matrixDivision: division,
+      matrixKey: division + '|||' + model
     });
   });
 
-  // 2. country → model → 셀 집계
+  // 엑셀 division 값 기준으로 그룹과 colspan을 생성합니다.
+  const grouped = groupRequestsForHeader(matrixRows);
+  const columns = [];  // { key, model, isArticle, groupTitle }
+  grouped.forEach(function(g){
+    g.requests.forEach(function(m){
+      columns.push({
+        key: g.type === 'article' ? ('__article__|||' + m) : (g.title + '|||' + m),
+        model: m,
+        isArticle: g.type === 'article',
+        groupTitle: g.title
+      });
+    });
+  });
+
+  // 2. country → division+model → 셀 집계
   const cellMap = {};
-  visibleRows.forEach(function(r){
+  matrixRows.forEach(function(r){
+    const columnKey = r.matrixKey;
     if(!cellMap[r.country]) cellMap[r.country] = {};
-    if(!cellMap[r.country][r.model]) cellMap[r.country][r.model] = { items:[], pgTotal:0, signal:'None', division:r.division, dam:r.dam, liveUrl:r.liveUrl, liveUrls:[] };
-    if(!cellMap[r.country][r.model].liveUrl && r.liveUrl) cellMap[r.country][r.model].liveUrl = r.liveUrl;
-    mergeLiveUrls(cellMap[r.country][r.model].liveUrls, r.liveUrl);
-    const cell = cellMap[r.country][r.model];
+    if(!cellMap[r.country][columnKey]) cellMap[r.country][columnKey] = { items:[], pgTotal:0, signal:'None', division:r.matrixDivision, dam:r.dam, liveUrl:r.liveUrl, liveUrls:[] };
+    if(!cellMap[r.country][columnKey].liveUrl && r.liveUrl) cellMap[r.country][columnKey].liveUrl = r.liveUrl;
+    mergeLiveUrls(cellMap[r.country][columnKey].liveUrls, r.liveUrl);
+    const cell = cellMap[r.country][columnKey];
     const pgNum = Number(String(r.pg || '').replace(/,/g,'').trim());
     cell.pgTotal += !isNaN(pgNum) ? pgNum : 0;
     if(r.status.signal !== 'None'){
@@ -3517,7 +3600,7 @@ function buildMatrixTable(visibleRows, visibleCountries){
         if(col.isArticle){
           tbody += buildArticleCell(c, col.model);
         } else {
-          const cell = (cellMap[c] || {})[col.model];
+          const cell = (cellMap[c] || {})[col.key];
           const grpCls = col.groupTitle === 'Authority & Trust' ? ' mx-authority' : '';
           tbody += buildMatrixCell(cell, c, col.model, grpCls);
         }
@@ -4554,7 +4637,7 @@ function bindStatusItemModals(){
 })();
 
 // ── Upload CSV Data Modal ──────────────────────────────────────────
-const WEEKS = ['W18','W19','W20','W21','W22','W23','W24','W25','W26','W27','W28','W29','W30'].sort((a,b) => weekNumberOf(a) - weekNumberOf(b));
+const WEEKS = ['W18','W19','W20','W21','W22','W23','W24','W25','W26','W27','W28','W29','W30','W31'].sort((a,b) => weekNumberOf(a) - weekNumberOf(b));
 let uploadSelectedWeek = (window.__STATUS_SHEET_TAB_NAME__ || SHEET_WEEK_FALLBACK_LABEL);
 let uploadSelectedFile = null;
 const loadedWeeks = new Set();
