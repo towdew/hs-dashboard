@@ -4844,7 +4844,9 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
         var value = row[h] || '';
         if (!disableRegion && colIdx === 0 && h === 'Region') {
           if (rowIdx > 0) return '';
-          return '<td class="sheet-region-cell region-' + escapeAttrSheet(String(group.region || 'ETC').toLowerCase()) + '" rowspan="' + group.rows.length + '">' + escapeHtmlSheet(group.region || 'ETC') + '</td>';
+          var regionBg = normalizeSheetCellBg(row.__styles && row.__styles[h]);
+          var regionStyle = regionBg ? ' style="background:' + escapeAttrSheet(regionBg) + ' !important"' : '';
+          return '<td class="sheet-region-cell region-' + escapeAttrSheet(String(group.region || 'ETC').toLowerCase()) + '"' + regionStyle + ' rowspan="' + group.rows.length + '">' + escapeHtmlSheet(group.region || 'ETC') + '</td>';
         }
         var cellClasses = [];
         if (isCountryDisplayHeader(h) || (countryDisplayHeader && h === countryDisplayHeader)) {
@@ -5168,11 +5170,14 @@ function buildSheetTableHead(headers, tableHeaderRows, sheetData) {
     return '<thead>' + rowsHtml + '</thead>';
   }
 
+  var headerStyles = (sheetData && sheetData.tableHeaderStyles) || {};
   var thead = headers.map(function(h) {
     var isCountryValue = isCountryLocaleDisplayValue(h);
     var displayText = (!skipCountryLocaleDisplay && isCountryValue) ? displayCountryFullName(h) : h;
     var thClass = (!skipCountryLocaleDisplay && (isCountryDisplayHeader(h) || isCountryValue)) ? ' class="sheet-country-col"' : '';
-    return '<th' + thClass + '>' + escapeHtmlSheet(displayText) + '</th>';
+    var bg = normalizeSheetCellBg(headerStyles[h]);
+    var styleAttr = bg ? ' style="background:' + escapeAttrSheet(bg) + '"' : '';
+    return '<th' + thClass + styleAttr + '>' + escapeHtmlSheet(displayText) + '</th>';
   }).join('');
   return '<thead><tr>' + thead + '</tr></thead>';
 }
