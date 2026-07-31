@@ -1078,6 +1078,39 @@
     .mx-cell-label{ margin-bottom:2px; }
     .mx-status-lbl{ font-size:12px; font-weight:700; color:inherit; white-space:normal; line-height:1.3; hyphens:none; word-break:keep-all; overflow-wrap:normal; }
     .mx-cell-bot{ font-size:11px; margin-top:3px; white-space:nowrap; color:#646464;}
+    /* 동일 국가/요청 셀에 여러 상태가 있으면 상태별 Page 수를 분리 표시 */
+    .mx-status-stack{
+      display:flex;
+      flex-direction:column;
+      margin:-10px -6px;
+    }
+    .mx-status-block{
+      min-height:48px;
+      padding:8px 6px;
+      background:#fff;
+    }
+    .mx-status-block + .mx-status-block{
+      border-top:1px solid #E2E2E2;
+    }
+    /* 혼합 상태 셀에서는 각 상태가 자신의 색상과 도트를 유지합니다. */
+    .mx-status-block.red .mx-status-lbl{ color:var(--s-red) !important; }
+    .mx-status-block.orange .mx-status-lbl{ color:var(--s-orange) !important; }
+    .mx-status-block.green .mx-status-lbl{ color:var(--s-green) !important; }
+    .mx-status-block.grey .mx-status-lbl{ color:var(--s-grey) !important; }
+    .mx-status-block.blue .mx-status-lbl{ color:var(--s-blue) !important; }
+    .mx-status-block.mx-complete-primary .mx-status-lbl{
+      font-size:14px;
+      font-weight:800 !important;
+    }
+    .mx-cancel-summary{
+      padding:5px 6px 7px;
+      border-top:1px solid #E2E2E2;
+      color:var(--s-grey);
+      font-size:10px;
+      font-weight:600;
+      line-height:1.2;
+      white-space:nowrap;
+    }
     .mx-table td.mx-data.red .mx-cell-top .mx-status-lbl{ color:var(--s-red); }
     .mx-table td.mx-data.orange .mx-cell-top .mx-status-lbl{ color:var(--s-orange); }
     .mx-table td.mx-data.green .mx-cell-top .mx-status-lbl{ color:var(--s-green); }
@@ -1094,7 +1127,7 @@
     .mx-table td.mx-article.orange .mx-art-ratio{ color:var(--s-orange); }
     .mx-table td.mx-article.red .mx-art-label,
     .mx-table td.mx-article.red .mx-art-ratio{ color:var(--s-red); }
-    /* Global Request.xlsx > LG Experience Articles 카운트 텍스트는 상태색을 적용하지 않음 */
+    /* 신호등-Article.xlsx > LG Experience Articles 카운트 텍스트는 상태색을 적용하지 않음 */
     .mx-table td.mx-article.green .mx-art-label,
     .mx-table td.mx-article.orange .mx-art-label,
     .mx-table td.mx-article.red .mx-art-label,
@@ -1193,10 +1226,35 @@
       background:var(--lg-gray-2);
     }
     .dam-actions{
-      display:inline-flex;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      width:100%;
+      min-width:0;
+    }
+    .dam-copy-row{
+      display:flex;
       align-items:center;
       justify-content:center;
-      gap:6px;
+      width:100%;
+      min-width:0;
+    }
+    .dam-url-text{
+      flex:1 1 auto;
+      min-width:0;
+      color:var(--lg-gray-6);
+      font-size:12px;
+      line-height:1.45;
+      font-weight:500;
+      white-space:normal;
+      overflow-wrap:anywhere;
+      word-break:break-all;
+      user-select:text;
+      cursor:text;
+    }
+    .dam-copy-row .mini-btn{
+      flex:0 0 auto;
+      margin-top:0;
     }
     .mini-btn{
       border:1px solid var(--lg-gray-2);
@@ -2243,7 +2301,8 @@
       cursor:grab;
       -webkit-overflow-scrolling:touch;
       overscroll-behavior-x:contain;
-      scrollbar-gutter:stable;
+      /* 스크롤이 필요하지 않을 때 우측 gutter/여백을 예약하지 않습니다. */
+      scrollbar-gutter:auto;
     }
     .matrix-wrap.is-dragging{
       cursor:grabbing;
@@ -2254,21 +2313,30 @@
     }
     .mx-table{
       table-layout:fixed !important;
-      width:max-content;
+      /* 넓은 화면에서는 카드 너비를 모두 사용하고,
+         열이 많아 최소 폭을 넘으면 가로 스크롤로 전환합니다. */
+      width:100% !important;
+      min-width:var(--mx-table-min-width, 100%);
       max-width:none !important;
     }
-    /* Country column is fixed; every request/data column stays compact. */
+    /* JS가 화면 너비와 열 개수에 맞춰 아래 폭을 최소/최대 범위 안에서 조정합니다. */
+    .mx-table col.mx-country-col{
+      width:var(--mx-country-width, 110px);
+    }
+    .mx-table col.mx-data-col{
+      width:var(--mx-data-width, 88px);
+    }
     .mx-table th.mx-country-head,
     .mx-table td.mx-country-cell{
       min-width:110px !important;
-      width:110px !important;
-      max-width:110px !important;
+      width:var(--mx-country-width, 110px) !important;
+      max-width:180px !important;
     }
     .mx-table th.mx-req-head,
     .mx-table td.mx-cell{
-      min-width:65px !important;
-      width:88px !important;
-      max-width:120px !important;
+      min-width:88px !important;
+      width:var(--mx-data-width, 88px) !important;
+      max-width:320px !important;
       box-sizing:border-box;
       overflow-wrap:anywhere;
     }
@@ -2279,9 +2347,9 @@
     .mx-table td.mx-article,
     .mx-table th.mx-req-head.mx-req-authority,
     .mx-table td.mx-authority{
-      min-width:65px !important;
-      width:88px !important;
-      max-width:120px !important;
+      min-width:88px !important;
+      width:var(--mx-data-width, 88px) !important;
+      max-width:320px !important;
     }
 
   </style>
@@ -2590,7 +2658,7 @@ async function loadGoogleSheetData(){
     const displayDateLabel = result.fileDateLabel || sheetTabName;
     setSheetTabWeek(sheetTabName, parsedRows, displayDateLabel);
 
-    // Global Request.xlsx > LG Experience Articles 카운트와 일반 데이터 국가키를 맞추기 위해
+    // 신호등-Article.xlsx > LG Experience Articles 카운트와 일반 데이터 국가키를 맞추기 위해
     // 신호등data에서 실제로 여러 언어로 나뉜 국가만 먼저 계산합니다.
     setCountryLangSplitBasesFromRows(parsedRows);
 
@@ -2654,9 +2722,11 @@ const aliasMap = {
   region:['region','region group','area','continent'],
   task:['task status in ptt','task status','status in ptt'],
   pttSubmit:['ptt submit date','ptt submission date'],
+  ldmAssigned:['ldm assigned date (gmt+8)','ldm assigned date','ldm assigned'],
   actualStaging:['actual staging date','actual stg date'],
   actualPublishing:['actual publishing date','actual publish date','publishing date'],
   submission:['submission date'],
+  clientReviewDate:['the date of client review','date of client review','client review date'],
   ldmApproval:["ldm's approval date",'ldm approval date','ldm approval'],
   lastComment:['last comment date','last comment'],
   liveUrl:['live url','liveurl'],
@@ -2794,16 +2864,84 @@ function liveUrlListHtml(urls){
     return '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(label) + '</a>';
   }).join('') + '</div>';
 }
-function damButtons(url){
-  const value = norm(url);
-  if(!isValidUrl(value)){
+function normalizeDamPath(value){
+  let raw = norm(value);
+  if(!raw || isNA(raw)) return '';
+
+  // AEM Assets 전체 URL이 들어오더라도 화면/복사 값은 /content/... 경로만 사용합니다.
+  // 예: https://author.../ui#/aem/assets.html/content/dam/... → /content/dam/...
+  const contentIndex = raw.toLowerCase().indexOf('/content/');
+  if(contentIndex >= 0) raw = raw.slice(contentIndex);
+  else if(/^content\//i.test(raw)) raw = '/' + raw;
+
+  return raw;
+}
+function extractDamPaths(value){
+  const out = [];
+  function add(v){
+    const normalized = normalizeDamPath(v);
+    if(normalized && out.indexOf(normalized) < 0) out.push(normalized);
+  }
+  function walk(v){
+    if(Array.isArray(v)){
+      v.forEach(walk);
+      return;
+    }
+    const raw = norm(v);
+    if(!raw || isNA(raw)) return;
+
+    // 여러 DAM 값이 줄바꿈·세미콜론으로 입력된 경우 각각 표시합니다.
+    const parts = raw.split(/\r?\n|\s*;\s*/).map(function(s){ return s.trim(); }).filter(Boolean);
+    (parts.length ? parts : [raw]).forEach(add);
+  }
+  walk(value);
+  return out;
+}
+function damButtons(value){
+  const paths = extractDamPaths(value);
+  if(!paths.length){
     return '<span class="muted-text">-</span>';
   }
-  return `
-    <div class="dam-actions">
-      <button class="mini-btn" type="button" data-copy-url="${esc(value)}">Copy</button>
-    </div>
-  `;
+  return '<div class="dam-actions">' + paths.map(function(path){
+    return '<div class="dam-copy-row">'
+      + '<button class="mini-btn" type="button" data-copy-url="' + esc(path) + '" title="Copy DAM path">Copy</button>'
+      + '</div>';
+  }).join('') + '</div>';
+}
+
+async function copyUrlButton(btn){
+  if(!btn) return;
+  const url = btn.getAttribute('data-copy-url') || '';
+  if(!url) return;
+  const original = btn.textContent;
+  try{
+    if(!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('Clipboard API unavailable');
+    await navigator.clipboard.writeText(url);
+  }catch(err){
+    const temp = document.createElement('textarea');
+    temp.value = url;
+    temp.setAttribute('readonly', '');
+    temp.style.position = 'fixed';
+    temp.style.opacity = '0';
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand('copy');
+    document.body.removeChild(temp);
+  }
+  btn.textContent = 'Copied';
+  setTimeout(function(){ btn.textContent = original; }, 1200);
+}
+
+function bindCopyUrlButtons(root){
+  const scope = root || document;
+  scope.querySelectorAll('[data-copy-url]').forEach(function(btn){
+    if(btn.dataset.copyBound === '1') return;
+    btn.dataset.copyBound = '1';
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      copyUrlButton(btn);
+    });
+  });
 }
 function findColumn(headers, aliases){
   const hmap = new Map(headers.map(h => [key(h), h]));
@@ -2840,6 +2978,11 @@ function isInProgressTask(task){
 
 function statusFor(r){
   const task = norm(r.task);
+  const taskLower = task.toLowerCase();
+  const isNewRequestTask = taskLower === '[wpl] new request';
+  const isClientReviewTask = taskLower === '[wpl] client review';
+  const isClarificationTask = taskLower === '[wpl] request clarification' || taskLower === '[wpl] change req. need close';
+
   if(!isNA(r.liveUrl)){
     const actualPublishingDate = formatDateValue(r.actualPublishing);
     const ldmApprovalDate = formatDateValue(r.ldmApproval);
@@ -2848,41 +2991,61 @@ function statusFor(r){
       : (ldmApprovalDate ? `Publishing Date: ${ldmApprovalDate}` : '');
     return { signal:'Green', title:'Complete', aging:'', periodText, reason:'Live URL exists' };
   }
-  if(task === '[WPL] Cancelled') return { signal:'Grey', title:'Cancelled', aging:'', periodText:'', reason:'Task Status = [WPL] Cancelled' };
+  if(taskLower === '[wpl] cancelled') return { signal:'Grey', title:'Cancelled', aging:'', periodText:'', reason:'Task Status = ' + task };
   // [WPL] Closed → Complete (Live URL 없어도 완료)
-  if(task === '[WPL] Closed'){
+  if(taskLower === '[wpl] closed'){
     const actualPublishingDate = formatDateValue(r.actualPublishing);
     const periodText = actualPublishingDate ? `Publishing Date: ${actualPublishingDate}` : '';
-    return { signal:'Green', title:'Complete', aging:'', periodText, reason:'Task Status = [WPL] Closed' };
+    return { signal:'Green', title:'Complete', aging:'', periodText, reason:'Task Status = ' + task };
   }
 
-  // In progress 상태는 신호등data-####.xlsx의 일반 데이터에서만 표시합니다.
+  // In progress 상태는 신호등data-MMDD.xlsx의 일반 데이터에서만 표시합니다.
   // Aging/Pending Period는 표시하지 않고, 셀에는 Status + Page 수만 노출합니다.
-  const taskLower = task.toLowerCase();
   if(isInProgressTask(task)){
     return { signal:'Blue', title:'In Progress', aging:'', periodText:'', reason:'Task Status = ' + task };
   }
-  const pttAge = ageDays(r.pttSubmit);
-  const subAge = ageDays(r.submission);
-  const stgAge = ageDays(r.actualStaging);
-  const clientAge = subAge !== null ? subAge : stgAge;
-  const commentAge = ageDays(r.lastComment);
 
-  // Formatted base dates so the popup reason can show the calculated date.
-  const pttDate = formatDateValue(r.pttSubmit) || 'N/A';
-  const subDate = formatDateValue(r.submission) || formatDateValue(r.actualStaging) || 'N/A';
+  // Pre check: [WPL] New Request 전체를 LDM assigned date부터 계산합니다.
+  const ldmAssignedAge = ageDays(r.ldmAssigned);
+  const ldmAssignedDate = formatDateValue(r.ldmAssigned) || 'N/A';
+
+  // Subsidiary Review: [WPL] Client Review 전체를 The Date of Client Review부터 계산합니다.
+  const clientReviewAge = ageDays(r.clientReviewDate);
+  const clientReviewDate = formatDateValue(r.clientReviewDate) || 'N/A';
+
+  const commentAge = ageDays(r.lastComment);
   const commentDate = formatDateValue(r.lastComment) || 'N/A';
 
-  if(pttAge !== null && pttAge >= 14 && isNA(r.actualStaging)) return { signal:'Red', title:'Pre-check', aging:pttAge, periodText:elapsedText(pttAge), reason:`PTT submit date (${pttDate}) is ${pttAge} days old (≥14) and Actual staging date is N/A` };
-  if(task === '[WPL] Client Review' && clientAge !== null && clientAge >= 14 && isNA(r.ldmApproval)) return { signal:'Red', title:'Subsidiary-Review', aging:clientAge, periodText:elapsedText(clientAge), reason:`Submission/Staging date (${subDate}) is ${clientAge} days old (≥14) and LDM approval date is N/A` };
-  if((task === '[WPL] Request Clarification' || task === '[WPL] Change req. need close') && commentAge !== null && commentAge >= 14) return { signal:'Red', title:'Request Clarification', aging:commentAge, periodText:elapsedText(commentAge), reason:`Last comment date (${commentDate}) is ${commentAge} days old (≥14)` };
+  // 명시적인 PTT 상태를 우선 판정합니다.
+  if(isClientReviewTask && clientReviewAge !== null && clientReviewAge >= 14){
+    return { signal:'Red', title:'Subsidiary Review', aging:clientReviewAge, periodText:elapsedText(clientReviewAge), reason:`The Date of Client Review (${clientReviewDate}) is ${clientReviewAge} days old (≥14)` };
+  }
+  if(isClarificationTask && commentAge !== null && commentAge >= 14){
+    return { signal:'Red', title:'Request Clarification', aging:commentAge, periodText:elapsedText(commentAge), reason:`Last comment date (${commentDate}) is ${commentAge} days old (≥14)` };
+  }
+  if(isNewRequestTask && ldmAssignedAge !== null && ldmAssignedAge >= 14){
+    return { signal:'Red', title:'Pre-check', aging:ldmAssignedAge, periodText:elapsedText(ldmAssignedAge), reason:`LDM assigned date (${ldmAssignedDate}) is ${ldmAssignedAge} days old (≥14)` };
+  }
 
-  if(pttAge !== null && pttAge >= 7 && isNA(r.actualStaging)) return { signal:'Orange', title:'Pre-check', aging:pttAge, periodText:elapsedText(pttAge), reason:`PTT submit date (${pttDate}) is ${pttAge} days old (≥7) and Actual staging date is N/A` };
-  if(task === '[WPL] Client Review' && clientAge !== null && clientAge >= 7 && isNA(r.ldmApproval)) return { signal:'Orange', title:'Subsidiary-Review', aging:clientAge, periodText:elapsedText(clientAge), reason:`Submission/Staging date (${subDate}) is ${clientAge} days old (≥7) and LDM approval date is N/A` };
-  if((task === '[WPL] Request Clarification' || task === '[WPL] Change req. need close') && commentAge !== null && commentAge >= 7) return { signal:'Orange', title:'Request Clarification', aging:commentAge, periodText:elapsedText(commentAge), reason:`Last comment date (${commentDate}) is ${commentAge} days old (≥7)` };
+  if(isClientReviewTask && clientReviewAge !== null && clientReviewAge >= 7){
+    return { signal:'Orange', title:'Subsidiary Review', aging:clientReviewAge, periodText:elapsedText(clientReviewAge), reason:`The Date of Client Review (${clientReviewDate}) is ${clientReviewAge} days old (≥7)` };
+  }
+  if(isClarificationTask && commentAge !== null && commentAge >= 7){
+    return { signal:'Orange', title:'Request Clarification', aging:commentAge, periodText:elapsedText(commentAge), reason:`Last comment date (${commentDate}) is ${commentAge} days old (≥7)` };
+  }
+  if(isNewRequestTask && ldmAssignedAge !== null && ldmAssignedAge >= 7){
+    return { signal:'Orange', title:'Pre-check', aging:ldmAssignedAge, periodText:elapsedText(ldmAssignedAge), reason:`LDM assigned date (${ldmAssignedDate}) is ${ldmAssignedAge} days old (≥7)` };
+  }
 
-  if(['[wpl] create request', '[wpl] new request'].includes(taskLower)){
-    return { signal:'None', title:'Pre-check', aging:'', periodText:'', reason:`Task Status = ${task}` };
+  // 기준 일수 미만이거나 기준 날짜가 없어도 현재 PTT 단계명은 유지합니다.
+  if(isClientReviewTask){
+    return { signal:'None', title:'Subsidiary Review', aging:'', periodText:'', reason:`Task Status = ${task}; The Date of Client Review = ${clientReviewDate}` };
+  }
+  if(isClarificationTask){
+    return { signal:'None', title:'Request Clarification', aging:'', periodText:'', reason:'Task Status = ' + task };
+  }
+  if(isNewRequestTask){
+    return { signal:'None', title:'Pre-check', aging:'', periodText:'', reason:`Task Status = ${task}; LDM assigned date = ${ldmAssignedDate}` };
   }
   return { signal:'None', title:'', aging:'', periodText:'', reason:'No matching condition' };
 }
@@ -2953,37 +3116,39 @@ function openRowDetailModal(detailObjs){
       : (r.signal === 'Green' ? 'Complete' : '—');
     const pages = r.pgTotal ? r.pgTotal.toLocaleString() + ' Pages' : '—';
     return '<tr>'
-      + '<td>' + esc(r.title) + '</td>'
-      + '<td><div class="detail-modal-aging"><i class="dot ' + sc + '"></i>'
-      + esc(aging) + '</div></td>'
+      + '<td><div class="detail-modal-aging"><i class="dot ' + sc + '"></i>' + esc(r.title) + '</div></td>'
+      + '<td>' + esc(aging) + '</td>'
       + '<td class="detail-modal-pages">' + esc(pages) + '</td>'
       + '</tr>';
   }).join('');
 
-  const copyId = 'dmCopyBtn_' + Date.now();
-  document.getElementById('statusModalBody').innerHTML =
+  const hasComplete = detailObjs.some(function(r){
+    return r.signal === 'Green' || String(r.title || '').toLowerCase() === 'complete';
+  });
+
+  let linkSection = '';
+  if(hasComplete){
+    // Complete가 다른 상태와 함께 있으면 DAM은 표시하지 않고 Live URL만 표시합니다.
+    const liveUrls = [];
+    detailObjs.forEach(function(r){
+      mergeLiveUrls(liveUrls, r.liveUrls && r.liveUrls.length ? r.liveUrls : (r.liveUrl || ''));
+    });
+    linkSection = rowHtml('Live URL', liveUrlListHtml(liveUrls), false);
+  } else {
+    const damValue = detailObjs.map(function(r){ return r.dam || ''; }).filter(Boolean).join('\n');
+    linkSection = rowHtml('DAM', damButtons(damValue), !extractDamPaths(damValue).length);
+  }
+
+  const statusModalBody = document.getElementById('statusModalBody');
+  statusModalBody.innerHTML =
     '<div class="detail-modal-info">' + esc(first.division) + ' · ' + esc(first.country) + '</div>'
     + '<table class="detail-modal-table">'
     + '<thead><tr><th>Status</th><th>Aging</th><th>Pages</th></tr></thead>'
     + '<tbody>' + rows + '</tbody>'
-    + '</table>';
+    + '</table>'
+    + '<div style="margin-top:14px">' + linkSection + '</div>';
 
-  // Copy button (copies CSV-like text)
-  const copyBtn = document.createElement('button');
-  copyBtn.className = 'detail-copy-btn';
-  copyBtn.title = 'Copy to clipboard';
-  copyBtn.innerHTML = '&#128203;';
-  copyBtn.addEventListener('click', function(){
-    const txt = detailObjs.map(function(r){
-      const aging = (r.aging !== '' && r.aging !== undefined && r.aging !== null) ? r.aging + 'd' : (r.signal==='Green'?'Complete':'—');
-      return [r.country, r.division, r.model, r.title, aging, (r.pgTotal||'—')+'p'].join('	');
-    }).join('\n');
-    navigator.clipboard && navigator.clipboard.writeText(txt).catch(function(){});
-    copyBtn.innerHTML = '✓';
-    setTimeout(function(){ copyBtn.innerHTML = '&#128203;'; }, 1500);
-  });
-  modal.querySelector('.modal-dialog').appendChild(copyBtn);
-
+  bindCopyUrlButtons(statusModalBody);
   modal.querySelectorAll('.detail-copy-btn').forEach(function(b){ b.remove(); });
   modal.classList.add('show');
   const tip = document.getElementById('floatingTooltip');
@@ -3257,7 +3422,7 @@ function buildFlatRows(requests, matrix, visibleRows, visibleCountries){
 }
 
 // ── LG Experience Articles 완료 카운트 (제품×국가) ──────────────────
-// Global Request.xlsx > "LG Experience Articles" 시트를 읽어 제품×국가별 완료/전체 카운트를 자동 생성합니다.
+// 같은 폴더의 신호등-Article.xlsx > "LG Experience Articles" 시트를 읽어 제품×국가별 완료/전체 카운트를 자동 생성합니다.
 // - 제품 컬럼: "제품"
 // - 국가 컬럼: Head 행의 Title 오른쪽(UK~LV 등)
 // - Done: URL 또는 완료/Done/Closed 계열 값
@@ -3267,22 +3432,20 @@ function buildFlatRows(requests, matrix, visibleRows, visibleCountries){
 let ARTICLE_DATA = {};
 const EMBEDDED_ARTICLE_DATA = {"UK":{"REF":{"c":9,"t":9,"x":0,"urls":["https://www.lg.com/uk/lg-experience/helpful-hints/american-fridge-sizes/","https://www.lg.com/uk/lg-experience/buying-guide/choosing-the-best-type-of-fridge-freezer/","https://www.lg.com/uk/lg-experience/helpful-hints/how-to-clean-your-refrigerator/","https://www.lg.com/uk/lg-experience/helpful-hints/how-to-defrost-a-freezer/","https://www.lg.com/uk/lg-experience/helpful-hints/how-to-choose-the-quietest-fridge-freezer/","https://www.lg.com/uk/lg-experience/helpful-hints/what-is-a-counter-depth-fridge-freezer/","https://www.lg.com/uk/lg-experience/helpful-hints/how-to-use-humidity-control-fridge/","https://www.lg.com/uk/lg-experience/helpful-hints/what-is-a-smart-fridge/","https://www.lg.com/uk/lg-experience/helpful-hints/how-to-use-a-smart-fridge/"]},"WM":{"c":11,"t":12,"x":0,"urls":["https://www.lg.com/uk/lg-experience/helpful-hints/energy-efficient-washing-machines","https://www.lg.com/uk/lg-experience/buying-guide/washing-machines","https://www.lg.com/uk/lg-experience/helpful-hints/how-to-clean-washing-machine","https://www.lg.com/uk/lg-experience/lg-lab/heat-pump-vs-condenser-dryer","https://www.lg.com/uk/lg-experience/helpful-hints/washing-machine-cycles-explained/","https://www.lg.com/uk/lg-experience/helpful-hints/how-long-does-a-washing-machine-last/","https://www.lg.com/uk/lg-experience/helpful-hints/how-to-stop-a-washing-machine-from-smelling/","https://www.lg.com/uk/lg-experience/helpful-hints/steam-in-washing-machines/","https://www.lg.com/uk/lg-experience/helpful-hints/the-ultimate-guide-to-the-best-lg-tumble-dryers-2025/","https://www.lg.com/uk/lg-experience/helpful-hints/lg-washing-machines-for-large-and-small-families/","https://www.lg.com/uk/lg-experience/helpful-hints/how-to-reset-washing-machine/"]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":3,"t":3,"x":0,"urls":["https://www.lg.com/uk/lg-experience/helpful-hints/how-much-water-and-energy-does-a-dishwasher-use/","https://www.lg.com/uk/lg-experience/helpful-hints/integrated-dishwashers-vs-freestanding-dishwashers/","https://www.lg.com/uk/lg-experience/helpful-hints/the-ultimate-guide-to-dishwasher-maintenance/"]}},"DE":{"REF":{"c":0,"t":14,"x":0,"urls":[]},"WM":{"c":6,"t":13,"x":0,"urls":["https://www.lg.com/de/haushaltsgeraete/haushaltsgeraete-tipps-und-anleitungen/waeschepflege/die-besten-energieeffizienten-waschmaschinen-2025/","https://www.lg.com/de/microsite-article/hs/laundry/article-contents/washing-machines/","https://www.lg.com/de/microsite-article/hs/laundry/article-contents/how-to-clean-washing-machine/","https://www.lg.com/de/microsite-article/hs/laundry/article-contents/heat-pump-vs-condenser-dryer/","https://www.lg.com/de/microsite-article/hs/laundry/article-contents/practical-tips-for-your-washing-machine/","https://www.lg.com/de/promotions/stiftungwarentest/"]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":0,"t":3,"x":0,"urls":[]}},"FR":{"REF":{"c":0,"t":9,"x":0,"urls":[]},"WM":{"c":0,"t":12,"x":0,"urls":[]},"VC":{"c":0,"t":1,"x":0,"urls":[]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":0,"t":3,"x":0,"urls":[]}},"IT":{"REF":{"c":0,"t":9,"x":0,"urls":[]},"WM":{"c":0,"t":12,"x":0,"urls":[]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":1,"t":3,"x":0,"urls":["https://www.lg.com/it/magazine/the-ultimate-guide-to-dishwasher-maintenance/"]}},"ES":{"REF":{"c":0,"t":9,"x":0,"urls":[]},"WM":{"c":0,"t":12,"x":0,"urls":[]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":0,"t":3,"x":0,"urls":[]}},"GR":{"REF":{"c":0,"t":9,"x":0,"urls":[]},"WM":{"c":0,"t":11,"x":0,"urls":[]}},"SA":{"REF":{"c":2,"t":2,"x":0,"urls":["https://www.lg.com/sa/appliance-tips-and-guides/refrigerators/refrigerator-size-guide/","https://www.lg.com/sa/appliance-tips-and-guides/refrigerators/what-is-the-best-refrigerator-cooling-temperature/"]},"WM":{"c":3,"t":4,"x":0,"urls":["https://www.lg.com/sa/appliance-tips-and-guides/washer-dryers/best-automatic-washing-machines/","https://www.lg.com/sa/appliance-tips-and-guides/washer-dryers/what-is-the-best-refrigerator-cooling-temperature/","https://www.lg.com/sa/appliance-tips-and-guides/washer-dryers/washing-machine-size-guide/"]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":3,"t":3,"x":0,"urls":["https://www.lg.com/sa/appliance-tips-and-guides/dishwasher/how-much-water-and-energy-does-a-dishwasher-use/","https://www.lg.com/sa/appliance-tips-and-guides/dishwashers/integrated-dishwashers-vs-freestanding-dishwashers/","https://www.lg.com/sa/appliance-tips-and-guides/dishwashers/the-ultimate-guide-to-dishwasher-maintenance/"]}},"SA-en":{"REF":{"c":2,"t":2,"x":0,"urls":["https://www.lg.com/sa_en/appliance-tips-and-guides/refrigerators/refrigerator-size-guide/","https://www.lg.com/sa_en/appliance-tips-and-guides/refrigerators/what-is-the-best-refrigerator-cooling-temperature/"]},"WM":{"c":3,"t":4,"x":0,"urls":["https://www.lg.com/sa_en/appliance-tips-and-guides/washer-dryers/best-automatic-washing-machines/","https://www.lg.com/sa_en/appliance-tips-and-guides/washer-dryers/what-is-the-best-refrigerator-cooling-temperature/","https://www.lg.com/sa_en/appliance-tips-and-guides/washer-dryers/washing-machine-size-guide/"]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":3,"t":3,"x":0,"urls":["https://www.lg.com/sa_en/appliance-tips-and-guides/dishwashers/how-much-water-and-energy-does-a-dishwasher-use/","https://www.lg.com/sa_en/appliance-tips-and-guides/dishwashers/integrated-dishwashers-vs-freestanding-dishwashers/","https://www.lg.com/sa_en/appliance-tips-and-guides/dishwashers/the-ultimate-guide-to-dishwasher-maintenance/"]}},"EG-ar":{"REF":{"c":2,"t":2,"x":0,"urls":["https://www.lg.com/eg_ar/lg-story/helpful-guide/refrigerator-size-guide/","https://www.lg.com/eg_ar/lg-story/helpful-guide/what-is-the-best-refrigerator-cooling-temperature/"]},"WM":{"c":3,"t":3,"x":0,"urls":["https://www.lg.com/eg_ar/lg-story/helpful-guide/best-automatic-washing-machines/","https://www.lg.com/eg_ar/lg-story/helpful-guide/how-to-clean-top-load-washing-machine/","https://www.lg.com/eg_ar/lg-story/helpful-guide/washing-machine-size-guide/"]},"DW":{"c":3,"t":3,"x":0,"urls":["https://www.lg.com/eg_ar/dwbenefits-usage/","https://www.lg.com/eg_ar/appliance-tips-and-guides/dishwasher/integrated-dishwashers-vs-freestanding-dishwashers/","https://www.lg.com/eg_ar/appliance-tips-and-guides/dishwasher/ultimate-guide-to-dishwasher-maintenance/"]}},"EG-en":{"REF":{"c":2,"t":2,"x":0,"urls":["https://www.lg.com/eg_en/lg-story/helpful-guide/refrigerator-size-guide/","https://www.lg.com/eg_en/lg-story/helpful-guide/what-is-the-best-refrigerator-cooling-temperature/"]},"WM":{"c":3,"t":3,"x":0,"urls":["https://www.lg.com/eg_en/lg-story/helpful-guide/best-automatic-washing-machines/","https://www.lg.com/eg_en/lg-story/helpful-guide/how-to-clean-top-load-washing-machine/","https://www.lg.com/eg_en/lg-story/helpful-guide/washing-machine-size-guide/"]},"DW":{"c":3,"t":3,"x":0,"urls":["https://www.lg.com/eg_en/appliance-tips-and-guides/dishwasher/dwbenefits-usage/","https://www.lg.com/eg_en/appliance-tips-and-guides/dishwasher/integrated-dishwashers-vs-freestanding-dishwashers/","https://www.lg.com/eg_en/appliance-tips-and-guides/dishwasher/ultimate-guide-to-dishwasher-maintenance/"]}},"MX":{"REF":{"c":7,"t":7,"x":0,"urls":["https://www.lg.com/mx/lg-experience/helpful-hints/best-refrigerator/","https://www.lg.com/mx/lg-experience/helpful-hints/best-energy-efficiency-refrigerator/","https://www.lg.com/mx/lg-experience/helpful-hints/what-is-inverter-technology-and-what-advantages-does-it-offer/","https://www.lg.com/mx/lg-experience/helpful-hints/how-to-clean-your-refrigerator/","https://www.lg.com/mx/lg-experience/helpful-hints/types-of-refrigerators/","https://www.lg.com/mx/lg-experience/helpful-hints/how-to-adjust-the-temperature/","https://www.lg.com/mx/lg-experience/helpful-hints/refrigerator-next-to-gas-stove/"]},"WM":{"c":6,"t":7,"x":0,"urls":["https://www.lg.com/mx/lg-experience/helpful-hints/what-are-energy-efficient-washing-machines/","https://www.lg.com/mx/lg-experience/helpful-hints/how-to-clean-automatic-washing-machine/","https://www.lg.com/mx/lg-experience/helpful-hints/what-is-smart-washing-and-benefit-with-ai/","https://www.lg.com/mx/lg-experience/helpful-hints/washer-dryers-gas-or-electric/","https://www.lg.com/mx/lg-experience/helpful-hints/washing-machine-measurement-and-sizes/","https://www.lg.com/mx/lg-experience/helpful-hints/types-of-washing-machine/"]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":1,"t":3,"x":0,"urls":["https://www.lg.com/mx/lg-experience/helpful-hints/cuanta-agua-y-energ-a-utiliza-un-lavavajillas/"]}},"CO":{"REF":{"c":7,"t":7,"x":0,"urls":["https://www.lg.com/co/consejos-y-guias-sobre-electrodomesticos/neveras/best-refrigerator","https://www.lg.com/co/consejos-y-guias-sobre-electrodomesticos/neveras/best-energy-efficiency-refrigerator/","https://www.lg.com/co/consejos-y-guias-sobre-electrodomesticos/neveras/what-is-inverter-technology-and-what-advantages-does-it-offer","https://www.lg.com/co/consejos-y-guias-sobre-electrodomesticos/neveras/how-to-clean-your-refrigerator","https://www.lg.com/co/consejos-y-guias-sobre-electrodomesticos/neveras/types-of-refrigerators","https://www.lg.com/co/consejos-y-guias-sobre-electrodomesticos/neveras/how-to-adjust-the-temperature","https://www.lg.com/co/consejos-y-guias-sobre-electrodomesticos/neveras/refrigerator-next-to-gas-stove"]},"WM":{"c":7,"t":7,"x":0,"urls":["https://www.lg.com/co/consejos-y-guias-sobre-electrodomesticos/lavadoras/what-are-energy-efficient-washing-machines/","https://www.lg.com/co/consejos-y-guias-sobre-electrodomesticos/lavadoras/how-to-clean-automatic-washing-machine/","https://www.lg.com/co/consejos-y-guias-sobre-electrodomesticos/lavadoras/what-is-smart-washing-and-benefit-with-ai/","https://www.lg.com/co/consejos-y-guias-sobre-electrodomesticos/lavadoras/washer-dryers-gas-or-electric/","https://www.lg.com/co/consejos-y-guias-sobre-electrodomesticos/lavadoras/washing-machine-measurement-and-sizes/","https://www.lg.com/co/consejos-y-guias-sobre-electrodomesticos/lavadoras/types-of-washing-machine/","https://www.lg.com/co/consejos-y-guias-sobre-electrodomesticos/lavadoras/mitos-y-verdades-sobre-las-lavadoras-de-carga-superior/"]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":0,"t":3,"x":0,"urls":[]}},"PE":{"REF":{"c":7,"t":7,"x":0,"urls":["https://www.lg.com/pe/consejos-y-guias-de-electrodomesticos/refrigeradores/best-refrigerator","https://www.lg.com/pe/consejos-y-guias-de-electrodomesticos/refrigeradores/best-energy-efficiency-refrigerator","https://www.lg.com/pe/consejos-y-guias-de-electrodomesticos/refrigeradores/what-is-inverter-technology-and-what-advantages-does-it-offer","https://www.lg.com/pe/consejos-y-guias-de-electrodomesticos/refrigeradores/how-to-clean-your-refrigerator","https://www.lg.com/pe/consejos-y-guias-de-electrodomesticos/refrigeradores/types-of-refrigerators","https://www.lg.com/pe/consejos-y-guias-de-electrodomesticos/refrigeradores/how-to-adjust-the-temperature","https://www.lg.com/pe/consejos-y-guias-de-electrodomesticos/refrigeradores/refrigerator-next-to-gas-stove"]},"WM":{"c":6,"t":6,"x":0,"urls":["https://www.lg.com/pe/consejos-y-guias-de-electrodomesticos/lavadoras/what-are-energy-efficient-washing-machines","https://www.lg.com/pe/consejos-y-guias-de-electrodomesticos/lavadoras/how-to-clean-automatic-washing-machine","https://www.lg.com/pe/consejos-y-guias-de-electrodomesticos/lavadoras/what-is-smart-washing-and-benefit-with-ai","https://www.lg.com/pe/consejos-y-guias-de-electrodomesticos/lavadoras/washer-dryers-gas-or-electric","https://www.lg.com/pe/consejos-y-guias-de-electrodomesticos/lavadoras/washing-machine-measurement-and-sizes","https://www.lg.com/pe/consejos-y-guias-de-electrodomesticos/lavadoras/types-of-washing-machine"]}},"CL":{"REF":{"c":7,"t":7,"x":0,"urls":["https://www.lg.com/cl/consejos-y-guias-de-electrodomesticos/refrigeradores/best-refrigerator","https://www.lg.com/cl/consejos-y-guias-de-electrodomesticos/refrigeradores/best-energy-efficiency-refrigerator","https://www.lg.com/cl/consejos-y-guias-de-electrodomesticos/refrigeradores/what-is-inverter-technology-and-what-advantages-does-it-offer","https://www.lg.com/cl/consejos-y-guias-de-electrodomesticos/refrigeradores/how-to-clean-your-refrigerator","https://www.lg.com/cl/consejos-y-guias-de-electrodomesticos/refrigeradores/types-of-refrigerators","https://www.lg.com/cl/consejos-y-guias-de-electrodomesticos/refrigeradores/how-to-adjust-the-temperature","https://www.lg.com/cl/consejos-y-guias-de-electrodomesticos/refrigeradores/refrigerator-next-to-gas-stove"]},"WM":{"c":6,"t":6,"x":0,"urls":["https://www.lg.com/cl/consejos-y-guias-de-electrodomesticos/lavadoras/what-are-energy-efficient-washing-machines","https://www.lg.com/cl/consejos-y-guias-de-electrodomesticos/lavadoras/how-to-clean-automatic-washing-machine","https://www.lg.com/cl/consejos-y-guias-de-electrodomesticos/lavadoras/what-is-smart-washing-and-benefit-with-ai","https://www.lg.com/cl/consejos-y-guias-de-electrodomesticos/lavadoras/washer-dryers-gas-or-electric","https://www.lg.com/cl/consejos-y-guias-de-electrodomesticos/lavadoras/washing-machine-measurement-and-sizes","https://www.lg.com/cl/consejos-y-guias-de-electrodomesticos/lavadoras/types-of-washing-machine"]},"DW":{"c":0,"t":2,"x":0,"urls":[]}},"BR":{"REF":{"c":0,"t":7,"x":0,"urls":[]},"WM":{"c":0,"t":7,"x":0,"urls":[]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]}},"TH":{"REF":{"c":0,"t":5,"x":0,"urls":[]},"WM":{"c":0,"t":8,"x":0,"urls":[]},"DW":{"c":0,"t":3,"x":0,"urls":[]}},"TW":{"REF":{"c":0,"t":5,"x":0,"urls":[]},"WM":{"c":5,"t":9,"x":0,"urls":["https://www.lg.com/tw/appliance-tips-and-guides/washer-dryers/how-many-watts-does-a-washing-machine-use/","https://www.lg.com/tw/appliance-tips-and-guides/washer-dryers/how-to-use-an-automatic-washing-machine/","https://www.lg.com/tw/appliance-tips-and-guides/washer-dryers/how-to-choose-a-right-dryer-size/","https://www.lg.com/tw/appliance-tips-and-guides/washer-dryers/washing-machine-temperature-guide/","https://www.lg.com/tw/appliance-tips-and-guides/washer-dryers/how-to-choose-standard-washing-machine-size/"]},"VC":{"c":0,"t":1,"x":0,"urls":[]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":0,"t":3,"x":0,"urls":[]}},"PH":{"REF":{"c":4,"t":5,"x":1,"urls":["https://www.lg.com/ph/lg-experience/helpful-hints/how-to-adjust-fridge-freezer-temperature/","https://www.lg.com/ph/lg-experience/helpful-hints/standard-refrigerator-size-should-choose/","https://www.lg.com/ph/lg-experience/helpful-hints/what-is-refrigerator-how-keep-food-fresh/","https://www.lg.com/ph/lg-experience/helpful-hints/5-tips-organize-refrigerator/"]},"WM":{"c":7,"t":8,"x":1,"urls":["https://www.lg.com/ph/lg-experience/helpful-hints/how-many-watts-does-a-washing-machine-use/","https://www.lg.com/ph/lg-experience/helpful-hints/how-to-use-an-automatic-washing-machine/","https://www.lg.com/ph/lg-experience/helpful-hints/how-to-choose-a-right-dryer-size/","https://www.lg.com/ph/lg-experience/helpful-hints/what-temperature-dry-duvet/","https://www.lg.com/ph/lg-experience/helpful-hints/washing-machine-temperature-guide/","https://www.lg.com/ph/lg-experience/helpful-hints/benefits-of-having-washing-machine/","https://www.lg.com/ph/lg-experience/helpful-hints/how-to-choose-standard-washing-machine-size/"]}},"VN":{"REF":{"c":4,"t":5,"x":1,"urls":["https://www.lg.com/vn/lg-experience/goi-y-va-meo/cach-dieu-chinh-nhiet-do-ngan-mat-ngan-da-tu-lanh/","https://www.lg.com/vn/lg-experience/goi-y-va-meo/cach-chon-kich-thuoc-tu-lanh-tieu-chuan/","https://www.lg.com/vn/lg-experience/goi-y-va-meo/tu-lanh-la-gi-va-cach-bao-quan-thuc-pham/","https://www.lg.com/vn/lg-experience/goi-y-va-meo/meo-sap-xep-tu-lanh/"]},"WM":{"c":8,"t":9,"x":0,"urls":["https://www.lg.com/vn/lg-experience/goi-y-va-meo/dat-tu-lanh-va-may-giat-theo-phong-thuy/","https://www.lg.com/vn/lg-experience/goi-y-va-meo/cach-chon-kich-thuoc-may-giat-tieu-chuan/","https://www.lg.com/vn/lg-experience/goi-y-va-meo/loi-ich-noi-bat-khi-so-huu-may-giat/","https://www.lg.com/vn/lg-experience/goi-y-va-meo/huong-dan-ve-nhiet-do-may-giat/","https://www.lg.com/vn/lg-experience/goi-y-va-meo/say-chan-o-nhiet-do-bao-nhieu/","https://www.lg.com/vn/lg-experience/goi-y-va-meo/cach-chon-kich-thuoc-may-say-phu-hop/","https://www.lg.com/vn/lg-experience/goi-y-va-meo/cach-su-dung-may-giat-tu-dong/","https://www.lg.com/vn/lg-experience/goi-y-va-meo/may-giat-su-dung-bao-nhieu-watt-va-cach-tiet-kiem-dien/"]},"Cooking":{"c":2,"t":2,"x":0,"urls":["https://www.lg.com/vn/lg-experience/goi-y-va-meo/cach-ve-sinh-lo-vi-song/","https://www.lg.com/vn/lg-experience/goi-y-va-meo/huong-dan-mua-va-chon-kich-thuoc-lo-vi-song/"]},"DW":{"c":1,"t":3,"x":0,"urls":["https://www.lg.com/vn/lg-experience/goi-y-va-meo/may-rua-bat-tieu-thu-bao-nhieu-dien-va-nuoc/"]}},"AU":{"REF":{"c":0,"t":5,"x":0,"urls":[]},"WM":{"c":0,"t":9,"x":0,"urls":[]},"VC":{"c":0,"t":1,"x":0,"urls":[]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":0,"t":3,"x":0,"urls":[]}},"SE":{"WM":{"c":0,"t":3,"x":0,"urls":[]}},"CA-en":{"WM":{"c":1,"t":1,"x":0,"urls":["https://www.lg.com/ca_en/lg-experience/helpful-hints/top-load-washing-machine-myths-and-truths/"]},"VC":{"c":0,"t":1,"x":0,"urls":[]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":2,"t":3,"x":0,"urls":["https://www.lg.com/ca_en/lg-experience/helpful-hints/how-much-water-and-energy-does-a-dishwasher-use/","https://www.lg.com/ca_en/lg-experience/helpful-hints/ultimate-guide-to-dishwasher-article-enfr/"]}},"CA-fr":{"WM":{"c":1,"t":1,"x":0,"urls":["https://www.lg.com/ca_fr/experience-lg/conseils-utiles/mythes-et-verites-laveuses-a-chargement-vertical/"]},"VC":{"c":0,"t":1,"x":0,"urls":[]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":2,"t":3,"x":0,"urls":["https://www.lg.com/ca_fr/experience-lg/conseils-utiles/how-much-water-and-energy-does-a-dishwasher-use/","https://www.lg.com/ca_fr/experience-lg/conseils-utiles/ultimate-guide-to-dishwasher-article-enfr/"]}},"ID":{"WM":{"c":0,"t":1,"x":0,"urls":[]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":0,"t":2,"x":0,"urls":[]}},"IN":{"WM":{"c":0,"t":1,"x":0,"urls":[]},"DW":{"c":2,"t":3,"x":1,"urls":["https://www.lg.com/in/magazine/how-much-water-and-energy-does-a-dishwasher-use/","https://www.lg.com/in/magazine/the-ultimate-guide-to-dishwasher-maintenance/"]}},"ZA":{"WM":{"c":0,"t":1,"x":0,"urls":[]},"Cooking":{"c":0,"t":2,"x":0,"urls":[]},"DW":{"c":0,"t":3,"x":0,"urls":[]}},"HK-en":{"VC":{"c":0,"t":1,"x":0,"urls":[]}},"HK-zh":{"VC":{"c":0,"t":1,"x":0,"urls":[]}},"MY":{"VC":{"c":0,"t":1,"x":0,"urls":[]}}};
 window.EMBEDDED_ARTICLE_DATA = EMBEDDED_ARTICLE_DATA;
-// Use embedded article counts immediately so the matrix does not render blank before the XLSX fetch finishes.
-if(!ARTICLE_DATA || !Object.keys(ARTICLE_DATA).length){
-  try { ARTICLE_DATA = JSON.parse(JSON.stringify(EMBEDDED_ARTICLE_DATA || {})); } catch(e) { ARTICLE_DATA = EMBEDDED_ARTICLE_DATA || {}; }
-  window.ARTICLE_DATA = ARTICLE_DATA;
-}
+// LG Experience Articles 카운트는 같은 폴더의 별도 엑셀만 사용합니다.
+// 기존 내장 데이터는 과거 값이 섞이지 않도록 카운트 소스로 사용하지 않습니다.
+window.ARTICLE_DATA = ARTICLE_DATA;
 const ARTICLE_PRODUCTS = ["WM","REF","DW","VC","Cooking"];
-// LG Experience Articles count source
-// The status dashboard is served from /lg-com-status-dashboard/.
-// Global Request.xlsx is intentionally stored in the sibling /hs/ folder.
-// Therefore the count must be loaded ONLY from ../hs/Global Request.xlsx to avoid duplicate/wrong counts.
-const GLOBAL_REQUEST_LOCAL_XLSX_FILE = '../hs/Global Request.xlsx';
+const ARTICLE_LOCAL_XLSX_FILE = '신호등-Article.xlsx';
 
-function getGlobalRequestLocalXlsxCandidateUrls(){
+function getArticleLocalXlsxCandidateUrls(){
   var urls = [];
-  try { urls.push(new URL(GLOBAL_REQUEST_LOCAL_XLSX_FILE, window.location.href).href); } catch(e) {}
-  if(!urls.length) urls.push('../hs/Global%20Request.xlsx');
+  function add(url){
+    if(url && urls.indexOf(url) < 0) urls.push(url);
+  }
+  // index.html과 동일한 폴더의 파일만 읽습니다.
+  try { add(new URL(ARTICLE_LOCAL_XLSX_FILE, window.location.href).href); } catch(e) {}
+  if(!urls.length) add('./' + encodeURIComponent(ARTICLE_LOCAL_XLSX_FILE));
   return urls;
 }
 
@@ -3409,13 +3572,20 @@ function buildArticleDataFromGlobalRequestMatrix(matrix){
 
 async function loadGlobalRequestArticleData(){
   if(!window.XLSX) throw new Error('XLSX 라이브러리가 로드되지 않았습니다.');
-  var urls = getGlobalRequestLocalXlsxCandidateUrls();
+  var urls = getArticleLocalXlsxCandidateUrls();
   var lastError = null;
   for(var i=0; i<urls.length; i++){
     try{
-      var res = await fetch(urls[i], { cache:'default' });
-      if(!res.ok) throw new Error('Global Request.xlsx fetch failed: ' + res.status + ' / ' + urls[i]);
+      var url = urls[i];
+      var requestUrl = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_article_ts=' + Date.now();
+      var res = await fetch(requestUrl, { cache:'no-store' });
+      if(!res.ok) throw new Error('신호등-Article.xlsx fetch failed: ' + res.status + ' / ' + url);
       var buf = await res.arrayBuffer();
+      var signature = new Uint8Array(buf, 0, Math.min(4, buf.byteLength));
+      // 없는 파일 경로에 HTML이 200으로 반환되는 서버를 대비해 XLSX ZIP 시그니처를 확인합니다.
+      if(signature.length < 2 || signature[0] !== 0x50 || signature[1] !== 0x4B){
+        throw new Error('응답이 XLSX 파일이 아닙니다: ' + url);
+      }
       var wb = XLSX.read(buf, { type:'array', cellDates:false, raw:false });
       var sheetName = (wb.SheetNames || []).find(function(name){
         return String(name || '').trim().toLowerCase() === 'lg experience articles';
@@ -3423,26 +3593,26 @@ async function loadGlobalRequestArticleData(){
         var n = String(name || '').toLowerCase();
         return n.indexOf('experience') >= 0 && n.indexOf('article') >= 0;
       });
-      if(!sheetName) throw new Error('Global Request.xlsx에서 LG Experience Articles 시트를 찾지 못했습니다.');
+      if(!sheetName) throw new Error('신호등-Article.xlsx에서 LG Experience Articles 시트를 찾지 못했습니다.');
       var ws = wb.Sheets[sheetName];
       var matrix = XLSX.utils.sheet_to_json(ws, { header:1, defval:'', raw:false });
       var data = buildArticleDataFromGlobalRequestMatrix(matrix);
-      ARTICLE_DATA = (data && Object.keys(data).length) ? data : JSON.parse(JSON.stringify(EMBEDDED_ARTICLE_DATA || {}));
+      if(!data || !Object.keys(data).length){
+        throw new Error('신호등-Article.xlsx에서 카운트 데이터를 찾지 못했습니다.');
+      }
+      ARTICLE_DATA = data;
       window.ARTICLE_DATA = ARTICLE_DATA;
-      console.info('[status-board] LG Experience Articles counts loaded:', ARTICLE_DATA);
+      console.info('[status-board] LG Experience Articles counts loaded from 신호등-Article.xlsx:', ARTICLE_DATA);
       return ARTICLE_DATA;
     }catch(e){
       lastError = e;
-      console.warn('[status-board] Global Request.xlsx load retry:', e && e.message ? e.message : e);
+      console.warn('[status-board] 신호등-Article.xlsx load retry:', e && e.message ? e.message : e);
     }
   }
-  ARTICLE_DATA = JSON.parse(JSON.stringify(EMBEDDED_ARTICLE_DATA || {}));
+  // 별도 엑셀을 읽지 못한 경우 과거 내장 카운트로 대체하지 않습니다.
+  ARTICLE_DATA = {};
   window.ARTICLE_DATA = ARTICLE_DATA;
-  if(Object.keys(ARTICLE_DATA).length){
-    console.info('[status-board] LG Experience Articles counts loaded from embedded fallback:', ARTICLE_DATA);
-    return ARTICLE_DATA;
-  }
-  throw lastError || new Error('Global Request.xlsx를 찾지 못했습니다.');
+  throw lastError || new Error('신호등-Article.xlsx를 찾지 못했습니다.');
 }
 window.ARTICLE_DATA = ARTICLE_DATA;
 
@@ -3482,9 +3652,9 @@ function groupRequestsForHeader(rows){
     })
     .filter(function(g){ return g.requests.length; });
 
-  // LG Experience Articles는 별도 Global Request.xlsx 데이터이므로
+  // LG Experience Articles는 별도 신호등-Article.xlsx 데이터이므로
   // division 열이 없어도 기존과 동일하게 독립 그룹으로 유지합니다.
-  const articleSource = Object.keys(ARTICLE_DATA || {}).length ? ARTICLE_DATA : (EMBEDDED_ARTICLE_DATA || {});
+  const articleSource = ARTICLE_DATA || {};
   const articleRequests = ARTICLE_PRODUCTS.filter(function(prod){
     return Object.keys(articleSource).some(function(ctry){
       return articleSource[ctry] && articleSource[ctry][prod];
@@ -3647,11 +3817,11 @@ function openArticleStatusModal(detail){
   if(tip){ tip.style.display = 'none'; tip.textContent = ''; }
 }
 
-// LG Experience Articles 셀: Global Request.xlsx의 완료/전체 카운트만 표시
+// LG Experience Articles 셀: 신호등-Article.xlsx의 완료/전체 카운트만 표시
 // data.x = 취소(cancelled) 건수 → effectiveTotal = t - x
 // In Progress 표기는 신호등data-####.xlsx에서 들어오는 일반 상태 셀에서만 처리합니다.
 function buildArticleCell(country, product){
-  const src = (ARTICLE_DATA && Object.keys(ARTICLE_DATA).length) ? ARTICLE_DATA : (EMBEDDED_ARTICLE_DATA || {});
+  const src = ARTICLE_DATA || {};
   function getArticleDataForCountry(ctry, prod){
     var raw = String(ctry || '').trim();
     var base = raw.split('-')[0].split('_')[0].toUpperCase();
@@ -3715,65 +3885,174 @@ function buildMatrixCell(cell, country, model, extraClass){
   if(!cell || !cell.items.length){
     return '<td class="mx-cell mx-empty"></td>';
   }
-  // 전체 항목 표시 (Pre-check 30일+ 제외 규칙 해제)
-  const items = cell.items.slice();
-  const cancelCount = items.reduce(function(sum, it){
-    const isCancelled = it && (it.signal === 'Grey' || String(it.title || '').toLowerCase() === 'cancelled');
-    return sum + (isCancelled ? Number(it.count || 1) : 0);
-  }, 0);
-  if(!items.length){
+
+  // 같은 TD 안에서도 상태별로 Page 수를 각각 집계합니다.
+  const groupedMap = {};
+  cell.items.forEach(function(it, index){
+    if(!it) return;
+    const title = it.title || (it.signal === 'Blue' ? 'In Progress' : (it.signal === 'Green' ? 'Complete' : ''));
+    const groupKey = String(it.signal || 'None') + '|||' + String(title || '');
+    if(!groupedMap[groupKey]){
+      groupedMap[groupKey] = {
+        signal:it.signal || 'None',
+        title:title,
+        aging:it.aging,
+        periodText:it.periodText || '',
+        reason:it.reason || '',
+        pgTotal:0,
+        firstIndex:index
+      };
+    }
+    const group = groupedMap[groupKey];
+    const pgValue = Number(it.pgValue || 0);
+    group.pgTotal += isNaN(pgValue) ? 0 : pgValue;
+
+    // 동일 상태가 여러 건이면 Pending 기간은 가장 오래된 값을 대표로 표시합니다.
+    const oldAging = Number(group.aging);
+    const nextAging = Number(it.aging);
+    if(!isNaN(nextAging) && (isNaN(oldAging) || nextAging > oldAging)){
+      group.aging = nextAging;
+      group.periodText = it.periodText || group.periodText;
+      group.reason = it.reason || group.reason;
+    }
+  });
+
+  const groups = Object.keys(groupedMap).map(function(k){ return groupedMap[k]; })
+    .sort(function(a,b){
+      const priorityDiff = (PRIORITY[b.signal] || 0) - (PRIORITY[a.signal] || 0);
+      return priorityDiff || a.firstIndex - b.firstIndex;
+    });
+
+  if(!groups.length){
     return '<td class="mx-cell mx-empty"></td>';
   }
 
-  const item = items[0];
-  const sc = COLORS[item.signal] || 'blue';
-  const agingNum = (item.aging !== '' && item.aging != null) ? item.aging : '';
-  const pg = cell.pgTotal;
+  const cancelledGroup = groups.find(function(group){
+    return group.signal === 'Grey' || String(group.title || '').toLowerCase() === 'cancelled';
+  }) || null;
+  const nonCancelledGroups = groups.filter(function(group){ return group !== cancelledGroup; });
+  const hasMixedStatuses = groups.length > 1;
+  const completeCancelledOnly = hasMixedStatuses
+    && !!cancelledGroup
+    && nonCancelledGroups.length === 1
+    && (nonCancelledGroups[0].signal === 'Green' || String(nonCancelledGroups[0].title || '').toLowerCase() === 'complete');
 
-  const statusLabel = item.title || (item.signal === 'Blue' ? 'In Progress' : (item.signal === 'Green' ? 'Complete' : ''));
-  const isInProgress = String(statusLabel || '').toLowerCase().replace(/[\s_-]+/g, '') === 'inprogress' || item.signal === 'Blue';
-  const displayLabel = statusLabel === 'Request Clarification' ? 'Request<br>Clarification' : esc(statusLabel);
+  // 취소가 다른 상태와 함께 있으면 별도 상태 블록 대신 (N Cancelled)로만 표시합니다.
+  const visibleGroups = hasMixedStatuses && cancelledGroup ? nonCancelledGroups : groups;
+  const statusBlocks = visibleGroups.map(function(group){
+    const sc = COLORS[group.signal] || 'blue';
+    const statusLabel = group.title || '';
+    const displayLabel = statusLabel === 'Request Clarification' ? 'Request<br>Clarification' : esc(statusLabel);
+    const pgText = group.pgTotal ? group.pgTotal + ' page' : '';
+    const primaryClass = completeCancelledOnly && (group.signal === 'Green' || String(statusLabel).toLowerCase() === 'complete')
+      ? ' mx-complete-primary' : '';
+    let block = '<div class="mx-status-block ' + sc + primaryClass + '">';
 
-  const pgText = pg ? pg + ' page' : '';
-  let txt = '';
-
-  if(isInProgress){
-    // 신호등data-####.xlsx 일반 데이터의 In Progress는 점/팝업 없이 상태와 page 수만 표시
-    txt += '<div class="mx-cell-label"><span class="mx-status-lbl">In Progress</span></div>';
+    // Complete와 다른 상태가 섞인 경우에도 모든 상태에 도트를 표시합니다.
+    block += '<div class="mx-cell-dot"><i class="dot ' + sc + ' mx-dot"></i></div>';
+    block += '<div class="mx-cell-label"><span class="mx-status-lbl">' + displayLabel + '</span></div>';
+    if(group.aging !== '' && group.aging !== null && group.aging !== undefined){
+      block += '<div class="mx-cell-bot"><span class="mx-aging">' + esc(String(group.aging)) + ' days</span></div>';
+    }
     if(pgText){
-      txt += '<div class="mx-cell-bot"><span class="mx-pg">' + pgText + '</span></div>';
+      block += '<div class="mx-cell-bot"><span class="mx-pg">' + pgText + '</span></div>';
     }
-    if(cancelCount > 0){
-      txt += '<span class="mx-art-cancel">(' + cancelCount + ' cancelled)</span>';
-    }
-    return '<td class="mx-cell mx-data ' + sc + extraClass + '">' + (txt || '<span class="mx-dash">—</span>') + '</td>';
-  }
+    block += '</div>';
+    return block;
+  }).join('');
 
-  const dot = '<i class="dot ' + sc + ' mx-dot"></i>';
-  const dotLine   = '<div class="mx-cell-dot">' + dot + '</div>';
-  const labelLine = '<div class="mx-cell-label"><span class="mx-status-lbl">' + displayLabel + '</span></div>';
-  let agingLine = '', pgLine = '';
-  if(agingNum !== ''){
-    agingLine = '<div class="mx-cell-bot"><span class="mx-aging">' + esc(String(agingNum)) + ' days</span></div>';
-  }
-  if(pgText){
-    pgLine = '<div class="mx-cell-bot"><span class="mx-pg">' + pgText + '</span></div>';
-  }
-  txt = (dotLine + labelLine + agingLine + pgLine) || '<span class="mx-dash">—</span>';
-  if(cancelCount > 0){
-    txt += '<span class="mx-art-cancel">(' + cancelCount + ' cancelled)</span>';
-  }
+  const cancelSummary = hasMixedStatuses && cancelledGroup
+    ? '<div class="mx-cancel-summary">(' + Number(cancelledGroup.pgTotal || 0).toLocaleString() + ' Cancelled)</div>'
+    : '';
 
-  const detail = JSON.stringify({
-    country: country, division: cell.division || '', model: model || '', dam: cell.dam || '', liveUrl: cell.liveUrl || '',
-    liveUrls: (cell.liveUrls && cell.liveUrls.length ? cell.liveUrls : extractUrls(cell.liveUrl || '')),
-    signal: item.signal || '', title: item.title || '',
-    aging: agingNum, periodText: item.periodText || '', reason: item.reason || '', pgTotal: pg || 0,
-    cancelCount: cancelCount || 0
+  const detailList = groups.map(function(group){
+    return {
+      country:country,
+      division:cell.division || '',
+      model:model || '',
+      dam:cell.dam || '',
+      liveUrl:cell.liveUrl || '',
+      liveUrls:(cell.liveUrls && cell.liveUrls.length ? cell.liveUrls : extractUrls(cell.liveUrl || '')),
+      signal:group.signal || '',
+      title:group.title || '',
+      aging:group.aging,
+      periodText:group.periodText || '',
+      reason:group.reason || '',
+      pgTotal:group.pgTotal || 0,
+      cancelCount:0
+    };
   });
 
-  return '<td class="mx-cell mx-data ' + sc + extraClass + ' cst-clickable" style="cursor:pointer" data-detail="' + esc(detail) + '">' + txt + '</td>';
+  const topSignal = visibleGroups.length ? (visibleGroups[0].signal || 'None') : (groups[0].signal || 'None');
+  const tdClass = COLORS[topSignal] || 'blue';
+  const detailAttr = detailList.length > 1
+    ? ' data-detail-list="' + esc(JSON.stringify(detailList)) + '"'
+    : ' data-detail="' + esc(JSON.stringify(detailList[0])) + '"';
+
+  return '<td class="mx-cell mx-data ' + tdClass + extraClass + ' cst-clickable" style="cursor:pointer"' + detailAttr + '>'
+    + '<div class="mx-status-stack">' + statusBlocks + cancelSummary + '</div>'
+    + '</td>';
 }
+
+// 화면 폭과 현재 열 개수에 맞춰 매트릭스 표를 자동 확장합니다.
+// 최소 폭보다 좁아지면 가로 스크롤, 넓어지면 카드 우측까지 빈 공간 없이 채웁니다.
+function fitMatrixTableToContainer(){
+  const wrap = document.querySelector('#matrixTableArea .matrix-wrap');
+  const table = wrap && wrap.querySelector('table.mx-table');
+  if(!wrap || !table) return;
+
+  const modelCount = Math.max(0, Number(table.getAttribute('data-model-count') || 0));
+  if(!modelCount) return;
+
+  const COUNTRY_MIN = 110;
+  const COUNTRY_MAX = 180;
+  const DATA_MIN = 88;
+  const DATA_MAX = 320;
+  const available = Math.max(0, Math.floor(wrap.clientWidth));
+
+  let countryWidth = Math.round(Math.min(COUNTRY_MAX, Math.max(COUNTRY_MIN, available * 0.085)));
+  let dataWidth = (available - countryWidth) / modelCount;
+
+  if(!Number.isFinite(dataWidth) || dataWidth < DATA_MIN){
+    countryWidth = COUNTRY_MIN;
+    dataWidth = DATA_MIN;
+  } else {
+    dataWidth = Math.min(DATA_MAX, dataWidth);
+  }
+
+  const minTableWidth = COUNTRY_MIN + (modelCount * DATA_MIN);
+  const calculatedWidth = countryWidth + (modelCount * dataWidth);
+  const tableWidth = Math.max(available, minTableWidth, Math.ceil(calculatedWidth));
+
+  table.style.setProperty('--mx-country-width', Math.round(countryWidth) + 'px');
+  table.style.setProperty('--mx-data-width', Math.max(DATA_MIN, Math.floor(dataWidth)) + 'px');
+  table.style.setProperty('--mx-table-min-width', minTableWidth + 'px');
+  table.style.width = tableWidth + 'px';
+  table.style.minWidth = minTableWidth + 'px';
+  table.style.maxWidth = 'none';
+}
+
+let matrixResizeTimer = null;
+let matrixWrapResizeObserver = null;
+
+function bindMatrixTableResizeObserver(){
+  if(matrixWrapResizeObserver){
+    matrixWrapResizeObserver.disconnect();
+    matrixWrapResizeObserver = null;
+  }
+  const wrap = document.querySelector('#matrixTableArea .matrix-wrap');
+  if(!wrap || typeof ResizeObserver === 'undefined') return;
+  matrixWrapResizeObserver = new ResizeObserver(function(){
+    window.clearTimeout(matrixResizeTimer);
+    matrixResizeTimer = window.setTimeout(fitMatrixTableToContainer, 40);
+  });
+  matrixWrapResizeObserver.observe(wrap);
+}
+
+window.addEventListener('resize', function(){
+  window.clearTimeout(matrixResizeTimer);
+  matrixResizeTimer = window.setTimeout(fitMatrixTableToContainer, 80);
+});
 
 function renderDashboard(rows, clickedCountry=null){
   let enriched;
@@ -3898,13 +4177,14 @@ function renderDashboard(rows, clickedCountry=null){
 
   // 매트릭스(교차표) HTML 사전 생성
   const _mx = buildMatrixTable(visibleRows, visibleCountries);
-  const _mxCountryColWidth = 110;
-  const _mxDataColWidth = 88;
-  const _mxTableWidth = _mxCountryColWidth + (_mx.modelCount * _mxDataColWidth);
-  const _mxColgroup = '<colgroup><col style="width:' + _mxCountryColWidth + 'px">' +
-    Array.from({length:_mx.modelCount}, function(){ return '<col style="width:' + _mxDataColWidth + 'px">'; }).join('') +
+  const _mxCountryMinWidth = 110;
+  const _mxDataMinWidth = 88;
+  const _mxTableMinWidth = _mxCountryMinWidth + (_mx.modelCount * _mxDataMinWidth);
+  const _mxColgroup = '<colgroup><col class="mx-country-col">' +
+    Array.from({length:_mx.modelCount}, function(){ return '<col class="mx-data-col">'; }).join('') +
     '</colgroup>';
-  const matrixTableHtml = '<table class="mx-table" style="width:' + _mxTableWidth + 'px;min-width:' + _mxTableWidth + 'px;max-width:' + _mxTableWidth + 'px;table-layout:fixed">' +
+  const matrixTableHtml = '<table class="mx-table" data-model-count="' + _mx.modelCount + '" ' +
+    'style="--mx-table-min-width:' + _mxTableMinWidth + 'px;--mx-country-width:' + _mxCountryMinWidth + 'px;--mx-data-width:' + _mxDataMinWidth + 'px">' +
     _mxColgroup + '<thead>' + _mx.thead + '</thead><tbody>' + _mx.tbody + '</tbody></table>';
 
   // Build dropdown checkbox options grouped by Region from Row Data.
@@ -4066,6 +4346,13 @@ function renderDashboard(rows, clickedCountry=null){
 
   document.getElementById('dashboard').innerHTML = html;
 
+  // DOM 삽입 후 실제 카드 폭을 기준으로 표 너비를 계산하고,
+  // 브라우저/컨테이너 크기 변경도 자동 감지합니다.
+  requestAnimationFrame(function(){
+    fitMatrixTableToContainer();
+    bindMatrixTableResizeObserver();
+  });
+
   const dropdown = document.getElementById('countryDropdown');
   const dropdownBtn = document.getElementById('countryDropdownBtn');
   if(dropdownBtn && dropdown){
@@ -4212,28 +4499,7 @@ function renderDashboard(rows, clickedCountry=null){
     // country header click removed (flat list mode)
   });
 
-  document.querySelectorAll('[data-copy-url]').forEach(btn => {
-    btn.addEventListener('click', async e => {
-      e.stopPropagation();
-      const url = btn.getAttribute('data-copy-url');
-      try{
-        await navigator.clipboard.writeText(url);
-        const original = btn.textContent;
-        btn.textContent = 'Copied';
-        setTimeout(() => btn.textContent = original, 1200);
-      }catch(err){
-        const temp = document.createElement('textarea');
-        temp.value = url;
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand('copy');
-        document.body.removeChild(temp);
-        const original = btn.textContent;
-        btn.textContent = 'Copied';
-        setTimeout(() => btn.textContent = original, 1200);
-      }
-    });
-  });
+  bindCopyUrlButtons(document);
 
   bindFloatingTooltips();
   bindStatusItemModals();
@@ -4258,11 +4524,19 @@ function renderDashboard(rows, clickedCountry=null){
         }catch(err){}
         return;
       }
-      // 매트릭스 셀: 해당 셀만 단일 팝업
+      // 매트릭스 셀: 상태가 여러 개면 상태별 Page 수를 분리한 테이블 팝업
       if(td.classList.contains('mx-data')){
         try{
-          const detail = JSON.parse(td.getAttribute('data-detail'));
-          if(detail) openStatusModal(detail);
+          const detailListRaw = td.getAttribute('data-detail-list');
+          if(detailListRaw){
+            const detailList = JSON.parse(detailListRaw);
+            if(Array.isArray(detailList) && detailList.length){
+              detailList.length === 1 ? openStatusModal(detailList[0]) : openRowDetailModal(detailList);
+            }
+          } else {
+            const detail = JSON.parse(td.getAttribute('data-detail'));
+            if(detail) openStatusModal(detail);
+          }
         }catch(err){}
         return;
       }
@@ -4584,8 +4858,8 @@ function openStatusModal(detail){
   const damUrl = String(detail.dam || '').trim();
   if(isCompleteStatus){
     linkVal = liveUrlListHtml(liveUrls);
-  } else if(/^https?:\/\//i.test(damUrl)){
-    linkVal = '<a href="' + esc(damUrl) + '" target="_blank" rel="noopener" style="color:var(--lg-heritage-red);font-weight:700;text-decoration:none">Open DAM Link ↗</a>';
+  } else if(extractDamPaths(damUrl).length){
+    linkVal = damButtons(damUrl);
   }
 
   const rows = [
@@ -4598,7 +4872,9 @@ function openStatusModal(detail){
     rowHtml(linkKey,          linkVal,                       false)
   ].join('');
 
-  document.getElementById('statusModalBody').innerHTML = rows;
+  const statusModalBody = document.getElementById('statusModalBody');
+  statusModalBody.innerHTML = rows;
+  bindCopyUrlButtons(statusModalBody);
   modal.querySelectorAll('.detail-copy-btn').forEach(function(b){ b.remove(); });
   modal.classList.add('show');
 
