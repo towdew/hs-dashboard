@@ -37,6 +37,49 @@
     return String(value == null ? '' : value).replace(/\u00a0/g, ' ').trim();
   }
 
+  // SheetJS는 General 형식의 숫자 5.0을 표시 문자열 5로 정리합니다.
+  // Type 컬럼은 본부 구분값이므로 정수 숫자도 소수점 한 자리(5.0)로 유지합니다.
+  function getCellDisplayValue(worksheet, rowIndex, colIndex, header, fallbackValue) {
+    var address = XLSX.utils.encode_cell({ r: rowIndex, c: colIndex });
+    var cell = worksheet && worksheet[address];
+    var value = fallbackValue;
+
+    if (cell) {
+      if (cell.w != null && cell.w !== '') value = cell.w;
+      else if (cell.v != null) value = cell.v;
+    }
+
+    if (normalizeHeader(header) === 'type' && cell && cell.t === 'n') {
+      var numberValue = Number(cell.v);
+      if (!isNaN(numberValue)) {
+        return Number.isInteger(numberValue) ? numberValue.toFixed(1) : String(numberValue);
+      }
+    }
+
+    return cleanText(value);
+  }
+
+  function normalizeRgbColor(value) {
+    var rgb = String(value == null ? '' : value).replace(/^#/, '').toUpperCase();
+    if (/^[0-9A-F]{8}$/.test(rgb)) rgb = rgb.slice(2);
+    return /^[0-9A-F]{6}$/.test(rgb) ? ('#' + rgb) : '';
+  }
+
+  // Excel의 solid fill 색상을 테이블 셀 배경색으로 전달합니다.
+  function getCellFillColor(worksheet, rowIndex, colIndex) {
+    var address = XLSX.utils.encode_cell({ r: rowIndex, c: colIndex });
+    var cell = worksheet && worksheet[address];
+    var style = cell && cell.s;
+    if (!style) return '';
+
+    var patternType = String(style.patternType || (style.fill && style.fill.patternType) || '').toLowerCase();
+    if (patternType && patternType !== 'solid') return '';
+
+    var fg = style.fgColor || (style.fill && style.fill.fgColor) || {};
+    var bg = style.bgColor || (style.fill && style.fill.bgColor) || {};
+    return normalizeRgbColor(fg.rgb || bg.rgb || '');
+  }
+
   function normalizeHeader(value) {
     return cleanText(value).toLowerCase().replace(/[\s_\-/.#]+/g, '');
   }
@@ -154,7 +197,8 @@
     var sheets = [];
 
     workbook.SheetNames.forEach(function (sheetName) {
-      var matrix = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
+      var worksheet = workbook.Sheets[sheetName];
+      var matrix = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
         defval: '',
         raw: false,
@@ -164,6 +208,11 @@
       if (headerIndex < 0) return;
 
       var headers = uniqueHeaders(matrix[headerIndex] || []);
+      var headerStyles = {};
+      headers.forEach(function (header, c) {
+        var headerBg = getCellFillColor(worksheet, headerIndex, c);
+        if (headerBg) headerStyles[header] = headerBg;
+      });
       var projectHeader = findHeader(headers, ['Project Name', 'Locale', 'Country', '국가']);
       var regionHeader = findHeader(headers, ['Region', '지역']);
       var statusHeader = findHeader(headers, ['Task Status in PTT', 'Status', '상태']);
@@ -187,9 +236,13 @@
         if (!sourceRow.some(function (v) { return cleanText(v) !== ''; })) continue;
 
         var row = {};
+        var rowStyles = {};
         headers.forEach(function (header, c) {
-          row[header] = cleanText(sourceRow[c]);
+          row[header] = getCellDisplayValue(worksheet, r, c, header, sourceRow[c]);
+          var bg = getCellFillColor(worksheet, r, c);
+          if (bg) rowStyles[header] = bg;
         });
+        if (Object.keys(rowStyles).length) row.__styles = rowStyles;
 
         var projectName = projectHeader ? row[projectHeader] : '';
         var modelName = modelHeader ? row[modelHeader] : '';
@@ -219,6 +272,7 @@
         records: records,
         headerIndex: headerIndex,
         metaCells: metaCells,
+        headerStyles: headerStyles,
         displayTitle: metaCells.B1 || sheetName,
         weeklyUpdateText: metaCells.B2,
         dam: metaCells.B3,
@@ -271,6 +325,7 @@
         dam: sheetInfo.dam || '',
         metaCells: sheetInfo.metaCells || {},
         tableHeaders: headers,
+        tableHeaderStyles: sheetInfo.headerStyles || {},
         tableRows: tableRows,
         items: items,
         stats: stats,
@@ -351,7 +406,7 @@
         return response.arrayBuffer();
       })
       .then(function (buffer) {
-        var workbook = XLSX.read(buffer, { type: 'array', cellDates: true });
+        var workbook = XLSX.read(buffer, { type: 'array', cellDates: true, cellStyles: true });
         var sheets = readWorkbookRows(workbook);
         var result = buildDashboardData(sheets);
 
