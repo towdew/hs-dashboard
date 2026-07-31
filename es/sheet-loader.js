@@ -54,15 +54,32 @@
   }
 
   function findHeaderRow(matrix) {
+    var fallback = -1;
+
     for (var i = 0; i < matrix.length; i++) {
       var normalized = (matrix[i] || []).map(normalizeHeader);
-      var hasProject = normalized.indexOf('projectname') >= 0 || normalized.indexOf('locale') >= 0 || normalized.indexOf('country') >= 0;
-      var hasStatus = normalized.indexOf('taskstatusinptt') >= 0 || normalized.indexOf('status') >= 0;
-      var hasPage = normalized.indexOf('pg') >= 0 || normalized.indexOf('page') >= 0;
-      var hasModel = normalized.indexOf('modelname') >= 0 || normalized.indexOf('title') >= 0;
-      if (hasProject && hasStatus && hasPage && hasModel) return i;
+      var nonEmptyCount = normalized.filter(function (value) { return !!value; }).length;
+      var hasProject = normalized.indexOf('projectname') >= 0 ||
+        normalized.indexOf('locale') >= 0 ||
+        normalized.indexOf('country') >= 0 ||
+        normalized.indexOf('국가') >= 0;
+      var hasStatus = normalized.indexOf('taskstatusinptt') >= 0 ||
+        normalized.indexOf('status') >= 0 ||
+        normalized.indexOf('상태') >= 0;
+      var hasPage = normalized.indexOf('pg') >= 0 ||
+        normalized.indexOf('page') >= 0 ||
+        normalized.indexOf('pages') >= 0;
+      var hasUrl = normalized.indexOf('liveurl') >= 0 || normalized.indexOf('url') >= 0;
+
+      // 본부별로 Title / Model Name / Sales Model Code 등의 컬럼 구성이 달라도
+      // Country + Status를 공통 기준으로 헤더를 찾습니다.
+      if (hasProject && hasStatus && nonEmptyCount >= 4) {
+        if (hasPage || hasUrl) return i;
+        if (fallback < 0) fallback = i;
+      }
     }
-    return -1;
+
+    return fallback;
   }
 
   function findHeader(headers, candidates) {
@@ -134,7 +151,8 @@
   }
 
   function readWorkbookRows(workbook) {
-    var all = [];
+    var sheets = [];
+
     workbook.SheetNames.forEach(function (sheetName) {
       var matrix = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
         header: 1,
@@ -150,8 +168,19 @@
       var regionHeader = findHeader(headers, ['Region', '지역']);
       var statusHeader = findHeader(headers, ['Task Status in PTT', 'Status', '상태']);
       var pageHeader = findHeader(headers, ['Pg#', 'Page#', 'Pages', 'Page']);
-      var modelHeader = findHeader(headers, ['Model Name', 'Title', 'Model']);
+      var modelHeader = findHeader(headers, [
+        'Model Name', 'Title', 'Model', 'Sales Model Code', 'Model Code',
+        'Product', 'Contents', 'Content'
+      ]);
       var liveUrlHeader = findHeader(headers, ['Live URL', 'URL']);
+
+      var metaCells = {
+        B1: cleanText(matrix[0] && matrix[0][1]),
+        B2: cleanText(matrix[1] && matrix[1][1]),
+        B3: cleanText(matrix[2] && matrix[2][1]),
+        B4: cleanText(matrix[3] && matrix[3][1])
+      };
+      var records = [];
 
       for (var r = headerIndex + 1; r < matrix.length; r++) {
         var sourceRow = matrix[r] || [];
@@ -165,49 +194,53 @@
         var projectName = projectHeader ? row[projectHeader] : '';
         var modelName = modelHeader ? row[modelHeader] : '';
         var rawStatus = statusHeader ? row[statusHeader] : '';
-        if (!projectName && !modelName && !rawStatus) continue;
 
+        // 시트별 표는 원본 행을 그대로 유지합니다.
+        // Country/Status가 비어 있는 보조 행도 실제 데이터가 있으면 표에서 제외하지 않습니다.
         row.Region = normalizeRegion(regionHeader ? row[regionHeader] : '', projectName);
-        all.push({
+        records.push({
           sheetName: sheetName,
           headers: headers,
           row: row,
           projectName: projectName,
-          modelName: modelName || sheetName,
+          modelName: modelName,
           rawStatus: rawStatus,
           mappedStatus: normalizeStatus(rawStatus, false),
           pages: pageHeader ? toPageCount(row[pageHeader]) : 1,
           liveUrl: liveUrlHeader ? row[liveUrlHeader] : ''
         });
       }
+
+      if (!records.length) return;
+
+      sheets.push({
+        sheetName: sheetName,
+        headers: headers,
+        records: records,
+        headerIndex: headerIndex,
+        metaCells: metaCells,
+        displayTitle: metaCells.B1 || sheetName,
+        weeklyUpdateText: metaCells.B2,
+        dam: metaCells.B3,
+        requestWeek: metaCells.B4
+      });
     });
-    return all;
+
+    return sheets;
   }
 
-  function buildDashboardData(records) {
-    var grouped = {};
-    var groupOrder = [];
-
-    records.forEach(function (record) {
-      var title = cleanText(record.modelName) || 'Untitled';
-      if (!grouped[title]) {
-        grouped[title] = [];
-        groupOrder.push(title);
-      }
-      grouped[title].push(record);
-    });
-
+  function buildDashboardData(sheets) {
     var data = {};
     var keys = [];
 
-    groupOrder.forEach(function (title, index) {
-      var recordsForModel = grouped[title];
-      var headers = recordsForModel[0].headers.slice();
+    (sheets || []).forEach(function (sheetInfo, index) {
+      var records = sheetInfo.records || [];
+      var headers = (sheetInfo.headers || []).slice();
       var tableRows = [];
       var items = [];
       var stats = { Done:0, 'Corp. Review':0, 'In Progress':0, 'Pre-Review':0, Cancel:0, Total:0 };
 
-      recordsForModel.forEach(function (record) {
+      records.forEach(function (record) {
         tableRows.push(record.row);
         items.push({
           locale: record.projectName,
@@ -218,19 +251,25 @@
           pages: record.pages,
           url: record.liveUrl,
           rawStatus: record.rawStatus,
-          modelName: title
+          modelName: cleanText(record.modelName) || sheetInfo.displayTitle || sheetInfo.sheetName
         });
         stats[record.mappedStatus] = (stats[record.mappedStatus] || 0) + record.pages;
         stats.Total += record.pages;
       });
 
-      var key = 'es_model_' + String(index + 1).padStart(2, '0');
+      var key = 'es_sheet_' + String(index + 1).padStart(2, '0');
       data[key] = {
         key: key,
-        title: title,
-        displayTitle: title,
-        sheetName: recordsForModel[0].sheetName,
-        requestWeek: '',
+        title: sheetInfo.displayTitle || sheetInfo.sheetName,
+        displayTitle: sheetInfo.displayTitle || sheetInfo.sheetName,
+        navTitle: sheetInfo.sheetName,
+        sheetName: sheetInfo.sheetName,
+        requestWeek: sheetInfo.requestWeek || '',
+        requestWeekB4: sheetInfo.requestWeek || '',
+        weeklyUpdateB2: sheetInfo.weeklyUpdateText || '',
+        weeklyUpdateText: sheetInfo.weeklyUpdateText || '',
+        dam: sheetInfo.dam || '',
+        metaCells: sheetInfo.metaCells || {},
         tableHeaders: headers,
         tableRows: tableRows,
         items: items,
@@ -260,8 +299,9 @@
     var html = '<div class="sb-section-label">Contents</div>';
     keys.forEach(function (key, index) {
       var d = data[key];
-      html += '<div class="nav-item' + (index === 0 ? ' active' : '') + '" data-key="' + key + '" onclick="switchMenu(this)" title="' + escapeHtml(d.displayTitle) + '">' +
-        '<span class="ni-text" data-abbr="' + String(index + 1).padStart(2, '0') + '">' + escapeHtml(d.displayTitle) + '</span>' +
+      var navTitle = d.navTitle || d.sheetName || d.displayTitle;
+      html += '<div class="nav-item' + (index === 0 ? ' active' : '') + '" data-key="' + key + '" onclick="switchMenu(this)" title="' + escapeHtml(navTitle) + '">' +
+        '<span class="ni-text" data-abbr="' + String(index + 1).padStart(2, '0') + '">' + escapeHtml(navTitle) + '</span>' +
         '<span class="ni-badge" style="background:rgba(148,163,184,.2);color:#94A3B8">0%</span>' +
       '</div>';
     });
@@ -312,11 +352,11 @@
       })
       .then(function (buffer) {
         var workbook = XLSX.read(buffer, { type: 'array', cellDates: true });
-        var records = readWorkbookRows(workbook);
-        var result = buildDashboardData(records);
+        var sheets = readWorkbookRows(workbook);
+        var result = buildDashboardData(sheets);
 
         if (!result.keys.length) {
-          throw new Error('Region / Project Name / Task Status in PTT / Model Name / Pg# 형식의 데이터를 찾지 못했습니다.');
+          throw new Error('Country / Status 기준의 시트 데이터를 찾지 못했습니다.');
         }
 
         installGlobals(result.data, result.keys);
