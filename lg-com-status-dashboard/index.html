@@ -1193,10 +1193,35 @@
       background:var(--lg-gray-2);
     }
     .dam-actions{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      width:100%;
+      min-width:0;
+    }
+    .dam-copy-row{
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
+      width:100%;
+      min-width:0;
+    }
+    .dam-url-text{
+      flex:1 1 auto;
+      min-width:0;
+      color:var(--lg-gray-6);
+      font-size:12px;
+      line-height:1.45;
+      font-weight:500;
+      white-space:normal;
+      overflow-wrap:anywhere;
+      word-break:break-all;
+      user-select:text;
+      cursor:text;
+    }
+    .dam-copy-row .mini-btn{
+      flex:0 0 auto;
+      margin-top:0;
     }
     .mini-btn{
       border:1px solid var(--lg-gray-2);
@@ -2804,16 +2829,52 @@ function liveUrlListHtml(urls){
     return '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(label) + '</a>';
   }).join('') + '</div>';
 }
-function damButtons(url){
-  const value = norm(url);
-  if(!isValidUrl(value)){
+function damButtons(value){
+  const urls = extractUrls(value);
+  if(!urls.length){
     return '<span class="muted-text">-</span>';
   }
-  return `
-    <div class="dam-actions">
-      <button class="mini-btn" type="button" data-copy-url="${esc(value)}">Copy</button>
-    </div>
-  `;
+  return '<div class="dam-actions">' + urls.map(function(url){
+    return '<div class="dam-copy-row">'
+      + '<span class="dam-url-text">' + esc(url) + '</span>'
+      + '<button class="mini-btn" type="button" data-copy-url="' + esc(url) + '">Copy</button>'
+      + '</div>';
+  }).join('') + '</div>';
+}
+
+async function copyUrlButton(btn){
+  if(!btn) return;
+  const url = btn.getAttribute('data-copy-url') || '';
+  if(!url) return;
+  const original = btn.textContent;
+  try{
+    if(!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('Clipboard API unavailable');
+    await navigator.clipboard.writeText(url);
+  }catch(err){
+    const temp = document.createElement('textarea');
+    temp.value = url;
+    temp.setAttribute('readonly', '');
+    temp.style.position = 'fixed';
+    temp.style.opacity = '0';
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand('copy');
+    document.body.removeChild(temp);
+  }
+  btn.textContent = 'Copied';
+  setTimeout(function(){ btn.textContent = original; }, 1200);
+}
+
+function bindCopyUrlButtons(root){
+  const scope = root || document;
+  scope.querySelectorAll('[data-copy-url]').forEach(function(btn){
+    if(btn.dataset.copyBound === '1') return;
+    btn.dataset.copyBound = '1';
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      copyUrlButton(btn);
+    });
+  });
 }
 function findColumn(headers, aliases){
   const hmap = new Map(headers.map(h => [key(h), h]));
@@ -4295,28 +4356,7 @@ function renderDashboard(rows, clickedCountry=null){
     // country header click removed (flat list mode)
   });
 
-  document.querySelectorAll('[data-copy-url]').forEach(btn => {
-    btn.addEventListener('click', async e => {
-      e.stopPropagation();
-      const url = btn.getAttribute('data-copy-url');
-      try{
-        await navigator.clipboard.writeText(url);
-        const original = btn.textContent;
-        btn.textContent = 'Copied';
-        setTimeout(() => btn.textContent = original, 1200);
-      }catch(err){
-        const temp = document.createElement('textarea');
-        temp.value = url;
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand('copy');
-        document.body.removeChild(temp);
-        const original = btn.textContent;
-        btn.textContent = 'Copied';
-        setTimeout(() => btn.textContent = original, 1200);
-      }
-    });
-  });
+  bindCopyUrlButtons(document);
 
   bindFloatingTooltips();
   bindStatusItemModals();
@@ -4667,8 +4707,8 @@ function openStatusModal(detail){
   const damUrl = String(detail.dam || '').trim();
   if(isCompleteStatus){
     linkVal = liveUrlListHtml(liveUrls);
-  } else if(/^https?:\/\//i.test(damUrl)){
-    linkVal = '<a href="' + esc(damUrl) + '" target="_blank" rel="noopener" style="color:var(--lg-heritage-red);font-weight:700;text-decoration:none">Open DAM Link ↗</a>';
+  } else if(extractUrls(damUrl).length){
+    linkVal = damButtons(damUrl);
   }
 
   const rows = [
@@ -4681,7 +4721,9 @@ function openStatusModal(detail){
     rowHtml(linkKey,          linkVal,                       false)
   ].join('');
 
-  document.getElementById('statusModalBody').innerHTML = rows;
+  const statusModalBody = document.getElementById('statusModalBody');
+  statusModalBody.innerHTML = rows;
+  bindCopyUrlButtons(statusModalBody);
   modal.querySelectorAll('.detail-copy-btn').forEach(function(b){ b.remove(); });
   modal.classList.add('show');
 
