@@ -20,10 +20,35 @@
       "from": "법인리뷰",
       "to": "완료"
     },
+    "UltraGear Buying Guide|BR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "UltraGear Buying Guide|CN": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "작업중"
+    },
+    "UltraGear Buying Guide|CO": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
     "UltraGear Buying Guide|FR": {
       "type": "status",
       "from": "법인리뷰",
       "to": "완료"
+    },
+    "UltraGear Buying Guide|IT": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "UltraGear Buying Guide|PL": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
     },
     "SmartMonitor ScreenShare|MX": {
       "type": "status",
@@ -137,7 +162,7 @@
       "new": 0
     },
     "UltraGear Buying Guide": {
-      "changed": 1,
+      "changed": 6,
       "new": 0
     },
     "SmartMonitor ScreenShare": {
