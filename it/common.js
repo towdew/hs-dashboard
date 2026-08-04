@@ -5960,17 +5960,18 @@ function grChangeBadgeHtml(displayTitle, rawCountry) {
 // Overall Status 카드에 "금주 변경 N건" 한 줄 요약을 덧붙인다(GR 탭이 아니거나
 // 데이터 미로딩/변경 없음이면 빈 문자열 — 카드 구조에 영향 없음).
 function buildGrWeeklyChangeSummaryHtml(d) {
-  if (!_grChanges || !_grChanges.taskSummary) return '';
+  if (!_grChanges || !_grChanges.changes) return '';
   var displayTitle = getDashboardDisplayTitle(d);
   if (!isGrSheetDisplayTitle(displayTitle)) return '';
-  if (typeof grTaskKeyOf !== 'function') return '';
+  if (typeof grTaskKeyOf !== 'function' || typeof grCountTaskChanges !== 'function') return '';
   var taskKey = grTaskKeyOf(displayTitle);
-  var summary = taskKey ? _grChanges.taskSummary[taskKey] : null;
-  if (!summary) return '';
-  var n = (summary.changed || 0) + (summary.new || 0);
-  if (!n) return '';
+  if (!taskKey) return '';
+  // taskSummary가 아니라 changes를 직접 센다 — 요약 숫자와 행 배지(grChangeBadgeHtml)가
+  // 같은 출처를 쓰게 해서, 배지 0개인데 "금주 변경 N건"만 뜨는 상태를 원천 차단한다.
+  var c = grCountTaskChanges(_grChanges.changes, taskKey);
+  if (!c.total) return '';
   return '<div class="gr-weekly-change-summary" style="margin-top:4px;font-size:11px;font-weight:700;color:#A50034">' +
-    '금주 변경 ' + n + '건' + (summary.new ? ' (신규 ' + summary.new + ')' : '') +
+    '금주 변경 ' + c.total + '건' + (c.added ? ' (신규 ' + c.added + ')' : '') +
     '</div>';
 }
 
