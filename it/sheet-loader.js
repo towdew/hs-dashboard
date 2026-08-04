@@ -1507,7 +1507,9 @@ function parseCountryValueParts(value) {
 
 function isSheetLoaderLanguageCode(value) {
   const code = String(value || '').toLowerCase();
-  return ['en','ar','fr','de','es','pt','ko','ja','zh','it','nl','vi','th','id','tr','pl','cs','da','sv','fi','no','he','fa','ro','bg','hr','hu','el','sk','sl','lt','lv','et','ms','hi'].indexOf(code) >= 0;
+  return ['en','ar','fr','de','es','pt','ko','ja','zh','it','nl','vi','th','id','tr','pl','cs','da','sv','fi','no','he','fa','ro','bg','hr','hu','el','sk','sl','lt','lv','et','ms','hi',
+          'ru','uk',                     // ISO 639-1인데 누락돼 있던 것
+          'cz','ee','gr','rs'].indexOf(code) >= 0;   // LG 로케일 관용 표기(ISO는 cs/et/el/sr)
 }
 
 function normalizeRegionLabel(value) {
@@ -1586,7 +1588,8 @@ const COUNTRY_REGION_MAP = {
 };
 
 const COUNTRY_FULLNAME_MAP = {
-  AFRICA:'Africa', LEVANT:'Levant', HS:'HS', AE:'United Arab Emirates', AF:'Afghanistan', AO:'Angola', AR:'Argentina', AT:'Austria', AU:'Australia',
+  AFRICA:'Africa', LEVANT:'Levant', HS:'HS', CAC:'Central America & Caribbean',
+  AE:'United Arab Emirates', AF:'Afghanistan', AO:'Angola', AR:'Argentina', AT:'Austria', AU:'Australia',
   BD:'Bangladesh', BE:'Belgium', BG:'Bulgaria', BH:'Bahrain', BO:'Bolivia', BR:'Brazil', CA:'Canada',
   CH:'Switzerland', CL:'Chile', CN:'China', CO:'Colombia', CR:'Costa Rica', CY:'Cyprus', CZ:'Czech Republic',
   DE:'Germany', DK:'Denmark', DO:'Dominican Republic', DZ:'Algeria', EC:'Ecuador', EE:'Estonia', EG:'Egypt',
@@ -1597,7 +1600,7 @@ const COUNTRY_FULLNAME_MAP = {
   MA:'Morocco', MM:'Myanmar', MX:'Mexico', MY:'Malaysia', NG:'Nigeria', NI:'Nicaragua', NL:'Netherlands',
   NO:'Norway', NP:'Nepal', NZ:'New Zealand', OM:'Oman', PA:'Panama', PE:'Peru', PH:'Philippines',
   PK:'Pakistan', PL:'Poland', PR:'Puerto Rico', PT:'Portugal', PY:'Paraguay', QA:'Qatar', RO:'Romania',
-  RS:'Serbia', SA:'Saudi Arabia', SE:'Sweden', SG:'Singapore', SI:'Slovenia', SK:'Slovakia', SV:'El Salvador',
+  RS:'Serbia', RU:'Russia', SA:'Saudi Arabia', SE:'Sweden', SG:'Singapore', SI:'Slovenia', SK:'Slovakia', SV:'El Salvador',
   TH:'Thailand', TN:'Tunisia', TR:'Turkey', TW:'Taiwan', TZ:'Tanzania', UA:'Ukraine', UK:'United Kingdom',
   US:'United States', UY:'Uruguay', VE:'Venezuela', VN:'Vietnam', ZA:'South Africa'
 };
