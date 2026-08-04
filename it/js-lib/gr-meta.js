@@ -138,12 +138,38 @@ function grTaskGroupOf(pct, override) {
   return (isFinite(n) && n >= 100) ? 'done' : 'in_progress';
 }
 
+// gr-changes.json의 changes에서 해당 태스크의 실제 변경 건수를 센다.
+// taskSummary를 그대로 쓰지 않는 이유: 수동 재작성된 gr-changes에서 taskSummary에만
+// 신규가 집계되고 changes에는 대응 엔트리가 없는 상태가 실제로 발생했다(2026-08-04 실측 —
+// Copilot+ Hero Banner·UltraGear 1000Hz FAQ·Windows 11 Landing·PDP Gallery Win11 Pro 4건).
+// 그 경우 카드에는 "금주 변경 1건 (신규 1)"이 뜨는데 정작 어느 국가행에도 NEW 배지가
+// 붙지 않아, 사용자는 무엇이 바뀌었는지 찾을 수 없다. 배지의 출처를 changes 한 곳으로
+// 통일해 요약과 행 배지가 항상 일치하게 한다.
+// 조회 키는 grLookup과 동일한 "taskKey|code" 규약 + GR_TASK_KEY_ALIASES 폴백.
+function grCountTaskChanges(changes, taskKey) {
+  var out = { changed: 0, added: 0, total: 0 };
+  if (!changes || !taskKey) return out;
+  var prefixes = [taskKey + '|'];
+  var alias = GR_TASK_KEY_ALIASES[taskKey];
+  if (alias) prefixes.push(alias + '|');
+  Object.keys(changes).forEach(function(key) {
+    var matched = prefixes.some(function(p) { return key.lastIndexOf(p, 0) === 0; });
+    if (!matched) return;
+    var type = (changes[key] || {}).type;
+    if (type === 'new_task' || type === 'new_country') out.added++;
+    else out.changed++;
+    out.total++;
+  });
+  return out;
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     grNormalizeCountryCode: grNormalizeCountryCode,
     grTaskGroupOf: grTaskGroupOf,
     grTaskKeyOf: grTaskKeyOf,
     grLookup: grLookup,
+    grCountTaskChanges: grCountTaskChanges,
     grNormTitleKey: grNormTitleKey,
     GR_DUAL_LOCALE_MAP: GR_DUAL_LOCALE_MAP,
     GR_COUNTRY_NAME_TO_CODE: GR_COUNTRY_NAME_TO_CODE,

@@ -453,10 +453,6 @@
       "changed": 2,
       "new": 0
     },
-    "Copilot+ Hero Banner": {
-      "changed": 0,
-      "new": 1
-    },
     "AI Upscaling Disclaimer": {
       "changed": 30,
       "new": 0
@@ -469,21 +465,9 @@
       "changed": 10,
       "new": 0
     },
-    "UltraGear 1000Hz FAQ": {
-      "changed": 0,
-      "new": 1
-    },
     "gram Secure Lock": {
       "changed": 1,
       "new": 0
-    },
-    "Windows 11 Landing": {
-      "changed": 0,
-      "new": 1
-    },
-    "PDP Gallery Win11 Pro": {
-      "changed": 0,
-      "new": 1
     }
   },
   "generatedAt": "2026-07-28"
