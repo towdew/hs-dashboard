@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADP 월간보고 대시보드</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{
+  --red:#A50034; --red-soft:#FFF0F2; --red-line:#F6C9D3;
+  --active:#10B981; --active-bg:#ECFDF5;
+  --disc:#EF4444; --disc-bg:#FEF2F2;
+  --hidden:#94A3B8; --hidden-bg:#F8FAFC;
+  --susp:#F59E0B; --susp-bg:#FFFBEB;
+  --ink:#1F2430; --sub:#6B7280; --faint:#9CA3AF;
+  --line:#E8EAF2; --bg:#F5F6FA; --card:#fff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+  font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  -webkit-font-smoothing:antialiased;}
+button{font-family:inherit;cursor:pointer}
+.app{display:flex;min-height:100vh}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{width:216px;background:#fff;border-right:1.5px solid var(--line);
+  display:flex;flex-direction:column;flex-shrink:0;
+  transition:width .25s cubic-bezier(.4,0,.2,1);position:sticky;top:0;height:100vh;}
+.sidebar.collapsed{width:60px}
+.sb-logo{display:flex;align-items:center;height:56px;border-bottom:1px solid var(--line)}
+.sb-toggle-btn{width:60px;height:56px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  background:none;border:none;}
+.sb-toggle-btn .hb{display:flex;flex-direction:column;gap:4.5px;width:18px}
+.sb-toggle-btn .hb span{display:block;height:1.5px;border-radius:2px;background:#6B7280}
+.sidebar-text-group{flex:1;padding-right:12px;overflow:hidden;transition:opacity .2s;white-space:nowrap}
+.sidebar.collapsed .sidebar-text-group{opacity:0;pointer-events:none}
+.sb-logo-text{font-size:13px;font-weight:800;color:var(--ink);letter-spacing:-.2px}
+.sb-logo-sub{font-size:10.5px;color:var(--red);font-weight:700;margin-top:1px}
+.sb-section{padding:14px 0 4px}
+.sb-section-label{font-size:10px;font-weight:700;color:var(--faint);letter-spacing:.06em;
+  padding:0 20px;margin-bottom:6px;text-transform:uppercase;white-space:nowrap;overflow:hidden}
+.sidebar.collapsed .sb-section-label{opacity:0}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;margin:2px 8px;border-radius:8px;
+  color:#6B7280;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden}
+.nav-item:hover{background:#F7F8FB}
+.nav-item.active{background:var(--red-soft);color:var(--red);font-weight:800}
+.nav-item .ni-ico{width:16px;height:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.sidebar.collapsed .nav-item{padding:11px;margin:2px 8px;justify-content:center}
+.sidebar.collapsed .nav-item span.ni-text{display:none}
+.sb-bottom{margin-top:auto;padding:12px;border-top:1px solid var(--line)}
+.sb-updated{font-size:10.5px;color:var(--faint);line-height:1.5;white-space:nowrap;overflow:hidden}
+.sidebar.collapsed .sb-updated{opacity:0}
+.sb-upload-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:6px;
+  background:var(--red);color:#fff;border:none;border-radius:8px;padding:9px 0;
+  font-size:11.5px;font-weight:700;margin-top:10px}
+.sidebar.collapsed .sb-upload-btn span.ni-text{display:none}
+
+/* ---------- TOPBAR ---------- */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{height:56px;flex-shrink:0;background:#fff;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:20}
+.tb-left{display:flex;align-items:center;gap:10px}
+.tb-title{font-size:14.5px;font-weight:800}
+.tb-badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--red-soft);color:var(--red)}
+.tb-badge.admin{background:#EEF2FF;color:#4338CA}
+.month-select{appearance:none;-webkit-appearance:none;border:1.5px solid var(--line);background:#fff;
+  color:var(--ink);font-family:'Pretendard',sans-serif;font-size:11.5px;font-weight:700;
+  padding:5px 26px 5px 12px;border-radius:20px;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center}
+.month-select:hover{border-color:var(--red-line)}
+.month-select:focus{outline:none;border-color:var(--red)}
+.tb-right{display:flex;align-items:center;gap:10px;color:#9CA3AF;font-size:11px}
+.tb-file-btn{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;
+  color:var(--ink);font-size:11.5px;font-weight:700;padding:6px 12px;border-radius:8px}
+.tb-file-btn:hover{border-color:var(--red);color:var(--red)}
+.tb-file-btn:disabled,.sb-upload-btn:disabled{opacity:.45;cursor:not-allowed;pointer-events:none}
+.hq-strip{background:#FBFAFB;border-bottom:1px solid var(--line);padding:6px 20px;
+  font-size:11px;color:var(--sub);display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.hq-strip b{color:var(--ink);font-weight:700}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--active);display:inline-block;margin-right:5px;
+  box-shadow:0 0 0 3px var(--active-bg)}
+
+.data-area{padding:20px 24px 40px;max-width:1600px;width:100%;margin:0}
+.view{display:none}
+.view.active{display:block;animation:fadeUp .25s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.section-title{display:flex;align-items:baseline;gap:8px;margin:0 0 12px}
+.section-title .num{font-size:11px;font-weight:800;color:var(--red);background:var(--red-soft);
+  padding:2px 8px;border-radius:5px}
+.section-title h2{font-size:16px;font-weight:800;margin:0}
+.section-title .desc{font-size:11.5px;color:var(--faint);margin-left:auto}
+
+.section-card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:20px;margin-bottom:16px;box-shadow:0 1px 2px rgba(20,20,43,.03)}
+
+/* KPI cards */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#fff;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.kpi.k-total::before{background:var(--red)}
+.kpi.k-active::before{background:var(--active)}
+.kpi.k-disc::before{background:var(--disc)}
+.kpi.k-hidden::before{background:var(--hidden)}
+.kpi.k-susp::before{background:var(--susp)}
+.kpi-label{font-size:11px;color:var(--sub);font-weight:600;margin-bottom:6px}
+.kpi-value{font-size:22px;font-weight:800;letter-spacing:-.3px}
+.kpi-pct{font-size:12px;font-weight:700;color:var(--sub)}
+.kpi-mom{font-size:11px;font-weight:700;margin-top:4px}
+.mom-up{color:var(--active)}.mom-down{color:var(--disc)}.mom-flat{color:var(--faint)}
+
+.grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+
+.chart-wrap{position:relative;height:260px}
+.chart-wrap.tall{height:320px}
+
+/* Locale table */
+.table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table.locale-table{width:100%;border-collapse:collapse;font-size:12px;min-width:680px}
+table.locale-table thead th{background:#FAFAFC;color:var(--sub);font-weight:700;font-size:10.5px;
+  text-transform:uppercase;letter-spacing:.03em;padding:9px 10px;border-bottom:1.5px solid var(--line);
+  position:sticky;top:0;text-align:right;white-space:nowrap}
+table.locale-table thead th:first-child,table.locale-table thead th:nth-child(2){text-align:left}
+table.locale-table tbody td{padding:7px 10px;border-bottom:1px solid #F2F3F8;text-align:right;white-space:nowrap}
+table.locale-table tbody td:first-child,table.locale-table tbody td:nth-child(2){text-align:left}
+table.locale-table tbody tr:hover{background:#FAFAFD}
+.region-tag{font-size:9.5px;font-weight:700;color:var(--faint)}
+.loc-name{font-weight:700;font-size:12.5px}
+td.c-active{color:var(--active);font-weight:700}
+td.c-disc{color:var(--disc)}
+td.c-hidden{color:var(--hidden)}
+td.c-susp{color:#B45309}
+.mom-pill{font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:20px}
+.mom-pill.up{background:var(--active-bg);color:#047857}
+.mom-pill.down{background:var(--disc-bg);color:#B91C1C}
+.mom-pill.flat{background:#F3F4F6;color:var(--faint)}
+tfoot td{font-weight:800;background:#FAFAFC;border-top:1.5px solid var(--line);padding:9px 10px}
+table.locale-table tfoot{position:sticky;bottom:0;z-index:5}
+table.locale-table tfoot td{box-shadow:0 -1px 0 var(--line)}
+
+.region-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.region-select-wrap{position:relative;display:inline-block;margin-bottom:12px}
+.region-select{appearance:none;-webkit-appearance:none;-moz-appearance:none;
+  border:1.5px solid var(--line);background:#fff;color:var(--ink);font-family:'Pretendard',sans-serif;
+  font-size:12.5px;font-weight:700;padding:9px 38px 9px 14px;border-radius:10px;min-width:200px;
+  cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.region-select:hover{border-color:var(--red-line)}
+.region-select:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px var(--red-soft)}
+.region-select-wrap::after{content:'';position:absolute;right:14px;top:50%;width:9px;height:9px;
+  border-right:2px solid var(--sub);border-bottom:2px solid var(--sub);
+  transform:translateY(-65%) rotate(45deg);pointer-events:none}
+.region-select-wrap::before{content:'';position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  width:8px;height:8px;border-radius:2px;background:var(--red);pointer-events:none}
+.region-select{padding-left:30px}
+.region-select option{font-weight:600;padding:6px}
+
+/* locale comparison chart */
+.chart-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;padding:12px 8px 4px;background:#FCFCFD}
+#localeBarInner{height:340px}
+table.locale-matrix{border-collapse:collapse;font-size:11px;min-width:100%}
+table.locale-matrix th,table.locale-matrix td{padding:6px 9px;border-bottom:1px solid #F2F3F8;text-align:right;white-space:nowrap}
+table.locale-matrix thead th{background:#FAFAFC;color:var(--sub);font-weight:700;font-size:10px;
+  text-transform:uppercase;border-bottom:1.5px solid var(--line)}
+table.locale-matrix td:first-child,table.locale-matrix th:first-child{
+  text-align:left;font-weight:700;position:sticky;left:0;background:#fff;min-width:96px}
+table.locale-matrix thead th:first-child{background:#FAFAFC}
+table.locale-matrix tr.mx-total td{font-weight:800;background:#FAFAFC}
+.mx-swatch{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:1px}
+
+/* pivot table */
+table.pivot{width:100%;border-collapse:collapse;font-size:12px}
+table.pivot th{background:#FAFAFC;color:var(--sub);font-weight:700;font-size:10.5px;text-transform:uppercase;
+  padding:8px 10px;border-bottom:1.5px solid var(--line);text-align:right}
+table.pivot th:first-child{text-align:left}
+table.pivot td{padding:7px 10px;border-bottom:1px solid #F2F3F8;text-align:right}
+table.pivot td:first-child{text-align:left;font-weight:700}
+table.pivot tr.cur td{background:var(--red-soft);color:var(--red);font-weight:800}
+table.pivot tfoot td{font-weight:800;border-top:1.5px solid var(--line)}
+
+/* ticket status buckets */
+.bucket-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:900px){.bucket-grid{grid-template-columns:repeat(2,1fr)}}
+.bucket-card{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#fff}
+.bucket-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+.bucket-head .b-label{font-size:12px;font-weight:800}
+.bucket-head .b-total{font-size:18px;font-weight:800;color:var(--red)}
+.bstat-row{margin-bottom:7px}
+.bstat-top{display:flex;justify-content:space-between;font-size:10.5px;color:var(--sub);margin-bottom:3px}
+.bstat-top b{color:var(--ink);font-weight:700}
+.bstat-bar{height:5px;border-radius:3px;background:#F0F1F8;overflow:hidden}
+.bstat-fill{height:100%;border-radius:3px;background:var(--red)}
+.jira-link{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--red);
+  text-decoration:none;margin-top:4px}
+.empty-hint{font-size:11.5px;color:var(--faint);padding:24px 4px;text-align:center}
+
+/* discussion */
+.issue-list{list-style:none;padding:0;margin:0}
+.issue-list li{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #F2F3F8;font-size:12.5px;line-height:1.55}
+.issue-list li:last-child{border-bottom:none}
+.issue-num{flex-shrink:0;width:20px;height:20px;border-radius:6px;background:var(--red-soft);color:var(--red);
+  font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.progress-block{margin-top:14px}
+.progress-labels{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:6px;color:var(--sub)}
+.progress-labels b{color:var(--ink)}
+.seg-bar{height:14px;border-radius:8px;overflow:hidden;display:flex;background:#F0F1F8}
+.seg{height:100%}
+.legend-row{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--sub)}
+.legend-dot{width:8px;height:8px;border-radius:2px}
+.target-note{font-size:11px;color:var(--faint);margin-top:8px}
+
+.card-title{font-size:13px;font-weight:800;margin:0 0 12px;display:flex;align-items:center;gap:6px}
+.card-title .tag{font-size:10px;font-weight:700;color:#fff;background:var(--red);padding:2px 6px;border-radius:5px}
+
+/* upload overlay */
+.upload-overlay{position:fixed;inset:0;background:rgba(245,246,250,.97);z-index:100;
+  display:flex;align-items:center;justify-content:center;padding:20px}
+.upload-card{background:#fff;border:1.5px dashed var(--red-line);border-radius:18px;padding:44px 40px;
+  text-align:center;max-width:440px;width:100%;transition:border-color .15s,background .15s}
+.upload-card.drag{border-color:var(--red);background:var(--red-soft)}
+.upload-icon{width:52px;height:52px;border-radius:14px;background:var(--red-soft);color:var(--red);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.upload-card h3{font-size:15px;font-weight:800;margin:0 0 6px}
+.upload-card p{font-size:12px;color:var(--sub);line-height:1.6;margin:0 0 18px}
+.upload-pick{display:inline-flex;align-items:center;gap:6px;background:var(--red);color:#fff;border:none;
+  border-radius:9px;padding:10px 20px;font-size:12.5px;font-weight:700}
+.upload-status{font-size:11px;color:var(--faint);margin-top:14px;min-height:16px}
+.upload-status.err{color:var(--disc);font-weight:700}
+
+/* discussion table */
+.kanban-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.kb-summary{font-size:12px;color:var(--sub);font-weight:600}
+.kb-add-btn{display:inline-flex;align-items:center;gap:6px;background:var(--red);color:#fff;border:none;
+  border-radius:9px;padding:8px 16px;font-size:12px;font-weight:700}
+.kb-add-btn:hover{background:#8a002b}
+table.kb-table{width:100%;border-collapse:collapse;font-size:12px;min-width:720px}
+table.kb-table thead th{background:#FAFAFC;color:var(--sub);font-weight:700;font-size:10.5px;
+  text-transform:uppercase;letter-spacing:.03em;padding:9px 10px;border-bottom:1.5px solid var(--line);text-align:left}
+table.kb-table tbody td{padding:9px 10px;border-bottom:1px solid #F2F3F8;vertical-align:middle}
+table.kb-table tbody tr{cursor:pointer}
+table.kb-table tbody tr:hover{background:#FAFAFD}
+.kb-td-content{max-width:360px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kb-cat{font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.kb-date{font-size:11px;color:var(--faint);font-weight:600;white-space:nowrap}
+.kb-assignee{font-size:11px;color:var(--sub);font-weight:700;background:#F4F5F9;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.kb-status-badge{font-size:10.5px;font-weight:800;padding:3px 10px;border-radius:20px;white-space:nowrap;color:#fff}
+.kb-comment-count{font-size:11px;color:var(--sub);white-space:nowrap}
+.kb-empty{font-size:11.5px;color:var(--faint);text-align:center;padding:16px 0}
+
+/* kanban modal (input + view, both max width 1024) */
+.kb-modal-overlay{position:fixed;inset:0;background:rgba(31,36,48,.45);z-index:200;
+  display:flex;align-items:center;justify-content:center;padding:16px}
+.kb-modal{background:#fff;border-radius:16px;width:100%;max-width:1024px;max-height:88vh;overflow-y:auto;
+  box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.kb-modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;
+  border-bottom:1px solid var(--line);font-size:14px;font-weight:800}
+.kb-modal-close{background:none;border:none;color:var(--faint);display:flex;padding:4px}
+.kb-modal-close:hover{color:var(--red)}
+.kb-modal-body{padding:18px 20px;display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+.kb-field.full{grid-column:1/-1}
+.kb-field label{display:block;font-size:11px;font-weight:700;color:var(--sub);margin-bottom:5px}
+.kb-field input[type=text],.kb-field input[type=date],.kb-field select,.kb-field textarea{
+  width:100%;border:1.5px solid var(--line);border-radius:8px;padding:8px 10px;font-size:12.5px;
+  font-family:'Pretendard',sans-serif;color:var(--ink);resize:vertical}
+.kb-field input:focus,.kb-field select:focus,.kb-field textarea:focus{outline:none;border-color:var(--red)}
+.kb-field input[type=file]{
+  width:100%;border:1.5px solid var(--line);border-radius:8px;padding:6px;font-size:12px;
+  color:var(--sub);font-family:'Pretendard',sans-serif;background:#fff}
+.kb-field input[type=file]::file-selector-button{
+  background:var(--red);color:#fff;border:none;border-radius:6px;padding:7px 16px;
+  font-size:11.5px;font-weight:700;margin-right:12px;cursor:pointer;font-family:'Pretendard',sans-serif;
+  transition:background .15s}
+.kb-field input[type=file]::file-selector-button:hover{background:#8a002b}
+.kb-field input[type=file]::-webkit-file-upload-button{
+  background:var(--red);color:#fff;border:none;border-radius:6px;padding:7px 16px;
+  font-size:11.5px;font-weight:700;margin-right:12px;cursor:pointer;font-family:'Pretendard',sans-serif}
+.kb-modal-foot{display:flex;justify-content:space-between;gap:8px;padding:14px 20px;border-top:1px solid var(--line)}
+.kb-btn-primary{flex:1;background:var(--red);color:#fff;border:none;border-radius:9px;padding:10px;
+  font-size:12.5px;font-weight:800}
+.kb-btn-secondary{background:#fff;color:var(--disc);border:1.5px solid var(--disc-bg);border-radius:9px;
+  padding:10px 16px;font-size:12.5px;font-weight:700}
+.kb-btn-secondary:hover{background:var(--disc-bg)}
+@media(max-width:700px){.kb-modal-body{grid-template-columns:1fr}}
+
+.kb-comment-badge{font-size:10.5px;color:var(--sub);font-weight:700;margin-left:8px}
+.kb-img-preview{position:relative;margin-top:8px;border-radius:8px;overflow:hidden}
+.kb-img-preview img{width:100%;max-height:260px;object-fit:cover;display:block}
+.kb-img-remove{position:absolute;top:6px;right:6px;background:rgba(20,20,43,.65);color:#fff;border:none;
+  border-radius:6px;padding:3px 9px;font-size:10px;font-weight:700}
+.kb-comments-section{border-top:1px dashed var(--line);padding-top:12px}
+.kb-comment-list{max-height:150px;overflow-y:auto;display:flex;flex-direction:column;gap:7px;margin-bottom:8px}
+.kb-comment{background:#F7F8FB;border-radius:8px;padding:7px 10px;font-size:11.5px;line-height:1.5}
+.kb-comment-head{display:flex;justify-content:space-between;margin-bottom:2px}
+.kb-comment-head b{font-size:11px}
+.kb-comment-date{font-size:10px;color:var(--faint)}
+.kb-comment-form{display:flex;gap:6px}
+.kb-comment-form input:first-child{flex:0 0 76px;min-width:0}
+.kb-comment-form input:last-child{flex:1;min-width:0}
+.kb-comment-form input{border:1.5px solid var(--line);border-radius:7px;padding:7px 9px;font-size:11.5px;
+  font-family:'Pretendard',sans-serif}
+.kb-comment-form input:focus{outline:none;border-color:var(--red)}
+.kb-comment-form button{background:var(--red);color:#fff;border:none;border-radius:7px;padding:0 14px;
+  font-size:11px;font-weight:700}
+.kb-comment-hint{font-size:11px;color:var(--faint)}
+
+/* view (read-only) modal */
+.kb-view-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:2px}
+.kb-view-content{font-size:13.5px;line-height:1.7;color:var(--ink);white-space:pre-wrap;word-break:break-word;
+  background:#FAFAFC;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kb-view-img{border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.kb-view-img img{width:100%;max-height:420px;object-fit:contain;display:block;background:#111}
+
+/* inline expand panel */
+tr.kb-row-open{background:var(--red-soft)}
+tr.kb-expand-row td{padding:0;border-bottom:1px solid var(--line);background:#FAFAFC}
+.kb-inline-panel{padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.kb-inline-actions{margin-left:auto;display:flex;gap:6px}
+.kb-icon-btn{background:#fff;border:1px solid var(--line);border-radius:7px;width:30px;height:30px;
+  display:inline-flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;padding:0}
+.kb-icon-btn:hover{border-color:var(--red)}
+
+@media(max-width:640px){
+  .sidebar{position:fixed;z-index:40;left:0}
+  .data-area{padding:14px 12px 28px}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .bucket-grid{grid-template-columns:1fr}
+  #localeBarInner{height:260px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo">
+      <button class="sb-toggle-btn" onclick="toggleSidebar()">
+        <div class="hb"><span></span><span></span><span></span></div>
+      </button>
+      <div class="sidebar-text-group">
+        <div class="sb-logo-text">ADP 월간보고</div>
+        <div class="sb-logo-sub">소모품사업팀</div>
+      </div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-section-label">Report</div>
+      <div class="nav-item active" data-view="v1" onclick="switchView(this)">
+        <span class="ni-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span>
+        <span class="ni-text">국가별 운영 현황</span>
+      </div>
+      <div class="nav-item" data-view="v2" onclick="switchView(this)">
+        <span class="ni-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg></span>
+        <span class="ni-text">신규 업무 현황</span>
+      </div>
+      <div class="nav-item" data-view="v4" onclick="switchView(this)">
+        <span class="ni-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+        <span class="ni-text">논의 사항</span>
+      </div>
+    </div>
+
+    <div class="sb-bottom">
+      <div class="sb-updated" id="sbUpdated">아직 불러온 파일이 없습니다</div>
+      <button class="sb-upload-btn" id="downloadBtnSb" onclick="downloadCurrentFile()" disabled>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+        <span class="ni-text">엑셀 다운로드</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="tb-left">
+        <span class="tb-title" id="tbTitle">1. 국가별 ADP 운영 현황</span>
+        <select class="month-select" id="monthSelect" onchange="onMonthChange(this.value)"></select>
+        <span class="tb-badge" id="tbPeriod">데이터 없음</span>
+        <span class="tb-badge admin">Admin</span>
+      </div>
+      <div class="tb-right">
+        <button class="tb-file-btn" onclick="fetchFromSource(false)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          최신본 다시 불러오기
+        </button>
+        <button class="tb-file-btn" id="downloadBtnTb" onclick="downloadCurrentFile()" disabled>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 3v12"/></svg>
+          엑셀 다운로드
+        </button>
+        <span>강경희 부장</span>
+      </div>
+    </div>
+    <div class="hq-strip">
+      <span><span class="live-dot"></span>브라우저에서 직접 계산 (서버 전송 없음)</span>
+      <span>업데이트 <b id="hqDate">—</b></span>
+      <span>소스 파일 <b id="hqFile">—</b></span>
+    </div>
+
+    <div class="data-area" id="dataArea">
+
+      <!-- VIEW 1 : 국가별 ADP 운영 현황 -->
+      <section class="view active" id="v1">
+        <div class="section-title"><h2>국가별 ADP 운영 현황</h2><span class="desc">Live ADP 탭 기준 자동 집계</span></div>
+
+        <div class="kpi-grid" id="kpiGrid"></div>
+
+        <div class="section-card">
+          <div class="card-title">로케일별 상태 비교 <span class="tag" id="chartTotalTag">TOTAL</span></div>
+          <div class="chart-scroll">
+            <div id="localeBarInner"><canvas id="localeBarChart"></canvas></div>
+          </div>
+          <div class="table-scroll" style="margin-top:14px">
+            <table class="locale-matrix" id="matrixDetail"></table>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="card-title">로케일별 현황 <span class="tag" id="localeCountTag">0 LOCALES</span></div>
+          <div id="regionFilter"></div>
+          <div class="table-scroll" id="localeTableScroll" style="max-height:520px;overflow-y:auto">
+            <table class="locale-table">
+              <thead><tr>
+                <th>REGION</th><th>LOCALE</th><th>ACTIVE</th><th>DISC.</th><th>HIDDEN</th><th>SUSP.</th><th>TOTAL</th><th>MoM</th>
+              </tr></thead>
+              <tbody id="localeBody"></tbody>
+              <tfoot id="localeFoot"></tfoot>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2 : 신규 업무 현황 -->
+      <section class="view" id="v2">
+        <div class="section-title"><h2>신규 업무 현황</h2><span class="desc" id="v2desc">Ticket RAW 탭 기준 자동 집계</span></div>
+        <div id="v2content"></div>
+      </section>
+
+      <!-- VIEW 4 : 논의 사항 -->
+      <section class="view" id="v4">
+        <div class="section-title"><h2>논의 사항</h2><span class="desc">담당자 확인 필요 사항 · 이슈 공유</span></div>
+        <div class="section-card">
+          <div class="kanban-toolbar">
+            <div class="kb-summary" id="kbSummary">전체 0건</div>
+            <button class="kb-add-btn" onclick="openCardModal()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+              새 항목 등록
+            </button>
+          </div>
+          <div class="table-scroll">
+            <table class="kb-table">
+              <thead><tr>
+                <th>등록일</th><th>항목</th><th>내용</th><th>담당자</th><th>상태</th><th>댓글</th>
+              </tr></thead>
+              <tbody id="kbTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- upload overlay (first load / no data) -->
+<div class="upload-overlay" id="uploadOverlay">
+  <div class="upload-card" id="uploadCard">
+    <div class="upload-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+    </div>
+    <h3>데이터를 불러오는 중입니다</h3>
+    <p>Git 저장소의 <code id="ovSrcName">ADP_월간보고.xlsx</code> 파일을 자동으로 확인하고 있어요.<br>
+    자동으로 불러와지지 않으면 아래에서 직접 올려주세요.<br>
+    (Git에 새 파일을 커밋하면 다음에 열 때 자동 반영됩니다)</p>
+    <button class="upload-pick" onclick="openFileDialog()">파일 직접 선택 (자동 로드 실패 시)</button>
+    <div class="upload-status" id="uploadStatus"></div>
+  </div>
+</div>
+<input type="file" id="fileInput" accept=".xlsx,.xlsm" style="display:none">
+
+<!-- input popup (create/edit) -->
+<div class="kb-modal-overlay" id="kbModalOverlay" style="display:none">
+  <div class="kb-modal">
+    <div class="kb-modal-head">
+      <span id="kbModalTitle">새 항목 등록</span>
+      <button class="kb-modal-close" onclick="closeCardModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="kb-modal-body">
+      <div class="kb-field"><label>등록일</label><input type="date" id="kbDate"></div>
+      <div class="kb-field"><label>항목 (Category)</label>
+        <select id="kbCategory">
+          <option>Tech Issue</option>
+          <option>정책/기준 확인</option>
+          <option>리소스 요청</option>
+          <option>일정 조율</option>
+          <option>기타</option>
+        </select>
+      </div>
+      <div class="kb-field"><label>담당자</label><input type="text" id="kbAssignee" placeholder="예: 강경희 부장"></div>
+      <div class="kb-field"><label>상태</label>
+        <select id="kbStatus">
+          <option value="todo">확인요청</option>
+          <option value="doing">진행중</option>
+          <option value="done">완료</option>
+        </select>
+      </div>
+      <div class="kb-field full"><label>내용</label>
+        <textarea id="kbContent" rows="5" placeholder="논의할 내용 또는 확인이 필요한 사항을 입력하세요"></textarea>
+      </div>
+      <div class="kb-field full">
+        <label>이미지 첨부</label>
+        <input type="file" accept="image/*" id="kbImageInput" onchange="onImageInputChange(event)">
+        <div id="kbImagePreviewWrap"></div>
+      </div>
+    </div>
+    <div class="kb-modal-foot">
+      <button class="kb-btn-secondary" id="kbDeleteBtn" onclick="deleteCurrentCard()" style="display:none">삭제</button>
+      <button class="kb-btn-primary" onclick="saveCard()">저장</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============ CONFIG ============ */
+const REGION_MAP = {
+  AU:'APAC',HK_EN:'APAC',HK_ZH:'APAC',JP:'APAC',MY:'APAC',SG:'APAC',TH:'APAC',TW:'APAC',VN:'APAC',
+  DE:'Europe',ES:'Europe',FR:'Europe',HU:'Europe',IT:'Europe',PL:'Europe',UK:'Europe',TR:'Europe',
+  IN:'South Asia',
+  BR:'LATAM',CL:'LATAM',CO:'LATAM',MX:'LATAM',PA:'LATAM',PE:'LATAM',
+  EG_EN:'MEA',EG_AR:'MEA',SA_EN:'MEA',SA_AR:'MEA',
+  CA_EN:'North America',CA_FR:'North America',
+};
+const REGION_ORDER = ['APAC','Europe','South Asia','LATAM','MEA','North America'];
+const MONTH_ORDER = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const VIEW_TITLES = {v1:'국가별 ADP 운영 현황', v2:'신규 업무 현황', v4:'논의 사항'};
+const STORAGE_KEY = 'adp_dashboard_state_v1';
+
+/* Git 저장소에 올려둔 월별 엑셀 경로 목록. 이 대시보드 html과 같은 폴더에 두고
+   GitHub Pages 등으로 서빙한다면 상대경로만 적어도 됩니다.
+   다른 곳(raw.githubusercontent.com 등)에 둔다면 전체 URL로 바꿔주세요. 예:
+   'https://raw.githubusercontent.com/{user}/{repo}/main/ADP_월간보고_2026-06.xlsx'
+   매달 새 파일을 올릴 때는 이 배열에 한 줄만 추가하면 됩니다. */
+const MONTH_SOURCES = [
+  {value:'2026-04', label:'2026년 4월', file:'ADP_월간보고_2026-04.xlsx'},
+  {value:'2026-05', label:'2026년 5월', file:'ADP_월간보고_2026-05.xlsx'},
+  {value:'2026-06', label:'2026년 6월', file:'ADP_월간보고_2026-06.xlsx'},
+];
+const DEFAULT_MONTH = '2026-06';
+let currentMonthValue = DEFAULT_MONTH;
+let DATA_SOURCE_URL = (MONTH_SOURCES.find(m=>m.value===DEFAULT_MONTH) || MONTH_SOURCES[MONTH_SOURCES.length-1]).file;
+
+function renderMonthSelect(){
+  const el = document.getElementById('monthSelect');
+  if(!el) return;
+  el.innerHTML = MONTH_SOURCES.map(m=>`<option value="${m.value}" ${m.value===currentMonthValue?'selected':''}>${m.label}</option>`).join('');
+}
+async function onMonthChange(value){
+  const m = MONTH_SOURCES.find(x=>x.value===value);
+  if(!m) return;
+  currentMonthValue = value;
+  DATA_SOURCE_URL = m.file;
+  const nameEl = document.getElementById('ovSrcName');
+  if(nameEl) nameEl.textContent = DATA_SOURCE_URL;
+  const ok = await fetchFromSource(false);
+  if(!ok){
+    const fromStorage = await tryLoadSaved();
+    if(fromStorage) markFallbackNotice();
+    else alert(m.label + ' 데이터를 불러오지 못했습니다. "' + DATA_SOURCE_URL + '" 파일이 저장소에 있는지 확인해주세요.');
+  }
+}
+
+let STATE = null;
+let charts = {};
+let lastFileBlob = null;
+let lastFileName = null;
+const fmt = n => (n||0).toLocaleString('en-US');
+
+
+function updateDownloadButtons(){
+  const enabled = !!lastFileBlob;
+  ['downloadBtnSb','downloadBtnTb'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.disabled = !enabled;
+  });
+}
+function downloadCurrentFile(){
+  if(!lastFileBlob) return;
+  const url = URL.createObjectURL(lastFileBlob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = lastFileName || 'ADP_월간보고.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url), 3000);
+}
+
+/* ============ UI: sidebar / view switch ============ */
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('collapsed')}
+function switchView(el){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+  const key = el.dataset.view;
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(key).classList.add('active');
+  document.getElementById('tbTitle').textContent = VIEW_TITLES[key];
+}
+function openFileDialog(){ document.getElementById('fileInput').click(); }
+
+/* ============ File handling ============ */
+const fileInput = document.getElementById('fileInput');
+fileInput.addEventListener('change', e=>{
+  if(e.target.files && e.target.files[0]) loadFile(e.target.files[0]);
+});
+const overlay = document.getElementById('uploadOverlay');
+const uploadCard = document.getElementById('uploadCard');
+['dragenter','dragover'].forEach(ev=>overlay.addEventListener(ev, e=>{e.preventDefault();uploadCard.classList.add('drag');}));
+['dragleave','drop'].forEach(ev=>overlay.addEventListener(ev, e=>{e.preventDefault();uploadCard.classList.remove('drag');}));
+overlay.addEventListener('drop', e=>{
+  const f = e.dataTransfer.files && e.dataTransfer.files[0];
+  if(f) loadFile(f);
+});
+// also allow dropping anywhere on the page to update
+document.addEventListener('dragover', e=>e.preventDefault());
+document.addEventListener('drop', e=>{
+  if(e.target.closest('#uploadOverlay')) return;
+  e.preventDefault();
+  const f = e.dataTransfer.files && e.dataTransfer.files[0];
+  if(f) loadFile(f);
+});
+
+function setStatus(msg, isErr){
+  const el = document.getElementById('uploadStatus');
+  el.textContent = msg||'';
+  el.className = 'upload-status' + (isErr?' err':'');
+}
+
+function loadFile(file){
+  setStatus('읽는 중... ' + file.name);
+  const reader = new FileReader();
+  reader.onload = ev=>{
+    try{
+      const data = new Uint8Array(ev.target.result);
+      const wb = XLSX.read(data, {type:'array', cellDates:true});
+      const state = parseWorkbook(wb, file.name);
+      STATE = state;
+      lastFileBlob = file;
+      lastFileName = file.name;
+      renderAll();
+      updateDownloadButtons();
+      overlay.style.display = 'none';
+      setStatus('');
+      saveState(state);
+    }catch(err){
+      console.error(err);
+      setStatus('파일을 읽는 중 오류가 발생했습니다: ' + err.message, true);
+    }
+  };
+  reader.onerror = ()=> setStatus('파일을 읽을 수 없습니다.', true);
+  reader.readAsArrayBuffer(file);
+}
+
+function saveState(state){
+  try{
+    if(window.storage && window.storage.set){
+      window.storage.set(STORAGE_KEY+'_'+currentMonthValue, JSON.stringify(state), false).catch(()=>{});
+    }
+  }catch(e){}
+}
+async function tryLoadSaved(){
+  try{
+    if(window.storage && window.storage.get){
+      const r = await window.storage.get(STORAGE_KEY+'_'+currentMonthValue, false);
+      if(r && r.value){
+        STATE = JSON.parse(r.value);
+        renderAll();
+        overlay.style.display = 'none';
+        return true;
+      }
+    }
+  }catch(e){ /* no saved state / storage unavailable */ }
+  return false;
+}
+
+/* ============ Auto fetch from git-hosted source ============ */
+async function fetchFromSource(silent){
+  if(!DATA_SOURCE_URL) return false;
+  try{
+    if(!silent) setStatus('Git 저장소에서 최신 파일을 불러오는 중...');
+    const res = await fetch(DATA_SOURCE_URL, {cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const buf = await res.arrayBuffer();
+    const wb = XLSX.read(new Uint8Array(buf), {type:'array', cellDates:true});
+    const fname = DATA_SOURCE_URL.split('/').pop();
+    STATE = parseWorkbook(wb, fname + ' (자동 로드)');
+    STATE.sourceMode = 'auto';
+    lastFileBlob = new Blob([buf], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    lastFileName = fname;
+    renderAll();
+    updateDownloadButtons();
+    overlay.style.display = 'none';
+    setStatus('');
+    saveState(STATE);
+    return true;
+  }catch(err){
+    // 자동 로드 실패는 흔한 상황(파일이 아직 git에 없거나, 미리보기 환경이라 상대경로가 안 먹는 경우)이라
+    // silent 모드에서는 콘솔에 에러로 남기지 않고 정보 로그로만 남깁니다.
+    if(silent) console.info('[ADP Dashboard] 자동 소스(' + DATA_SOURCE_URL + ') 미발견 — 로컬 저장본/수동 업로드로 대체합니다.');
+    else { console.warn('자동 소스 로드 실패:', err); setStatus('자동 소스를 불러오지 못했습니다 (' + err.message + '). 파일 경로를 확인하거나 직접 업로드해주세요.', true); }
+    return false;
+  }
+}
+
+async function initLoad(){
+  renderMonthSelect();
+  const nameEl = document.getElementById('ovSrcName');
+  if(nameEl) nameEl.textContent = DATA_SOURCE_URL || '(자동 소스 미설정)';
+  if(!DATA_SOURCE_URL){
+    await tryLoadSaved();
+    return;
+  }
+  const ok = await fetchFromSource(true);
+  if(!ok){
+    const fromStorage = await tryLoadSaved();
+    if(fromStorage) markFallbackNotice();
+  }
+}
+initLoad();
+
+function clearFallbackNotice(){
+  const n = document.getElementById('fallbackNotice');
+  if(n) n.remove();
+}
+function markFallbackNotice(){
+  clearFallbackNotice();
+  const el = document.getElementById('hqFile');
+  if(el) el.insertAdjacentHTML('afterend',
+    ' <span id="fallbackNotice" style="color:#B45309;font-weight:700">· Git 자동 로드 실패 — 마지막으로 저장된 데이터 표시 중</span>');
+}
+
+/* ============ Parsing ============ */
+function sheetToRows(wb, name){
+  const sh = wb.Sheets[name];
+  if(!sh) return null;
+  return XLSX.utils.sheet_to_json(sh, {header:1, defval:null});
+}
+
+function readPeriod(wb){
+  const sh = wb.Sheets['Report'];
+  if(sh && sh['B2'] && sh['B2'].v) return String(sh['B2'].v);
+  return '';
+}
+
+function computeLocaleRows(wb){
+  const rows = sheetToRows(wb, 'Live ADP');
+  if(!rows) return {rows:[], ok:false};
+  const header = rows[0] || [];
+  // column layout can shift month to month, so detect dynamically instead of trusting fixed indices:
+  // - the "target row" filter column is whichever header contains '대상' (집계 대상 / 매출 대상 여부 / etc.)
+  // - locale columns are whichever headers look like a locale code (AU, HK_EN, CA_FR, ...)
+  const dIdx = header.findIndex(h => h && String(h).includes('대상'));
+  const localeRe = /^[A-Z]{2}(_[A-Z]{2})?$/;
+  const locales = [], colIdx = [];
+  header.forEach((h,c)=>{
+    if(h && localeRe.test(String(h).trim())){ locales.push(String(h).trim()); colIdx.push(c); }
+  });
+  const counts = {};
+  locales.forEach(l=>counts[l]={ACTIVE:0,DISCONTINUED:0,HIDDEN:0,SUSPENDED:0});
+  for(let r=1;r<rows.length;r++){
+    const row = rows[r];
+    if(!row) continue;
+    if(dIdx>=0 && !String(row[dIdx]||'').includes('대상')) continue;
+    locales.forEach((l,i)=>{
+      const v = row[colIdx[i]];
+      if(v && counts[l][v]!==undefined) counts[l][v]++;
+    });
+  }
+  // MoM
+  const momRows = sheetToRows(wb, 'MoM');
+  const momMap = {};
+  if(momRows){
+    for(let r=2;r<momRows.length;r++){
+      const row = momRows[r];
+      if(!row || !row[0]) continue;
+      momMap[row[0]] = {A:Number(row[13])||0, D:Number(row[14])||0, H:Number(row[15])||0, S:Number(row[16])||0};
+    }
+  }
+  const out = locales.map(loc=>{
+    const c = counts[loc];
+    const m = momMap[loc] || {A:0,D:0,H:0,S:0};
+    const total = c.ACTIVE+c.DISCONTINUED+c.HIDDEN+c.SUSPENDED;
+    return {
+      region: REGION_MAP[loc]||'Other', locale: loc,
+      active:c.ACTIVE, disc:c.DISCONTINUED, hidden:c.HIDDEN, susp:c.SUSPENDED, total,
+      mom_active:m.A, mom_total:m.A+m.D+m.H+m.S
+    };
+  });
+  out.sort((a,b)=>{
+    const ai = REGION_ORDER.indexOf(a.region), bi = REGION_ORDER.indexOf(b.region);
+    return ((ai<0?99:ai)-(bi<0?99:bi)) || a.locale.localeCompare(b.locale);
+  });
+  return {rows: out, ok: true};
+}
+
+function computeNewWork(wb){
+  const rows = sheetToRows(wb, 'Ticket RAW');
+  if(!rows) return null;
+  const header = rows[0] || [];
+  const iTarget = header.indexOf('Target Page#');
+  const iPageType = header.indexOf('Contents Page Type');
+  const iBilling = header.indexOf('Contents Billing Type');
+  const iMonth = header.indexOf('DATE');
+  if(iTarget<0 || iPageType<0 || iMonth<0) return null;
+
+  const monthly = {};
+  const monthsPresent = new Set();
+  const body = rows.slice(1).filter(Boolean);
+  body.forEach(row=>{
+    const month = row[iMonth], ptype = row[iPageType], target = row[iTarget];
+    if(!month || !ptype || target==null) return;
+    monthsPresent.add(month);
+    monthly[month] = monthly[month] || {ADP:0,Category:0,PLP:0};
+    if(monthly[month][ptype]!==undefined) monthly[month][ptype]+=Number(target)||0;
+  });
+  const presentSorted = MONTH_ORDER.filter(m=>monthsPresent.has(m));
+  const curMonth = presentSorted[presentSorted.length-1];
+
+  const curBreak = {};
+  body.forEach(row=>{
+    const month=row[iMonth], ptype=row[iPageType], billing=row[iBilling], target=row[iTarget];
+    if(month!==curMonth || !ptype || target==null) return;
+    const key = ptype+'|||'+(billing||'미분류');
+    curBreak[key] = (curBreak[key]||0) + (Number(target)||0);
+  });
+  const billingTypes = [...new Set(Object.keys(curBreak).map(k=>k.split('|||')[1]))];
+  const totals_by_type = {ADP:0,Category:0,PLP:0};
+  Object.keys(curBreak).forEach(k=>{
+    const [pt] = k.split('|||');
+    totals_by_type[pt] = (totals_by_type[pt]||0) + curBreak[k];
+  });
+  totals_by_type.grand = (totals_by_type.ADP||0)+(totals_by_type.Category||0)+(totals_by_type.PLP||0);
+
+  return {
+    categories: billingTypes,
+    adp: billingTypes.map(bt=>curBreak['ADP|||'+bt]||0),
+    category: billingTypes.map(bt=>curBreak['Category|||'+bt]||0),
+    plp: billingTypes.map(bt=>curBreak['PLP|||'+bt]||0),
+    totals_by_type, curMonth,
+    monthly: {
+      labels: presentSorted,
+      adp: presentSorted.map(m=>monthly[m].ADP),
+      category: presentSorted.map(m=>monthly[m].Category),
+      plp: presentSorted.map(m=>monthly[m].PLP),
+      total: presentSorted.map(m=>monthly[m].ADP+monthly[m].Category+monthly[m].PLP),
+    }
+  };
+}
+
+function excelDateToJs(v){
+  if(v instanceof Date) return v;
+  if(typeof v === 'number') return new Date(Math.round((v-25569)*86400*1000));
+  if(typeof v === 'string'){ const d = new Date(v.replace(' ','T')); if(!isNaN(d)) return d; }
+  return null;
+}
+
+function computeDiscussion(wb){
+  const rows = sheetToRows(wb, 'Report');
+  if(!rows) return null;
+  let techIssues = [];
+  let bulk = {};
+  let inTech = false;
+  rows.forEach(row=>{
+    if(!row) return;
+    const cellB = row[1];
+    if(typeof cellB !== 'string') return;
+    if(/Tech issue/i.test(cellB)){ inTech = true; return; }
+    if(inTech){
+      const m = cellB.match(/^\(\d+\)\s*(.+)/);
+      if(m) techIssues.push(m[1].trim());
+      else if(/^\d+\)/.test(cellB.trim())) inTech = false;
+    }
+    let m;
+    if((m = cellB.match(/목표\s*SKU\s*[:：]\s*(\d+)/))) bulk.target = parseInt(m[1]);
+    if((m = cellB.match(/완료\s*[:：]\s*(\d+)\D+(\d+)%/))){ bulk.done=parseInt(m[1]); bulk.donePct=parseInt(m[2]); }
+    if((m = cellB.match(/라이브\s*대기\s*[:：]\s*(\d+)\D+(\d+)%/))){ bulk.waiting=parseInt(m[1]); bulk.waitPct=parseInt(m[2]); }
+    if((m = cellB.match(/미요청\s*[:：]\s*(\d+)\D+(\d+)%/))){ bulk.notreq=parseInt(m[1]); bulk.notreqPct=parseInt(m[2]); }
+  });
+  const hasBulk = bulk.target!=null;
+  return {tech_issues: techIssues, bulk: hasBulk?bulk:null};
+}
+
+function parseWorkbook(wb, fileName){
+  const {rows: locale_rows, ok: liveOk} = computeLocaleRows(wb);
+  const totals = {
+    active: locale_rows.reduce((s,r)=>s+r.active,0),
+    disc: locale_rows.reduce((s,r)=>s+r.disc,0),
+    hidden: locale_rows.reduce((s,r)=>s+r.hidden,0),
+    susp: locale_rows.reduce((s,r)=>s+r.susp,0),
+  };
+  totals.grand = totals.active+totals.disc+totals.hidden+totals.susp;
+  const mom_totals = {
+    active: locale_rows.reduce((s,r)=>s+r.mom_active,0),
+    disc: 0, hidden:0, susp:0
+  };
+  // recompute mom totals properly (sum of per-status deltas requires raw values; approximate via total delta split)
+  return {
+    period: readPeriod(wb) || '',
+    fileName,
+    uploadedAt: new Date().toISOString(),
+    liveOk,
+    locale_rows, totals, mom_totals,
+    newwork: computeNewWork(wb),
+    discussion: computeDiscussion(wb),
+  };
+}
+
+/* ============ Rendering ============ */
+function destroyChart(id){ if(charts[id]){ charts[id].destroy(); delete charts[id]; } }
+
+function renderAll(){
+  if(!STATE) return;
+  clearFallbackNotice();
+  document.getElementById('tbPeriod').textContent = STATE.period || '기간 미확인';
+  document.getElementById('hqDate').textContent = new Date(STATE.uploadedAt).toLocaleString('ko-KR');
+  document.getElementById('hqFile').textContent = STATE.fileName || '—';
+  document.getElementById('sbUpdated').innerHTML = 'Data source<br><b style="color:#374151">Live ADP · MoM 탭</b><br>기준월 ' + (STATE.period||'—');
+
+  renderView1();
+  renderView2();
+}
+
+function renderView1(){
+  const rows = STATE.locale_rows, t = STATE.totals, m = STATE.mom_totals;
+  document.getElementById('localeCountTag').textContent = rows.length + ' LOCALES';
+
+  const pct = v => t.grand ? ((v/t.grand)*100).toFixed(1) : '0.0';
+  const kpis = [
+    {cls:'k-total', label:'전체 SKU × 로케일', val:t.grand, mom:m.active, pct:null},
+    {cls:'k-active', label:'ACTIVE', val:t.active, mom:m.active, pct:pct(t.active)},
+    {cls:'k-disc', label:'DISCONTINUED', val:t.disc, mom:0, pct:pct(t.disc)},
+    {cls:'k-hidden', label:'HIDDEN', val:t.hidden, mom:0, pct:pct(t.hidden)},
+    {cls:'k-susp', label:'SUSPENDED', val:t.susp, mom:0, pct:pct(t.susp)},
+  ];
+  document.getElementById('kpiGrid').innerHTML = kpis.map(k=>{
+    const dir = k.mom>0?'up':(k.mom<0?'down':'flat');
+    const arrow = k.mom>0?'▲':(k.mom<0?'▼':'―');
+    return `<div class="kpi ${k.cls}">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value">${fmt(k.val)}${k.pct!==null ? ` <span class="kpi-pct">(${k.pct}%)</span>` : ''}</div>
+      ${k.cls==='k-total'||k.cls==='k-active' ? `<div class="kpi-mom mom-${dir}">${arrow} ${Math.abs(k.mom)} (전월대비)</div>` : ''}
+    </div>`;
+  }).join('');
+
+  renderRegionFilter(rows);
+  renderLocaleTable(rows, currentRegionFilter);
+
+  destroyChart('donut'); destroyChart('mom');
+
+  renderLocaleMatrixChart(rows, t);
+}
+
+let currentRegionFilter = '전체';
+
+function renderRegionFilter(rows){
+  const presentRegions = REGION_ORDER.filter(rg => rows.some(r=>r.region===rg));
+  const otherPresent = rows.some(r=>!REGION_ORDER.includes(r.region));
+  const options = ['전체', ...presentRegions, ...(otherPresent?['Other']:[])];
+  const optHtml = options.map(opt=>{
+    const count = opt==='전체' ? rows.length : rows.filter(r=>r.region===opt).length;
+    const label = (opt==='전체' ? '전체보기' : opt) + ' (' + count + ')';
+    const sel = opt===currentRegionFilter ? 'selected' : '';
+    return `<option value="${opt}" ${sel}>${label}</option>`;
+  }).join('');
+  document.getElementById('regionFilter').innerHTML = `
+    <div class="region-select-wrap">
+      <select class="region-select" id="regionSelect" onchange="selectRegion(this.value)">${optHtml}</select>
+    </div>`;
+}
+
+function selectRegion(region){
+  currentRegionFilter = region;
+  const rows = STATE.locale_rows;
+  renderRegionFilter(rows);
+  renderLocaleTable(rows, region);
+}
+
+function renderLocaleTable(rows, region){
+  const filtered = region==='전체' ? rows : rows.filter(r=>r.region===region);
+  document.getElementById('localeBody').innerHTML = filtered.map(r=>{
+    const dir = r.mom_total>0?'up':(r.mom_total<0?'down':'flat');
+    const arrow = r.mom_total>0?'▲':(r.mom_total<0?'▼':'―');
+    return `<tr>
+      <td class="region-tag">${r.region}</td>
+      <td class="loc-name">${r.locale}</td>
+      <td class="c-active">${r.active}</td>
+      <td class="c-disc">${r.disc||'-'}</td>
+      <td class="c-hidden">${r.hidden||'-'}</td>
+      <td class="c-susp">${r.susp||'-'}</td>
+      <td><b>${r.total}</b></td>
+      <td><span class="mom-pill ${dir}">${arrow} ${Math.abs(r.mom_total)}</span></td>
+    </tr>`;
+  }).join('');
+  const sub = {
+    active: filtered.reduce((s,r)=>s+r.active,0),
+    disc: filtered.reduce((s,r)=>s+r.disc,0),
+    hidden: filtered.reduce((s,r)=>s+r.hidden,0),
+    susp: filtered.reduce((s,r)=>s+r.susp,0),
+  };
+  sub.grand = sub.active+sub.disc+sub.hidden+sub.susp;
+  const label = region==='전체' ? '총합계' : region + ' 소계';
+  document.getElementById('localeFoot').innerHTML = `<tr>
+    <td colspan="2">${label}</td>
+    <td>${fmt(sub.active)}</td><td>${fmt(sub.disc)}</td><td>${fmt(sub.hidden)}</td><td>${fmt(sub.susp)}</td>
+    <td>${fmt(sub.grand)}</td><td></td></tr>`;
+}
+
+const STATUS_COLORS = {ACTIVE:'#4472C4', DISCONTINUED:'#ED7D31', HIDDEN:'#A5A5A5', SUSPENDED:'#FFC000'};
+
+function renderLocaleMatrixChart(rows, t){
+  document.getElementById('chartTotalTag').textContent = 'TOTAL ' + fmt(t.grand);
+
+  // grouped bar chart, one bar-group per locale, 4 series
+  destroyChart('localeBar');
+  const inner = document.getElementById('localeBarInner');
+  inner.style.minWidth = Math.max(rows.length * 46, 640) + 'px';
+  charts.localeBar = new Chart(document.getElementById('localeBarChart'), {
+    type:'bar',
+    data:{
+      labels: rows.map(r=>r.locale),
+      datasets:[
+        {label:'ACTIVE', data:rows.map(r=>r.active), backgroundColor:STATUS_COLORS.ACTIVE},
+        {label:'DISCONTINUED', data:rows.map(r=>r.disc), backgroundColor:STATUS_COLORS.DISCONTINUED},
+        {label:'HIDDEN', data:rows.map(r=>r.hidden), backgroundColor:STATUS_COLORS.HIDDEN},
+        {label:'SUSPENDED', data:rows.map(r=>r.susp), backgroundColor:STATUS_COLORS.SUSPENDED},
+      ]
+    },
+    options:{
+      maintainAspectRatio:false,
+      plugins:{legend:{position:'top',labels:{boxWidth:9,font:{size:10.5,family:'Pretendard'}}},
+        title:{display:true,text:'Total : '+fmt(t.grand),font:{size:12,family:'Pretendard',weight:'600'},color:'#6B7280'}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:10,family:'Pretendard'}}},
+        y:{beginAtZero:true,grid:{color:'#F0F1F8'},ticks:{font:{size:10}}}
+      }
+    }
+  });
+
+  // detail data table (matches the bottom legend table in the reference layout)
+  const statusRows = [
+    {key:'active', label:'ACTIVE'},
+    {key:'disc', label:'DISCONTINUED'},
+    {key:'hidden', label:'HIDDEN'},
+    {key:'susp', label:'SUSPENDED'},
+  ];
+  const head = '<thead><tr><th>Locale</th>' + rows.map(r=>`<th>${r.locale}</th>`).join('') + '</tr></thead>';
+  const body = '<tbody>' + statusRows.map(sr=>{
+    const cells = rows.map(r=>{
+      const v = r[sr.key];
+      return `<td>${v ? fmt(v) : '-'}</td>`;
+    }).join('');
+    return `<tr><td><span class="mx-swatch" style="background:${STATUS_COLORS[sr.label]}"></span>${sr.label}</td>${cells}</tr>`;
+  }).join('') + '</tbody>';
+  document.getElementById('matrixDetail').innerHTML = head + body;
+}
+
+function renderView2(){
+  const nw = STATE.newwork;
+  const el = document.getElementById('v2content');
+  if(!nw){
+    el.innerHTML = `<div class="section-card"><div class="empty-hint">Ticket RAW 탭을 찾을 수 없어 신규 업무 현황을 계산할 수 없습니다.<br>탭 이름과 Target Page# / Contents Page Type / DATE 컬럼을 확인해주세요.</div></div>`;
+    return;
+  }
+  const tb = nw.totals_by_type;
+  el.innerHTML = `
+    <div class="kpi-grid">
+      <div class="kpi k-total"><div class="kpi-label">${nw.curMonth||''} 총 신규 요청</div><div class="kpi-value">${fmt(tb.grand)}</div></div>
+      <div class="kpi k-active"><div class="kpi-label">ADP</div><div class="kpi-value">${fmt(tb.ADP)}</div></div>
+      <div class="kpi k-hidden"><div class="kpi-label">Category</div><div class="kpi-value">${fmt(tb.Category)}</div></div>
+      <div class="kpi k-susp"><div class="kpi-label">PLP</div><div class="kpi-value">${fmt(tb.PLP)}</div></div>
+    </div>
+    <div class="grid2">
+      <div class="section-card">
+        <div class="card-title">신규 업무 요청 현황 (Page Type별, ${nw.curMonth||''})</div>
+        <div class="chart-wrap tall"><canvas id="newworkBar"></canvas></div>
+      </div>
+      <div class="section-card">
+        <div class="card-title">Monthly Trend — Target Pg</div>
+        <div class="chart-wrap tall"><canvas id="trendLine"></canvas></div>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="card-title">월별 집계표 <span class="tag">Target Page#</span></div>
+      <table class="pivot">
+        <thead><tr><th>월</th><th>ADP</th><th>Category</th><th>PLP</th><th>총합계</th></tr></thead>
+        <tbody id="pivotBody"></tbody>
+        <tfoot id="pivotFoot"></tfoot>
+      </table>
+    </div>`;
+
+  destroyChart('newworkBar'); destroyChart('trendLine');
+  charts.newworkBar = new Chart(document.getElementById('newworkBar'), {
+    type:'bar',
+    data:{labels:nw.categories,
+      datasets:[
+        {label:'ADP', data:nw.adp, backgroundColor:'#A50034', borderRadius:4},
+        {label:'Category', data:nw.category, backgroundColor:'#F472A0', borderRadius:4},
+        {label:'PLP', data:nw.plp, backgroundColor:'#FBCFE0', borderRadius:4},
+      ]},
+    options:{plugins:{legend:{position:'top',labels:{boxWidth:9,font:{size:10.5,family:'Pretendard'}}}},
+      scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:9.5,family:'Pretendard'},maxRotation:40,minRotation:40}},
+               y:{stacked:true,beginAtZero:true,grid:{color:'#F0F1F8'}}}}
+  });
+  const mo = nw.monthly;
+  charts.trendLine = new Chart(document.getElementById('trendLine'), {
+    type:'line',
+    data:{labels:mo.labels,
+      datasets:[
+        {label:'ADP', data:mo.adp, borderColor:'#A50034', backgroundColor:'#A50034', tension:.35, borderWidth:2.5},
+        {label:'Category', data:mo.category, borderColor:'#3B82F6', backgroundColor:'#3B82F6', tension:.35, borderWidth:2.5},
+        {label:'PLP', data:mo.plp, borderColor:'#10B981', backgroundColor:'#10B981', tension:.35, borderWidth:2.5},
+      ]},
+    options:{plugins:{legend:{position:'top',labels:{boxWidth:9,font:{size:10.5,family:'Pretendard'}}}},
+      scales:{y:{beginAtZero:true,grid:{color:'#F0F1F8'}},x:{grid:{display:false}}}}
+  });
+  document.getElementById('pivotBody').innerHTML = mo.labels.map(lab=>{
+    const i = mo.labels.indexOf(lab);
+    const isCur = lab===nw.curMonth;
+    return `<tr class="${isCur?'cur':''}"><td>${lab}</td><td>${fmt(mo.adp[i])}</td><td>${fmt(mo.category[i])}</td><td>${fmt(mo.plp[i])}</td><td>${fmt(mo.total[i])}</td></tr>`;
+  }).join('');
+  const sum = arr=>arr.reduce((a,b)=>a+b,0);
+  document.getElementById('pivotFoot').innerHTML = `<tr><td>총합계</td><td>${fmt(sum(mo.adp))}</td><td>${fmt(sum(mo.category))}</td><td>${fmt(sum(mo.plp))}</td><td>${fmt(sum(mo.total))}</td></tr>`;
+}
+
+/* ============ VIEW 4 : Kanban discussion board ============ */
+const KANBAN_PREFIX = 'kbcard:';
+const STATUS_META = {
+  todo: {label:'확인요청', color:'#F59E0B'},
+  doing: {label:'진행중', color:'#3B82F6'},
+  done: {label:'완료', color:'#10B981'},
+};
+const CATEGORY_COLORS = {
+  'Tech Issue':'#A50034', '정책/기준 확인':'#7C3AED', '리소스 요청':'#0EA5E9', '일정 조율':'#F59E0B', '기타':'#6B7280'
+};
+let kanbanCards = [];
+let editingCardId = null;
+let expandedCardId = null;
+let modalImageData = null;
+
+async function loadKanban(){
+  try{
+    if(window.storage && window.storage.list && window.storage.get){
+      const listRes = await window.storage.list(KANBAN_PREFIX, true); // shared across everyone viewing this dashboard
+      const keys = (listRes && listRes.keys) || [];
+      const cards = [];
+      for(const k of keys){
+        try{
+          const r = await window.storage.get(k, true);
+          if(r && r.value) cards.push(JSON.parse(r.value));
+        }catch(e){ /* skip unreadable entry */ }
+      }
+      cards.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+      kanbanCards = cards;
+    }
+  }catch(e){ /* storage unavailable in this environment — table works in-memory for this session */ }
+  renderTable();
+}
+async function saveCardToStorage(card){
+  try{
+    if(window.storage && window.storage.set){
+      await window.storage.set(KANBAN_PREFIX+card.id, JSON.stringify(card), true);
+    }
+  }catch(e){ console.warn('카드 저장 실패 (이 세션에서만 유지됩니다):', e); }
+}
+async function deleteCardFromStorage(id){
+  try{
+    if(window.storage && window.storage.delete){
+      await window.storage.delete(KANBAN_PREFIX+id, true);
+    }
+  }catch(e){ console.warn('카드 삭제 실패:', e); }
+}
+
+/* ---- input popup (create/edit) ---- */
+function openCardModal(cardId){
+  editingCardId = cardId || null;
+  const modal = document.getElementById('kbModalOverlay');
+  document.getElementById('kbImageInput').value = '';
+  if(cardId){
+    const c = kanbanCards.find(x=>x.id===cardId);
+    if(!c) return;
+    document.getElementById('kbModalTitle').textContent = '항목 수정';
+    document.getElementById('kbDate').value = c.date || '';
+    document.getElementById('kbCategory').value = c.category;
+    document.getElementById('kbContent').value = c.content;
+    document.getElementById('kbAssignee').value = c.assignee;
+    document.getElementById('kbStatus').value = c.status;
+    document.getElementById('kbDeleteBtn').style.display = 'inline-flex';
+    modalImageData = c.image || null;
+  } else {
+    document.getElementById('kbModalTitle').textContent = '새 항목 등록';
+    document.getElementById('kbDate').value = new Date().toISOString().slice(0,10);
+    document.getElementById('kbCategory').value = 'Tech Issue';
+    document.getElementById('kbContent').value = '';
+    document.getElementById('kbAssignee').value = '';
+    document.getElementById('kbStatus').value = 'todo';
+    document.getElementById('kbDeleteBtn').style.display = 'none';
+    modalImageData = null;
+  }
+  renderModalImagePreview();
+  modal.style.display = 'flex';
+}
+function closeCardModal(){
+  document.getElementById('kbModalOverlay').style.display = 'none';
+  editingCardId = null;
+  modalImageData = null;
+}
+
+/* ---- inline detail panel (expand under table row) ---- */
+function toggleRow(id){
+  expandedCardId = (expandedCardId===id) ? null : id;
+  renderTable();
+}
+function deleteInline(id){
+  if(!confirm('이 항목을 삭제할까요?')) return;
+  deleteCardFromStorage(id);
+  kanbanCards = kanbanCards.filter(x=>x.id!==id);
+  if(expandedCardId===id) expandedCardId = null;
+  renderTable();
+}
+
+/* ---- image attach (input popup) ---- */
+function onImageInputChange(e){
+  const f = e.target.files && e.target.files[0];
+  if(f) handleImageFile(f);
+}
+function handleImageFile(file){
+  if(!file.type.startsWith('image/')){ alert('이미지 파일만 첨부할 수 있습니다.'); return; }
+  const reader = new FileReader();
+  reader.onload = ev=>{
+    const img = new Image();
+    img.onload = ()=>{
+      const maxW = 960;
+      const scale = Math.min(1, maxW/img.width);
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(img.width*scale);
+      canvas.height = Math.round(img.height*scale);
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      modalImageData = canvas.toDataURL('image/jpeg', 0.78);
+      renderModalImagePreview();
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function removeModalImage(){
+  modalImageData = null;
+  document.getElementById('kbImageInput').value = '';
+  renderModalImagePreview();
+}
+function renderModalImagePreview(){
+  const wrap = document.getElementById('kbImagePreviewWrap');
+  if(!wrap) return;
+  wrap.innerHTML = modalImageData
+    ? `<div class="kb-img-preview"><img src="${modalImageData}" alt=""><button type="button" class="kb-img-remove" onclick="removeModalImage()">이미지 삭제</button></div>`
+    : '';
+}
+
+/* ---- comments (inline panel) ---- */
+function commentsListHtml(comments){
+  return (comments && comments.length)
+    ? comments.map(cm=>`
+      <div class="kb-comment">
+        <div class="kb-comment-head"><b>${escapeHtml(cm.author)}</b><span class="kb-comment-date">${escapeHtml(cm.date||'')}</span></div>
+        <div>${escapeHtml(cm.text)}</div>
+      </div>`).join('')
+    : '<div class="kb-empty" style="padding:6px 0">등록된 댓글이 없습니다.</div>';
+}
+async function addInlineComment(id){
+  const authorEl = document.getElementById('inlineAuthor_'+id);
+  const textEl = document.getElementById('inlineText_'+id);
+  if(!authorEl || !textEl) return;
+  const author = authorEl.value.trim() || '익명';
+  const text = textEl.value.trim();
+  if(!text) return;
+  const idx = kanbanCards.findIndex(x=>x.id===id);
+  if(idx<0) return;
+  const comment = {id:'cm_'+Date.now()+'_'+Math.random().toString(36).slice(2,6), author, text, date:new Date().toISOString().slice(0,10)};
+  kanbanCards[idx].comments = kanbanCards[idx].comments || [];
+  kanbanCards[idx].comments.push(comment);
+  await saveCardToStorage(kanbanCards[idx]);
+  renderTable();
+}
+
+/* ---- create / update / delete ---- */
+function saveCard(){
+  const content = document.getElementById('kbContent').value.trim();
+  if(!content){ alert('내용을 입력해주세요.'); return; }
+  const data = {
+    date: document.getElementById('kbDate').value,
+    category: document.getElementById('kbCategory').value,
+    content,
+    assignee: document.getElementById('kbAssignee').value.trim() || '미지정',
+    status: document.getElementById('kbStatus').value,
+    image: modalImageData,
+  };
+  let card;
+  if(editingCardId){
+    const idx = kanbanCards.findIndex(x=>x.id===editingCardId);
+    if(idx>-1){
+      kanbanCards[idx] = Object.assign({}, kanbanCards[idx], data);
+      card = kanbanCards[idx];
+    }
+  } else {
+    card = Object.assign(
+      {id:'kb_'+Date.now()+'_'+Math.random().toString(36).slice(2,7), createdAt:Date.now(), comments:[]},
+      data
+    );
+    kanbanCards.unshift(card);
+  }
+  if(card) saveCardToStorage(card);
+  renderTable();
+  closeCardModal();
+}
+function deleteCurrentCard(){
+  if(!editingCardId) return;
+  if(!confirm('이 항목을 삭제할까요?')) return;
+  deleteCardFromStorage(editingCardId);
+  kanbanCards = kanbanCards.filter(x=>x.id!==editingCardId);
+  renderTable();
+  closeCardModal();
+}
+
+/* ---- table render ---- */
+function renderTable(){
+  const tbody = document.getElementById('kbTableBody');
+  if(!tbody) return;
+  const summaryEl = document.getElementById('kbSummary');
+  if(summaryEl) summaryEl.textContent = '전체 ' + kanbanCards.length + '건';
+  if(!kanbanCards.length){
+    tbody.innerHTML = `<tr><td colspan="6" class="empty-hint">등록된 항목이 없습니다. "새 항목 등록"으로 추가해보세요.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = kanbanCards.map(c=>{
+    const catColor = CATEGORY_COLORS[c.category] || '#6B7280';
+    const st = STATUS_META[c.status] || {label:c.status, color:'#6B7280'};
+    const commentCount = (c.comments && c.comments.length) || 0;
+    const isOpen = expandedCardId===c.id;
+    const mainRow = `<tr class="kb-row ${isOpen?'kb-row-open':''}" onclick="toggleRow('${c.id}')">
+      <td class="kb-date">${escapeHtml(c.date||'')}</td>
+      <td><span class="kb-cat" style="background:${catColor}1A;color:${catColor}">${escapeHtml(c.category)}</span></td>
+      <td class="kb-td-content">${c.image?'📷 ':''}${escapeHtml(c.content)}</td>
+      <td><span class="kb-assignee">${escapeHtml(c.assignee)}</span></td>
+      <td><span class="kb-status-badge" style="background:${st.color}">${st.label}</span></td>
+      <td class="kb-comment-count">${commentCount ? '💬 '+commentCount : '-'}</td>
+    </tr>`;
+    if(!isOpen) return mainRow;
+    const expandRow = `<tr class="kb-expand-row"><td colspan="6">
+      <div class="kb-inline-panel" onclick="event.stopPropagation()">
+        <div class="kb-view-meta">
+          <span class="kb-cat" style="background:${catColor}1A;color:${catColor};font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px">${escapeHtml(c.category)}</span>
+          <span class="kb-status-badge" style="background:${st.color}">${st.label}</span>
+          <span class="kb-date">${escapeHtml(c.date||'')}</span>
+          <span class="kb-assignee">${escapeHtml(c.assignee)}</span>
+          <span class="kb-inline-actions">
+            <button type="button" class="kb-icon-btn" onclick="openCardModal('${c.id}')" title="수정">✏️</button>
+            <button type="button" class="kb-icon-btn" onclick="deleteInline('${c.id}')" title="삭제">🗑️</button>
+          </span>
+        </div>
+        <div class="kb-view-content">${escapeHtml(c.content)}</div>
+        ${c.image ? `<div class="kb-view-img"><img src="${c.image}" alt=""></div>` : ''}
+        <div class="kb-comments-section" style="display:flex;flex-direction:column;gap:8px">
+          <label style="font-size:11px;font-weight:700;color:var(--sub)">댓글</label>
+          <div class="kb-comment-list">${commentsListHtml(c.comments)}</div>
+          <div class="kb-comment-form">
+            <input type="text" id="inlineAuthor_${c.id}" placeholder="이름">
+            <input type="text" id="inlineText_${c.id}" placeholder="코멘트를 입력하세요"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();addInlineComment('${c.id}')}">
+            <button type="button" onclick="addInlineComment('${c.id}')">등록</button>
+          </div>
+        </div>
+      </div>
+    </td></tr>`;
+    return mainRow + expandRow;
+  }).join('');
+}
+function escapeHtml(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+loadKanban();
+</script>
+</body>
+</html>
