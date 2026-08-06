@@ -7,6 +7,8 @@
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.16.0/firebase-app-compat.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.16.0/firebase-firestore-compat.min.js"></script>
 <style>
 :root{
   --red:#A50034; --red-soft:#FFF0F2; --red-line:#F6C9D3;
@@ -1216,8 +1218,23 @@ function renderView2(){
   document.getElementById('pivotFoot').innerHTML = `<tr><td>총합계</td><td>${fmt(sum(mo.adp))}</td><td>${fmt(sum(mo.category))}</td><td>${fmt(sum(mo.plp))}</td><td>${fmt(sum(mo.total))}</td></tr>`;
 }
 
-/* ============ VIEW 4 : Kanban discussion board ============ */
-const KANBAN_PREFIX = 'kbcard:';
+/* ============ VIEW 4 : Kanban discussion board (Firestore-backed, shared across everyone) ============ */
+const firebaseConfig = {
+  apiKey: "AIzaSyBoIZ7neU8WBH3t2Bs90ifWB64lI8QpWoU",
+  authDomain: "concentrix-53274.firebaseapp.com",
+  projectId: "concentrix-53274",
+  storageBucket: "concentrix-53274.firebasestorage.app",
+  messagingSenderId: "99091601061",
+  appId: "1:99091601061:web:cd310292f5aab2b7969f4c",
+  measurementId: "G-9W8KNR854G"
+};
+let db = null;
+try{
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.firestore();
+}catch(e){ console.warn('Firebase 초기화 실패 — 논의사항은 이 세션에서만 유지됩니다:', e); }
+const KANBAN_COLLECTION = 'adp_discussion_cards';
+
 const STATUS_META = {
   todo: {label:'확인요청', color:'#F59E0B'},
   doing: {label:'진행중', color:'#3B82F6'},
@@ -1231,36 +1248,36 @@ let editingCardId = null;
 let expandedCardId = null;
 let modalImageData = null;
 
+function sortKanbanCards(){
+  kanbanCards.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+}
+
 async function loadKanban(){
+  if(!db){ renderTable(); return; }
   try{
-    if(window.storage && window.storage.list && window.storage.get){
-      const listRes = await window.storage.list(KANBAN_PREFIX, true); // shared across everyone viewing this dashboard
-      const keys = (listRes && listRes.keys) || [];
-      const cards = [];
-      for(const k of keys){
-        try{
-          const r = await window.storage.get(k, true);
-          if(r && r.value) cards.push(JSON.parse(r.value));
-        }catch(e){ /* skip unreadable entry */ }
-      }
-      cards.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
-      kanbanCards = cards;
-    }
-  }catch(e){ /* storage unavailable in this environment — table works in-memory for this session */ }
-  renderTable();
+    // real-time listener: any change anyone makes (add/edit/delete/comment) syncs to everyone automatically
+    db.collection(KANBAN_COLLECTION).onSnapshot(snapshot=>{
+      kanbanCards = snapshot.docs.map(d=>d.data());
+      sortKanbanCards();
+      renderTable();
+    }, err=>{
+      console.warn('Firestore 실시간 동기화 실패 — 로컬 상태로만 동작합니다:', err);
+    });
+  }catch(e){
+    console.warn('Firestore 로드 실패:', e);
+    renderTable();
+  }
 }
 async function saveCardToStorage(card){
+  if(!db) return;
   try{
-    if(window.storage && window.storage.set){
-      await window.storage.set(KANBAN_PREFIX+card.id, JSON.stringify(card), true);
-    }
-  }catch(e){ console.warn('카드 저장 실패 (이 세션에서만 유지됩니다):', e); }
+    await db.collection(KANBAN_COLLECTION).doc(card.id).set(card);
+  }catch(e){ console.warn('카드 저장 실패:', e); }
 }
 async function deleteCardFromStorage(id){
+  if(!db) return;
   try{
-    if(window.storage && window.storage.delete){
-      await window.storage.delete(KANBAN_PREFIX+id, true);
-    }
+    await db.collection(KANBAN_COLLECTION).doc(id).delete();
   }catch(e){ console.warn('카드 삭제 실패:', e); }
 }
 
