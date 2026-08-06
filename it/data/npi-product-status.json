@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-08-04 11:26",
- "pttRawFile": "raw-data-20260804.xlsb",
+ "generatedAt": "2026-08-06 10:31",
+ "pttRawFile": "raw-data-20260806.xlsb",
  "cmsFile": "cms_merged_view_20260804_093859.csv",
  "sourceFile": "43 NPI for IT product status_20260707.xlsx",
  "totalRows": 42,
@@ -957,7 +957,7 @@
      "stage": "in_progress",
      "category": "NPI",
      "targetLaunchDate": "2026-08-31",
-     "hasStg": false
+     "hasStg": true
     },
     {
      "region": "EU",
@@ -966,7 +966,7 @@
      "model": "17Z90TL-G.AU88BN",
      "salesModelKey": "ES-es-17Z90TL-G.AU88BN",
      "pttId": "WR2289881AK",
-     "pttStatus": "[WB] New Request",
+     "pttStatus": "[WPL] Request Clarification",
      "targetStagingDate": "2026-06-15",
      "detailKr": "제작 착수 가능",
      "detailEn": "Ready to start production",
@@ -995,10 +995,10 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "precheck",
+     "stage": "clarify",
      "category": "NPI",
      "targetLaunchDate": "2026-08-31",
-     "hasStg": false
+     "hasStg": true
     },
     {
      "region": "EU",
@@ -1007,7 +1007,7 @@
      "model": "17Z90U-G.AU88BN",
      "salesModelKey": "ES-es-17Z90U-G.AU88BN",
      "pttId": "WR2283118AK",
-     "pttStatus": "[WB] New Request",
+     "pttStatus": "[WPL] Request Clarification",
      "targetStagingDate": "2026-06-30",
      "detailKr": "제작 착수 가능",
      "detailEn": "Ready to start production",
@@ -1036,10 +1036,10 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "precheck",
+     "stage": "clarify",
      "category": "NPI",
      "targetLaunchDate": "2026-08-31",
-     "hasStg": false
+     "hasStg": true
     },
     {
      "region": "EU",
@@ -1048,7 +1048,7 @@
      "model": "17Z90UB-H.AU96BN",
      "salesModelKey": "ES-es-17Z90UB-H.AU96BN",
      "pttId": "WR2289887AK",
-     "pttStatus": "[WB] New Request",
+     "pttStatus": "[WPL] Request Clarification",
      "targetStagingDate": "2026-06-15",
      "detailKr": "제작 착수 가능",
      "detailEn": "Ready to start production",
@@ -1077,10 +1077,10 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "precheck",
+     "stage": "clarify",
      "category": "NPI",
      "targetLaunchDate": "2026-08-31",
-     "hasStg": false
+     "hasStg": true
     },
     {
      "region": "EU",
@@ -1089,7 +1089,7 @@
      "model": "15U50U-G.AA55BN",
      "salesModelKey": "ES-es-15U50U-G.AA55BN",
      "pttId": "WR2283110AK",
-     "pttStatus": "[QA] QA review",
+     "pttStatus": "[WPL] Request Clarification",
      "targetStagingDate": "2026-06-30",
      "detailKr": "제작 착수 가능",
      "detailEn": "Ready to start production",
@@ -1118,7 +1118,7 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "in_progress",
+     "stage": "clarify",
      "category": "NPI",
      "targetLaunchDate": "2026-08-31",
      "hasStg": true
@@ -1130,7 +1130,7 @@
      "model": "16UD55U-G.AX85BN",
      "salesModelKey": "ES-es-16UD55U-G.AX85BN",
      "pttId": "WR2281865AK",
-     "pttStatus": "[QA] QA review",
+     "pttStatus": "[WPL] Request Clarification",
      "targetStagingDate": "2026-06-15",
      "detailKr": "제작 착수 가능",
      "detailEn": "Ready to start production",
@@ -1159,7 +1159,7 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "in_progress",
+     "stage": "clarify",
      "category": "NPI",
      "targetLaunchDate": "2026-08-31",
      "hasStg": true
@@ -1771,5 +1771,5 @@
    ]
   }
  ],
- "readinessFile": "Readiness_Check_AllLocales_20260804_100119.xlsx"
+ "readinessFile": "Readiness_Check_AllLocales_20260806_014159.xlsx"
 }
