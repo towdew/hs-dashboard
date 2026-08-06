@@ -241,6 +241,11 @@ table.pivot tfoot td{font-weight:800;border-top:1.5px solid var(--line)}
   border-radius:9px;padding:10px 20px;font-size:12.5px;font-weight:700}
 .upload-status{font-size:11px;color:var(--faint);margin-top:14px;min-height:16px}
 .upload-status.err{color:var(--disc);font-weight:700}
+.loading-spinner-view{display:flex;flex-direction:column;align-items:center;gap:10px}
+.loading-spinner-view .spinner{width:20px;height:20px;border:2.5px solid #E8EAF2;
+  border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite}
+.loading-spinner-view .loading-text{font-size:11px;color:var(--faint);font-weight:600;letter-spacing:.02em}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* discussion table */
 .kanban-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
@@ -334,8 +339,32 @@ tr.kb-expand-row td{padding:0;border-bottom:1px solid var(--line);background:#FA
   display:inline-flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;padding:0}
 .kb-icon-btn:hover{border-color:var(--red)}
 
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(15,18,28,.45);z-index:55}
+.sidebar-backdrop.show{display:block}
+
 @media(max-width:640px){
-  .sidebar{position:fixed;z-index:40;left:0}
+  /* sidebar becomes an off-canvas drawer so it never overlaps the main content */
+  .sidebar{position:fixed;top:0;left:0;height:100vh;z-index:60;width:230px;
+    transform:translateX(-100%);transition:transform .25s ease;box-shadow:0 0 28px rgba(0,0,0,.18)}
+  .sidebar.mobile-open{transform:translateX(0)}
+  .sidebar.collapsed{width:230px}
+  .sidebar.collapsed .sidebar-text-group,
+  .sidebar.collapsed .sb-section-label,
+  .sidebar.collapsed .nav-item span.ni-text,
+  .sidebar.collapsed .sb-updated,
+  .sidebar.collapsed .sb-upload-btn span.ni-text{opacity:1;pointer-events:auto;display:inline}
+  .sidebar.collapsed .nav-item{justify-content:flex-start;padding:9px 12px}
+
+  .main{width:100%;min-width:0}
+  .topbar{height:auto;min-height:52px;flex-wrap:wrap;gap:8px;padding:10px 14px}
+  .tb-left{flex-wrap:wrap;gap:8px;width:100%;order:2}
+  .tb-title{font-size:13px}
+  .tb-right{width:100%;order:3;justify-content:flex-start;flex-wrap:wrap;gap:8px}
+  .tb-right span{display:none}
+  .tb-file-btn{font-size:11px;padding:6px 10px}
+  .tb-badge.admin{display:none}
+  .hq-strip{padding:6px 14px;font-size:10.5px;gap:8px}
+
   .data-area{padding:14px 12px 28px}
   .kpi-grid{grid-template-columns:repeat(2,1fr)}
   .bucket-grid{grid-template-columns:1fr}
@@ -345,6 +374,7 @@ tr.kb-expand-row td{padding:0;border-bottom:1px solid var(--line);background:#FA
 </head>
 <body>
 <div class="top-loading-bar" id="topLoadingBar"><div class="bar"></div></div>
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeMobileSidebar()"></div>
 <div class="app">
 
   <aside class="sidebar" id="sidebar">
@@ -476,7 +506,11 @@ tr.kb-expand-row td{padding:0;border-bottom:1px solid var(--line);background:#FA
 
 <!-- upload overlay (first load / no data) -->
 <div class="upload-overlay" id="uploadOverlay">
-  <div class="upload-card" id="uploadCard">
+  <div class="loading-spinner-view" id="loadingSpinnerView">
+    <div class="spinner"></div>
+    <div class="loading-text">Loading...</div>
+  </div>
+  <div class="upload-card" id="uploadCard" style="display:none">
     <div class="upload-icon">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
     </div>
@@ -487,6 +521,7 @@ tr.kb-expand-row td{padding:0;border-bottom:1px solid var(--line);background:#FA
     <button class="upload-pick" onclick="openFileDialog()">파일 직접 선택 (자동 로드 실패 시)</button>
     <div class="upload-status" id="uploadStatus"></div>
   </div>
+
 </div>
 <input type="file" id="fileInput" accept=".xlsx,.xlsm" style="display:none">
 
@@ -608,9 +643,36 @@ function downloadCurrentFile(){
 }
 
 /* ============ UI: sidebar / view switch ============ */
-function toggleSidebar(){document.getElementById('sidebar').classList.toggle('collapsed')}
+function isMobileViewport(){ return window.innerWidth <= 640; }
+function toggleSidebar(){
+  const sb = document.getElementById('sidebar');
+  if(isMobileViewport()){
+    const open = sb.classList.toggle('mobile-open');
+    const bd = document.getElementById('sidebarBackdrop');
+    if(bd) bd.classList.toggle('show', open);
+  } else {
+    sb.classList.toggle('collapsed');
+  }
+}
+function closeMobileSidebar(){
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  const bd = document.getElementById('sidebarBackdrop');
+  if(bd) bd.classList.remove('show');
+}
 function showLoadingBar(){ const el=document.getElementById('topLoadingBar'); if(el) el.classList.add('active'); }
 function hideLoadingBar(){ const el=document.getElementById('topLoadingBar'); if(el) el.classList.remove('active'); }
+function showUploadFallbackCard(){
+  const sp = document.getElementById('loadingSpinnerView');
+  const card = document.getElementById('uploadCard');
+  if(sp) sp.style.display = 'none';
+  if(card) card.style.display = 'block';
+}
+function showLoadingSpinner(){
+  const sp = document.getElementById('loadingSpinnerView');
+  const card = document.getElementById('uploadCard');
+  if(sp) sp.style.display = 'flex';
+  if(card) card.style.display = 'none';
+}
 function switchView(el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   el.classList.add('active');
@@ -618,6 +680,7 @@ function switchView(el){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById(key).classList.add('active');
   document.getElementById('tbTitle').textContent = VIEW_TITLES[key];
+  if(isMobileViewport()) closeMobileSidebar();
 }
 function openFileDialog(){ document.getElementById('fileInput').click(); }
 
@@ -736,13 +799,15 @@ async function initLoad(){
   const nameEl = document.getElementById('ovSrcName');
   if(nameEl) nameEl.textContent = DATA_SOURCE_URL || '(자동 소스 미설정)';
   if(!DATA_SOURCE_URL){
-    await tryLoadSaved();
+    const fromStorage = await tryLoadSaved();
+    if(!fromStorage) showUploadFallbackCard();
     return;
   }
   const ok = await fetchFromSource(true);
   if(!ok){
     const fromStorage = await tryLoadSaved();
     if(fromStorage) markFallbackNotice();
+    else showUploadFallbackCard();
   }
 }
 initLoad();
