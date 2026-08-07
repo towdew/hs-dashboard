@@ -1661,6 +1661,120 @@ function npiPsOpenProcessModal() {
   document.addEventListener('keydown', npiPsProcessModalEsc);
 }
 
+// ── Readiness Check 판정 기준 안내 모달 (2026-08-07 사용자 요청) ──────────
+// 기준이 '사이트 스택별 Spec Assignment'로 바뀌면서 화면만 봐서는 왜 Ready/Not Ready인지
+// 알기 어려워졌다. 진행 프로세스 모달과 같은 패턴으로 기준표를 띄운다.
+// 스택별 로케일 목록은 하드코딩하지 않고 현재 데이터의 readinessTip 접미사에서 모은다.
+var NPI_PS_ASSIGN_RULES = [
+  { value: 'Assigned', gp1: true, v5: true },
+  { value: 'PDR Assigned', gp1: true, v5: true },
+  { value: 'New PDR Spec - Ⓝ', gp1: true, v5: true },
+  { value: 'SPEC Need Publish', gp1: true, v5: true },
+  { value: 'Need Assign', gp1: false, v5: true },
+  { value: 'No PDR Spec', gp1: false, v5: false },
+  { value: 'NO SPEC', gp1: false, v5: false },
+];
+
+// 행의 readinessTip 끝에 붙은 ' · gp1' / ' · v5'에서 스택을 읽는다(빌드가 넣어준 값).
+function npiPsRowStack(row) {
+  var m = String((row && row.readinessTip) || '').match(/·\s*(gp1|v5)\s*$/);
+  return m ? m[1] : '';
+}
+
+function npiPsStackLocales() {
+  var byStack = { gp1: {}, v5: {} };
+  (npiPsFlatRows() || []).forEach(function(item) {
+    var st = npiPsRowStack(item.row);
+    if (st && item.row.locale) byStack[st][item.row.locale] = 1;
+  });
+  return {
+    gp1: Object.keys(byStack.gp1).sort(),
+    v5: Object.keys(byStack.v5).sort(),
+  };
+}
+
+function npiPsOpenReadinessGuideModal() {
+  window._npiPsGuideReturnFocus = document.activeElement;
+  var cond =
+    '<ol style="margin:0;padding-left:18px;color:#334155;font-size:var(--fs-caption);line-height:1.9">' +
+      '<li><strong>Spec Status</strong> = Y</li>' +
+      '<li><strong>Key Feature</strong> 1개 이상</li>' +
+      '<li><strong>UFN</strong> 입력됨 (빈칸 아님)</li>' +
+      '<li><strong>Spec Assignment</strong> 가 인정 값 — 사이트 스택별로 다름 (아래 표)</li>' +
+      '<li><strong>Local Asset Review</strong> = Confirmed <span style="color:#94A3B8">또는 미기재</span> ' +
+        '<span style="color:#94A3B8">(Review Needed면 Not Ready)</span></li>' +
+    '</ol>';
+  var mark = function(ok) {
+    return ok ? '<span style="color:#10B981;font-weight:700">O</span>'
+              : '<span style="color:#CBD5E1;font-weight:700">X</span>';
+  };
+  var tbl =
+    '<table style="width:100%;border-collapse:collapse;font-size:var(--fs-caption)">' +
+      '<thead><tr style="background:#F8FAFC">' +
+        '<th style="text-align:left;padding:7px 12px;color:#64748B;font-weight:700">Spec Assignment</th>' +
+        '<th style="padding:7px 12px;color:#64748B;font-weight:700;white-space:nowrap">GP1 5.0</th>' +
+        '<th style="padding:7px 12px;color:#64748B;font-weight:700">v5</th>' +
+      '</tr></thead><tbody>' +
+      NPI_PS_ASSIGN_RULES.map(function(r) {
+        return '<tr style="border-top:1px solid #E2E8F0">' +
+          '<td style="padding:7px 12px;color:#334155">' + escapeHtmlSheet(r.value) + '</td>' +
+          '<td style="padding:7px 12px;text-align:center">' + mark(r.gp1) + '</td>' +
+          '<td style="padding:7px 12px;text-align:center">' + mark(r.v5) + '</td></tr>';
+      }).join('') +
+    '</tbody></table>';
+  var sl = npiPsStackLocales();
+  var stackLine = function(label, arr) {
+    return '<div style="margin-top:6px"><span class="sheet-status-pill" style="background:#EFF6FF;color:#1E40AF">' +
+      label + '</span> <span style="color:#475569;font-size:var(--fs-caption)">' +
+      (arr.length ? arr.map(function(l) { return escapeHtmlSheet(npiPsCountryName(l)); }).join(' · ') : '—') +
+      '</span></div>';
+  };
+  var stacks =
+    '<div style="color:#64748B;font-size:11px;margin-bottom:2px">사이트 스택은 lg.com 국가별 플랫폼 구분입니다 (출처: lg-links-dashboard).</div>' +
+    stackLine('GP1 5.0', sl.gp1) + stackLine('v5', sl.v5);
+
+  var sect = function(t, inner) {
+    return '<div style="margin-bottom:16px">' +
+      '<div style="font-weight:800;color:#1A1D2E;font-size:var(--fs-caption);margin-bottom:8px">' + t + '</div>' + inner + '</div>';
+  };
+  var html = '<div class="modal-overlay" id="npiPsGuideModal" onclick="if(event.target===this)closeNpiPsGuideModal()">' +
+    '<div class="modal-card" style="max-width:680px" onclick="event.stopPropagation()">' +
+      '<div class="country-modal-header"><div class="country-modal-info">' +
+        '<div class="country-modal-title" id="npiPsGuideTitle">Readiness Check 판정 기준</div>' +
+        '<div class="country-modal-meta"><span style="font-size:11px;color:#9BA3BF">아래 5개 조건을 모두 충족하면 Ready</span></div>' +
+      '</div><button type="button" class="modal-close-btn" aria-label="판정 기준 닫기" onclick="closeNpiPsGuideModal()">✕</button></div>' +
+      '<div style="padding:18px 20px 20px;max-height:70vh;overflow-y:auto">' +
+        sect('Ready 조건', cond) +
+        sect('Spec Assignment 인정 값', '<div style="border:1px solid #E2E8F0;border-radius:10px;overflow:hidden">' + tbl + '</div>') +
+        sect('사이트 스택', stacks) +
+        '<div style="font-size:11px;color:#9BA3BF;line-height:1.7">' +
+          '· 라이브 게시된 행은 판정과 무관하게 <strong>Ready</strong>로 표시합니다 — 이미 게시된 건에 Not Ready는 의미가 없기 때문입니다.<br>' +
+          '· 원본 값은 대소문자를 구분하지 않습니다.' +
+        '</div>' +
+      '</div>' +
+    '</div></div>';
+  var wrap = document.createElement('div');
+  wrap.innerHTML = html;
+  document.body.appendChild(wrap.firstChild);
+  setTimeout(function() {
+    var m = document.getElementById('npiPsGuideModal');
+    if (m) m.classList.add('modal-show');
+  }, 10);
+  document.addEventListener('keydown', npiPsGuideModalEsc);
+}
+
+function npiPsGuideModalEsc(e) {
+  if (e.key === 'Escape') closeNpiPsGuideModal();
+}
+
+function closeNpiPsGuideModal() {
+  var m = document.getElementById('npiPsGuideModal');
+  if (m) m.remove();
+  document.removeEventListener('keydown', npiPsGuideModalEsc);
+  var rf = window._npiPsGuideReturnFocus;
+  window._npiPsGuideReturnFocus = null;
+  if (rf && typeof rf.focus === 'function') rf.focus();
+}
 function npiPsProcessModalEsc(e) {
   if (e.key === 'Escape') closeNpiPsProcessModal();
 }
@@ -1680,6 +1794,7 @@ function npiPsOpenReadinessModal(locale, model) {
   var row = hit.row;
   var rf = row.readinessFields || {};
   var verdict = row.readinessCheck || '-';
+  var stackKey = (typeof npiPsRowStack === 'function') ? npiPsRowStack(row) : '';
   var vMeta = verdict === 'Ready'
     ? { bg: '#ECFDF5', tc: '#047857', dot: '#10B981' }
     : { bg: '#F1F5F9', tc: '#64748B', dot: '#94A3B8' };
@@ -1706,12 +1821,16 @@ function npiPsOpenReadinessModal(locale, model) {
       '<div style="padding:16px 20px 20px">' +
         '<div style="margin-bottom:12px;display:flex;align-items:center;gap:10px">' +
           '<span class="sheet-status-pill" style="background:' + vMeta.bg + ';color:' + vMeta.tc + '"><span style="background:' + vMeta.dot + '"></span>' + escapeHtmlSheet(verdict) + '</span>' +
-          (row.readinessTip ? '<span style="font-size:var(--fs-caption);color:#94A3B8">' + escapeHtmlSheet(row.readinessTip) + '</span>' : '') +
+          (stackKey ? '<span class="sheet-status-pill" style="background:#EFF6FF;color:#1E40AF" title="Spec Assignment 인정 범위가 스택별로 다릅니다">' + escapeHtmlSheet(stackKey === 'gp1' ? 'GP1 5.0' : 'v5') + '</span>' : '') +
+          (row.readinessTip ? '<span style="font-size:var(--fs-caption);color:#94A3B8">' + escapeHtmlSheet(String(row.readinessTip).replace(/\s*·\s*(gp1|v5)\s*$/, '')) + '</span>' : '') +
         '</div>' +
         '<div style="border:1px solid #E2E8F0;border-radius:10px;overflow:hidden;max-height:52vh;overflow-y:auto">' +
           '<table style="width:100%;border-collapse:collapse">' + rowsHtml + '</table>' +
         '</div>' +
-        '<div style="margin-top:8px;font-size:11px;color:#9BA3BF">* 판정 기준 필드 — Ready = Spec Y · Key Feature &gt; 0 · UFN 입력 · Assigned · LAR Confirmed 또는 미기재</div>' +
+        '<div style="margin-top:8px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">' +
+          '<span style="font-size:11px;color:#9BA3BF">* 판정 기준 필드 — Ready = Spec Y · Key Feature 1개 이상 · UFN 입력 · Spec Assignment 인정값(스택별) · LAR Confirmed 또는 미기재</span>' +
+          '<button type="button" onclick="npiPsOpenReadinessGuideModal()" style="cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:999px;padding:3px 10px;font-size:11px;font-weight:700;font-family:inherit;white-space:nowrap">기준 자세히</button>' +
+        '</div>' +
       '</div></div></div>';
   var wrap = document.createElement('div');
   wrap.innerHTML = html;
@@ -1820,6 +1939,7 @@ function renderNpiProductStatusContent() {
   html += '<span id="npiPsSummaryChips" style="display:contents">' + npiPsBuildSummaryChipsHtml() + '</span>';
   // 진행 프로세스는 버튼 클릭 시 모달로 노출(2026-07-14 사용자 지시)
   html += '<button onclick="npiPsOpenProcessModal()" style="margin-left:4px;cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:999px;padding:4px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">진행 프로세스 보기</button>';
+  html += '<button onclick="npiPsOpenReadinessGuideModal()" style="margin-left:4px;cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:999px;padding:4px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">Readiness 기준 보기</button>';
   html += '</div>';
 
   // 필터바 컨테이너 — 탭 진입 시 1회만 npiPsRenderFilterBar()로 채워지고, 이후 필터 변경 시
