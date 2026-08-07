@@ -2032,6 +2032,49 @@ function npiPsDownloadExcel() {
   XLSX.writeFile(wb, 'IT_제품현황_' + stamp + '.xlsx');
 }
 
+// URL Library를 현재 필터+정렬 그대로 xlsx로 내보낸다 (SheetJS, npiPsDownloadExcel과 같은 방식).
+// 행 단위는 '모델 × 로케일' — URL 모음집이라 로케일 하나가 곧 한 줄이어야 쓸모가 있다.
+// 내보내는 로케일은 화면 상세 테이블과 동일하게 urlLibMatchedLocales를 거친다(보이는 것 = 받는 것).
+function urlLibDownloadExcel() {
+  if (typeof XLSX === 'undefined') { alert('엑셀 라이브러리를 불러오지 못했습니다.'); return; }
+  if (!_urlLibData || !_urlLibData.models) { alert('URL Library 데이터가 아직 로드되지 않았습니다.'); return; }
+  var models = urlLibSortModels(
+    urlLibFilterModels(_urlLibData.models, _urlLibFilter), _urlLibFilter.sort);
+  var aoa = [['Model', 'Sales Model Code', 'Suffix', 'Category',
+              'Locale', 'Country', 'Status', 'Live URL', 'Publish Update']];
+  models.forEach(function(m) {
+    urlLibMatchedLocales(m, _urlLibFilter).forEach(function(l) {
+      aoa.push([m.modelName || '', m.salesModelCode || '', m.salesSuffixCode || '', m.category || '',
+                urlLibLocaleToken(l.locale), l.country || '', l.status || '',
+                l.prodUrl || '', l.publishUpdateDate || '']);
+    });
+  });
+  if (aoa.length === 1) { alert('현재 필터 조건에 해당하는 URL이 없습니다.'); return; }
+
+  var ws = XLSX.utils.aoa_to_sheet(aoa);
+  ws['!cols'] = [{ wch: 20 }, { wch: 18 }, { wch: 10 }, { wch: 12 },
+                 { wch: 10 }, { wch: 22 }, { wch: 14 }, { wch: 70 }, { wch: 14 }];
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'URL Library');
+
+  // 어떤 조건으로 뽑았는지 남긴다 — 필터가 걸린 파일을 나중에 열었을 때 오해가 없도록
+  var f = _urlLibFilter;
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+    ['항목', '값'],
+    ['CMS 소스', _urlLibData.cmsSource || ''],
+    ['카테고리', f.category || '전체'],
+    ['상태', f.status || '전체'],
+    ['로케일', f.locale || '전체'],
+    ['개국 수', f.countRange || '전체'],
+    ['검색어', f.search || ''],
+    ['모델 수', models.length],
+    ['URL 수', aoa.length - 1],
+  ]), '추출 조건');
+
+  var stamp = (String(_urlLibData.cmsSource || '').match(/20\d{6}/) || ['export'])[0];
+  XLSX.writeFile(wb, 'LG_URL_Library_' + stamp + '.xlsx');
+}
+
 // ── 검색창: 상태/클리어버튼은 즉시, 결과 재렌더는 디바운스(포커스/IME 보존) ──
 var _npiPsDebouncedRenderResults = dashDebounce(function() { npiPsRenderResults(); }, 150);
 
@@ -2175,8 +2218,11 @@ function npiPsRenderResults() {
 // LIVE URL LIBRARY VIEW
 // ══════════════════════════════════════════════════════════════════
 var _urlLibData = null;
-// activeOnly 기본 체크(2026-07-16 사용자 지시) — 기본 화면은 ACTIVE 로케일 보유 모델만
-var _urlLibFilter = { search: '', category: '', status: '', locale: '', countRange: '', sort: 'name', page: 1, activeOnly: true };
+// 기본 상태 필터는 ACTIVE (2026-08-07 사용자 지시). 이전에는 status='' + 숨은 activeOnly 체크박스
+// 조합이라 '전체 상태'로 보이는데 실제로는 ACTIVE만 걸려 있어 혼란스러웠다 → 체크박스를 없애고
+// 상태 셀렉트 하나로 일원화한다.
+var URL_LIB_DEFAULT_FILTER = { search: '', category: '', status: 'ACTIVE', locale: '', countRange: '', sort: 'name', page: 1 };
+var _urlLibFilter = Object.assign({}, URL_LIB_DEFAULT_FILTER);
 var _urlLibExpandedModel = null;
 var _urlLibViewMode = 'model'; // 'model' | 'country'
 var _urlLibCountryQuery = '';
@@ -2379,9 +2425,8 @@ function renderUrlLibraryContent() {
       headerHtml += '<option value="' + opt.value + '"' + (_urlLibFilter.sort === opt.value ? ' selected' : '') + '>' + opt.label + '</option>';
     });
     headerHtml += '</select>';
-    headerHtml += '<label style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-caption);color:#475569;cursor:pointer;white-space:nowrap">' +
-      '<input type="checkbox" id="urlLibActiveOnly"' + (_urlLibFilter.activeOnly ? ' checked' : '') + ' onchange="urlLibSetFilter(\'activeOnly\', this.checked)">Active만</label>';
     headerHtml += '<button type="button" class="url-lib-page-btn" id="urlLibResetBtn" onclick="urlLibResetFilter()">초기화</button>';
+    headerHtml += '<button type="button" class="url-lib-page-btn" id="urlLibExcelBtn" onclick="urlLibDownloadExcel()" title="현재 필터 조건 그대로 내보냅니다">⬇ 엑셀 다운로드</button>';
   }
   headerHtml += '</div>';
   headerHtml += '</div></div>';
@@ -2429,7 +2474,12 @@ function renderUrlLibModelView(allModels) {
   listHtml += '<div class="url-lib-model-list">';
   pageModels.forEach(function(model) {
     var isExpanded = _urlLibExpandedModel === model.modelName;
-    var activeCount = model.locales.filter(function(l) { return l.status === 'ACTIVE'; }).length;
+    // 목록 필터(status·locale)와 같은 기준으로 걸러진 로케일만 통계·상세에 쓴다.
+    // 예전엔 상세 테이블이 model.locales 전체를 그렸기 때문에 ACTIVE로 걸러놓고 펼치면
+    // DISCONTINUED까지 다 보여 "필터가 안 먹는다"로 보였다(2026-08-07 사용자 지적).
+    var shownLocales = (typeof urlLibMatchedLocales === 'function')
+      ? urlLibMatchedLocales(model, _urlLibFilter) : model.locales;
+    var activeCount = shownLocales.filter(function(l) { return l.status === 'ACTIVE'; }).length;
     listHtml += '<div class="url-lib-model-row' + (isExpanded ? ' url-lib-model-row-active' : '') + '" data-mk="' + escapeAttrSheet(model.modelName) + '" onclick="toggleUrlLibModel(this.getAttribute(\'data-mk\'))">';
     listHtml += '<div class="url-lib-model-main">';
     listHtml += '<div>';
@@ -2439,7 +2489,7 @@ function renderUrlLibModelView(allModels) {
     listHtml += '<div style="display:flex;align-items:center;gap:10px">';
     listHtml += '<span style="font-size:var(--fs-caption);color:#10B981;font-weight:700">ACTIVE ' + activeCount + '</span>';
     // 같은 국가의 언어별 사이트는 1개국으로 — "N개국 · M개 사이트" (2026-07-16 사용자 지시)
-    listHtml += '<span style="font-size:var(--fs-caption);color:#64748B">' + urlLibCountryCount(model) + '개국 · ' + model.locales.length + '개 사이트</span>';
+    listHtml += '<span style="font-size:var(--fs-caption);color:#64748B">' + urlLibCountryCount({ locales: shownLocales }) + '개국 · ' + shownLocales.length + '개 사이트</span>';
     listHtml += '<span style="color:#94A3B8">' + (isExpanded ? '▲' : '▼') + '</span>';
     listHtml += '</div></div>';
 
@@ -2448,7 +2498,7 @@ function renderUrlLibModelView(allModels) {
       listHtml += '<table class="url-lib-table"><thead><tr>';
       listHtml += '<th>Locale</th><th>Country</th><th>Status</th><th>Live URL</th>';
       listHtml += '</tr></thead><tbody>';
-      model.locales.forEach(function(loc) {
+      shownLocales.forEach(function(loc) {
         var sc = loc.status === 'ACTIVE' ? 'url-lib-status-active'
                : loc.status === 'DISCONTINUED' ? 'url-lib-status-disc'
                : 'url-lib-status-other';
@@ -2563,7 +2613,7 @@ function urlLibSetFilter(key, value) {
 
 // 초기화 — 검색/카테고리/상태/로케일/국가수/정렬/페이지 전체 리셋 + 입력값/select 동기화 + 결과 재렌더(필터바 자체는 재생성 안 함)
 function urlLibResetFilter() {
-  _urlLibFilter = { search: '', category: '', status: '', locale: '', countRange: '', sort: 'name', page: 1, activeOnly: true };
+  _urlLibFilter = Object.assign({}, URL_LIB_DEFAULT_FILTER);
   var searchInput = document.getElementById('urlLibSearchInput');
   if (searchInput) searchInput.value = '';
   urlLibToggleClearBtn('urlLibSearchClear', '');

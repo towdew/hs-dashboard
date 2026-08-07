@@ -68,13 +68,24 @@ function urlLibCountryCount(model) {
   return n;
 }
 
+// status·locale 조건을 **같은 로케일 항목에서** 함께 만족하는 것만 반환한다.
+// 두 조건을 따로 평가하면 "DE 로케일이 있고" AND "어딘가 ACTIVE가 있는" 모델이 통과해
+// 정작 DE는 DISCONTINUED인 모델까지 잡힌다(2026-08-07 사용자 지적).
+// 목록 필터와 상세 테이블이 이 함수를 공유해야 "걸러놓고 펼치면 다 보이는" 불일치가 없다.
+function urlLibMatchedLocales(model, filter) {
+  var f = filter || {};
+  return ((model && model.locales) || []).filter(function (l) {
+    if (f.status && l.status !== f.status) return false;
+    if (f.locale && urlLibLocaleToken(l.locale) !== f.locale) return false;
+    return true;
+  });
+}
+
 function urlLibFilterModels(allModels, filter) {
   var q = (filter.search || '').toLowerCase().trim();
   var localeTok = filter.locale || '';
   var countRange = filter.countRange || '';
   return (allModels || []).filter(function (m) {
-    // Active 모델만(기본 체크): ACTIVE 로케일이 하나도 없는 모델은 숨김 (2026-07-16 사용자 지시)
-    if (filter.activeOnly && !m.locales.some(function (l) { return l.status === 'ACTIVE'; })) return false;
     if (q) {
       var nameHit = m.modelName.toLowerCase().includes(q);
       var codeHit = m.salesModelCode.toLowerCase().includes(q);
@@ -84,8 +95,8 @@ function urlLibFilterModels(allModels, filter) {
       if (!nameHit && !codeHit && !urlHit) return false;
     }
     if (filter.category && m.category !== filter.category) return false;
-    if (filter.status && !m.locales.some(function (l) { return l.status === filter.status; })) return false;
-    if (localeTok && !m.locales.some(function (l) { return urlLibLocaleToken(l.locale) === localeTok; })) return false;
+    // status·locale은 교차(같은 항목) 평가 — 위 urlLibMatchedLocales 주석 참고
+    if ((filter.status || localeTok) && urlLibMatchedLocales(m, filter).length === 0) return false;
     if (countRange) {
       var n = urlLibCountryCount(m); // '개국' 필터는 국가 수 기준(사이트 수 아님)
       if (countRange === '1' && n !== 1) return false;
@@ -129,6 +140,7 @@ if (typeof module !== 'undefined' && module.exports) {
     buildUrlLibLocaleIndex: buildUrlLibLocaleIndex,
     urlLibDisplayUrl: urlLibDisplayUrl,
     urlLibCountryCount: urlLibCountryCount,
+    urlLibMatchedLocales: urlLibMatchedLocales,
     urlLibFilterModels: urlLibFilterModels,
     urlLibSortModels: urlLibSortModels,
     urlLibPaginate: urlLibPaginate,
