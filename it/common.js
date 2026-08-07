@@ -2217,6 +2217,8 @@ function npiPsRenderResults() {
 // LIVE URL LIBRARY VIEW
 // ══════════════════════════════════════════════════════════════════
 var _urlLibData = null;
+// 로케일 표기(국가명 + 언어 병기 여부) 캐시 — 데이터 로드 시 1회 계산.
+var _urlLibCountryMeta = {};
 // 기본 상태 필터는 ACTIVE (2026-08-07 사용자 지시). 이전에는 status='' + 숨은 activeOnly 체크박스
 // 조합이라 '전체 상태'로 보이는데 실제로는 ACTIVE만 걸려 있어 혼란스러웠다 → 체크박스를 없애고
 // 상태 셀렉트 하나로 일원화한다.
@@ -2334,6 +2336,7 @@ function renderUrlLibraryContent() {
       .then(function(r) { return r.json(); })
       .then(function(data) {
         _urlLibData = data;
+        _urlLibCountryMeta = urlLibLocaleDisplayMap((data && data.models) || []);
         renderUrlLibraryContent();
       })
       .catch(function(e) {
@@ -2346,6 +2349,8 @@ function renderUrlLibraryContent() {
   var categories = _urlLibData.categories || [];
   var statusOptions = ['ACTIVE', 'DISCONTINUED', 'SUSPENDED', 'HIDDEN'];
   var localeTokens = urlLibAllLocaleTokens(allModels);
+  // 로케일 표기 기준: 같은 국가에 로케일이 둘 이상일 때만 언어 병기(js-lib 주석 참고)
+  var localeMeta = urlLibLocaleDisplayMap(allModels);
 
   // ── 헤더 카드 ──
   var headerHtml = '<div style="padding:16px 24px 0;flex-shrink:0"><div class="ov-card-new">';
@@ -2401,7 +2406,8 @@ function renderUrlLibraryContent() {
     headerHtml += '<select class="url-lib-select" id="urlLibLocaleSelect" onchange="urlLibSetFilter(\'locale\',this.value)">';
     headerHtml += '<option value="">All Countries</option>';
     localeTokens.forEach(function(token) {
-      var label = token + ' — ' + urlLibCountryName(token);
+      var lm = localeMeta[token] || {};
+      var label = token + ' — ' + urlLibLocaleDisplayName(token, lm.lang, lm.withLang);
       headerHtml += '<option value="' + escapeAttrSheet(token) + '"' + (_urlLibFilter.locale === token ? ' selected' : '') + '>' + escapeHtmlSheet(label) + '</option>';
     });
     headerHtml += '</select>';
@@ -2541,7 +2547,8 @@ function renderUrlLibCountryView() {
     matched.forEach(function(token) {
       var count = countByToken[token];
       html += '<div class="url-lib-country-card" data-token="' + escapeAttrSheet(token) + '" onclick="urlLibSelectLocale(this.getAttribute(\'data-token\'))">';
-      html += '<div class="url-lib-country-name">' + escapeHtmlSheet(urlLibCountryName(token)) + '</div>';
+      var cm = _urlLibCountryMeta[token] || {};
+      html += '<div class="url-lib-country-name">' + escapeHtmlSheet(urlLibLocaleDisplayName(token, cm.lang, cm.withLang)) + '</div>';
       html += '<div class="url-lib-country-token">' + escapeHtmlSheet(token) + '</div>';
       html += '<div class="url-lib-country-count">' + count.toLocaleString() + '개 제품</div>';
       html += '</div>';
@@ -2559,7 +2566,8 @@ function renderUrlLibCountryView() {
   var html2 = '<div style="padding:12px 24px">';
   html2 += '<div class="url-lib-country-back" data-token="' + escapeAttrSheet(_urlLibSelectedLocale) + '" onclick="urlLibSelectLocale(this.getAttribute(\'data-token\'))">← 국가 목록으로</div>';
   html2 += '<div class="ov-head-total-num ov-head-total-sites" style="margin:8px 0">';
-  html2 += escapeHtmlSheet(urlLibCountryName(_urlLibSelectedLocale)) + ' (' + escapeHtmlSheet(_urlLibSelectedLocale) + ') · <strong>' + entries.length.toLocaleString() + '</strong>개 IT 제품 라이브';
+  var sm = _urlLibCountryMeta[_urlLibSelectedLocale] || {};
+  html2 += escapeHtmlSheet(urlLibLocaleDisplayName(_urlLibSelectedLocale, sm.lang, sm.withLang)) + ' (' + escapeHtmlSheet(_urlLibSelectedLocale) + ') · <strong>' + entries.length.toLocaleString() + '</strong>개 IT 제품 라이브';
   if (catSummary) html2 += '<span style="color:#94A3B8;font-size:var(--fs-caption);font-weight:500;margin-left:8px">(' + escapeHtmlSheet(catSummary) + ')</span>';
   html2 += '</div>';
 

@@ -4,39 +4,93 @@ function urlLibLocaleToken(rawLocale) {
   return idx >= 0 ? raw.slice(0, idx) : raw;
 }
 
-// 로케일 토큰 → 국가명. 여기 없는 토큰은 코드가 그대로 화면에 노출되므로
-// (2026-08-07 사용자 지적: "AR — AR"처럼 코드만 보이면 안 된다) 데이터에 실재하는
-// 토큰은 빠짐없이 채운다. 검증: url-library.json의 고유 토큰 전수를 훑어 미매핑 0건.
-// 언어 변형은 기존 관례대로 '국가명 (언어)' — 기본 로케일은 언어 표기 없이 국가명만.
+// ── 로케일 표기 기준 (2026-08-07 사용자 지시로 정리) ─────────────
+// 문제: AE는 "United Arab Emirates", AE_AR은 "UAE (Arabic)"처럼 같은 국가인데 국가명이
+// 다르고, 언어 병기 여부도 들쭉날쭉했다. 아래 두 규칙으로 통일한다.
+//   ① 국가명은 **베이스 국가 코드 하나**로 통일 (AE_AR → AE의 이름을 쓴다)
+//   ② 같은 국가에 로케일이 **2개 이상일 때만** 언어를 병기하고, 그 경우 **전부** 병기한다
+//      (AE/AE_AR → 'United Arab Emirates (English)' / '... (Arabic)',
+//       DE 하나뿐 → 'Germany')
+// 언어는 하드코딩하지 않고 원본 locale 문자열의 괄호 코드에서 읽는다("AE : AE (en)").
 var URL_LIB_COUNTRY_NAMES = {
-  AE: 'United Arab Emirates', AE_AR: 'UAE (Arabic)', AR: 'Argentina', AT: 'Austria',
-  AU: 'Australia', BD: 'Bangladesh',
-  BE: 'Belgium', BE_FR: 'Belgium (French)', BG: 'Bulgaria', BR: 'Brazil',
-  CA_EN: 'Canada (English)', CA_FR: 'Canada (French)', CAC: 'Central America',
-  CH: 'Switzerland', CH_DE: 'Switzerland (German)', CH_FR: 'Switzerland (French)',
-  CL: 'Chile', CN: 'China', CO: 'Colombia', CZ: 'Czech Republic',
-  DE: 'Germany', DK: 'Denmark', DZ: 'Algeria', EASTAFRICA: 'East Africa', AFRICA: 'Africa',
-  EC: 'Ecuador', EE: 'Estonia', EG: 'Egypt', EG_AR: 'Egypt (Arabic)', EG_EN: 'Egypt (English)',
-  ES: 'Spain', FI: 'Finland', FR: 'France',
-  GB: 'United Kingdom', UK: 'United Kingdom', GLOBAL: 'Global', GR: 'Greece',
-  HK: 'Hong Kong', HK_EN: 'Hong Kong (English)',
-  HR: 'Croatia', HU: 'Hungary', ID: 'Indonesia', IE: 'Ireland', IL: 'Israel',
-  IN: 'India', IR: 'Iran', IT: 'Italy', JP: 'Japan', KR: 'South Korea',
-  KZ: 'Kazakhstan', KZ_KZ: 'Kazakhstan (Kazakh)',
-  LEVANT_AR: 'Levant (Arabic)', LEVANT_EN: 'Levant (English)', LK: 'Sri Lanka',
-  LT: 'Lithuania', LV: 'Latvia', MX: 'Mexico', MY: 'Malaysia', NL: 'Netherlands',
-  NO: 'Norway', NP: 'Nepal', NZ: 'New Zealand', PA: 'Panama', PE: 'Peru', PH: 'Philippines',
-  PL: 'Poland', PT: 'Portugal', RO: 'Romania', RS: 'Serbia', RU: 'Russia',
-  SA: 'Saudi Arabia', SA_EN: 'Saudi Arabia (English)', SE: 'Sweden', SG: 'Singapore',
-  SK: 'Slovakia', TH: 'Thailand', TN: 'Tunisia',
-  TR: 'Turkey', TW: 'Taiwan', UA: 'Ukraine', US: 'United States',
-  UZ: 'Uzbekistan', UZ_RU: 'Uzbekistan (Russian)',
-  VN: 'Vietnam', ZA: 'South Africa',
+  AE: 'United Arab Emirates', AFRICA: 'Africa', AR: 'Argentina', AT: 'Austria',
+  AU: 'Australia', BD: 'Bangladesh', BE: 'Belgium', BG: 'Bulgaria', BR: 'Brazil',
+  CA: 'Canada', CAC: 'Central America', CH: 'Switzerland', CL: 'Chile', CN: 'China',
+  CO: 'Colombia', CZ: 'Czech Republic', DE: 'Germany', DK: 'Denmark', DZ: 'Algeria',
+  EASTAFRICA: 'East Africa', EC: 'Ecuador', EE: 'Estonia', EG: 'Egypt', ES: 'Spain',
+  FI: 'Finland', FR: 'France', GB: 'United Kingdom', GLOBAL: 'Global', GR: 'Greece',
+  HK: 'Hong Kong', HR: 'Croatia', HU: 'Hungary', ID: 'Indonesia', IE: 'Ireland',
+  IL: 'Israel', IN: 'India', IR: 'Iran', IT: 'Italy', JP: 'Japan', KR: 'South Korea',
+  KZ: 'Kazakhstan', LEVANT: 'Levant', LK: 'Sri Lanka', LT: 'Lithuania', LV: 'Latvia',
+  MX: 'Mexico', MY: 'Malaysia', NL: 'Netherlands', NO: 'Norway', NP: 'Nepal',
+  NZ: 'New Zealand', PA: 'Panama', PE: 'Peru', PH: 'Philippines', PL: 'Poland',
+  PT: 'Portugal', RO: 'Romania', RS: 'Serbia', RU: 'Russia', SA: 'Saudi Arabia',
+  SE: 'Sweden', SG: 'Singapore', SK: 'Slovakia', TH: 'Thailand', TN: 'Tunisia',
+  TR: 'Turkey', TW: 'Taiwan', UA: 'Ukraine', UK: 'United Kingdom', US: 'United States',
+  UZ: 'Uzbekistan', VN: 'Vietnam', ZA: 'South Africa',
 };
 
+// 원본 locale 괄호 코드 → 언어명. 'in'(인도네시아)·'iw'(히브리)는 구 ISO 코드라 함께 매핑.
+var URL_LIB_LANG_NAMES = {
+  ar: 'Arabic', bg: 'Bulgarian', cs: 'Czech', da: 'Danish', de: 'German', el: 'Greek',
+  en: 'English', es: 'Spanish', et: 'Estonian', fa: 'Persian', fi: 'Finnish',
+  fr: 'French', he: 'Hebrew', hr: 'Croatian', hu: 'Hungarian', id: 'Indonesian',
+  'in': 'Indonesian', it: 'Italian', iw: 'Hebrew', ja: 'Japanese', kk: 'Kazakh',
+  ko: 'Korean', lt: 'Lithuanian', lv: 'Latvian', nl: 'Dutch', no: 'Norwegian',
+  pl: 'Polish', pt: 'Portuguese', ro: 'Romanian', ru: 'Russian', sk: 'Slovak',
+  sr: 'Serbian', sv: 'Swedish', th: 'Thai', tr: 'Turkish', uk: 'Ukrainian',
+  uz: 'Uzbek', vi: 'Vietnamese', zh: 'Chinese',
+};
+
+// 'AE_AR' → 'AE', 'CA_EN' → 'CA'. 언더스코어 뒤가 언어/지역 접미사인 경우만 잘라내고,
+// 'EASTAFRICA'처럼 접미사가 없는 토큰은 그대로 둔다.
+function urlLibBaseCountry(token) {
+  var key = String(token || '').toUpperCase().replace(/-/g, '_');
+  if (Object.prototype.hasOwnProperty.call(URL_LIB_COUNTRY_NAMES, key)) return key;
+  var head = key.split('_')[0];
+  return Object.prototype.hasOwnProperty.call(URL_LIB_COUNTRY_NAMES, head) ? head : key;
+}
+
+// 원본 locale 문자열("AE_AR : AE (ar)")에서 언어 코드만 뽑는다.
+function urlLibLocaleLang(rawLocale) {
+  var m = String(rawLocale || '').match(/\(([A-Za-z]{2})\)\s*$/);
+  return m ? m[1].toLowerCase() : '';
+}
+
+function urlLibLangName(code) {
+  var c = String(code || '').toLowerCase();
+  return URL_LIB_LANG_NAMES[c] || (c ? c.toUpperCase() : '');
+}
+
 function urlLibCountryName(token) {
-  var key = (token || '').toUpperCase().replace(/-/g, '_');
-  return URL_LIB_COUNTRY_NAMES[key] || token;
+  var base = urlLibBaseCountry(token);
+  return URL_LIB_COUNTRY_NAMES[base] || token;
+}
+
+// 셀렉트/목록 표시용 라벨. withLang이면 '국가명 (언어)' — 같은 국가에 로케일이
+// 둘 이상일 때만 호출부가 true를 준다(위 표기 기준 ②).
+function urlLibLocaleDisplayName(token, langCode, withLang) {
+  var name = urlLibCountryName(token);
+  var lang = withLang ? urlLibLangName(langCode) : '';
+  return lang ? name + ' (' + lang + ')' : name;
+}
+
+// models → { token: {lang, base, withLang} }. 언어는 데이터에서 읽고,
+// 같은 베이스 국가에 토큰이 2개 이상이면 withLang=true.
+function urlLibLocaleDisplayMap(models) {
+  var meta = {};
+  (models || []).forEach(function (m) {
+    (m.locales || []).forEach(function (l) {
+      var t = urlLibLocaleToken(l.locale);
+      if (!t) return;
+      if (!meta[t]) meta[t] = { lang: urlLibLocaleLang(l.locale), base: urlLibBaseCountry(t) };
+      else if (!meta[t].lang) meta[t].lang = urlLibLocaleLang(l.locale);
+    });
+  });
+  var baseCount = {};
+  Object.keys(meta).forEach(function (t) { baseCount[meta[t].base] = (baseCount[meta[t].base] || 0) + 1; });
+  Object.keys(meta).forEach(function (t) { meta[t].withLang = baseCount[meta[t].base] > 1; });
+  return meta;
 }
 
 function urlLibLocaleMatchesQuery(token, query) {
@@ -141,6 +195,11 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     urlLibLocaleToken: urlLibLocaleToken,
     urlLibCountryName: urlLibCountryName,
+    urlLibBaseCountry: urlLibBaseCountry,
+    urlLibLocaleLang: urlLibLocaleLang,
+    urlLibLangName: urlLibLangName,
+    urlLibLocaleDisplayName: urlLibLocaleDisplayName,
+    urlLibLocaleDisplayMap: urlLibLocaleDisplayMap,
     urlLibLocaleMatchesQuery: urlLibLocaleMatchesQuery,
     buildUrlLibLocaleIndex: buildUrlLibLocaleIndex,
     urlLibDisplayUrl: urlLibDisplayUrl,
@@ -150,5 +209,6 @@ if (typeof module !== 'undefined' && module.exports) {
     urlLibSortModels: urlLibSortModels,
     urlLibPaginate: urlLibPaginate,
     URL_LIB_COUNTRY_NAMES: URL_LIB_COUNTRY_NAMES,
+    URL_LIB_LANG_NAMES: URL_LIB_LANG_NAMES,
   };
 }
