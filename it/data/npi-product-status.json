@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-08-06 10:31",
+ "generatedAt": "2026-08-07 10:39",
  "pttRawFile": "raw-data-20260806.xlsb",
  "cmsFile": "cms_merged_view_20260804_093859.csv",
  "sourceFile": "43 NPI for IT product status_20260707.xlsx",
@@ -56,7 +56,7 @@
      "liveUrl": "https://www.lg.com/de/notebooks/gram-pro/16z90u-g-au78gn/",
      "cmsLive": "라이브",
      "readinessCheck": "Ready",
-     "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/de/ms/lgcom/2026/it/laptop/gram-pro",
       "PDR Use": "Y",
@@ -97,7 +97,7 @@
      "liveUrl": "https://www.lg.com/de/notebooks/gram-pro/17z90u-g-au8bgn/",
      "cmsLive": "라이브",
      "readinessCheck": "Ready",
-     "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/de/ms/lgcom/2026/it/laptop/gram-pro",
       "PDR Use": "Y",
@@ -138,7 +138,7 @@
      "liveUrl": "https://www.lg.com/de/notebooks/gram-2-in-1/16t95tp-k-aa78gn/",
      "cmsLive": "라이브",
      "readinessCheck": "Ready",
-     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/de/ms/lgcom/2026/it/laptop/gram-pro-2in1/16t95tp",
       "PDR Use": "Y",
@@ -179,7 +179,7 @@
      "liveUrl": "https://www.lg.com/de/notebooks/gram-2-in-1/16t95tp-k-ad8bgn/",
      "cmsLive": "라이브",
      "readinessCheck": "Ready",
-     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/de/ms/lgcom/2026/it/laptop/gram-pro-2in1/16t95tp",
       "PDR Use": "Y",
@@ -220,7 +220,7 @@
      "liveUrl": "https://www.lg.com/it/notebook/gram/17z90tl-g-au88dn/",
      "cmsLive": "라이브",
      "readinessCheck": "Ready",
-     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -261,7 +261,7 @@
      "liveUrl": "",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/it/ms/lgcom/2026/it/laptop/gram-pro",
       "PDR Use": "Y",
@@ -302,7 +302,7 @@
      "liveUrl": "",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -343,7 +343,7 @@
      "liveUrl": "",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -384,7 +384,7 @@
      "liveUrl": "",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -425,7 +425,7 @@
      "liveUrl": "",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -466,7 +466,7 @@
      "liveUrl": "https://www.lg.com/it/notebook/gram/17z90tl-g-au75dn/",
      "cmsLive": "라이브",
      "readinessCheck": "Ready",
-     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -507,7 +507,7 @@
      "liveUrl": "https://www.lg.com/it/notebook/gram/17z90tl-g-au78dn/",
      "cmsLive": "라이브",
      "readinessCheck": "Ready",
-     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -554,7 +554,7 @@
      "liveUrl": "",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/uk/ms/lgcom/2026/it/laptop/gram-pro",
       "PDR Use": "Y",
@@ -595,7 +595,7 @@
      "liveUrl": "",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/uk/ms/lgcom/2026/it/laptop/gram-pro",
       "PDR Use": "Y",
@@ -636,7 +636,7 @@
      "liveUrl": "",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Not Ready",
-     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Need Assign · Confirmed",
+     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Need Assign · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/uk/ms/lgcom/2026/it/laptop/gram-book",
       "PDR Use": "Y",
@@ -677,7 +677,7 @@
      "liveUrl": "",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -718,7 +718,7 @@
      "liveUrl": "",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Not Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Need Assign · Confirmed",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Need Assign · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/uk/ms/lgcom/2026/it/laptop/gram-pro-2in1/16t95tp",
       "PDR Use": "Y",
@@ -759,7 +759,7 @@
      "liveUrl": "",
      "cmsLive": "등록·미게시",
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/uk/ms/lgcom/2026/it/laptop/gram-pro",
       "PDR Use": "Y",
@@ -806,7 +806,7 @@
      "liveUrl": "https://www.lg.com/de/notebooks/gram-pro/16z90u-k-aub8gn/",
      "cmsLive": "라이브",
      "readinessCheck": "Ready",
-     "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Need Assign · Confirmed",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Need Assign · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/de/ms/lgcom/2026/it/laptop/gram-pro",
       "PDR Use": "Y",
@@ -847,7 +847,7 @@
      "liveUrl": "https://www.lg.com/de/notebooks/gram-pro/17z90u-g-au78gn/",
      "cmsLive": "라이브",
      "readinessCheck": "Ready",
-     "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Need Assign · Confirmed",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Need Assign · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/de/ms/lgcom/2026/it/laptop/gram-pro",
       "PDR Use": "Y",
@@ -888,7 +888,7 @@
      "liveUrl": "https://www.lg.com/es/business/informatica/ordenadores/portatiles-para-creadores/14z95u-g-au88bn/",
      "cmsLive": "라이브",
      "readinessCheck": "Ready",
-     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/es/ms/lgcom/2026/it/laptop/gram",
       "PDR Use": "Y",
@@ -939,7 +939,7 @@
      "stageFallback": "precheck",
      "pimChecked": true,
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -980,7 +980,7 @@
      "stageFallback": "precheck",
      "pimChecked": true,
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -1021,7 +1021,7 @@
      "stageFallback": "precheck",
      "pimChecked": true,
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/es/ms/lgcom/2026/it/laptop/gram-pro",
       "PDR Use": "Y",
@@ -1062,7 +1062,7 @@
      "stageFallback": "precheck",
      "pimChecked": true,
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/es/ms/lgcom/2026/it/laptop/gram-pro",
       "PDR Use": "Y",
@@ -1103,7 +1103,7 @@
      "stageFallback": "precheck",
      "pimChecked": true,
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -1144,7 +1144,7 @@
      "stageFallback": "precheck",
      "pimChecked": true,
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -1181,7 +1181,7 @@
      "liveUrl": "https://www.lg.com/es/portatiles/gram-book/16u55u-g-au88bn/",
      "cmsLive": "라이브",
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/es/ms/lgcom/2026/it/laptop/gram-book",
       "PDR Use": "Y",
@@ -1226,7 +1226,7 @@
      "stageFallback": "precheck",
      "pimChecked": true,
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/it/ms/lgcom/2026/it/laptop/gram-pro",
       "PDR Use": "Y",
@@ -1268,7 +1268,7 @@
      "stage": "precheck",
      "category": "NPI",
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · Confirmed · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -1313,7 +1313,7 @@
      "stageFallback": "precheck",
      "pimChecked": true,
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -1353,7 +1353,7 @@
      "stageFallback": "precheck",
      "pimChecked": true,
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -1394,7 +1394,7 @@
      "stageFallback": "precheck",
      "pimChecked": true,
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -1435,7 +1435,7 @@
      "stageFallback": "precheck",
      "pimChecked": true,
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "Spec Y · KF 5 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "Y",
@@ -1471,7 +1471,7 @@
      "liveUrl": "https://www.lg.com/au/laptops/gram-pro/16z90u-g-au75ap/",
      "cmsLive": "라이브",
      "readinessCheck": "Ready",
-     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재",
+     "readinessTip": "Spec Y · KF 6 · UFN ✓ · Assigned · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/au/ms/lgcom/2026/it/laptop/gram-pro",
       "PDR Use": "Y",
@@ -1522,7 +1522,7 @@
      "stageFallback": "",
      "pimChecked": true,
      "readinessCheck": "Not Ready",
-     "readinessTip": "Spec N · KF 0 · UFN ✗ · Need Assign · LAR 미기재",
+     "readinessTip": "Spec N · KF 0 · UFN ✗ · Need Assign · LAR 미기재 · v5",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "N",
@@ -1562,7 +1562,7 @@
      "stageFallback": "",
      "pimChecked": true,
      "readinessCheck": "Not Ready",
-     "readinessTip": "Spec N · KF 0 · UFN ✗ · Need Assign · LAR 미기재",
+     "readinessTip": "Spec N · KF 0 · UFN ✗ · Need Assign · LAR 미기재 · v5",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "N",
@@ -1602,7 +1602,7 @@
      "stageFallback": "",
      "pimChecked": true,
      "readinessCheck": "Not Ready",
-     "readinessTip": "Spec N · KF 0 · UFN ✗ · Need Assign · LAR 미기재",
+     "readinessTip": "Spec N · KF 0 · UFN ✗ · Need Assign · LAR 미기재 · v5",
      "readinessFields": {
       "Channel DAM Workflow": "N",
       "PDR Use": "N",
@@ -1644,7 +1644,7 @@
      "liveUrl": "https://www.lg.com/ca_en/laptops/all-laptops/17z90u-g78/",
      "cmsLive": "PIM 미등록",
      "readinessCheck": "Ready",
-     "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Need Assign · LAR 미기재",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Need Assign · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/ca_en/ms/lgcom/2026/it/laptop/gram-pro",
       "PDR Use": "Y",
@@ -1685,7 +1685,7 @@
      "liveUrl": "https://www.lg.com/ca_en/laptops/all-laptops/17z90ur-p/",
      "cmsLive": "PIM 미등록",
      "readinessCheck": "Ready",
-     "readinessTip": "라이브 게시 확인 · Spec Y · KF 2 · UFN ✓ · Need Assign · LAR 미기재",
+     "readinessTip": "라이브 게시 확인 · Spec Y · KF 2 · UFN ✓ · Need Assign · LAR 미기재 · gp1",
      "readinessFields": {
       "Channel DAM Workflow": "/content/dam/channel/wcms/1-channel/ca_en/ms/lgcom/2026/it/laptop/gram-pro",
       "PDR Use": "Y",

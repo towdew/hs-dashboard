@@ -15,7 +15,9 @@ function npiPsFilterRows(flatRows, filter) {
     if (f.region && row.region !== f.region) return false;
     if (f.locale && row.locale !== f.locale) return false;
     if (q) {
-      var haystack = [row.model, row.salesModelKey, row.pttId]
+      // PTT ID는 검색 대상에서 제외 (2026-08-07 사용자 지시) — 화면 컬럼에도 없고
+      // 엑셀 다운로드에만 포함되는 값이라 검색어와 우연히 겹치면 혼란만 준다.
+      var haystack = [row.model, row.salesModelKey]
         .map(function (v) { return (v || '').toLowerCase(); })
         .join(' ');
       if (haystack.indexOf(q) === -1) return false;
