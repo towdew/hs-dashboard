@@ -4,21 +4,33 @@ function urlLibLocaleToken(rawLocale) {
   return idx >= 0 ? raw.slice(0, idx) : raw;
 }
 
+// 로케일 토큰 → 국가명. 여기 없는 토큰은 코드가 그대로 화면에 노출되므로
+// (2026-08-07 사용자 지적: "AR — AR"처럼 코드만 보이면 안 된다) 데이터에 실재하는
+// 토큰은 빠짐없이 채운다. 검증: url-library.json의 고유 토큰 전수를 훑어 미매핑 0건.
+// 언어 변형은 기존 관례대로 '국가명 (언어)' — 기본 로케일은 언어 표기 없이 국가명만.
 var URL_LIB_COUNTRY_NAMES = {
-  AE: 'United Arab Emirates', AE_AR: 'UAE (Arabic)', AT: 'Austria', AU: 'Australia',
+  AE: 'United Arab Emirates', AE_AR: 'UAE (Arabic)', AR: 'Argentina', AT: 'Austria',
+  AU: 'Australia', BD: 'Bangladesh',
   BE: 'Belgium', BE_FR: 'Belgium (French)', BG: 'Bulgaria', BR: 'Brazil',
   CA_EN: 'Canada (English)', CA_FR: 'Canada (French)', CAC: 'Central America',
-  CH: 'Switzerland', CL: 'Chile', CN: 'China', CO: 'Colombia', CZ: 'Czech Republic',
-  DE: 'Germany', DK: 'Denmark', EASTAFRICA: 'East Africa', AFRICA: 'Africa',
-  EC: 'Ecuador', EE: 'Estonia', EG: 'Egypt', ES: 'Spain', FI: 'Finland', FR: 'France',
-  GB: 'United Kingdom', UK: 'United Kingdom', GR: 'Greece', HK: 'Hong Kong',
+  CH: 'Switzerland', CH_DE: 'Switzerland (German)', CH_FR: 'Switzerland (French)',
+  CL: 'Chile', CN: 'China', CO: 'Colombia', CZ: 'Czech Republic',
+  DE: 'Germany', DK: 'Denmark', DZ: 'Algeria', EASTAFRICA: 'East Africa', AFRICA: 'Africa',
+  EC: 'Ecuador', EE: 'Estonia', EG: 'Egypt', EG_AR: 'Egypt (Arabic)', EG_EN: 'Egypt (English)',
+  ES: 'Spain', FI: 'Finland', FR: 'France',
+  GB: 'United Kingdom', UK: 'United Kingdom', GLOBAL: 'Global', GR: 'Greece',
+  HK: 'Hong Kong', HK_EN: 'Hong Kong (English)',
   HR: 'Croatia', HU: 'Hungary', ID: 'Indonesia', IE: 'Ireland', IL: 'Israel',
-  IN: 'India', IT: 'Italy', JP: 'Japan', KR: 'South Korea', KZ: 'Kazakhstan',
+  IN: 'India', IR: 'Iran', IT: 'Italy', JP: 'Japan', KR: 'South Korea',
+  KZ: 'Kazakhstan', KZ_KZ: 'Kazakhstan (Kazakh)',
+  LEVANT_AR: 'Levant (Arabic)', LEVANT_EN: 'Levant (English)', LK: 'Sri Lanka',
   LT: 'Lithuania', LV: 'Latvia', MX: 'Mexico', MY: 'Malaysia', NL: 'Netherlands',
-  NO: 'Norway', NZ: 'New Zealand', PA: 'Panama', PE: 'Peru', PH: 'Philippines',
+  NO: 'Norway', NP: 'Nepal', NZ: 'New Zealand', PA: 'Panama', PE: 'Peru', PH: 'Philippines',
   PL: 'Poland', PT: 'Portugal', RO: 'Romania', RS: 'Serbia', RU: 'Russia',
-  SA: 'Saudi Arabia', SE: 'Sweden', SG: 'Singapore', SK: 'Slovakia', TH: 'Thailand',
-  TR: 'Turkey', TW: 'Taiwan', UA: 'Ukraine', US: 'United States', UZ: 'Uzbekistan',
+  SA: 'Saudi Arabia', SA_EN: 'Saudi Arabia (English)', SE: 'Sweden', SG: 'Singapore',
+  SK: 'Slovakia', TH: 'Thailand', TN: 'Tunisia',
+  TR: 'Turkey', TW: 'Taiwan', UA: 'Ukraine', US: 'United States',
+  UZ: 'Uzbekistan', UZ_RU: 'Uzbekistan (Russian)',
   VN: 'Vietnam', ZA: 'South Africa',
 };
 
