@@ -1858,13 +1858,13 @@ function npiPsRenderFilterBar() {
   var html = '<div class="url-lib-filter-bar">';
 
   html += '<select class="url-lib-select" id="npiPsCategorySelect" onchange="npiPsSetFilter(\'category\', this.value)">';
-  html += '<option value="">전체 구분</option>';
+  html += '<option value="">All Types</option>';
   html += '<option value="NPI"' + (_npiPsFilter.category === 'NPI' ? ' selected' : '') + '>NPI</option>';
   html += '<option value="MOD"' + (_npiPsFilter.category === 'MOD' ? ' selected' : '') + '>Modification</option>';
   html += '</select>';
 
   html += '<select class="url-lib-select" id="npiPsStageSelect" onchange="npiPsSetFilter(\'stage\', this.value)">';
-  html += '<option value="">전체 Stage</option>';
+  html += '<option value="">All Stages</option>';
   stages.forEach(function(s) {
     var cnt = stageCounts[s.key] || 0;
     html += '<option value="' + escapeAttrSheet(s.key) + '"' + (_npiPsFilter.stage === s.key ? ' selected' : '') + '>' +
@@ -1873,7 +1873,7 @@ function npiPsRenderFilterBar() {
   html += '</select>';
 
   html += '<select class="url-lib-select" id="npiPsRegionSelect" onchange="npiPsSetFilter(\'region\', this.value)">';
-  html += '<option value="">전체 Region</option>';
+  html += '<option value="">All Regions</option>';
   regions.forEach(function(region) {
     html += '<option value="' + escapeAttrSheet(region) + '"' + (_npiPsFilter.region === region ? ' selected' : '') + '>' + escapeHtmlSheet(region) + '</option>';
   });
@@ -1881,7 +1881,7 @@ function npiPsRenderFilterBar() {
 
   // Country 필터 — 값은 원본 locale 유지(필터 로직 무변경), 표시만 국가명 (2026-07-22 사용자 지시)
   html += '<select class="url-lib-select" id="npiPsLocaleSelect" onchange="npiPsSetFilter(\'locale\', this.value)">';
-  html += '<option value="">전체 Country</option>';
+  html += '<option value="">All Countries</option>';
   locales.slice().sort(function(a, b) {
     return npiPsCountryName(a).localeCompare(npiPsCountryName(b));
   }).forEach(function(locale) {
@@ -1890,13 +1890,13 @@ function npiPsRenderFilterBar() {
   html += '</select>';
 
   html += '<div class="dash-search">' + DASH_SEARCH_ICON_SVG;
-  html += '<input id="npiPsSearchInput" class="dash-search-input" type="text" placeholder="모델명/서픽스 검색..." value="' + escapeAttrSheet(_npiPsFilter.search) + '" oninput="npiPsOnSearchInput(this)">';
-  html += '<button type="button" class="dash-search-clear' + (_npiPsFilter.search ? ' dash-search-clear-visible' : '') + '" id="npiPsSearchClear" onclick="npiPsClearSearch()" aria-label="검색어 지우기">&times;</button>';
+  html += '<input id="npiPsSearchInput" class="dash-search-input" type="text" placeholder="Search model or suffix..." value="' + escapeAttrSheet(_npiPsFilter.search) + '" oninput="npiPsOnSearchInput(this)">';
+  html += '<button type="button" class="dash-search-clear' + (_npiPsFilter.search ? ' dash-search-clear-visible' : '') + '" id="npiPsSearchClear" onclick="npiPsClearSearch()" aria-label="Clear search">&times;</button>';
   html += '</div>';
 
   html += '<label style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-caption);color:#475569;cursor:pointer;white-space:nowrap">' +
-    '<input type="checkbox" id="npiPsExcludeLive"' + (_npiPsFilter.excludeLive ? ' checked' : '') + ' onchange="npiPsSetFilter(\'excludeLive\', this.checked)">라이브 제외</label>';
-  html += '<button type="button" class="url-lib-page-btn" id="npiPsResetBtn" onclick="npiPsResetFilter()">초기화</button>';
+    '<input type="checkbox" id="npiPsExcludeLive"' + (_npiPsFilter.excludeLive ? ' checked' : '') + ' onchange="npiPsSetFilter(\'excludeLive\', this.checked)">Exclude Live</label>';
+  html += '<button type="button" class="url-lib-page-btn" id="npiPsResetBtn" onclick="npiPsResetFilter()">Reset</button>';
   html += '</div>';
 
   bar.innerHTML = html;
@@ -2039,7 +2039,7 @@ function urlLibDownloadExcel() {
   if (typeof XLSX === 'undefined') { alert('엑셀 라이브러리를 불러오지 못했습니다.'); return; }
   if (!_urlLibData || !_urlLibData.models) { alert('URL Library 데이터가 아직 로드되지 않았습니다.'); return; }
   var models = urlLibSortModels(
-    urlLibFilterModels(_urlLibData.models, _urlLibFilter), _urlLibFilter.sort);
+    urlLibFilterModels(_urlLibData.models, _urlLibFilter), URL_LIB_SORT_KEY);
   var aoa = [['Model', 'Sales Model Code', 'Suffix', 'Category',
               'Locale', 'Country', 'Status', 'Live URL', 'Publish Update']];
   models.forEach(function(m) {
@@ -2220,7 +2220,9 @@ var _urlLibData = null;
 // 기본 상태 필터는 ACTIVE (2026-08-07 사용자 지시). 이전에는 status='' + 숨은 activeOnly 체크박스
 // 조합이라 '전체 상태'로 보이는데 실제로는 ACTIVE만 걸려 있어 혼란스러웠다 → 체크박스를 없애고
 // 상태 셀렉트 하나로 일원화한다.
-var URL_LIB_DEFAULT_FILTER = { search: '', category: '', status: 'ACTIVE', locale: '', sort: 'name', page: 1 };
+// 목록 순서는 모델명순 고정 — 정렬 셀렉트는 실효성이 없어 제거(2026-08-07 사용자 지시)
+var URL_LIB_SORT_KEY = 'name';
+var URL_LIB_DEFAULT_FILTER = { search: '', category: '', status: 'ACTIVE', locale: '', page: 1 };
 var _urlLibFilter = Object.assign({}, URL_LIB_DEFAULT_FILTER);
 var _urlLibExpandedModel = null;
 var _urlLibViewMode = 'model'; // 'model' | 'country'
@@ -2344,11 +2346,6 @@ function renderUrlLibraryContent() {
   var categories = _urlLibData.categories || [];
   var statusOptions = ['ACTIVE', 'DISCONTINUED', 'SUSPENDED', 'HIDDEN'];
   var localeTokens = urlLibAllLocaleTokens(allModels);
-  var sortOptions = [
-    { value: 'name', label: 'Model Name' },
-    { value: 'locales_desc', label: 'Most Countries' },
-    { value: 'locales_asc', label: 'Fewest Countries' },
-  ];
 
   // ── 헤더 카드 ──
   var headerHtml = '<div style="padding:16px 24px 0;flex-shrink:0"><div class="ov-card-new">';
@@ -2380,12 +2377,12 @@ function renderUrlLibraryContent() {
   if (_urlLibViewMode === 'country') {
     headerHtml += '<div class="dash-search">' + DASH_SEARCH_ICON_SVG;
     headerHtml += '<input id="urlLibCountryQueryInput" class="dash-search-input" type="text" placeholder="국가명 또는 로케일 검색 (예: Spain, ES)..." value="' + escapeAttrSheet(_urlLibCountryQuery) + '" oninput="urlLibOnCountryQueryInput(this)">';
-    headerHtml += '<button type="button" class="dash-search-clear' + (_urlLibCountryQuery ? ' dash-search-clear-visible' : '') + '" id="urlLibCountryClear" onclick="urlLibClearCountryQuery()" aria-label="검색어 지우기">&times;</button>';
+    headerHtml += '<button type="button" class="dash-search-clear' + (_urlLibCountryQuery ? ' dash-search-clear-visible' : '') + '" id="urlLibCountryClear" onclick="urlLibClearCountryQuery()" aria-label="Clear search">&times;</button>';
     headerHtml += '</div>';
   } else {
     headerHtml += '<div class="dash-search">' + DASH_SEARCH_ICON_SVG;
     headerHtml += '<input id="urlLibSearchInput" class="dash-search-input" type="text" placeholder="모델명 또는 코드 검색..." value="' + escapeAttrSheet(_urlLibFilter.search) + '" oninput="urlLibOnSearchInput(this)">';
-    headerHtml += '<button type="button" class="dash-search-clear' + (_urlLibFilter.search ? ' dash-search-clear-visible' : '') + '" id="urlLibSearchClear" onclick="urlLibClearSearch()" aria-label="검색어 지우기">&times;</button>';
+    headerHtml += '<button type="button" class="dash-search-clear' + (_urlLibFilter.search ? ' dash-search-clear-visible' : '') + '" id="urlLibSearchClear" onclick="urlLibClearSearch()" aria-label="Clear search">&times;</button>';
     headerHtml += '</div>';
   }
   headerHtml += '<select class="url-lib-select" id="urlLibCategorySelect" onchange="urlLibSetFilter(\'category\',this.value)">';
@@ -2406,11 +2403,6 @@ function renderUrlLibraryContent() {
     localeTokens.forEach(function(token) {
       var label = token + ' — ' + urlLibCountryName(token);
       headerHtml += '<option value="' + escapeAttrSheet(token) + '"' + (_urlLibFilter.locale === token ? ' selected' : '') + '>' + escapeHtmlSheet(label) + '</option>';
-    });
-    headerHtml += '</select>';
-    headerHtml += '<select class="url-lib-select" id="urlLibSortSelect" onchange="urlLibSetFilter(\'sort\',this.value)">';
-    sortOptions.forEach(function(opt) {
-      headerHtml += '<option value="' + opt.value + '"' + (_urlLibFilter.sort === opt.value ? ' selected' : '') + '>' + opt.label + '</option>';
     });
     headerHtml += '</select>';
     headerHtml += '<button type="button" class="url-lib-page-btn" id="urlLibResetBtn" onclick="urlLibResetFilter()">Reset</button>';
@@ -2443,7 +2435,7 @@ function renderUrlLibModelView(allModels) {
   const wrap = document.getElementById('urlLibResults');
   if (!wrap) return;
   var filtered = urlLibFilterModels(allModels, _urlLibFilter);
-  filtered = urlLibSortModels(filtered, _urlLibFilter.sort);
+  filtered = urlLibSortModels(filtered, URL_LIB_SORT_KEY);
   var pageInfo = urlLibPaginate(filtered, _urlLibFilter.page, URL_LIB_PAGE_SIZE);
   var totalPages = pageInfo.totalPages;
   var page = pageInfo.page;
@@ -2614,10 +2606,6 @@ function urlLibResetFilter() {
   if (statusSel) statusSel.value = '';
   var localeSel = document.getElementById('urlLibLocaleSelect');
   if (localeSel) localeSel.value = '';
-  var sortSel = document.getElementById('urlLibSortSelect');
-  if (sortSel) sortSel.value = 'name';
-  var activeChk = document.getElementById('urlLibActiveOnly');
-  if (activeChk) activeChk.checked = true;
   urlLibRenderResults();
 }
 
