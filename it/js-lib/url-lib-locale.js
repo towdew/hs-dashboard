@@ -96,7 +96,6 @@ function urlLibMatchedLocales(model, filter) {
 function urlLibFilterModels(allModels, filter) {
   var q = (filter.search || '').toLowerCase().trim();
   var localeTok = filter.locale || '';
-  var countRange = filter.countRange || '';
   return (allModels || []).filter(function (m) {
     if (q) {
       var nameHit = m.modelName.toLowerCase().includes(q);
@@ -109,12 +108,6 @@ function urlLibFilterModels(allModels, filter) {
     if (filter.category && m.category !== filter.category) return false;
     // status·locale은 교차(같은 항목) 평가 — 위 urlLibMatchedLocales 주석 참고
     if ((filter.status || localeTok) && urlLibMatchedLocales(m, filter).length === 0) return false;
-    if (countRange) {
-      var n = urlLibCountryCount(m); // '개국' 필터는 국가 수 기준(사이트 수 아님)
-      if (countRange === '1' && n !== 1) return false;
-      if (countRange === '2-9' && (n < 2 || n > 9)) return false;
-      if (countRange === '10+' && n < 10) return false;
-    }
     return true;
   });
 }

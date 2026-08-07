@@ -2065,7 +2065,6 @@ function urlLibDownloadExcel() {
     ['카테고리', f.category || '전체'],
     ['상태', f.status || '전체'],
     ['로케일', f.locale || '전체'],
-    ['개국 수', f.countRange || '전체'],
     ['검색어', f.search || ''],
     ['모델 수', models.length],
     ['URL 수', aoa.length - 1],
@@ -2221,7 +2220,7 @@ var _urlLibData = null;
 // 기본 상태 필터는 ACTIVE (2026-08-07 사용자 지시). 이전에는 status='' + 숨은 activeOnly 체크박스
 // 조합이라 '전체 상태'로 보이는데 실제로는 ACTIVE만 걸려 있어 혼란스러웠다 → 체크박스를 없애고
 // 상태 셀렉트 하나로 일원화한다.
-var URL_LIB_DEFAULT_FILTER = { search: '', category: '', status: 'ACTIVE', locale: '', countRange: '', sort: 'name', page: 1 };
+var URL_LIB_DEFAULT_FILTER = { search: '', category: '', status: 'ACTIVE', locale: '', sort: 'name', page: 1 };
 var _urlLibFilter = Object.assign({}, URL_LIB_DEFAULT_FILTER);
 var _urlLibExpandedModel = null;
 var _urlLibViewMode = 'model'; // 'model' | 'country'
@@ -2345,15 +2344,10 @@ function renderUrlLibraryContent() {
   var categories = _urlLibData.categories || [];
   var statusOptions = ['ACTIVE', 'DISCONTINUED', 'SUSPENDED', 'HIDDEN'];
   var localeTokens = urlLibAllLocaleTokens(allModels);
-  var countRangeOptions = [
-    { value: '1', label: '1개국' },
-    { value: '2-9', label: '2~9개국' },
-    { value: '10+', label: '10개국+' },
-  ];
   var sortOptions = [
-    { value: 'name', label: '모델명순' },
-    { value: 'locales_desc', label: '국가수 많은순' },
-    { value: 'locales_asc', label: '국가수 적은순' },
+    { value: 'name', label: 'Model Name' },
+    { value: 'locales_desc', label: 'Most Countries' },
+    { value: 'locales_asc', label: 'Fewest Countries' },
   ];
 
   // ── 헤더 카드 ──
@@ -2395,29 +2389,23 @@ function renderUrlLibraryContent() {
     headerHtml += '</div>';
   }
   headerHtml += '<select class="url-lib-select" id="urlLibCategorySelect" onchange="urlLibSetFilter(\'category\',this.value)">';
-  headerHtml += '<option value="">전체 카테고리</option>';
+  headerHtml += '<option value="">All Categories</option>';
   categories.forEach(function(cat) {
     headerHtml += '<option value="' + escapeAttrSheet(cat) + '"' + (_urlLibFilter.category === cat ? ' selected' : '') + '>' + escapeHtmlSheet(cat) + '</option>';
   });
   headerHtml += '</select>';
   headerHtml += '<select class="url-lib-select" id="urlLibStatusSelect" onchange="urlLibSetFilter(\'status\',this.value)">';
-  headerHtml += '<option value="">전체 상태</option>';
+  headerHtml += '<option value="">All Status</option>';
   statusOptions.forEach(function(s) {
     headerHtml += '<option value="' + s + '"' + (_urlLibFilter.status === s ? ' selected' : '') + '>' + s + '</option>';
   });
   headerHtml += '</select>';
   if (_urlLibViewMode !== 'country') {
     headerHtml += '<select class="url-lib-select" id="urlLibLocaleSelect" onchange="urlLibSetFilter(\'locale\',this.value)">';
-    headerHtml += '<option value="">전체 로케일</option>';
+    headerHtml += '<option value="">All Countries</option>';
     localeTokens.forEach(function(token) {
       var label = token + ' — ' + urlLibCountryName(token);
       headerHtml += '<option value="' + escapeAttrSheet(token) + '"' + (_urlLibFilter.locale === token ? ' selected' : '') + '>' + escapeHtmlSheet(label) + '</option>';
-    });
-    headerHtml += '</select>';
-    headerHtml += '<select class="url-lib-select" id="urlLibCountRangeSelect" onchange="urlLibSetFilter(\'countRange\',this.value)">';
-    headerHtml += '<option value="">전체 국가수</option>';
-    countRangeOptions.forEach(function(opt) {
-      headerHtml += '<option value="' + opt.value + '"' + (_urlLibFilter.countRange === opt.value ? ' selected' : '') + '>' + opt.label + '</option>';
     });
     headerHtml += '</select>';
     headerHtml += '<select class="url-lib-select" id="urlLibSortSelect" onchange="urlLibSetFilter(\'sort\',this.value)">';
@@ -2425,7 +2413,7 @@ function renderUrlLibraryContent() {
       headerHtml += '<option value="' + opt.value + '"' + (_urlLibFilter.sort === opt.value ? ' selected' : '') + '>' + opt.label + '</option>';
     });
     headerHtml += '</select>';
-    headerHtml += '<button type="button" class="url-lib-page-btn" id="urlLibResetBtn" onclick="urlLibResetFilter()">초기화</button>';
+    headerHtml += '<button type="button" class="url-lib-page-btn" id="urlLibResetBtn" onclick="urlLibResetFilter()">Reset</button>';
   }
   headerHtml += '</div>';
   headerHtml += '</div></div>';
@@ -2626,8 +2614,6 @@ function urlLibResetFilter() {
   if (statusSel) statusSel.value = '';
   var localeSel = document.getElementById('urlLibLocaleSelect');
   if (localeSel) localeSel.value = '';
-  var countRangeSel = document.getElementById('urlLibCountRangeSelect');
-  if (countRangeSel) countRangeSel.value = '';
   var sortSel = document.getElementById('urlLibSortSelect');
   if (sortSel) sortSel.value = 'name';
   var activeChk = document.getElementById('urlLibActiveOnly');
