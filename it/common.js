@@ -1890,7 +1890,7 @@ function npiPsRenderFilterBar() {
   html += '</select>';
 
   html += '<div class="dash-search">' + DASH_SEARCH_ICON_SVG;
-  html += '<input id="npiPsSearchInput" class="dash-search-input" type="text" placeholder="모델명/서픽스/PTT ID 검색..." value="' + escapeAttrSheet(_npiPsFilter.search) + '" oninput="npiPsOnSearchInput(this)">';
+  html += '<input id="npiPsSearchInput" class="dash-search-input" type="text" placeholder="모델명/서픽스 검색..." value="' + escapeAttrSheet(_npiPsFilter.search) + '" oninput="npiPsOnSearchInput(this)">';
   html += '<button type="button" class="dash-search-clear' + (_npiPsFilter.search ? ' dash-search-clear-visible' : '') + '" id="npiPsSearchClear" onclick="npiPsClearSearch()" aria-label="검색어 지우기">&times;</button>';
   html += '</div>';
 
@@ -2143,7 +2143,7 @@ function npiPsRenderResults() {
   var html = '<div style="padding:16px 24px">';
   html += '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px">';
   html += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500">' + flatRows.length.toLocaleString() + '건 / 전체 ' + totalRows.toLocaleString() + '건</div>';
-  html += '<button onclick="npiPsDownloadExcel()" style="cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:8px;padding:5px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">⬇ 엑셀 다운로드</button>';
+  html += '<button onclick="npiPsDownloadExcel()" style="cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:8px;padding:5px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">⬇ Excel Download</button>';
   html += '</div>';
   html += '<div class="npi-detail-table-wrap" style="overflow-x:auto">';
   html += '<table class="npi-detail-table" style="min-width:1300px">';
@@ -2426,7 +2426,6 @@ function renderUrlLibraryContent() {
     });
     headerHtml += '</select>';
     headerHtml += '<button type="button" class="url-lib-page-btn" id="urlLibResetBtn" onclick="urlLibResetFilter()">초기화</button>';
-    headerHtml += '<button type="button" class="url-lib-page-btn" id="urlLibExcelBtn" onclick="urlLibDownloadExcel()" title="현재 필터 조건 그대로 내보냅니다">⬇ 엑셀 다운로드</button>';
   }
   headerHtml += '</div>';
   headerHtml += '</div></div>';
@@ -2463,7 +2462,11 @@ function renderUrlLibModelView(allModels) {
   var pageModels = pageInfo.pageItems;
 
   var listHtml = '<div style="padding:12px 24px">';
-  listHtml += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500;margin-bottom:8px">' + filtered.length.toLocaleString() + '개 모델</div>';
+  // 다운로드 버튼은 필터바가 아니라 결과 테이블 바로 위 — 목록 개수와 같은 줄에 둔다(2026-08-07 사용자 지시)
+  listHtml += '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px">';
+  listHtml += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500">' + filtered.length.toLocaleString() + '개 모델</div>';
+  listHtml += '<button type="button" id="urlLibExcelBtn" onclick="urlLibDownloadExcel()" title="현재 필터 조건 그대로 내보냅니다" style="cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:8px;padding:5px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">⬇ Excel Download</button>';
+  listHtml += '</div>';
 
   if (!filtered.length) {
     listHtml += '<div class="url-lib-empty">조건에 맞는 결과가 없습니다</div></div>';
