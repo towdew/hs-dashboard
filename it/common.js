@@ -6863,3 +6863,174 @@ function escapeHtmlSheet(value) {
 function escapeAttrSheet(value) {
   return escapeHtmlSheet(value);
 }
+// ── 상단바 통합 검색 (2026-08-10 사용자 요청) ──────────────────────────
+// 세 화면(GR 태스크 · IT 제품 현황 · URL Library)이 각자 검색을 갖고 있어
+// "이 모델이 어디 있나"를 보려면 탭을 옮겨 다녀야 했다. 한 곳에서 훑고
+// 결과를 누르면 해당 탭으로 이동하며 그 탭 검색창에 값을 넣어준다.
+// 매칭 규칙은 js-lib/global-search.js(dashGlobalSearch)에 있고 여기서는 UI만 담당한다.
+var _dashSearchActiveIdx = -1;   // 키보드 ↑↓ 하이라이트 위치
+var _dashSearchItems = [];       // 현재 패널에 그려진 항목(순서 = DOM 순서)
+
+// window.DATA에서 GR 시트만 추린다(커스텀 탭은 _custom 플래그로 제외 — 사이드바 규칙과 동일).
+function dashGlobalSearchSources() {
+  var grTasks = [];
+  var D = window.DATA || {};
+  Object.keys(D).forEach(function (k) {
+    var d = D[k];
+    if (!d || d._custom) return;
+    grTasks.push({ key: k, title: d.displayTitle || d.sheetTabName || d.sheetTitle || d.title || k });
+  });
+  var products = (typeof npiPsFlatRows === 'function' ? npiPsFlatRows() : []).map(function (it) {
+    return {
+      model: it.row.model, locale: it.row.locale, salesModelKey: it.row.salesModelKey,
+      stage: it.stage, status: it.status,
+    };
+  });
+  var urlModels = (_urlLibData && _urlLibData.models) || [];
+  return { grTasks: grTasks, products: products, urlModels: urlModels };
+}
+
+function dashSwitchToNavKey(key) {
+  var items = document.querySelectorAll('.nav-item[data-key]');
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].getAttribute('data-key') === key) {
+      if (typeof switchMenu === 'function') switchMenu(items[i]);
+      return true;
+    }
+  }
+  return false;
+}
+
+// 탭 전환 직후에는 대상 input이 아직 없을 수 있어 한 틱 뒤에 주입한다.
+function dashInjectTabSearch(inputId, handler, term) {
+  setTimeout(function () {
+    var el = document.getElementById(inputId);
+    if (!el) return;
+    el.value = term;
+    if (typeof window[handler] === 'function') window[handler](el);
+    el.focus();
+  }, 60);
+}
+
+function dashGlobalSearchGo(kind, key, term) {
+  dashGlobalSearchClose();
+  if (kind === 'gr') { dashSwitchToNavKey(key); return; }
+  if (kind === 'product') {
+    if (dashSwitchToNavKey('npi_product_status')) dashInjectTabSearch('npiPsSearchInput', 'npiPsOnSearchInput', term);
+    return;
+  }
+  if (kind === 'url') {
+    if (dashSwitchToNavKey('url_library')) dashInjectTabSearch('urlLibSearchInput', 'urlLibOnSearchInput', term);
+  }
+}
+
+function dashGlobalSearchRender(q) {
+  var panel = document.getElementById('dashSearchPanel');
+  if (!panel) return;
+  var res = dashGlobalSearch(q, dashGlobalSearchSources());
+  _dashSearchItems = [];
+  _dashSearchActiveIdx = -1;
+
+  if (res.tooShort) { dashGlobalSearchClose(); return; }
+  if (!res.total) {
+    panel.innerHTML = '<div class="dash-sr-empty">검색 결과가 없습니다</div>';
+    dashGlobalSearchOpen();
+    return;
+  }
+
+  var html = '';
+  var push = function (label, count, rows) {
+    if (!rows.length) return;
+    html += '<div class="dash-sr-group"><span>' + label + '</span><span>' + count + '건</span></div>';
+    html += rows.join('');
+  };
+  push('Global Request', res.counts.gr, res.gr.map(function (t) {
+    _dashSearchItems.push({ kind: 'gr', key: t.key, term: q });
+    return '<div class="dash-sr-item" role="option" data-idx="' + (_dashSearchItems.length - 1) + '">' +
+      '<span class="sr-main">' + escapeHtmlSheet(t.title) + '</span></div>';
+  }));
+  push('IT 제품 현황', res.counts.products, res.products.map(function (p) {
+    _dashSearchItems.push({ kind: 'product', key: '', term: p.model || q });
+    return '<div class="dash-sr-item" role="option" data-idx="' + (_dashSearchItems.length - 1) + '">' +
+      '<span class="sr-main">' + escapeHtmlSheet(p.model || '') + '</span>' +
+      '<span class="sr-sub">' + escapeHtmlSheet(p.locale || '') + '</span></div>';
+  }));
+  push('URL Library', res.counts.urls, res.urls.map(function (m) {
+    var n = (m.locales || []).length;
+    _dashSearchItems.push({ kind: 'url', key: '', term: m.modelName || q });
+    return '<div class="dash-sr-item" role="option" data-idx="' + (_dashSearchItems.length - 1) + '">' +
+      '<span class="sr-main">' + escapeHtmlSheet(m.modelName || '') + '</span>' +
+      '<span class="sr-sub">' + n + '개 사이트</span></div>';
+  }));
+  panel.innerHTML = html;
+
+  Array.prototype.forEach.call(panel.querySelectorAll('.dash-sr-item'), function (el) {
+    el.addEventListener('click', function () {
+      var it = _dashSearchItems[Number(el.getAttribute('data-idx'))];
+      if (it) dashGlobalSearchGo(it.kind, it.key, it.term);
+    });
+  });
+  dashGlobalSearchOpen();
+}
+
+var _dashGlobalSearchDebounced = (typeof dashDebounce === 'function')
+  ? dashDebounce(function (q) { dashGlobalSearchRender(q); }, 150)
+  : function (q) { dashGlobalSearchRender(q); };
+
+function dashGlobalSearchInput(el) {
+  var clear = document.getElementById('dashGlobalSearchClear');
+  if (clear) clear.classList.toggle('is-visible', !!el.value);
+  _dashGlobalSearchDebounced(el.value);
+}
+
+function dashGlobalSearchOpen() {
+  var panel = document.getElementById('dashSearchPanel');
+  var input = document.getElementById('dashGlobalSearch');
+  if (panel) panel.hidden = false;
+  if (input) input.setAttribute('aria-expanded', 'true');
+}
+
+function dashGlobalSearchClose() {
+  var panel = document.getElementById('dashSearchPanel');
+  var input = document.getElementById('dashGlobalSearch');
+  if (panel) { panel.hidden = true; panel.innerHTML = ''; }
+  if (input) input.setAttribute('aria-expanded', 'false');
+  _dashSearchItems = [];
+  _dashSearchActiveIdx = -1;
+}
+
+function dashGlobalSearchClear() {
+  var input = document.getElementById('dashGlobalSearch');
+  if (input) { input.value = ''; input.focus(); }
+  var clear = document.getElementById('dashGlobalSearchClear');
+  if (clear) clear.classList.remove('is-visible');
+  dashGlobalSearchClose();
+}
+
+function dashGlobalSearchHighlight(next) {
+  var panel = document.getElementById('dashSearchPanel');
+  if (!panel || !_dashSearchItems.length) return;
+  var els = panel.querySelectorAll('.dash-sr-item');
+  if (!els.length) return;
+  _dashSearchActiveIdx = (next + els.length) % els.length;
+  Array.prototype.forEach.call(els, function (el, i) {
+    el.classList.toggle('is-active', i === _dashSearchActiveIdx);
+    if (i === _dashSearchActiveIdx && el.scrollIntoView) el.scrollIntoView({ block: 'nearest' });
+  });
+}
+
+function dashGlobalSearchKey(e) {
+  if (e.key === 'Escape') { dashGlobalSearchClose(); return; }
+  if (e.key === 'ArrowDown') { e.preventDefault(); dashGlobalSearchHighlight(_dashSearchActiveIdx + 1); return; }
+  if (e.key === 'ArrowUp') { e.preventDefault(); dashGlobalSearchHighlight(_dashSearchActiveIdx - 1); return; }
+  if (e.key === 'Enter') {
+    var it = _dashSearchItems[_dashSearchActiveIdx >= 0 ? _dashSearchActiveIdx : 0];
+    if (it) { e.preventDefault(); dashGlobalSearchGo(it.kind, it.key, it.term); }
+  }
+}
+
+// 패널 밖을 누르면 닫는다(입력창·패널 내부 클릭은 유지).
+document.addEventListener('click', function (e) {
+  var wrap = document.getElementById('dashSearchWrap');
+  if (wrap && !wrap.contains(e.target)) dashGlobalSearchClose();
+});

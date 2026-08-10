@@ -1990,3 +1990,35 @@ button,input,select,textarea{font-family:inherit}
 }
 .url-lib-page-btn:hover:not(:disabled) { border-color: #A50034; color: #A50034; }
 .url-lib-page-btn:disabled { opacity: .4; cursor: not-allowed; }
+/* ── 상단바 통합 검색 (2026-08-10) ─────────────────────────────
+   GR 태스크·IT 제품 현황·URL Library를 한 번에 훑는 드롭다운. */
+.topbar-search { position: relative; display: flex; align-items: center; flex: 1 1 220px; min-width: 150px; max-width: 320px; }
+.topbar-search-icon { position: absolute; left: 10px; color: #94A3B8; pointer-events: none; }
+.topbar-search-input {
+  width: 100%; padding: 6px 26px 6px 30px; border: 1px solid #E2E5EC; border-radius: 6px;
+  font-size: 12px; font-family: inherit; color: #1A1D2E; background: #fff; transition: border-color .15s;
+}
+.topbar-search-input:focus { outline: none; border-color: #A50034; }
+.topbar-search-clear {
+  position: absolute; right: 6px; display: none; border: 0; background: transparent;
+  color: #94A3B8; font-size: 16px; line-height: 1; cursor: pointer; padding: 2px 4px;
+}
+.topbar-search-clear.is-visible { display: block; }
+.topbar-search-panel {
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0; min-width: 300px;
+  background: #fff; border: 1px solid #E2E5EC; border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.12); z-index: 1200; max-height: 62vh; overflow-y: auto; padding: 6px;
+}
+.dash-sr-group {
+  padding: 8px 10px 4px; font-size: 10px; font-weight: 800; color: #9BA3BF;
+  text-transform: uppercase; letter-spacing: .04em; display: flex; justify-content: space-between; gap: 8px;
+}
+.dash-sr-item {
+  display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 8px;
+  cursor: pointer; font-size: 12px; color: #334155;
+}
+.dash-sr-item:hover, .dash-sr-item.is-active { background: #F1F5F9; }
+.dash-sr-item .sr-main { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dash-sr-item .sr-sub { color: #94A3B8; font-size: 11px; margin-left: auto; white-space: nowrap; }
+.dash-sr-empty { padding: 16px 12px; color: #94A3B8; font-size: 12px; text-align: center; }
+@media (max-width: 900px) { .topbar-search { display: none; } }

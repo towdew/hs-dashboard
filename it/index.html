@@ -4,7 +4,7 @@
 <title>LG IT Dashboard</title>
 <link rel="icon" type="image/x-icon" href="./favicon.ico">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=0.6.67">
+<link rel="stylesheet" href="style.css?v=0.6.68">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body style="">
@@ -61,6 +61,15 @@
     <span class="topbar-meta" id="topMeta">W--</span>
     <div class="topbar-rpt-group" style="display:flex;align-items:center;gap:6px">
       <button onclick="openWeeklyReport()" class="topbar-rpt-btn" style="display:none; align-items:center;gap:6px;padding:6px 14px;border:1px solid #A50034;border-radius:4px;background:#fff;color:#A50034;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s" onmouseover="this.style.background='#A50034';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='#A50034'"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="13" y2="17"></line></svg><span class="topbar-btn-label">주간 종합 리포트</span></button></div>
+    <div class="topbar-search" id="dashSearchWrap">
+      <svg class="topbar-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input id="dashGlobalSearch" class="topbar-search-input" type="text" autocomplete="off" spellcheck="false"
+             placeholder="Search tasks, models, URLs..." aria-label="Global search"
+             role="combobox" aria-expanded="false" aria-controls="dashSearchPanel" aria-autocomplete="list"
+             oninput="dashGlobalSearchInput(this)" onkeydown="dashGlobalSearchKey(event)" onfocus="dashGlobalSearchInput(this)">
+      <button type="button" class="topbar-search-clear" id="dashGlobalSearchClear" onclick="dashGlobalSearchClear()" aria-label="Clear search">&times;</button>
+      <div class="topbar-search-panel" id="dashSearchPanel" role="listbox" aria-label="Search results" hidden></div>
+    </div>
     <div class="topbar-right">
       <span id="weekSelWrap" style="display:none;align-items:center"><span style="font-size:11px;font-weight:700;color:#9BA3BF;margin-right:2px">주차</span>
       <select id="topWeekSel" onchange="onWeekChange(this.value)" style="font-size: 12px; font-weight: 700; padding: 5px 30px 5px 12px; border-radius: 4px; border: 1px solid rgb(226, 229, 236); background: url(&quot;data:image/svg+xml;utf8,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 fill=%22none%22 stroke=%22%23A50034%22 stroke-width=%222.2%22&gt;&lt;polyline points=%222,4 6,8 10,4%22/&gt;&lt;/svg&gt;&quot;) right 10px center no-repeat rgb(255, 255, 255); color: rgb(26, 29, 46); cursor: pointer; appearance: none; margin-left: 0px; box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 2px; transition: border-color 0.15s;" onmouseover="this.style.borderColor='#A50034'" onmouseout="this.style.borderColor='#E2E5EC'"><option value="W25" selected="">W25</option></select></span>
@@ -244,11 +253,12 @@
     }, 360);
   }
 </script>
-<script>var __BUILD_V = '0.6.67';</script>
-<script src="./sheet-loader.js?v=0.6.67"></script>
-<script src="./js-lib/gr-meta.js?v=0.6.67"></script>
-<script src="./js-lib/url-lib-locale.js?v=0.6.67"></script>
-<script src="./js-lib/npi-product-status.js?v=0.6.67"></script>
+<script>var __BUILD_V = '0.6.68';</script>
+<script src="./sheet-loader.js?v=0.6.68"></script>
+<script src="./js-lib/global-search.js?v=0.6.68"></script>
+<script src="./js-lib/gr-meta.js?v=0.6.68"></script>
+<script src="./js-lib/url-lib-locale.js?v=0.6.68"></script>
+<script src="./js-lib/npi-product-status.js?v=0.6.68"></script>
 <script>
   function loadScript(src) {
     return new Promise(function (resolve, reject) {
@@ -261,11 +271,11 @@
   }
 
   loadDashboardFromPublishedHtml().then(function () {
-    return loadScript('./sheet-exceptions.js?v=0.6.67')
+    return loadScript('./sheet-exceptions.js?v=0.6.68')
       .catch(function (err) {
         console.warn('[sheet-exceptions-load-warning]', err);
       })
-      .then(function () { return loadScript('./common.js?v=0.6.67'); });
+      .then(function () { return loadScript('./common.js?v=0.6.68'); });
   }).then(function () {
     if (typeof dashboardInit === 'function') {
       dashboardInit();
