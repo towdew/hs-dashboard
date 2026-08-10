@@ -164,9 +164,26 @@ function grCountTaskChanges(changes, taskKey) {
   return out;
 }
 
+/**
+ * GR 시트 표시 타이틀 → 담당자명. data/gr-titles.json의 owners(태스크키 → 담당자)를
+ * window._grOwners로 로드해 둔 것을 조회한다. 태스크키 판정은 grTaskKeyOf를 그대로
+ * 재사용하므로 배지·검색과 같은 기준을 쓴다(이중 구현 금지).
+ * @param {string} displayTitle
+ * @param {object} [owners] 테스트용 주입(생략 시 window._grOwners)
+ * @returns {string} 미지정이면 빈 문자열
+ */
+function grOwnerOf(displayTitle, owners) {
+  var map = owners || (typeof window !== 'undefined' ? window._grOwners : null);
+  if (!map) return '';
+  var key = grTaskKeyOf(displayTitle);
+  if (key && Object.prototype.hasOwnProperty.call(map, key)) return String(map[key] || '');
+  return '';
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     grNormalizeCountryCode: grNormalizeCountryCode,
+    grOwnerOf: grOwnerOf,
     grTaskGroupOf: grTaskGroupOf,
     grTaskKeyOf: grTaskKeyOf,
     grLookup: grLookup,
