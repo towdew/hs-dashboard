@@ -20,7 +20,7 @@ function dashSearchHit(fields, q) {
 /**
  * @param {string} query 사용자 입력
  * @param {object} sources
- *   - grTasks:   [{ key, title }]                      사이드바 GR 시트
+ *   - grTasks:   [{ key, title, owner }]                사이드바 GR 시트(owner는 담당자, 선택)
  *   - products:  [{ model, locale, salesModelKey, pttId, stage, status }]  IT 제품 현황 행
  *   - urlModels: [{ modelName, salesModelCode, category, locales:[{prodUrl}] }]
  * @param {number} [limit] 그룹별 최대 표시 수
@@ -34,7 +34,7 @@ function dashGlobalSearch(query, sources, limit) {
 
   var s = sources || {};
   var grAll = (s.grTasks || []).filter(function (t) {
-    return dashSearchHit([t.title, t.key], q);
+    return dashSearchHit([t.title, t.key, t.owner], q);
   });
   var prodAll = (s.products || []).filter(function (p) {
     return dashSearchHit([p.model, p.locale, p.salesModelKey], q);

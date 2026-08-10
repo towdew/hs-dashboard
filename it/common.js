@@ -2811,7 +2811,7 @@ function renderContent() {
       <!-- Header -->
       <div class="ov-head-new">
         <div class="ov-head-title">
-          <div class="ov-head-eyebrow">Overall Status</div>
+          <div class="ov-head-eyebrow">Overall Status${buildGrOwnerHtml(d)}</div>
           <div class="ov-head-name" style="display:flex;align-items:center;gap:9px">${getDashboardDisplayTitle(d)}${(currentKey==='buying_guide'||currentKey==='article_list') ? '<button onclick="openPagePreview()" title="페이지 미리보기" style="width:28px;height:28px;border:1.5px solid #E0E4F0;border-radius:8px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>' : ''}</div>
           ${typeof buildGrWeeklyChangeSummaryHtml === 'function' ? buildGrWeeklyChangeSummaryHtml(d) : ''}
         </div>
@@ -6058,8 +6058,10 @@ function ensureGrDataLoaded() {
       }
     }
     window._grTitleToTask = titleToTask;
+    // 담당자(태스크키 → 이름). 검색 대상이자 GR 헤더 표시용 — 없으면 조용히 무시한다.
+    window._grOwners = (data && data.owners) || null;
     if (titleToTask) maybeRerenderGrTab();
-  }).catch(function() { window._grTitles = null; window._grTitleToTask = null; });
+  }).catch(function() { window._grTitles = null; window._grTitleToTask = null; window._grOwners = null; });
   // 사이드바 In Progress/Done 그룹의 수동 오버라이드. 사이드바는 이 파일이 오기 전에 이미
   // 자동 판정(완료율)으로 렌더돼 있으므로, 도착 후 nav만 다시 그려 보정한다(404면 조용히 무시).
   fetch('data/gr-task-state.json' + bust).then(function(r) { return r.ok ? r.json() : null; }).then(function(data) {
@@ -6114,6 +6116,17 @@ function grChangeBadgeHtml(displayTitle, rawCountry) {
 
 // Overall Status 카드에 "금주 변경 N건" 한 줄 요약을 덧붙인다(GR 탭이 아니거나
 // 데이터 미로딩/변경 없음이면 빈 문자열 — 카드 구조에 영향 없음).
+// GR 시트 헤더의 eyebrow("Overall Status") 뒤에 담당자를 덧붙인다. GR 시트가 아니거나
+// 담당자 미지정이면 빈 문자열 — 기존 헤더 모양이 그대로 유지된다.
+function buildGrOwnerHtml(d) {
+  if (typeof grOwnerOf !== 'function') return '';
+  var displayTitle = getDashboardDisplayTitle(d);
+  if (!isGrSheetDisplayTitle(displayTitle)) return '';
+  var owner = grOwnerOf(displayTitle);
+  if (!owner) return '';
+  return ' · 담당 ' + escapeHtmlSheet(owner);
+}
+
 function buildGrWeeklyChangeSummaryHtml(d) {
   if (!_grChanges || !_grChanges.changes) return '';
   var displayTitle = getDashboardDisplayTitle(d);
@@ -6878,7 +6891,8 @@ function dashGlobalSearchSources() {
   Object.keys(D).forEach(function (k) {
     var d = D[k];
     if (!d || d._custom) return;
-    grTasks.push({ key: k, title: d.displayTitle || d.sheetTabName || d.sheetTitle || d.title || k });
+    var title = d.displayTitle || d.sheetTabName || d.sheetTitle || d.title || k;
+    grTasks.push({ key: k, title: title, owner: grOwnerOf(title) });
   });
   var products = (typeof npiPsFlatRows === 'function' ? npiPsFlatRows() : []).map(function (it) {
     return {
@@ -6947,7 +6961,8 @@ function dashGlobalSearchRender(q) {
   push('Global Request', res.counts.gr, res.gr.map(function (t) {
     _dashSearchItems.push({ kind: 'gr', key: t.key, term: q });
     return '<div class="dash-sr-item" role="option" data-idx="' + (_dashSearchItems.length - 1) + '">' +
-      '<span class="sr-main">' + escapeHtmlSheet(t.title) + '</span></div>';
+      '<span class="sr-main">' + escapeHtmlSheet(t.title) + '</span>' +
+      (t.owner ? '<span class="sr-sub">' + escapeHtmlSheet(t.owner) + '</span>' : '') + '</div>';
   }));
   push('IT 제품 현황', res.counts.products, res.products.map(function (p) {
     _dashSearchItems.push({ kind: 'product', key: '', term: p.model || q });
