@@ -1,5 +1,5 @@
 {
-  "baseDate": "20260810",
+  "baseDate": "20260811",
   "prevDate": "20260804",
   "changes": {
     "UltraFine PDP MIC 삭제|AE": {
@@ -94,13 +94,83 @@
     },
     "UltraFine PDP MIC 삭제|ZA": {
       "type": "new_task"
+    },
+    "Smart Monitor Multi AI|AE": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|AE_AR": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|AU": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|BR": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|CO": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|CZ": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|DE": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|ES": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|HK": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|HK_EN": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|ID": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|IN": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|JP": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|MX": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|PE": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|SA": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|SA_EN": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|SG": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|TR": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|UK": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|US": {
+      "type": "new_task"
+    },
+    "Smart Monitor Multi AI|ZA": {
+      "type": "new_task"
     }
   },
   "taskSummary": {
     "UltraFine PDP MIC 삭제": {
       "changed": 0,
       "new": 31
+    },
+    "Smart Monitor Multi AI": {
+      "changed": 0,
+      "new": 22
     }
   },
-  "generatedAt": "2026-08-10"
+  "generatedAt": "2026-08-11"
 }
