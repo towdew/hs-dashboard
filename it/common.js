@@ -1229,29 +1229,32 @@ function countSheetCountrySites(d) {
 
   var rows = Array.isArray(d.tableRows) ? d.tableRows : [];
   var items = Array.isArray(d.items) ? d.items : [];
-  var count = 0;
 
   // Sheet 기반 대시보드는 실제 표의 Country/Contry 컬럼에 표시되는 값만 Sites로 계산합니다.
-  // 중복 제거하지 않으며, 빈 값은 제외합니다. CA-fr, SA_ar도 각각 1 Site입니다.
+  // 빈 값은 제외하고, **같은 국가가 여러 행에 나와도 1 Site**로 셉니다(중복 제거).
+  // 한 시트가 국가×모델로 여러 행을 갖는 건 흔한 형태라(실측: gram Secure Lock 99행/12국,
+  // PDP Gallery Win11 Pro 79행/13국) 행 수를 세면 Sites가 Pages와 같아져 의미를 잃는다.
+  // CA-fr, SA_ar처럼 로케일이 다르면 값 자체가 달라 각각 1 Site로 유지됩니다.
+  var seen = Object.create(null);
+  function addSite(raw) {
+    if (!raw) return;
+    var parts = splitSheetCountrySiteValues(raw);
+    if (!parts.length) parts = [raw];
+    parts.forEach(function(p) {
+      var key = String(p == null ? '' : p).replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim().toUpperCase();
+      if (key) seen[key] = true;
+    });
+  }
+
   if (rows.length) {
     var countryHeader = findCountryValueHeaderForCount(d);
     if (!countryHeader) return 0;
-    rows.forEach(function(row) {
-      var c = row && row[countryHeader];
-      if (!c) return;
-      var parts = splitSheetCountrySiteValues(c);
-      count += parts.length || 1;
-    });
-    return count;
+    rows.forEach(function(row) { addSite(row && row[countryHeader]); });
+    return Object.keys(seen).length;
   }
 
-  items.forEach(function(x) {
-    var c = x && (x.country || x.locale);
-    if (!c) return;
-    var parts = splitSheetCountrySiteValues(c);
-    count += parts.length || 1;
-  });
-  return count || 0;
+  items.forEach(function(x) { addSite(x && (x.country || x.locale)); });
+  return Object.keys(seen).length;
 }
 
 function getSheetOverviewTotalInfo(d) {
