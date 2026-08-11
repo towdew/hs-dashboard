@@ -1694,7 +1694,7 @@ function renderSidebarNavFromSheets(keys) {
   }
   var stateMap = (window._grTaskState && window._grTaskState.state) || {};
   var canGroup = (typeof contentStats === 'function' && typeof grTaskGroupOf === 'function');
-  var groups = { in_progress: [], done: [] };
+  var groups = { planned: [], in_progress: [], done: [] };
   grKeys.forEach(function(key) {
     var d0 = window.DATA && window.DATA[key];
     // 커스텀 탭(IT 제품 현황·URL Library)은 GR 그룹에서 제외. 라이브는 CUSTOM_NAV_TABS 구성이
@@ -1704,7 +1704,8 @@ function renderSidebarNavFromSheets(keys) {
     var d = window.DATA && window.DATA[key];
     var title = (d && (d.displayTitle || d.sheetTabName || d.sheetTitle || d.title)) || key;
     var override = stateMap[typeof grTaskKeyOf === 'function' ? grTaskKeyOf(title) : title];
-    groups[grTaskGroupOf(grTabPct(key), override) === 'done' ? 'done' : 'in_progress'].push(key);
+    var g = grTaskGroupOf(grTabPct(key), override);
+    (groups[g] || groups.in_progress).push(key);
   });
 
   var navIdx = 0;
@@ -1744,6 +1745,8 @@ function renderSidebarNavFromSheets(keys) {
   if (canGroup) {
     window.__grNavNeedsRegroup = false;
     pushGrSection('In Progress', groups.in_progress);
+    // 예정: 요청은 접수됐지만 아직 착수 전. In Progress에 섞이면 진행 중인 일이 부풀어 보인다.
+    pushGrSection('Planned', groups.planned, ' style="margin-top:10px"', 'planned');
     pushGrSection('Done', groups.done, ' style="margin-top:10px"', 'done');
   } else {
     // 이 함수는 common.js(contentStats)보다 먼저 로드되는 sheet-loader.js에 있어, 최초 호출

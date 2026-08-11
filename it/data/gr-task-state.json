@@ -1,5 +1,7 @@
 {
-  "generatedAt": "2026-07-27",
-  "comment": "GR 태스크 사이드바 그룹 수동 오버라이드. 키는 grTaskKeyOf(표시 타이틀) 결과(= gr-titles.json의 태스크 키). 값은 'done' | 'in_progress'. 비어 있으면 완료율 100%(취소 제외) 자동 판정만 적용된다.",
-  "state": {}
+  "generatedAt": "2026-08-11",
+  "comment": "GR 태스크 사이드바 그룹 수동 오버라이드. 키는 grTaskKeyOf(표시 타이틀) 결과(= gr-titles.json의 태스크 키). 값은 'done' | 'in_progress' | 'planned'. 'planned'(예정)은 자동 판정으로 나오지 않으므로 착수 전 태스크는 여기 명시해야 한다. 비어 있으면 완료율 100%(취소 제외) 자동 판정만 적용된다.",
+  "state": {
+    "Windows 11 Landing": "planned"
+  }
 }
