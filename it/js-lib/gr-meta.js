@@ -134,7 +134,10 @@ function grLookup(dict, taskKey, code) {
 // 수동 지정('done' | 'in_progress')으로 자동 판정보다 우선한다.
 // 국가행이 없는 신규 태스크는 pct=0 → in_progress (완료로 오분류되지 않게).
 function grTaskGroupOf(pct, override) {
-  if (override === 'done' || override === 'in_progress') return override;
+  // 'planned'(예정)은 자동 판정으로 나오지 않는다 — 아직 착수 전이라는 건 완료율만으로는
+  // 알 수 없기 때문이다(0%는 "착수 전"일 수도 "시작했는데 아직 0건"일 수도 있다).
+  // 오직 gr-task-state.json의 수동 오버라이드로만 지정한다.
+  if (override === 'done' || override === 'in_progress' || override === 'planned') return override;
   var n = Number(pct);
   return (isFinite(n) && n >= 100) ? 'done' : 'in_progress';
 }
