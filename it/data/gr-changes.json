@@ -1,5 +1,5 @@
 {
-  "baseDate": "20260812",
+  "baseDate": "20260813",
   "prevDate": "20260804",
   "changes": {
     "gram Secure Lock|TW": {
@@ -115,9 +115,6 @@
       "type": "new_task"
     },
     "Smart Monitor Multi AI|UK": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|US": {
       "type": "new_task"
     },
     "Smart Monitor Multi AI|ZA": {
@@ -644,7 +641,7 @@
     },
     "Smart Monitor Multi AI": {
       "changed": 0,
-      "new": 22
+      "new": 21
     },
     "UltraGear 27GX704A": {
       "changed": 0,
@@ -663,5 +660,5 @@
       "new": 31
     }
   },
-  "generatedAt": "2026-08-12"
+  "generatedAt": "2026-08-13"
 }
