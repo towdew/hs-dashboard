@@ -183,9 +183,35 @@ function grOwnerOf(displayTitle, owners) {
   return '';
 }
 
+/**
+ * FAQ 태스크인가. FAQ 건은 PLP(카테고리 페이지) 작업이라 국가당 1행이고, 완료 여부를
+ * 실제 페이지로 확인하는 일이 잦아 테이블에 Live URL을 직접 노출한다.
+ * (다른 GR 시트는 국가당 모델이 여러 개라 URL이 한 칸에 여러 개가 되어 숨긴다.)
+ * @param {string} displayTitle GR 표시 타이틀 또는 시트명
+ */
+function grIsFaqTask(displayTitle) {
+  // 복수형(FAQs)까지 잡되 단어 경계는 지킨다 — 경계를 빼면 'SOFAQUEEN' 같은 값에도 걸린다.
+  return /\bfaqs?\b/i.test(String(displayTitle == null ? '' : displayTitle));
+}
+
+/**
+ * lg.com URL → 표에 넣을 짧은 라벨. 도메인은 모든 행이 같아 반복 정보이므로 떼고
+ * 경로만 남긴다. lg.com이 아닌 주소는 판단하지 않고 원본을 그대로 돌려준다.
+ * @returns {string} 예: 'https://www.lg.com/uk/monitors/gaming/' → '/uk/monitors/gaming/'
+ */
+function grUrlPathLabel(url) {
+  var s = String(url == null ? '' : url).trim();
+  if (!s) return '';
+  var m = s.match(/^https?:\/\/(?:www\.)?lg\.com(\/.*)?$/i);
+  if (!m) return s;
+  return m[1] || '/';
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     grNormalizeCountryCode: grNormalizeCountryCode,
+    grIsFaqTask: grIsFaqTask,
+    grUrlPathLabel: grUrlPathLabel,
     grOwnerOf: grOwnerOf,
     grTaskGroupOf: grTaskGroupOf,
     grTaskKeyOf: grTaskKeyOf,

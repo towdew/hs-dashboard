@@ -6298,8 +6298,15 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
     : ensureRegionFirstHeaders(headers);
   // URL 컬럼은 테이블에서 숨김(HS 콘텐츠 시트 방식). 데이터(row의 URL)는 유지하여
   // 행 클릭 시 상세 모달에서 전체 URL을 제공하고, NEW 행 매칭에도 계속 사용.
+  //
+  // 예외: FAQ 태스크는 노출한다. PLP 작업이라 국가당 1행이고, 완료 여부를 실제
+  // 페이지에서 확인하는 일이 잦아 매번 모달을 여는 것이 번거롭다(2026-08-13 요청).
+  // 다른 GR 시트는 국가당 모델이 여러 개라 한 칸에 URL이 여러 개가 되므로 그대로 숨긴다.
+  var showUrlColumn = isGrSheet && typeof grIsFaqTask === 'function' && grIsFaqTask(grDisplayTitle);
   var urlDisplayHeader = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h) === 'url'; })[0] || null;
-  displayHeaders = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h) !== 'url'; });
+  if (!showUrlColumn) {
+    displayHeaders = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h) !== 'url'; });
+  }
   var groupedRows = disableRegion
     ? [{ region: '', rows: rows || [] }]
     : groupRowsByRegion(rows, displayHeaders);
@@ -6317,12 +6324,15 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
   }
   var headerRowsForDisplay = disableRegion ? [] : (d.tableHeaderRows || []);
   // body에서 URL 컬럼을 숨겼으므로 헤더(tableHeaderRows)에서도 URL 셀 제거 → 컬럼 정렬 유지.
-  headerRowsForDisplay = headerRowsForDisplay.map(function(hr) {
-    return (hr || []).filter(function(cell) {
-      var t = typeof cell === 'string' ? cell : (cell && cell.text) || '';
-      return normalizeSheetHeaderName(t) !== 'url';
+  // FAQ 시트는 body에 URL을 그리므로 헤더도 남겨야 정렬이 어긋나지 않는다.
+  if (!showUrlColumn) {
+    headerRowsForDisplay = headerRowsForDisplay.map(function(hr) {
+      return (hr || []).filter(function(cell) {
+        var t = typeof cell === 'string' ? cell : (cell && cell.text) || '';
+        return normalizeSheetHeaderName(t) !== 'url';
+      });
     });
-  });
+  }
   var thead = buildSheetTableHead(displayHeaders, headerRowsForDisplay, d);
 
   // ── 이번 주 신규(완료) 항목을 테이블 행에 NEW 배지/하이라이트로 표시 ──
@@ -6784,6 +6794,15 @@ function renderSheetCell(value, header, row, sheetData) {
         exceptionRules.isUrlHeader(header) &&
         typeof exceptionRules.renderDonePill === 'function') {
       return exceptionRules.renderDonePill(text);
+    }
+    // FAQ 시트의 URL 컬럼은 도메인을 떼고 경로만 보인다 — 모든 행이 같은 lg.com이라
+    // 도메인은 반복 정보이고, 그대로 두면 컬럼이 표를 밀어낸다.
+    if (normalizeSheetHeaderName(header) === 'url' &&
+        typeof grIsFaqTask === 'function' && typeof grUrlPathLabel === 'function' &&
+        grIsFaqTask(getDashboardDisplayTitle(sheetData || DATA[currentKey] || {}))) {
+      return '<a class="sheet-link sheet-url-path" href="' + escapeAttrSheet(text) +
+        '" target="_blank" rel="noopener" title="' + escapeAttrSheet(text) + '">' +
+        escapeHtmlSheet(grUrlPathLabel(text)) + '</a>';
     }
     return '<a class="sheet-link" href="' + escapeAttrSheet(text) + '" target="_blank" rel="noopener">' + escapeHtmlSheet(shortenUrlSheet(text)) + '</a>';
   }

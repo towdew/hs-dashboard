@@ -1429,6 +1429,9 @@ button,input,select,textarea{font-family:inherit}
 .sheet-empty{color:#CBD5E1}
 .sheet-link{color:#2563EB;text-decoration:none;font-weight:600}
 .sheet-link:hover{text-decoration:underline}
+/* FAQ 시트의 Live URL 컬럼 — 도메인을 뗀 경로만 보이므로 폭을 제한하고, 길면 말줄임.
+   전체 주소는 title 속성으로 확인한다(2026-08-13). */
+.sheet-url-path{display:inline-block;max-width:22ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:bottom;font-weight:500}
 .sheet-status-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:800;white-space:nowrap}
 .sheet-status-pill span{width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0}
 @media(max-width:768px){
