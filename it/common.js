@@ -6468,6 +6468,9 @@ function collapseRowsByCountry(rows, countryHeader, remarkHeader, statusHeader, 
   });
   function mergeGroup(members) {
     var base = Object.assign({}, members[0]);
+    if (typeof grCollectRowUrls === 'function') {
+      base.__grUrls = grCollectRowUrls(members);
+    }
     if (pageHeader && members.length > 1) {
       var sum = 0, numeric = true;
       members.forEach(function(m) { var n = parseFloat(String(m[pageHeader] == null ? '' : m[pageHeader]).replace(/[^0-9.]/g, '')); if (isNaN(n)) numeric = false; else sum += n; });
@@ -6800,9 +6803,15 @@ function renderSheetCell(value, header, row, sheetData) {
     if (normalizeSheetHeaderName(header) === 'url' &&
         typeof grIsFaqTask === 'function' && typeof grUrlPathLabel === 'function' &&
         grIsFaqTask(getDashboardDisplayTitle(sheetData || DATA[currentKey] || {}))) {
-      return '<a class="sheet-link sheet-url-path" href="' + escapeAttrSheet(text) +
-        '" target="_blank" rel="noopener" title="' + escapeAttrSheet(text) + '">' +
-        escapeHtmlSheet(grUrlPathLabel(text)) + '</a>';
+      // 국가당 PLP가 2개인 FAQ 건은 병합된 URL을 모두 보여준다 (Page# 2 ↔ 링크 1개 불일치 해소).
+      var faqUrls = (typeof grFaqCellUrls === 'function')
+        ? grFaqCellUrls(text, row && row.__grUrls)
+        : [text];
+      return faqUrls.map(function(u) {
+        return '<a class="sheet-link sheet-url-path" href="' + escapeAttrSheet(u) +
+          '" target="_blank" rel="noopener" title="' + escapeAttrSheet(u) + '">' +
+          escapeHtmlSheet(grUrlPathLabel(u)) + '</a>';
+      }).join('<br>');
     }
     return '<a class="sheet-link" href="' + escapeAttrSheet(text) + '" target="_blank" rel="noopener">' + escapeHtmlSheet(shortenUrlSheet(text)) + '</a>';
   }

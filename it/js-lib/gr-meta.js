@@ -199,6 +199,45 @@ function grIsFaqTask(displayTitle) {
  * 경로만 남긴다. lg.com이 아닌 주소는 판단하지 않고 원본을 그대로 돌려준다.
  * @returns {string} 예: 'https://www.lg.com/uk/monitors/gaming/' → '/uk/monitors/gaming/'
  */
+function grCollectRowUrls(rows) {
+  var urls = [];
+  var seen = {};
+  (rows || []).forEach(function(row) {
+    Object.keys(row || {}).forEach(function(key) {
+      if (key.charAt(0) === '_') return;
+      var normalizedKey = String(key).toLowerCase().replace(/[\s_\-/.]+/g, '');
+      if (normalizedKey !== 'url') return;
+      var url = String(row[key] || '').trim();
+      if (!/^https?:\/\//i.test(url) || seen[url]) return;
+      seen[url] = true;
+      urls.push(url);
+    });
+  });
+  return urls;
+}
+
+// FAQ 행의 URL 셀에 실제로 보여줄 URL 목록.
+// 국가 통합(collapseRowsByCountry) 시 같은 국가의 여러 행이 1행으로 합쳐지면서
+// URL 셀에는 첫 행 값만 남는다 — Page#가 2인데 링크가 1개만 보이던 원인이다.
+// 병합 과정에서 모아둔 __grUrls가 있으면 그걸 쓰고, 없으면 셀 값 하나만 쓴다.
+function grFaqCellUrls(cellValue, rowUrls) {
+  var primary = String(cellValue == null ? '' : cellValue).trim();
+  var list = [];
+  var seen = {};
+  (rowUrls || []).forEach(function(value) {
+    var url = String(value == null ? '' : value).trim();
+    if (!/^https?:\/\//i.test(url) || seen[url]) return;
+    seen[url] = true;
+    list.push(url);
+  });
+  if (!list.length) return primary ? [primary] : [];
+  // 셀 값(=병합된 대표 행의 URL)을 항상 맨 앞에 둬 기존 표시 순서를 지킨다.
+  if (primary && seen[primary] && list[0] !== primary) {
+    list = [primary].concat(list.filter(function(u) { return u !== primary; }));
+  }
+  return list;
+}
+
 function grUrlPathLabel(url) {
   var s = String(url == null ? '' : url).trim();
   if (!s) return '';
@@ -212,6 +251,8 @@ if (typeof module !== 'undefined' && module.exports) {
     grNormalizeCountryCode: grNormalizeCountryCode,
     grIsFaqTask: grIsFaqTask,
     grUrlPathLabel: grUrlPathLabel,
+    grCollectRowUrls: grCollectRowUrls,
+    grFaqCellUrls: grFaqCellUrls,
     grOwnerOf: grOwnerOf,
     grTaskGroupOf: grTaskGroupOf,
     grTaskKeyOf: grTaskKeyOf,
