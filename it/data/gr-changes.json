@@ -2,6 +2,31 @@
   "baseDate": "20260818",
   "prevDate": "20260814",
   "changes": {
+    "GNB Structure|SA_AR": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "완료"
+    },
+    "GNB Structure|SA_EN": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "완료"
+    },
+    "Copilot+ Hero Banner|ES": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Copilot+ Hero Banner|IT": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Copilot+ Hero Banner|GLOBAL": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
     "UltraGear 27GX704A|AE": {
       "type": "status",
       "from": "작업중",
@@ -639,6 +664,14 @@
     }
   },
   "taskSummary": {
+    "GNB Structure": {
+      "changed": 2,
+      "new": 0
+    },
+    "Copilot+ Hero Banner": {
+      "changed": 3,
+      "new": 0
+    },
     "UltraGear 27GX704A": {
       "changed": 53,
       "new": 0
