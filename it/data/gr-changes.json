@@ -22,6 +22,11 @@
       "from": "작업중",
       "to": "완료"
     },
+    "Copilot+ Hero Banner|VN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
     "Copilot+ Hero Banner|GLOBAL": {
       "type": "status",
       "from": "작업중",
@@ -669,7 +674,7 @@
       "new": 0
     },
     "Copilot+ Hero Banner": {
-      "changed": 3,
+      "changed": 4,
       "new": 0
     },
     "UltraGear 27GX704A": {
