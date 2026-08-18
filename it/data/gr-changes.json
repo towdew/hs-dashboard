@@ -1,664 +1,656 @@
 {
-  "baseDate": "20260814",
-  "prevDate": "20260804",
+  "baseDate": "20260818",
+  "prevDate": "20260814",
   "changes": {
-    "gram Secure Lock|TW": {
-      "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
-    },
-    "gram Secure Lock|DE": {
-      "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
-    },
-    "gram Secure Lock|VN": {
-      "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
-    },
-    "gram Secure Lock|ES": {
-      "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
-    },
-    "gram Secure Lock|SG": {
-      "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
-    },
-    "gram Secure Lock|UK": {
-      "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
-    },
-    "gram Secure Lock|IT": {
-      "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
-    },
-    "gram Secure Lock|JP": {
-      "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
-    },
-    "gram Secure Lock|CA_EN": {
-      "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
-    },
-    "gram Secure Lock|CA_FR": {
-      "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
-    },
-    "gram Secure Lock|AU": {
-      "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
-    },
-    "Smart Monitor Multi AI|AE": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|AE_AR": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|AU": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|BR": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|CO": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|CZ": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|DE": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|ES": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|HK": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|HK_EN": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|ID": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|IN": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|JP": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|MX": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|PE": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|SA": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|SA_EN": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|SG": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|TR": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|UK": {
-      "type": "new_task"
-    },
-    "Smart Monitor Multi AI|ZA": {
-      "type": "new_task"
-    },
     "UltraGear 27GX704A|AE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|AE_AR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|AU": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|BE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|BE_FR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|BG": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|BR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|CAC": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|CA_EN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|CA_FR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|CL": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|CN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|CO": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|CZ": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|DE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|DK": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|EC": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|EE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|ES": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|FI": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|FR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|GR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|HK": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|HK_EN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|HR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|HU": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|ID": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|IT": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|JP": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|KZ": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|LT": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|LV": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|MX": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|NL": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|NO": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|PA": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|PE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|PH": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|PL": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|PT": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|RO": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|RS": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|RU": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|SE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|SG": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|SK": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|TH": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|TR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|UA": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|UK": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|US": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|VN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear 27GX704A|ZA": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|AE": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|AE_AR": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|AR": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|AT": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|AU": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|BE": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|BE_FR": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|BG": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|BR": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|CA_EN": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|CA_FR": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|CL": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|CN": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|CO": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|CZ": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|DE": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|DK": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|ES": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|FR": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|GLOBAL": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|HK": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|HK_EN": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|ID": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|IN": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|IT": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|JP": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|KZ": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|MX": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|NL": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|NZ": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|PA": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|PE": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|PH": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|PL": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|SA": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|SA_EN": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|SE": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|SG": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|TH": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|TR": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|TW": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|UK": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|VN": {
-      "type": "new_task"
-    },
-    "Digital Trends Award 삭제|ZA": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|AE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|AE_AR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|AU": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|BE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|BE_FR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|BG": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|BR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|CA_EN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|CA_FR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|CN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|CO": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|DE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|EE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|ES": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|FR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|HK": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|HK_EN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|HR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|HU": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|ID": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|IL": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|IN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|JP": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|KZ": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|LT": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|LV": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|MX": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|NL": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|PE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|PH": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|PL": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|RO": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|RS": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|RU": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|SA": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|SA_EN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|SE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|SG": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|TR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|UK": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|US": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|VN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear PDP 5모델|ZA": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|AE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|AU": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|CAC": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|CA_EN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|CA_FR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|CL": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|CN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|CO": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|CZ": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|EE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|ES": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|FR": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|HK": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|HK_EN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|ID": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|IN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|JP": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|LT": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|LV": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|MX": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|MY": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|NL": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|PA": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|PE": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|PH": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|SA": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|SA_EN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|SG": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|UK": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|VN": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraFine PDP MIC 삭제|ZA": {
-      "type": "new_task"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     }
   },
   "taskSummary": {
-    "gram Secure Lock": {
-      "changed": 11,
+    "UltraGear 27GX704A": {
+      "changed": 53,
       "new": 0
     },
-    "Smart Monitor Multi AI": {
-      "changed": 0,
-      "new": 21
-    },
-    "UltraGear 27GX704A": {
-      "changed": 0,
-      "new": 53
-    },
-    "Digital Trends Award 삭제": {
-      "changed": 0,
-      "new": 44
-    },
     "UltraGear PDP 5모델": {
-      "changed": 0,
-      "new": 43
+      "changed": 43,
+      "new": 0
     },
     "UltraFine PDP MIC 삭제": {
-      "changed": 0,
-      "new": 31
+      "changed": 31,
+      "new": 0
     }
   },
-  "generatedAt": "2026-08-14"
+  "generatedAt": "2026-08-18"
 }
