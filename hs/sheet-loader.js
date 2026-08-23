@@ -6,7 +6,9 @@
 // Local workbook mode: the dashboard no longer loads data from Google Sheets.
 // Put this file in the same folder as index.html on GitHub Pages / local server.
 const LOCAL_DASHBOARD_XLSX_FILE = 'Global Request.xlsx';
+const PREV_DASHBOARD_XLSX_FILE = 'Global Request-Prev.xlsx';
 const DEFAULT_XLSX_URL = getLocalWorkbookUrl(LOCAL_DASHBOARD_XLSX_FILE);
+const PREV_XLSX_URL = getLocalWorkbookUrl(PREV_DASHBOARD_XLSX_FILE);
 const DEFAULT_PUBLISHED_HTML_URL = '';
 const DEFAULT_PUBLISHED_BASE_URL = '';
 const DEFAULT_CSV_URL = '';
@@ -226,6 +228,16 @@ function extractWeeklyUpdateItemsFromText(text) {
   return out;
 }
 
+function getWeeklyUpdateCancelMeta(value) {
+  const raw = String(value == null ? '' : value).replace(/\u00a0/g, ' ').trim();
+  const match = raw.match(/^(취소|cancel(?:led)?)(?:\s*[-:：]\s*|\s+|$)(.*)$/i);
+  if (!match) return { isCancelled: false, text: raw, cancelCount: 0 };
+  const body = String(match[2] || '').trim();
+  const countMatch = body.match(/(\d+)\s*건/);
+  const count = countMatch ? Math.max(1, parseInt(countMatch[1], 10) || 1) : 1;
+  return { isCancelled: true, text: body, cancelCount: count };
+}
+
 function parseWeeklyUpdateText(text) {
   const raw = String(text || '')
     .replace(/\u00a0/g, ' ')
@@ -287,15 +299,31 @@ function parseWeeklyUpdateEntryList(part) {
   const kv = text.match(/^([^:：]{1,40})\s*[：:]\s*(.+)$/);
   if (kv) {
     const country = cleanText(kv[1]) || '신규 항목';
-    const body = String(kv[2] || '').trim();
+    const rawBody = String(kv[2] || '').trim();
+    const cancelMeta = getWeeklyUpdateCancelMeta(rawBody);
+    const body = cancelMeta.text;
     const urls = [];
     const urlRe = /https?:\/\/[^\s,;]+/ig;
     let m;
     while ((m = urlRe.exec(body))) urls.push(m[0].replace(/[),.;]+$/g, ''));
     if (urls.length) {
-      return urls.map(function(url) { return { country: country, url: url, text: url }; });
+      return urls.map(function(url) {
+        return {
+          country: country,
+          url: url,
+          text: url,
+          isCancelled: cancelMeta.isCancelled,
+          cancelCount: cancelMeta.isCancelled ? 1 : 0
+        };
+      });
     }
-    return [{ country: country, url: '', text: cleanText(body) || text }];
+    return [{
+      country: country,
+      url: '',
+      text: cleanText(body) || rawBody || text,
+      isCancelled: cancelMeta.isCancelled,
+      cancelCount: cancelMeta.cancelCount
+    }];
   }
 
   const item = parseWeeklyUpdateEntry(text);
@@ -305,26 +333,48 @@ function parseWeeklyUpdateEntryList(part) {
 function parseWeeklyUpdateEntry(part) {
   const text = String(part || '').trim();
   if (!text) return null;
+
+  const cancelMeta = getWeeklyUpdateCancelMeta(text);
+  if (cancelMeta.isCancelled) {
+    return {
+      country: '신규 항목',
+      url: '',
+      text: cleanText(cancelMeta.text) || text,
+      isCancelled: true,
+      cancelCount: cancelMeta.cancelCount
+    };
+  }
+
   const urlMatch = text.match(/https?:\/\/\S+/i);
   if (urlMatch) {
     const url = urlMatch[0].replace(/[),.;]+$/g, '');
     const before = text.slice(0, urlMatch.index).replace(/[：:>-]+\s*$/g, '').trim();
     const country = cleanText(before) || '신규 항목';
-    return { country: country, url: url, text: text };
+    return { country: country, url: url, text: text, isCancelled: false, cancelCount: 0 };
   }
 
   // URL이 없는 B열 문구도 이번주 업데이트 공지로 표시합니다.
-  // 예: 신규 항목: How to clean MWO, MWO buying guide
   const m = text.match(/^([^:：]{1,40})\s*[：:]\s*(.+)$/);
-  if (m) return { country: cleanText(m[1]) || '신규 항목', url: '', text: cleanText(m[2]) || text };
-  return { country: '신규 항목', url: '', text: text };
+  if (m) {
+    const country = cleanText(m[1]) || '신규 항목';
+    const bodyMeta = getWeeklyUpdateCancelMeta(m[2]);
+    return {
+      country: country,
+      url: '',
+      text: cleanText(bodyMeta.text) || text,
+      isCancelled: bodyMeta.isCancelled,
+      cancelCount: bodyMeta.cancelCount
+    };
+  }
+  return { country: '신규 항목', url: '', text: text, isCancelled: false, cancelCount: 0 };
 }
 
 async function loadDashboardFromPublishedHtml() {
   let sheetPayloads = [];
+  let prevSheetPayloads = [];
   const errors = [];
 
-  // Local XLSX only. This avoids the slow Google Sheet published XLSX request.
+  // Current workbook is required.
   try {
     sheetPayloads = await loadSheetsFromPublishedXlsx(DEFAULT_XLSX_URL);
     console.info('[sheet-loader] loaded sheets from local xlsx:', sheetPayloads.map(function(s){ return s.sheetName; }));
@@ -342,6 +392,15 @@ async function loadDashboardFromPublishedHtml() {
     );
   }
 
+  // Previous workbook is optional. If it is missing, the dashboard still works
+  // and simply hides Prev Week comparison rows.
+  try {
+    prevSheetPayloads = await loadSheetsFromPublishedXlsx(PREV_XLSX_URL);
+    console.info('[sheet-loader] loaded prev-week sheets:', prevSheetPayloads.map(function(s){ return s.sheetName; }));
+  } catch (e) {
+    console.warn('[sheet-loader] prev-week xlsx not available:', PREV_DASHBOARD_XLSX_FILE, e);
+  }
+
   const validSheets = [];
   const loadErrors = [];
 
@@ -349,21 +408,7 @@ async function loadDashboardFromPublishedHtml() {
     const displayTitle = getPayloadDisplayTitle(payload, idx);
     const key = 'sheet_' + (idx + 1);
     try {
-      const table = extractHeadMarkedTable(payload.matrix, key, payload.styles || []);
-      const dashboardData = buildSheetDashboardData(table, displayTitle || key);
-      dashboardData.displayTitle = displayTitle || key;
-      dashboardData.sheetTitle = displayTitle || key;
-      dashboardData.sheetTabName = displayTitle || key;
-      dashboardData.originalSheetName = key;
-      dashboardData.sourceUrl = payload.sourceUrl || '';
-      dashboardData.matrix = payload.matrix || [];
-      dashboardData.rawMatrix = payload.rawMatrix || payload.matrix || [];
-      dashboardData.weeklyUpdateText = String(payload.weeklyUpdateText == null ? '' : payload.weeklyUpdateText).trim();
-      dashboardData.weeklyUpdateB2 = String(payload.weeklyUpdateB2 == null ? dashboardData.weeklyUpdateText : payload.weeklyUpdateB2).trim();
-      dashboardData.requestWeek = String(payload.requestWeek == null ? '' : payload.requestWeek).trim();
-      dashboardData.requestWeekB4 = String(payload.requestWeekB4 == null ? dashboardData.requestWeek : payload.requestWeekB4).trim();
-      dashboardData.metaCells = Object.assign({}, payload.metaCells || {}, { B2: dashboardData.weeklyUpdateB2, B4: dashboardData.requestWeekB4 });
-      dashboardData.weeklyUpdates = payload.weeklyUpdates || extractWeeklyUpdateItemsFromText(dashboardData.weeklyUpdateText) || extractWeeklyUpdateItemsFromMatrix(payload.rawMatrix || payload.matrix || []);
+      const dashboardData = buildDashboardDataFromPayload(payload, idx, key);
       validSheets.push({ key: key, source: { sheetName: dashboardData.displayTitle, displayTitle: dashboardData.displayTitle, originalSheetName: key, url: payload.sourceUrl || '' }, data: dashboardData });
     } catch (e) {
       const msg = '[' + (displayTitle || payload.sheetName || key) + '] ' + (e && e.message ? e.message : e);
@@ -375,6 +420,18 @@ async function loadDashboardFromPublishedHtml() {
   if (!validSheets.length) {
     throw new Error('로드 가능한 시트가 없습니다. 각 시트의 A열에 Head가 있는지 확인해주세요.\n' + loadErrors.join('\n'));
   }
+
+  // Build the previous-week workbook with the exact same parsing rules as the current workbook.
+  // Matching is title-first so sheet order can change without breaking the comparison.
+  const prevValidSheets = [];
+  prevSheetPayloads.forEach(function(payload, idx) {
+    try {
+      prevValidSheets.push(buildDashboardDataFromPayload(payload, idx, 'prev_sheet_' + (idx + 1)));
+    } catch (e) {
+      console.warn('[sheet-loader] prev-week sheet skipped:', getPayloadDisplayTitle(payload, idx), e);
+    }
+  });
+  attachPrevWeekData(validSheets, prevValidSheets);
 
   const keys = validSheets.map(function(s){ return s.key; });
   const sourceMap = {};
@@ -392,6 +449,49 @@ async function loadDashboardFromPublishedHtml() {
 
   renderSidebarNavFromSheets(keys);
   forceCurrentSheetTitle(keys[0]);
+}
+
+function buildDashboardDataFromPayload(payload, idx, key) {
+  const displayTitle = getPayloadDisplayTitle(payload, idx);
+  const table = extractHeadMarkedTable(payload.matrix, key, payload.styles || []);
+  const dashboardData = buildSheetDashboardData(table, displayTitle || key);
+  dashboardData.displayTitle = displayTitle || key;
+  dashboardData.sheetTitle = displayTitle || key;
+  dashboardData.sheetTabName = displayTitle || key;
+  dashboardData.originalSheetName = key;
+  dashboardData.sourceUrl = payload.sourceUrl || '';
+  dashboardData.matrix = payload.matrix || [];
+  dashboardData.rawMatrix = payload.rawMatrix || payload.matrix || [];
+  dashboardData.weeklyUpdateText = String(payload.weeklyUpdateText == null ? '' : payload.weeklyUpdateText).trim();
+  dashboardData.weeklyUpdateB2 = String(payload.weeklyUpdateB2 == null ? dashboardData.weeklyUpdateText : payload.weeklyUpdateB2).trim();
+  dashboardData.requestWeek = String(payload.requestWeek == null ? '' : payload.requestWeek).trim();
+  dashboardData.requestWeekB4 = String(payload.requestWeekB4 == null ? dashboardData.requestWeek : payload.requestWeekB4).trim();
+  dashboardData.metaCells = Object.assign({}, payload.metaCells || {}, { B2: dashboardData.weeklyUpdateB2, B4: dashboardData.requestWeekB4 });
+  dashboardData.weeklyUpdates = payload.weeklyUpdates || extractWeeklyUpdateItemsFromText(dashboardData.weeklyUpdateText) || extractWeeklyUpdateItemsFromMatrix(payload.rawMatrix || payload.matrix || []);
+  return dashboardData;
+}
+
+function normalizePrevSheetMatchKey(value) {
+  return String(value || '')
+    .replace(/&amp;/gi, '&')
+    .replace(/[\u00A0\s]+/g, ' ')
+    .replace(/[^a-z0-9가-힣]+/gi, '')
+    .toLowerCase();
+}
+
+function attachPrevWeekData(validSheets, prevValidSheets) {
+  const prevByTitle = {};
+  (prevValidSheets || []).forEach(function(data) {
+    const titleKey = normalizePrevSheetMatchKey(data && data.displayTitle);
+    if (titleKey && !prevByTitle[titleKey]) prevByTitle[titleKey] = data;
+  });
+
+  (validSheets || []).forEach(function(sheet, idx) {
+    const currentData = sheet && sheet.data;
+    const titleKey = normalizePrevSheetMatchKey(currentData && currentData.displayTitle);
+    const prevData = (titleKey && prevByTitle[titleKey]) || null;
+    if (currentData) currentData.prevWeekData = prevData;
+  });
 }
 
 async function loadSheetsFromPublishedXlsx(xlsxUrl) {
@@ -1646,6 +1746,7 @@ function applySheetData(key, data) {
   target.headerStyleRows = data.headerStyleRows || [];
   target.items = data.items;
   target.stats = data.stats;
+  target.prevWeekData = data.prevWeekData || null;
 
   // Fixed management cells outside the Head table must be copied too.
   // B2 is used for the weekly update notice shown inside .ov-card-new.
