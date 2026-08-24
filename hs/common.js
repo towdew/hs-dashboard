@@ -2573,8 +2573,8 @@ function renderPrevWeekStatDelta(currentValue, prevStats, statusKey, cfg) {
 
   var sign = delta > 0 ? '+' : '';
   var deltaColor = delta > 0 ? '#10B981' : '#E5484D';
-  return '<div class="stat-prev-change" title="Prev Week 대비 변동">' +
-    '<span class="stat-prev-label">Prev Week</span>' +
+  return '<div class="stat-prev-change" title="Last Week 대비 변동">' +
+    '<span class="stat-prev-label">Last Week</span>' +
     '<span class="stat-prev-values">' +
       '<span class="stat-prev-value">' + prevValue.toLocaleString() + '</span>' +
       '<span class="stat-prev-delta" style="color:' + deltaColor + '">' + sign + delta.toLocaleString() + '</span>' +
