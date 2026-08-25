@@ -191,6 +191,24 @@ function urlLibPaginate(items, page, pageSize) {
   return { totalPages: totalPages, page: clampedPage, pageItems: pageItems };
 }
 
+function urlLibEscapeHtml(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function urlLibSelectA11y(label) {
+  return ' aria-label="' + urlLibEscapeHtml(label) + '"';
+}
+
+function urlLibEmptyStateMarkup(message) {
+  return '<div class="url-lib-empty" role="status"><p>' + urlLibEscapeHtml(message) +
+    '</p><button type="button" class="url-lib-page-btn" onclick="urlLibResetFilter()">필터 초기화</button></div>';
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     urlLibLocaleToken: urlLibLocaleToken,
@@ -208,6 +226,8 @@ if (typeof module !== 'undefined' && module.exports) {
     urlLibFilterModels: urlLibFilterModels,
     urlLibSortModels: urlLibSortModels,
     urlLibPaginate: urlLibPaginate,
+    urlLibSelectA11y: urlLibSelectA11y,
+    urlLibEmptyStateMarkup: urlLibEmptyStateMarkup,
     URL_LIB_COUNTRY_NAMES: URL_LIB_COUNTRY_NAMES,
     URL_LIB_LANG_NAMES: URL_LIB_LANG_NAMES,
   };
