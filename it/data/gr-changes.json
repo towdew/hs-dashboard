@@ -1,5 +1,5 @@
 {
-  "baseDate": "20260818",
+  "baseDate": "20260825",
   "prevDate": "20260814",
   "changes": {
     "GNB Structure|SA_AR": {
@@ -293,6 +293,226 @@
       "to": "완료"
     },
     "UltraGear 27GX704A|ZA": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|AE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|AE_AR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|AR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|AT": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|AU": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|BE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|BE_FR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|BG": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|BR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|CA_EN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|CA_FR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|CL": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|CN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|CO": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|CZ": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|DE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|DK": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|ES": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|FR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|GLOBAL": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|HK": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|HK_EN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|ID": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|IN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|IT": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|JP": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|KZ": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|MX": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|NL": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|NZ": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|PA": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|PE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|PH": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|PL": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|SA": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|SA_EN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|SE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|SG": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|TH": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|TR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|TW": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|UK": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|VN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Digital Trends Award 삭제|ZA": {
       "type": "status",
       "from": "작업중",
       "to": "완료"
@@ -681,6 +901,10 @@
       "changed": 53,
       "new": 0
     },
+    "Digital Trends Award 삭제": {
+      "changed": 44,
+      "new": 0
+    },
     "UltraGear PDP 5모델": {
       "changed": 43,
       "new": 0
@@ -690,5 +914,5 @@
       "new": 0
     }
   },
-  "generatedAt": "2026-08-18"
+  "generatedAt": "2026-08-25"
 }
