@@ -7,6 +7,61 @@
       "from": "작업중",
       "to": "취소"
     },
+    "UltraGear 1000Hz FAQ|AU": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "UltraGear 1000Hz FAQ|CA_EN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "UltraGear 1000Hz FAQ|CA_FR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "UltraGear 1000Hz FAQ|DE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "UltraGear 1000Hz FAQ|ES": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "UltraGear 1000Hz FAQ|FR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "UltraGear 1000Hz FAQ|IT": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "UltraGear 1000Hz FAQ|JP": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "UltraGear 1000Hz FAQ|NL": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "UltraGear 1000Hz FAQ|SE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "UltraGear 1000Hz FAQ|UK": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
     "Digital Trends Award 삭제|AE": {
       "type": "status",
       "from": "작업중",
@@ -231,6 +286,10 @@
   "taskSummary": {
     "Copilot+ Hero Banner": {
       "changed": 1,
+      "new": 0
+    },
+    "UltraGear 1000Hz FAQ": {
+      "changed": 11,
       "new": 0
     },
     "Digital Trends Award 삭제": {
