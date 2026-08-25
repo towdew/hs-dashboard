@@ -2,6 +2,11 @@
   "baseDate": "20260825",
   "prevDate": "20260818",
   "changes": {
+    "UltraGear OLED FAQ Update|FR": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "완료"
+    },
     "Copilot+ Hero Banner|CN": {
       "type": "status",
       "from": "작업중",
@@ -284,6 +289,10 @@
     }
   },
   "taskSummary": {
+    "UltraGear OLED FAQ Update": {
+      "changed": 1,
+      "new": 0
+    },
     "Copilot+ Hero Banner": {
       "changed": 1,
       "new": 0
