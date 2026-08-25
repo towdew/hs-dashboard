@@ -2,6 +2,16 @@
   "baseDate": "20260825",
   "prevDate": "20260818",
   "changes": {
+    "FAQ Request (UltraGear PLP)|AU": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "완료"
+    },
+    "FAQ Request (UltraGear PLP)|DE": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "완료"
+    },
     "UltraGear OLED FAQ Update|FR": {
       "type": "status",
       "from": "법인리뷰",
@@ -289,6 +299,10 @@
     }
   },
   "taskSummary": {
+    "FAQ Request (UltraGear PLP)": {
+      "changed": 2,
+      "new": 0
+    },
     "UltraGear OLED FAQ Update": {
       "changed": 1,
       "new": 0
