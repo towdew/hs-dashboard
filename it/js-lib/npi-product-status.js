@@ -35,9 +35,47 @@ function npiPsStageCounts(flatRows) {
   return counts;
 }
 
+function npiPsEscapeHtml(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function npiPsSelectA11y(label) {
+  return ' aria-label="' + npiPsEscapeHtml(label) + '"';
+}
+
+function npiPsStageChipMarkup(stage, label, count, color, active, background, textColor) {
+  var styles = ['--npi-stage-color:' + npiPsEscapeHtml(color)];
+  if (background) styles.push('background:' + npiPsEscapeHtml(background));
+  if (textColor) styles.push('color:' + npiPsEscapeHtml(textColor));
+  return '<button type="button" class="npi-ps-stage-chip' + (active ? ' npi-ps-stage-chip-active' : '') +
+    '" data-stage="' + npiPsEscapeHtml(stage) + '" aria-pressed="' + (active ? 'true' : 'false') +
+    '" style="' + styles.join(';') +
+    '" onclick="npiPsToggleStageChip(this.getAttribute(\'data-stage\'))">' +
+    npiPsEscapeHtml(label) + ' <span>' + npiPsEscapeHtml(count == null ? 0 : count) + '</span></button>';
+}
+
+function npiPsEmptyStateMarkup(message) {
+  return '<div class="npi-ps-empty" role="status"><p>' + npiPsEscapeHtml(message) +
+    '</p><button type="button" class="url-lib-page-btn" onclick="npiPsResetFilter()">필터 초기화</button></div>';
+}
+
+function npiPsDialogA11y(labelledBy) {
+  return ' role="dialog" aria-modal="true" aria-labelledby="' +
+    npiPsEscapeHtml(labelledBy) + '"';
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     npiPsFilterRows: npiPsFilterRows,
     npiPsStageCounts: npiPsStageCounts,
+    npiPsSelectA11y: npiPsSelectA11y,
+    npiPsStageChipMarkup: npiPsStageChipMarkup,
+    npiPsEmptyStateMarkup: npiPsEmptyStateMarkup,
+    npiPsDialogA11y: npiPsDialogA11y,
   };
 }
