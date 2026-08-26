@@ -128,6 +128,37 @@ function grLookup(dict, taskKey, code) {
   }
   return null;
 }
+function grCollectRowUrls(rows) {
+  var urls = [];
+  var seen = {};
+  (rows || []).forEach(function(row) {
+    Object.keys(row || {}).forEach(function(key) {
+      if (key.charAt(0) === '_') return;
+      var normalizedKey = String(key).toLowerCase().replace(/[\s_\-/.]+/g, '');
+      if (normalizedKey !== 'url') return;
+      var url = String(row[key] || '').trim();
+      if (!/^https?:\/\//i.test(url) || seen[url]) return;
+      seen[url] = true;
+      urls.push(url);
+    });
+  });
+  return urls;
+}
+
+function grMergeUrls(mappedUrls, fallbackUrls) {
+  var urls = [];
+  var seen = {};
+  [mappedUrls, fallbackUrls].forEach(function(source) {
+    (source || []).forEach(function(value) {
+      var url = String(value || '').trim();
+      if (!/^https?:\/\//i.test(url) || seen[url]) return;
+      seen[url] = true;
+      urls.push(url);
+    });
+  });
+  return urls;
+}
+
 
 // 사이드바 GR 탭을 In Progress / Done 두 그룹으로 나눈다.
 // pct는 완료율(취소 제외 분모, contentStats 기준). override는 data/gr-task-state.json의
@@ -150,6 +181,14 @@ function grTaskGroupOf(pct, override) {
 // 붙지 않아, 사용자는 무엇이 바뀌었는지 찾을 수 없다. 배지의 출처를 changes 한 곳으로
 // 통일해 요약과 행 배지가 항상 일치하게 한다.
 // 조회 키는 grLookup과 동일한 "taskKey|code" 규약 + GR_TASK_KEY_ALIASES 폴백.
+// 사이드바 N 배지용 — displayTitle → gr-changes 건수(0이면 배지 없음).
+function grNavWeeklyChangeCount(changes, displayTitle) {
+  if (!changes || !displayTitle || typeof grTaskKeyOf !== 'function') return 0;
+  var taskKey = grTaskKeyOf(displayTitle);
+  if (!taskKey) return 0;
+  return grCountTaskChanges(changes, taskKey).total;
+}
+
 function grCountTaskChanges(changes, taskKey) {
   var out = { changed: 0, added: 0, total: 0 };
   if (!changes || !taskKey) return out;
@@ -199,21 +238,12 @@ function grIsFaqTask(displayTitle) {
  * 경로만 남긴다. lg.com이 아닌 주소는 판단하지 않고 원본을 그대로 돌려준다.
  * @returns {string} 예: 'https://www.lg.com/uk/monitors/gaming/' → '/uk/monitors/gaming/'
  */
-function grCollectRowUrls(rows) {
-  var urls = [];
-  var seen = {};
-  (rows || []).forEach(function(row) {
-    Object.keys(row || {}).forEach(function(key) {
-      if (key.charAt(0) === '_') return;
-      var normalizedKey = String(key).toLowerCase().replace(/[\s_\-/.]+/g, '');
-      if (normalizedKey !== 'url') return;
-      var url = String(row[key] || '').trim();
-      if (!/^https?:\/\//i.test(url) || seen[url]) return;
-      seen[url] = true;
-      urls.push(url);
-    });
-  });
-  return urls;
+function grUrlPathLabel(url) {
+  var s = String(url == null ? '' : url).trim();
+  if (!s) return '';
+  var m = s.match(/^https?:\/\/(?:www\.)?lg\.com(\/.*)?$/i);
+  if (!m) return s;
+  return m[1] || '/';
 }
 
 // FAQ 행의 URL 셀에 실제로 보여줄 URL 목록.
@@ -238,26 +268,20 @@ function grFaqCellUrls(cellValue, rowUrls) {
   return list;
 }
 
-function grUrlPathLabel(url) {
-  var s = String(url == null ? '' : url).trim();
-  if (!s) return '';
-  var m = s.match(/^https?:\/\/(?:www\.)?lg\.com(\/.*)?$/i);
-  if (!m) return s;
-  return m[1] || '/';
-}
-
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     grNormalizeCountryCode: grNormalizeCountryCode,
     grIsFaqTask: grIsFaqTask,
     grUrlPathLabel: grUrlPathLabel,
-    grCollectRowUrls: grCollectRowUrls,
     grFaqCellUrls: grFaqCellUrls,
     grOwnerOf: grOwnerOf,
     grTaskGroupOf: grTaskGroupOf,
     grTaskKeyOf: grTaskKeyOf,
     grLookup: grLookup,
     grCountTaskChanges: grCountTaskChanges,
+    grNavWeeklyChangeCount: grNavWeeklyChangeCount,
+    grCollectRowUrls: grCollectRowUrls,
+    grMergeUrls: grMergeUrls,
     grNormTitleKey: grNormTitleKey,
     GR_DUAL_LOCALE_MAP: GR_DUAL_LOCALE_MAP,
     GR_COUNTRY_NAME_TO_CODE: GR_COUNTRY_NAME_TO_CODE,
