@@ -393,7 +393,7 @@ async function loadDashboardFromPublishedHtml() {
   }
 
   // Previous workbook is optional. If it is missing, the dashboard still works
-  // and simply hides Prev Week comparison rows.
+  // and simply hides Last Week comparison rows.
   try {
     prevSheetPayloads = await loadSheetsFromPublishedXlsx(PREV_XLSX_URL);
     console.info('[sheet-loader] loaded prev-week sheets:', prevSheetPayloads.map(function(s){ return s.sheetName; }));
