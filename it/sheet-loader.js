@@ -333,21 +333,11 @@ async function loadDashboardFromPublishedHtml() {
 
   initBaseGlobals(keys, sourceMap);
 
-  // 커스텀 섹션 (NPI / URL Library) 특수 키 등록 — initBaseGlobals(DATA={}) 이후에 추가
-  // 임시 숨김: true로 바꾸면 사이드바에 다시 표시됩니다.
-  window.__SHOW_CUSTOM_NAV_TABS = false;
-  if (window.__SHOW_CUSTOM_NAV_TABS) {
-    window.__DASHBOARD_KEYS.push('npi');
-    window.DATA['npi'] = { displayTitle: 'NPI Tracker', _custom: true, _loaded: false };
-  }
-
-  // Live URL Library — 항상 표시 (2026-07-08 배포)
-  window.__DASHBOARD_KEYS.push('url_library');
-  window.DATA['url_library'] = { displayTitle: 'Live URL Library', _custom: true, _loaded: false };
-
-  // IT 제품 현황 (NPI product status) — 항상 표시 (2026-07-08)
+  // 커스텀 섹션 (IT 제품 현황 / URL Library) 특수 키 등록 — initBaseGlobals(DATA={}) 이후에 추가
   window.__DASHBOARD_KEYS.push('npi_product_status');
+  window.__DASHBOARD_KEYS.push('url_library');
   window.DATA['npi_product_status'] = { displayTitle: 'IT 제품 현황', _custom: true, _loaded: false };
+  window.DATA['url_library'] = { displayTitle: 'Live URL Library', _custom: true, _loaded: false };
 
   validSheets.forEach(function(s) {
     applySheetData(s.key, s.data);
@@ -1505,6 +1495,10 @@ function parseCountryValueParts(value) {
   return { code: code, lang: lang };
 }
 
+// 뒤 2자리를 언어 힌트로 인정할지 판정한다. 인정되지 않으면 "CZ-cz" 같은 값이 코드/언어로
+// 분해되지 않아 화면에 원문 그대로 노출된다(2026-08-04 사용자 지적: W22에서 CZ·EE·GR만 코드로 보임).
+// ru·uk는 정식 ISO 639-1인데 누락돼 있었고, cz·ee·gr·rs는 ISO(cs·et·el·sr)가 아니라
+// LG 로케일 관용 표기다 — 실제 데이터가 그 형태로 들어오므로 함께 인정한다.
 function isSheetLoaderLanguageCode(value) {
   const code = String(value || '').toLowerCase();
   return ['en','ar','fr','de','es','pt','ko','ja','zh','it','nl','vi','th','id','tr','pl','cs','da','sv','fi','no','he','fa','ro','bg','hr','hu','el','sk','sl','lt','lv','et','ms','hi',
@@ -1636,7 +1630,7 @@ function applySheetData(key, data) {
 }
 
 var CUSTOM_NAV_TABS = [
-  { key: 'npi', label: 'NPI Tracker', abbr: 'NP', section: 'NPI' },
+  { key: 'npi_product_status', label: 'IT 제품 현황', abbr: 'PS', section: 'NPI' },
   { key: 'url_library', label: 'Live URL Library', abbr: 'UL', section: 'Live URL' },
 ];
 
@@ -1670,6 +1664,17 @@ function toggleGrNavSection(id) {
   }
 }
 if (typeof window !== 'undefined') window.toggleGrNavSection = toggleGrNavSection;
+
+function grNavWeeklyBadgeMarkup(title) {
+  var changes = (typeof window !== 'undefined' && window._grChanges && window._grChanges.changes) || null;
+  if (!changes || typeof grTaskKeyOf !== 'function' || typeof grCountTaskChanges !== 'function') return '';
+  var taskKey = grTaskKeyOf(title);
+  if (!taskKey) return '';
+  var c = grCountTaskChanges(changes, taskKey);
+  if (!c.total) return '';
+  var tip = '금주 변경 ' + c.total + '건' + (c.added ? ' (신규 ' + c.added + ')' : '');
+  return '<span class="ni-weekly-badge" title="' + escapeAttrForLoader(tip) + '" aria-label="' + escapeAttrForLoader(tip) + '">N</span>';
+}
 
 function renderSidebarNavFromSheets(keys) {
   const section = document.getElementById('sheetNavList') || document.querySelector('.sb-section');
@@ -1736,6 +1741,7 @@ function renderSidebarNavFromSheets(keys) {
       var total = d && d.stats ? (d.stats.Total || 0) : 0;
       html.push('<div class="nav-item ' + (navIdx === 0 ? 'active' : '') + '" data-key="' + escapeAttrForLoader(key) + '" onclick="switchMenu(this)" title="' + escapeAttrForLoader(title) + '">' +
         '<span class="ni-text" data-abbr="' + escapeAttrForLoader(abbr) + '">' + escapeHtmlForLoader(navTitle) + '</span>' +
+        grNavWeeklyBadgeMarkup(title) +
         '<span class="ni-badge" style="background:rgba(148,163,184,.16);color:#64748B">' + total.toLocaleString() + '</span>' +
         '</div>');
       navIdx++;
@@ -1755,24 +1761,14 @@ function renderSidebarNavFromSheets(keys) {
     pushGrSection('Global Request', grKeys);
   }
 
-  // ── NPI 섹션: IT 제품 현황 (항상 표시) ──
+  // ── NPI 섹션 ──
   html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">NPI</div>');
   html.push('<div class="nav-item nav-item-custom" data-key="npi_product_status" onclick="switchMenu(this)">' +
     '<span class="ni-text" data-abbr="PS">IT 제품 현황</span>' +
     '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">PS</span>' +
     '</div>');
 
-  if (window.__SHOW_CUSTOM_NAV_TABS) {
-    // ── NPI 섹션 ──
-    html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">NPI</div>');
-    html.push('<div class="nav-item nav-item-custom" data-key="npi" onclick="switchMenu(this)">' +
-      '<span class="ni-text" data-abbr="NP">NPI Tracker</span>' +
-      '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">IT</span>' +
-      '</div>');
-
-  }
-
-  // ── Live URL 섹션 (항상 표시) ──
+  // ── Live URL 섹션 ──
   html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">Live URL</div>');
   html.push('<div class="nav-item nav-item-custom" data-key="url_library" onclick="switchMenu(this)">' +
     '<span class="ni-text" data-abbr="UL">Live URL Library</span>' +

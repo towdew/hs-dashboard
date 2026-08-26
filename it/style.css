@@ -126,6 +126,18 @@ button,input,select,textarea{font-family:inherit}
   font-size:9px;font-weight:800;padding:1px 5px;border-radius:3px;
   transition:opacity .2s,width .2s;
 }
+.nav-item .ni-weekly-badge{
+  flex-shrink:0;
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:14px;height:14px;padding:0 4px;border-radius:3px;
+  background:#A50034;color:#fff;
+  font-size:8px;font-weight:800;letter-spacing:.02em;line-height:1;
+}
+.sidebar.collapsed .ni-weekly-badge{
+  position:absolute;top:5px;right:5px;
+  min-width:7px;height:7px;padding:0;border-radius:50%;
+  font-size:0;overflow:hidden;
+}
 .sidebar.collapsed .ni-badge{opacity:0;width:0;padding:0;margin:0;overflow:hidden}
 
 /* Collapsed: 아이콘 자리 회수 */
@@ -1421,7 +1433,7 @@ button,input,select,textarea{font-family:inherit}
 .sheet-data-table tbody tr.sheet-row-new td{background:#EFF6FF}
 .sheet-data-table tbody tr.sheet-row-new td:first-child{box-shadow:inset 3px 0 0 #3B82F6}
 .sheet-data-table tbody tr.sheet-row-new:hover td{background:#E4EEFE}
-.sheet-new-badge{display:inline-block;margin-left:6px;padding:0 6px;height:16px;line-height:16px;border-radius:3px;background:#A50034;color:#fff;font-size:8px;font-weight:800;letter-spacing:.1px;vertical-align:middle;white-space:nowrap}
+.sheet-new-badge{display:inline-block;margin-left:6px;padding:0 5px;height:15px;line-height:15px;border-radius:3px;background:#A50034;color:#fff;font-size:8px;font-weight:800;letter-spacing:.3px;vertical-align:middle}
 .sheet-updated-badge{display:inline-block;margin-left:6px;padding:0 5px;height:15px;line-height:15px;border-radius:3px;background:#A50034;color:#fff;font-size:8px;font-weight:800;letter-spacing:.3px;vertical-align:middle}
 /* URL 컬럼은 숨기고, 국가 셀 클릭 시 상세 모달에서 전체 URL 제공 */
 .sheet-data-table tbody td.sheet-country-click{cursor:pointer}
@@ -1563,8 +1575,8 @@ button,input,select,textarea{font-family:inherit}
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  height:18px;
-  padding:0 8px;
+  height:17px;
+  padding:0 7px;
   border-radius:3px;
   background:#3B82F6;
   color:#fff;
@@ -1709,14 +1721,42 @@ button,input,select,textarea{font-family:inherit}
 .npi-stage-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
 /* IT 제품 현황 stage 요약 칩(클릭 가능 — Stage 필터 토글) */
 .npi-ps-stage-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 999px;
   border: 1.5px solid transparent;
+  font: inherit;
+  font-size: var(--fs-badge);
+  font-weight: 700;
   transition: box-shadow .12s, border-color .12s, filter .12s;
 }
+.npi-ps-stage-chip::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--npi-stage-color);
+}
 .npi-ps-stage-chip:hover { filter: brightness(.97); }
+.npi-ps-stage-chip:focus-visible { outline: 2px solid #A50034; outline-offset: 2px; }
 .npi-ps-stage-chip-active { border-color: #A50034; box-shadow: 0 0 0 1px #A50034 inset; }
+.npi-ps-empty {
+  padding: 36px 16px;
+  text-align: center;
+  color: #64748B;
+}
+.npi-ps-empty p { margin: 0 0 12px; }
+.npi-readiness-btn {
+  border: 0;
+  /* font shorthand는 함께 지정된 .sheet-status-pill의 크기(10px)·굵기(800)까지 덮어써
+     배지가 본문 크기로 커지는 회귀가 있었다. 버튼 기본 폰트만 상속하고 pill 스타일은 유지. */
+  font-family: inherit;
+  cursor: pointer;
+}
+.npi-readiness-btn:focus-visible { outline: 2px solid #A50034; outline-offset: 2px; }
 .npi-month-expand-icon { text-align: center; font-size: var(--fs-badge); color: #94A3B8; margin-top: 6px; }
 .npi-stage-detail-bar {
   display: flex;
@@ -1732,6 +1772,7 @@ button,input,select,textarea{font-family:inherit}
   border: 1.5px solid #E2E8F0;
   border-radius: 8px;
 }
+
 .npi-url-icon {
   display: inline-flex;
   align-items: center;
@@ -1749,7 +1790,6 @@ button,input,select,textarea{font-family:inherit}
   color: #2563EB;
   background: #EFF6FF;
 }
-
 .npi-detail-table {
   width: 100%;
   border-collapse: collapse;
@@ -1863,12 +1903,26 @@ button,input,select,textarea{font-family:inherit}
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;
-  cursor: pointer;
+  width: 100%;
   min-width: 0;
+  padding: 8px 12px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.url-lib-model-main:focus-visible,
+.url-lib-country-card:focus-visible,
+.url-lib-country-back:focus-visible,
+.url-lib-view-tab:focus-visible,
+.url-lib-page-btn:focus-visible {
+  outline: 2px solid #A50034;
+  outline-offset: 2px;
 }
 /* 좌측(모델명+카테고리): 넘치면 모델명 말줄임 / 우측(ACTIVE·개국): 절대 줄바꿈·축소 금지 */
-.url-lib-model-main > div:first-child {
+.url-lib-model-identity {
   min-width: 0;
   flex: 1;
   display: flex;
@@ -1876,7 +1930,20 @@ button,input,select,textarea{font-family:inherit}
   gap: 6px;
   white-space: nowrap;
 }
-.url-lib-model-main > div:first-child .url-lib-model-name {
+.url-lib-model-identity .url-lib-model-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.url-lib-model-stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.url-lib-model-stats > span { white-space: nowrap; }
+.url-lib-model-name {
   font-weight: 700;
   font-size: var(--fs-section);
   color: #1A1D2E;
@@ -1944,6 +2011,7 @@ button,input,select,textarea{font-family:inherit}
   color: #94A3B8;
   font-size: var(--fs-body);
 }
+.url-lib-empty p { margin: 0 0 12px; }
 .url-lib-view-tabs { display: flex; gap: 6px; padding: 10px 0 0; }
 .url-lib-view-tab {
   padding: 6px 14px;
@@ -1961,6 +2029,10 @@ button,input,select,textarea{font-family:inherit}
   gap: 10px;
 }
 .url-lib-country-card {
+  width: 100%;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   background: #fff;
   border: 1.5px solid #E2E8F0;
   border-radius: 10px;
@@ -1969,10 +2041,20 @@ button,input,select,textarea{font-family:inherit}
   transition: border-color .15s, box-shadow .15s;
 }
 .url-lib-country-card:hover { border-color: #A50034; box-shadow: 0 1px 6px rgba(165,0,52,.1); }
-.url-lib-country-name { font-weight: 700; font-size: var(--fs-section); color: #1A1D2E; }
-.url-lib-country-token { font-size: var(--fs-badge); color: #94A3B8; margin-top: 2px; }
-.url-lib-country-count { font-size: var(--fs-caption); color: #475569; margin-top: 6px; }
-.url-lib-country-back { font-size: var(--fs-body); color: #A50034; cursor: pointer; margin-bottom: 4px; }
+.url-lib-country-name { display: block; font-weight: 700; font-size: var(--fs-section); color: #1A1D2E; }
+.url-lib-country-token { display: block; font-size: var(--fs-badge); color: #94A3B8; margin-top: 2px; }
+.url-lib-country-count { display: block; font-size: var(--fs-caption); color: #475569; margin-top: 6px; }
+.url-lib-country-back {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: var(--fs-body);
+  color: #A50034;
+  cursor: pointer;
+  margin-bottom: 4px;
+}
 .url-lib-country-back:hover { text-decoration: underline; }
 .url-lib-pagination {
   display: flex;
@@ -1993,6 +2075,60 @@ button,input,select,textarea{font-family:inherit}
 }
 .url-lib-page-btn:hover:not(:disabled) { border-color: #A50034; color: #A50034; }
 .url-lib-page-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+@media (max-width: 768px) {
+  .url-lib-filter-bar { align-items: stretch; }
+  .url-lib-filter-bar .dash-search {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+  .url-lib-select,
+  .dash-search-input,
+  .url-lib-page-btn,
+  .url-lib-view-tab {
+    min-height: 44px;
+  }
+  .url-lib-filter-bar > label,
+  .npi-ps-stage-chip {
+    min-height: 40px;
+  }
+  .modal-close-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .url-lib-select {
+    flex: 1 1 calc(50% - 5px);
+    min-width: 0;
+  }
+  .url-lib-model-list { grid-template-columns: 1fr; }
+  .url-lib-detail-table,
+  .npi-detail-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 480px) {
+  .url-lib-select {
+    flex-basis: 100%;
+    width: 100%;
+  }
+  .url-lib-model-main {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+  .url-lib-model-stats {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+    white-space: normal;
+  }
+  .url-lib-country-grid { grid-template-columns: 1fr; }
+}
+
 /* ── 상단바 통합 검색 (2026-08-10) ─────────────────────────────
    GR 태스크·IT 제품 현황·URL Library를 한 번에 훑는 드롭다운. */
 .topbar-search { position: relative; display: flex; align-items: center; flex: 1 1 220px; min-width: 150px; max-width: 320px; }

@@ -1398,7 +1398,7 @@ function renderWeeklyUpdateSection(d) {
     '<section class="weekly-update-section" aria-label="이번주 업데이트 사항">' +
       '<div class="weekly-update-notice">' +
         '<div class="weekly-update-mainline">' +
-          '<span class="weekly-update-new-badge">금주 업데이트</span>' +
+          '<span class="weekly-update-new-badge">NEW</span>' +
           '<span class="weekly-update-desc">이번 주에 새로 완료된 항목 ' + items.length.toLocaleString() + '건입니다.</span>' +
         '</div>' +
         '<div class="weekly-update-items">' + list + '</div>' +
@@ -1455,118 +1455,6 @@ function updateHQ() {
 }
 
 // ══════════════════════════════════════════════════════════════════
-// NPI TRACKER VIEW
-// ══════════════════════════════════════════════════════════════════
-var _npiData = null;
-var _npiExpandedMonth = null;
-
-function renderNpiContent() {
-  updateTopbarTitle();
-  const wrap = document.getElementById('contentWrap');
-  wrap.innerHTML = '';
-
-  if (!_npiData) {
-    // Lazy fetch
-    wrap.innerHTML = '<div style="padding:40px;text-align:center;color:#64748B">NPI 데이터를 불러오는 중...</div>';
-    fetch('data/npi.json?v=' + (window.__BUILD_TS || Date.now()))
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        _npiData = data;
-        renderNpiContent();
-      })
-      .catch(function(e) {
-        wrap.innerHTML = '<div style="padding:40px;text-align:center;color:#EF4444">NPI 데이터 로드 실패: ' + escapeHtmlSheet(String(e)) + '</div>';
-      });
-    return;
-  }
-
-  var months = (_npiData.months || []).slice().reverse(); // 최신 월부터
-  var latest = months[0];
-  var prev = months[1];
-  var delta = (latest && prev) ? (latest.pct - prev.pct) : null;
-
-  // ── 헤더 카드 ──
-  var headerHtml = '<div style="padding:16px 24px 0;flex-shrink:0"><div class="ov-card-new">';
-  headerHtml += '<div class="ov-head-new"><div class="ov-head-title">';
-  headerHtml += '<div class="ov-head-eyebrow">NPI Tracking · IT BU</div>';
-  headerHtml += '<div class="ov-head-name">월별 등록 진척 현황</div>';
-  headerHtml += '</div>';
-  if (latest) {
-    var deltaHtml = '';
-    if (delta !== null) {
-      deltaHtml = '<span style="font-size:12px;font-weight:600;color:' + (delta >= 0 ? '#10B981' : '#EF4444') + ';margin-left:8px">' +
-        (delta >= 0 ? '▲' : '▼') + ' ' + Math.abs(delta) + '% vs ' + (prev ? prev.month : '') + '</span>';
-    }
-    headerHtml += '<div class="ov-head-total"><div class="ov-head-total-num ov-head-total-sites">' +
-      latest.month + ' · <strong>' + latest.registered + '</strong>/' + latest.total + ' 등록 (' + latest.pct + '%)' + deltaHtml + '</div></div>';
-  }
-  headerHtml += '</div></div></div>';
-  wrap.insertAdjacentHTML('beforeend', headerHtml);
-
-  // ── 월별 진척 카드 그리드 ──
-  var gridHtml = '<div style="padding:16px 24px"><div class="npi-month-grid">';
-  months.forEach(function(m) {
-    var isExpanded = _npiExpandedMonth === m.month;
-    var pctColor = m.pct >= 80 ? '#10B981' : m.pct >= 50 ? '#F59E0B' : '#EF4444';
-    gridHtml += '<div class="npi-month-card' + (isExpanded ? ' npi-month-card-active' : '') + '" onclick="toggleNpiMonth(\'' + m.month + '\')">';
-    gridHtml += '<div class="npi-month-header"><span class="npi-month-label">' + m.month + '</span>';
-    gridHtml += '<span class="npi-month-pct" style="color:' + pctColor + '">' + m.pct + '%</span></div>';
-    gridHtml += '<div class="npi-progress-bar"><div class="npi-progress-fill" style="width:' + m.pct + '%;background:' + pctColor + '"></div></div>';
-    gridHtml += '<div class="npi-month-stats">';
-    gridHtml += '<span style="color:#10B981">✓ ' + m.registered + '</span> / ';
-    gridHtml += '<span style="color:#94A3B8">○ ' + m.unregistered + '</span> / ';
-    gridHtml += '<span style="color:#EF4444">✕ ' + m.cancelled + '</span>';
-    gridHtml += ' <span style="color:#94A3B8;font-size:11px">(' + m.total + '건)</span>';
-    gridHtml += '</div>';
-    gridHtml += '<div class="npi-month-expand-icon">' + (isExpanded ? '▲' : '▼') + '</div>';
-    gridHtml += '</div>';
-
-    // 펼침 테이블
-    if (isExpanded) {
-      gridHtml += '<div class="npi-detail-table-wrap" style="grid-column:1/-1">';
-      gridHtml += '<table class="npi-detail-table">';
-      gridHtml += '<thead><tr><th>Region</th><th>Country</th><th>Model</th><th>Suffix</th><th>Status</th><th>PTT</th><th>Target Date</th></tr></thead>';
-      gridHtml += '<tbody>';
-      (m.rows || []).forEach(function(row) {
-        var statusCfg = {
-          'Registered': { bg: '#ECFDF5', tc: '#065F46', dot: '#10B981', label: 'Registered' },
-          'Un-registered': { bg: '#EFF6FF', tc: '#1E40AF', dot: '#3B82F6', label: 'Un-registered' },
-          'Cancelled': { bg: '#F8FAFC', tc: '#475569', dot: '#94A3B8', label: 'Cancelled' },
-        }[row.status] || { bg: '#F1F5F9', tc: '#64748B', dot: '#94A3B8', label: row.status };
-
-        var statusHtml;
-        if (row.status === 'Registered' && row.liveUrl) {
-          statusHtml = '<a class="sheet-status-pill sheet-status-pill-link" href="' + escapeAttrSheet(row.liveUrl) + '" target="_blank" rel="noopener" style="background:' + statusCfg.bg + ';color:' + statusCfg.tc + ';text-decoration:none">' +
-            '<span style="background:' + statusCfg.dot + '"></span>' + escapeHtmlSheet(statusCfg.label) + '</a>';
-        } else {
-          statusHtml = '<span class="sheet-status-pill" style="background:' + statusCfg.bg + ';color:' + statusCfg.tc + '">' +
-            '<span style="background:' + statusCfg.dot + '"></span>' + escapeHtmlSheet(statusCfg.label) + '</span>';
-        }
-
-        gridHtml += '<tr>';
-        gridHtml += '<td>' + escapeHtmlSheet(row.region) + '</td>';
-        gridHtml += '<td>' + escapeHtmlSheet(row.country) + '</td>';
-        gridHtml += '<td style="font-weight:600">' + escapeHtmlSheet(row.modelName || row.suffix) + '</td>';
-        gridHtml += '<td style="color:#64748B;font-size:12px">' + escapeHtmlSheet(row.suffix) + '</td>';
-        gridHtml += '<td>' + statusHtml + '</td>';
-        gridHtml += '<td style="font-size:12px;color:#64748B">' + escapeHtmlSheet(row.pttId) + '</td>';
-        gridHtml += '<td style="font-size:12px;color:#64748B">' + escapeHtmlSheet(row.targetDate) + '</td>';
-        gridHtml += '</tr>';
-      });
-      gridHtml += '</tbody></table></div>';
-    }
-  });
-  gridHtml += '</div></div>';
-  wrap.insertAdjacentHTML('beforeend', gridHtml);
-  syncNavBadges();
-}
-
-function toggleNpiMonth(month) {
-  _npiExpandedMonth = (_npiExpandedMonth === month) ? null : month;
-  renderNpiContent();
-}
-
-// ══════════════════════════════════════════════════════════════════
 // NPI IT PRODUCT STATUS VIEW (1회성 스냅샷: 43 NPI for IT product status_20260707)
 // ══════════════════════════════════════════════════════════════════
 var _npiProductStatusData = null;
@@ -1601,6 +1489,19 @@ function npiPsFlowBox(m, label, n) {
     '<div style="font-size:20px;font-weight:800;line-height:1.15">' + n + '</div></div>';
 }
 
+// NPI 진행 프로세스 흐름도: Etc → Precheck → In Progress → (Client Review / Clarify) → Live
+function npiPsProcessFlowHtml(stageCounts) {
+  function box(key, label) {
+    return npiPsFlowBox(npiPsStageMeta(key), label, stageCounts[key] || 0);
+  }
+  var arrow = '<div style="color:#CBD5E1;font-size:20px;font-weight:800;padding:0 2px">→</div>';
+  var branch = '<div style="display:inline-flex;flex-direction:column;gap:6px">' +
+    box('client_review', 'Client Review') + box('clarify', 'Clarify') + '</div>';
+  return '<div style="display:flex;align-items:center;gap:6px;flex-wrap:nowrap;padding:14px;background:#F8FAFC;border-radius:14px;overflow-x:auto">' +
+    box('etc', 'Etc') + arrow + box('precheck', 'Precheck') + arrow + box('in_progress', 'In Progress') + arrow + branch + arrow + box('live', 'Live') +
+    '</div>';
+}
+
 // Modification 진행 프로세스: Request → In Progress → Completed (stage 매핑: live→Completed, in_progress→In Progress, 그 외→Request)
 function npiPsModFlowHtml(modRows) {
   var counts = { request: 0, working: 0, done: 0 };
@@ -1617,22 +1518,20 @@ function npiPsModFlowHtml(modRows) {
     '</div>';
 }
 
-function npiPsProcessFlowHtml(stageCounts) {
-  function box(key, label) {
-    return npiPsFlowBox(npiPsStageMeta(key), label, stageCounts[key] || 0);
-  }
-  var arrow = '<div style="color:#CBD5E1;font-size:20px;font-weight:800;padding:0 2px">→</div>';
-  var branch = '<div style="display:inline-flex;flex-direction:column;gap:6px">' +
-    box('client_review', 'Client Review') + box('clarify', 'Clarify') + '</div>';
-  return '<div style="display:flex;align-items:center;gap:6px;flex-wrap:nowrap;padding:14px;background:#F8FAFC;border-radius:14px;overflow-x:auto">' +
-    box('etc', 'Etc') + arrow + box('precheck', 'Precheck') + arrow + box('in_progress', 'In Progress') + arrow + branch + arrow + box('live', 'Live') +
-    '</div>';
+function npiPsRevealModal(modalId) {
+  setTimeout(function() {
+    var modal = document.getElementById(modalId);
+    if (!modal) return;
+    modal.classList.add('modal-show');
+    var closeButton = modal.querySelector('.modal-close-btn');
+    if (closeButton) closeButton.focus();
+  }, 10);
 }
 
-// Modification 진행 프로세스: Request → In Progress → Completed (stage 매핑: live→Completed, in_progress→In Progress, 그 외→Request)
 function npiPsOpenProcessModal() {
   var d = _npiProductStatusData;
   if (!d) return;
+  window._npiPsModalReturnFocus = document.activeElement;
   // 대분류(NPI/Modification)별로 플로우 분리 (2026-07-16 사용자 지시)
   var flatRows = npiPsFlatRows();
   var npiRows = flatRows.filter(function(it) { return (it.row.category || 'NPI') === 'NPI'; });
@@ -1645,22 +1544,19 @@ function npiPsOpenProcessModal() {
   if (modRows.length) {
     body += '<div style="height:14px"></div>' + sectionTitle('Modification', modRows.length) + npiPsModFlowHtml(modRows);
   }
-  var html = '<div class="modal-overlay" id="npiPsProcessModal" onclick="if(event.target===this)closeNpiPsProcessModal()">' +
+  var html = '<div class="modal-overlay" id="npiPsProcessModal"' + npiPsDialogA11y('npiPsProcessTitle') + ' onclick="if(event.target===this)closeNpiPsProcessModal()">' +
     '<div class="modal-card" style="max-width:760px" onclick="event.stopPropagation()">' +
       '<div class="country-modal-header"><div class="country-modal-info">' +
-        '<div class="country-modal-title">진행 프로세스</div>' +
+        '<div class="country-modal-title" id="npiPsProcessTitle">진행 프로세스</div>' +
         '<div class="country-modal-meta"><span style="font-size:11px;color:#9BA3BF">NPI: Etc → Precheck → In Progress → Client Review / Clarify → Live · Modification: Request → In Progress → Completed</span></div>' +
-      '</div><button class="modal-close-btn" onclick="closeNpiPsProcessModal()">✕</button></div>' +
+      '</div><button type="button" class="modal-close-btn" aria-label="진행 프로세스 닫기" onclick="closeNpiPsProcessModal()">✕</button></div>' +
       '<div style="padding:20px">' + body + '</div>' +
     '</div></div>';
   var wrap = document.createElement('div');
   wrap.innerHTML = html;
   document.body.appendChild(wrap.firstChild);
   // .modal-overlay는 기본 opacity:0 → modal-show 클래스로 페이드인(다른 모달과 동일 패턴)
-  setTimeout(function() {
-    var m = document.getElementById('npiPsProcessModal');
-    if (m) m.classList.add('modal-show');
-  }, 10);
+  npiPsRevealModal('npiPsProcessModal');
   document.addEventListener('keydown', npiPsProcessModalEsc);
 }
 
@@ -1740,7 +1636,7 @@ function npiPsOpenReadinessGuideModal() {
     return '<div style="margin-bottom:16px">' +
       '<div style="font-weight:800;color:#1A1D2E;font-size:var(--fs-caption);margin-bottom:8px">' + t + '</div>' + inner + '</div>';
   };
-  var html = '<div class="modal-overlay" id="npiPsGuideModal" onclick="if(event.target===this)closeNpiPsGuideModal()">' +
+  var html = '<div class="modal-overlay" id="npiPsGuideModal"' + npiPsDialogA11y('npiPsGuideTitle') + ' onclick="if(event.target===this)closeNpiPsGuideModal()">' +
     '<div class="modal-card" style="max-width:680px" onclick="event.stopPropagation()">' +
       '<div class="country-modal-header"><div class="country-modal-info">' +
         '<div class="country-modal-title" id="npiPsGuideTitle">Readiness Check 판정 기준</div>' +
@@ -1759,10 +1655,7 @@ function npiPsOpenReadinessGuideModal() {
   var wrap = document.createElement('div');
   wrap.innerHTML = html;
   document.body.appendChild(wrap.firstChild);
-  setTimeout(function() {
-    var m = document.getElementById('npiPsGuideModal');
-    if (m) m.classList.add('modal-show');
-  }, 10);
+  npiPsRevealModal('npiPsGuideModal');
   document.addEventListener('keydown', npiPsGuideModalEsc);
 }
 
@@ -1778,6 +1671,7 @@ function closeNpiPsGuideModal() {
   window._npiPsGuideReturnFocus = null;
   if (rf && typeof rf.focus === 'function') rf.focus();
 }
+
 function npiPsProcessModalEsc(e) {
   if (e.key === 'Escape') closeNpiPsProcessModal();
 }
@@ -1786,6 +1680,9 @@ function closeNpiPsProcessModal() {
   var m = document.getElementById('npiPsProcessModal');
   if (m) m.remove();
   document.removeEventListener('keydown', npiPsProcessModalEsc);
+  var returnFocus = window._npiPsModalReturnFocus;
+  window._npiPsModalReturnFocus = null;
+  if (returnFocus && typeof returnFocus.focus === 'function') returnFocus.focus();
 }
 
 // ── Readiness Check 상세 모달 (2026-07-16): 칩 클릭 시 판정 근거 + 원본 12필드 표시 ──
@@ -1794,6 +1691,7 @@ function npiPsOpenReadinessModal(locale, model) {
     return it.row.locale === locale && it.row.model === model;
   })[0];
   if (!hit) return;
+  window._npiPsReadinessReturnFocus = document.activeElement;
   var row = hit.row;
   var rf = row.readinessFields || {};
   var verdict = row.readinessCheck || '-';
@@ -1815,15 +1713,16 @@ function npiPsOpenReadinessModal(locale, model) {
       (JUDGE[f] ? 'font-weight:700;color:#334155' : '') + '">' + escapeHtmlSheet(f) + (JUDGE[f] ? ' *' : '') + '</td>' +
       '<td style="padding:7px 12px;font-size:var(--fs-caption);color:#334155">' + vHtml + '</td></tr>';
   }).join('');
-  var html = '<div class="modal-overlay" id="npiPsReadinessModal" onclick="if(event.target===this)closeNpiPsReadinessModal()">' +
+  var html = '<div class="modal-overlay" id="npiPsReadinessModal"' + npiPsDialogA11y('npiPsReadinessTitle') + ' onclick="if(event.target===this)closeNpiPsReadinessModal()">' +
     '<div class="modal-card" style="max-width:620px" onclick="event.stopPropagation()">' +
       '<div class="country-modal-header"><div class="country-modal-info">' +
-        '<div class="country-modal-title">Readiness Check — ' + escapeHtmlSheet(model) + '</div>' +
+        '<div class="country-modal-title" id="npiPsReadinessTitle">Readiness Check — ' + escapeHtmlSheet(model) + '</div>' +
         '<div class="country-modal-meta"><span style="font-size:11px;color:#9BA3BF">' + escapeHtmlSheet(npiPsCountryName(locale)) + ' · ' + escapeHtmlSheet(locale) + '</span></div>' +
-      '</div><button class="modal-close-btn" onclick="closeNpiPsReadinessModal()">✕</button></div>' +
+      '</div><button type="button" class="modal-close-btn" aria-label="Readiness 상세 닫기" onclick="closeNpiPsReadinessModal()">✕</button></div>' +
       '<div style="padding:16px 20px 20px">' +
         '<div style="margin-bottom:12px;display:flex;align-items:center;gap:10px">' +
           '<span class="sheet-status-pill" style="background:' + vMeta.bg + ';color:' + vMeta.tc + '"><span style="background:' + vMeta.dot + '"></span>' + escapeHtmlSheet(verdict) + '</span>' +
+          // 어느 기준으로 판정됐는지(사이트 스택)를 배지로 분리 노출 — Spec Assignment 인정 범위가 스택별로 다르다
           (stackKey ? '<span class="sheet-status-pill" style="background:#EFF6FF;color:#1E40AF" title="Spec Assignment 인정 범위가 스택별로 다릅니다">' + escapeHtmlSheet(stackKey === 'gp1' ? 'GP1 5.0' : 'v5') + '</span>' : '') +
           (row.readinessTip ? '<span style="font-size:var(--fs-caption);color:#94A3B8">' + escapeHtmlSheet(String(row.readinessTip).replace(/\s*·\s*(gp1|v5)\s*$/, '')) + '</span>' : '') +
         '</div>' +
@@ -1838,10 +1737,7 @@ function npiPsOpenReadinessModal(locale, model) {
   var wrap = document.createElement('div');
   wrap.innerHTML = html;
   document.body.appendChild(wrap.firstChild);
-  setTimeout(function() {
-    var m = document.getElementById('npiPsReadinessModal');
-    if (m) m.classList.add('modal-show');
-  }, 10);
+  npiPsRevealModal('npiPsReadinessModal');
   document.addEventListener('keydown', npiPsReadinessModalEsc);
 }
 
@@ -1853,6 +1749,9 @@ function closeNpiPsReadinessModal() {
   var m = document.getElementById('npiPsReadinessModal');
   if (m) m.remove();
   document.removeEventListener('keydown', npiPsReadinessModalEsc);
+  var returnFocus = window._npiPsReadinessReturnFocus;
+  window._npiPsReadinessReturnFocus = null;
+  if (returnFocus && typeof returnFocus.focus === 'function') returnFocus.focus();
 }
 
 // groups(JSON) → 필터/집계용 평탄화 배열 [{status,colorClass,stage,row}]
@@ -1881,10 +1780,9 @@ function npiPsBuildSummaryChipsHtml() {
     if (!cnt) return;
     var meta = npiPsStageMeta(s.key);
     var isActive = _npiPsFilter.stage === s.key;
-    html += '<span class="npi-stage-chip npi-ps-stage-chip' + (isActive ? ' npi-ps-stage-chip-active' : '') +
-      '" data-stage="' + escapeAttrSheet(s.key) + '" style="background:' + meta.bg + ';color:' + meta.tc + ';font-weight:700" onclick="npiPsToggleStageChip(\'' + escapeAttrSheet(s.key) + '\')">' +
-      '<span class="npi-stage-dot" style="background:' + meta.color + '"></span>' +
-      escapeHtmlSheet(s.label) + ' ' + cnt + '건</span>';
+    html += npiPsStageChipMarkup(
+      s.key, s.label, cnt.toLocaleString() + '건', meta.color, isActive, meta.bg, meta.tc
+    );
   });
   return html;
 }
@@ -1910,12 +1808,14 @@ function renderNpiProductStatusContent() {
   wrap.innerHTML = '';
 
   if (!_npiProductStatusData) {
-    wrap.innerHTML = '<div style="padding:40px;text-align:center;color:#64748B">IT 제품 현황 데이터를 불러오는 중...</div>';
+    wrap.innerHTML = '<div class="npi-ps-empty" role="status">IT 제품 현황 데이터를 불러오는 중...</div>';
     fetch('data/npi-product-status.json?v=' + (window.__BUILD_TS || Date.now()))
       .then(function(r) { return r.json(); })
       .then(function(data) { _npiProductStatusData = data; renderNpiProductStatusContent(); })
       .catch(function(e) {
-        wrap.innerHTML = '<div style="padding:40px;text-align:center;color:#EF4444">IT 제품 현황 데이터 로드 실패: ' + escapeHtmlSheet(String(e)) + '</div>';
+        wrap.innerHTML = '<div class="npi-ps-empty" role="alert"><p>IT 제품 현황 데이터 로드 실패: ' +
+          escapeHtmlSheet(String(e)) +
+          '</p><button type="button" class="url-lib-page-btn" onclick="renderNpiProductStatusContent()">다시 시도</button></div>';
       });
     return;
   }
@@ -1941,8 +1841,8 @@ function renderNpiProductStatusContent() {
   html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center">';
   html += '<span id="npiPsSummaryChips" style="display:contents">' + npiPsBuildSummaryChipsHtml() + '</span>';
   // 진행 프로세스는 버튼 클릭 시 모달로 노출(2026-07-14 사용자 지시)
-  html += '<button onclick="npiPsOpenProcessModal()" style="margin-left:4px;cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:999px;padding:4px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">진행 프로세스 보기</button>';
-  html += '<button onclick="npiPsOpenReadinessGuideModal()" style="margin-left:4px;cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:999px;padding:4px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">Readiness 기준 보기</button>';
+  html += '<button type="button" onclick="npiPsOpenProcessModal()" style="margin-left:4px;cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:999px;padding:4px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">진행 프로세스 보기</button>';
+  html += '<button type="button" onclick="npiPsOpenReadinessGuideModal()" style="margin-left:4px;cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:999px;padding:4px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">Readiness 기준 보기</button>';
   html += '</div>';
 
   // 필터바 컨테이너 — 탭 진입 시 1회만 npiPsRenderFilterBar()로 채워지고, 이후 필터 변경 시
@@ -1980,13 +1880,13 @@ function npiPsRenderFilterBar() {
 
   var html = '<div class="url-lib-filter-bar">';
 
-  html += '<select class="url-lib-select" id="npiPsCategorySelect" onchange="npiPsSetFilter(\'category\', this.value)">';
+  html += '<select class="url-lib-select" id="npiPsCategorySelect"' + npiPsSelectA11y('Type filter') + ' onchange="npiPsSetFilter(\'category\', this.value)">';
   html += '<option value="">All Types</option>';
   html += '<option value="NPI"' + (_npiPsFilter.category === 'NPI' ? ' selected' : '') + '>NPI</option>';
   html += '<option value="MOD"' + (_npiPsFilter.category === 'MOD' ? ' selected' : '') + '>Modification</option>';
   html += '</select>';
 
-  html += '<select class="url-lib-select" id="npiPsStageSelect" onchange="npiPsSetFilter(\'stage\', this.value)">';
+  html += '<select class="url-lib-select" id="npiPsStageSelect"' + npiPsSelectA11y('Stage filter') + ' onchange="npiPsSetFilter(\'stage\', this.value)">';
   html += '<option value="">All Stages</option>';
   stages.forEach(function(s) {
     var cnt = stageCounts[s.key] || 0;
@@ -1995,7 +1895,7 @@ function npiPsRenderFilterBar() {
   });
   html += '</select>';
 
-  html += '<select class="url-lib-select" id="npiPsRegionSelect" onchange="npiPsSetFilter(\'region\', this.value)">';
+  html += '<select class="url-lib-select" id="npiPsRegionSelect"' + npiPsSelectA11y('Region filter') + ' onchange="npiPsSetFilter(\'region\', this.value)">';
   html += '<option value="">All Regions</option>';
   regions.forEach(function(region) {
     html += '<option value="' + escapeAttrSheet(region) + '"' + (_npiPsFilter.region === region ? ' selected' : '') + '>' + escapeHtmlSheet(region) + '</option>';
@@ -2003,7 +1903,7 @@ function npiPsRenderFilterBar() {
   html += '</select>';
 
   // Country 필터 — 값은 원본 locale 유지(필터 로직 무변경), 표시만 국가명 (2026-07-22 사용자 지시)
-  html += '<select class="url-lib-select" id="npiPsLocaleSelect" onchange="npiPsSetFilter(\'locale\', this.value)">';
+  html += '<select class="url-lib-select" id="npiPsLocaleSelect"' + npiPsSelectA11y('Country filter') + ' onchange="npiPsSetFilter(\'locale\', this.value)">';
   html += '<option value="">All Countries</option>';
   locales.slice().sort(function(a, b) {
     return npiPsCountryName(a).localeCompare(npiPsCountryName(b));
@@ -2013,7 +1913,7 @@ function npiPsRenderFilterBar() {
   html += '</select>';
 
   html += '<div class="dash-search">' + DASH_SEARCH_ICON_SVG;
-  html += '<input id="npiPsSearchInput" class="dash-search-input" type="text" placeholder="Search model or suffix..." value="' + escapeAttrSheet(_npiPsFilter.search) + '" oninput="npiPsOnSearchInput(this)">';
+  html += '<input id="npiPsSearchInput" class="dash-search-input" type="text" aria-label="Search IT product status" placeholder="Search model or suffix..." value="' + escapeAttrSheet(_npiPsFilter.search) + '" oninput="npiPsOnSearchInput(this)">';
   html += '<button type="button" class="dash-search-clear' + (_npiPsFilter.search ? ' dash-search-clear-visible' : '') + '" id="npiPsSearchClear" onclick="npiPsClearSearch()" aria-label="Clear search">&times;</button>';
   html += '</div>';
 
@@ -2265,8 +2165,15 @@ function npiPsRenderResults() {
   var html = '<div style="padding:16px 24px">';
   html += '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px">';
   html += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500">' + flatRows.length.toLocaleString() + '건 / 전체 ' + totalRows.toLocaleString() + '건</div>';
-  html += '<button onclick="npiPsDownloadExcel()" style="cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:8px;padding:5px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">⬇ Excel Download</button>';
+  html += '<button type="button" onclick="npiPsDownloadExcel()" style="cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:8px;padding:5px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">⬇ Excel Download</button>';
   html += '</div>';
+  if (!flatRows.length) {
+    html += npiPsEmptyStateMarkup('조건에 맞는 결과가 없습니다.') + '</div>';
+    resultsEl.innerHTML = html;
+    npiPsUpdateSummary(0);
+    syncNavBadges();
+    return;
+  }
   html += '<div class="npi-detail-table-wrap" style="overflow-x:auto">';
   html += '<table class="npi-detail-table" style="min-width:1300px">';
   // PTT Task ID는 테이블에서 숨김 — 엑셀 다운로드(NPI_PS_COLUMNS 전체)에만 포함 (2026-07-22 사용자 지시)
@@ -2311,9 +2218,11 @@ function npiPsRenderResults() {
       'Not Ready': { bg: '#F1F5F9', tc: '#64748B', dot: '#94A3B8', label: 'Not Ready' }
     }[row.readinessCheck];
     var rcCell = rcMeta
-      ? '<span class="sheet-status-pill" style="background:' + rcMeta.bg + ';color:' + rcMeta.tc + ';cursor:pointer" title="클릭: Readiness 상세" ' +
-        'onclick="npiPsOpenReadinessModal(\'' + escapeAttrSheet(row.locale || '') + '\',\'' + escapeAttrSheet(row.model || '') + '\')"' +
-        '><span style="background:' + rcMeta.dot + '"></span>' + escapeHtmlSheet(rcMeta.label) + '</span>'
+      ? '<button type="button" class="sheet-status-pill npi-readiness-btn" style="background:' + rcMeta.bg + ';color:' + rcMeta.tc + '" ' +
+        'data-locale="' + escapeAttrSheet(row.locale || '') + '" data-model="' + escapeAttrSheet(row.model || '') + '" ' +
+        'aria-label="' + escapeAttrSheet(rcMeta.label) + ' Readiness 상세 보기" ' +
+        'onclick="npiPsOpenReadinessModal(this.dataset.locale,this.dataset.model)">' +
+        '<span style="background:' + rcMeta.dot + '"></span>' + escapeHtmlSheet(rcMeta.label) + '</button>'
       : '<span style="color:#CBD5E1">-</span>';
     html += '<td style="text-align:center">' + rcCell + '</td>';
     // Detail: KR/EN 통합 단일 컬럼 — KR(기본) + EN(작은 회색 서브줄)
@@ -2454,7 +2363,7 @@ function renderUrlLibraryContent() {
   wrap.innerHTML = '';
 
   if (!_urlLibData) {
-    wrap.innerHTML = '<div style="padding:40px;text-align:center;color:#64748B">URL Library 데이터를 불러오는 중...</div>';
+    wrap.innerHTML = '<div class="url-lib-empty" role="status">URL Library 데이터를 불러오는 중...</div>';
     fetch('data/url-library.json?v=' + (window.__BUILD_TS || Date.now()))
       .then(function(r) { return r.json(); })
       .then(function(data) {
@@ -2463,7 +2372,9 @@ function renderUrlLibraryContent() {
         renderUrlLibraryContent();
       })
       .catch(function(e) {
-        wrap.innerHTML = '<div style="padding:40px;text-align:center;color:#EF4444">URL Library 로드 실패: ' + escapeHtmlSheet(String(e)) + '</div>';
+        wrap.innerHTML = '<div class="url-lib-empty" role="alert"><p>URL Library 로드 실패: ' +
+          escapeHtmlSheet(String(e)) +
+          '</p><button type="button" class="url-lib-page-btn" onclick="renderUrlLibraryContent()">다시 시도</button></div>';
       });
     return;
   }
@@ -2494,8 +2405,8 @@ function renderUrlLibraryContent() {
 
   // 뷰 전환 탭
   headerHtml += '<div class="url-lib-view-tabs">';
-  headerHtml += '<button class="url-lib-view-tab' + (_urlLibViewMode === 'model' ? ' url-lib-view-tab-active' : '') + '" onclick="urlLibSetViewMode(\'model\')">모델별</button>';
-  headerHtml += '<button class="url-lib-view-tab' + (_urlLibViewMode === 'country' ? ' url-lib-view-tab-active' : '') + '" onclick="urlLibSetViewMode(\'country\')">국가별</button>';
+  headerHtml += '<button type="button" class="url-lib-view-tab' + (_urlLibViewMode === 'model' ? ' url-lib-view-tab-active' : '') + '" aria-pressed="' + (_urlLibViewMode === 'model' ? 'true' : 'false') + '" onclick="urlLibSetViewMode(\'model\')">모델별</button>';
+  headerHtml += '<button type="button" class="url-lib-view-tab' + (_urlLibViewMode === 'country' ? ' url-lib-view-tab-active' : '') + '" aria-pressed="' + (_urlLibViewMode === 'country' ? 'true' : 'false') + '" onclick="urlLibSetViewMode(\'country\')">국가별</button>';
   headerHtml += '</div>';
 
   // 필터 바 (검색창은 뷰 모드에 따라 모델명/국가명 검색으로 전환, 카테고리·상태는 공통)
@@ -2504,29 +2415,29 @@ function renderUrlLibraryContent() {
   headerHtml += '<div class="url-lib-filter-bar">';
   if (_urlLibViewMode === 'country') {
     headerHtml += '<div class="dash-search">' + DASH_SEARCH_ICON_SVG;
-    headerHtml += '<input id="urlLibCountryQueryInput" class="dash-search-input" type="text" placeholder="국가명 또는 로케일 검색 (예: Spain, ES)..." value="' + escapeAttrSheet(_urlLibCountryQuery) + '" oninput="urlLibOnCountryQueryInput(this)">';
+    headerHtml += '<input id="urlLibCountryQueryInput" class="dash-search-input" type="text" aria-label="국가명 또는 로케일 검색" placeholder="국가명 또는 로케일 검색 (예: Spain, ES)..." value="' + escapeAttrSheet(_urlLibCountryQuery) + '" oninput="urlLibOnCountryQueryInput(this)">';
     headerHtml += '<button type="button" class="dash-search-clear' + (_urlLibCountryQuery ? ' dash-search-clear-visible' : '') + '" id="urlLibCountryClear" onclick="urlLibClearCountryQuery()" aria-label="Clear search">&times;</button>';
     headerHtml += '</div>';
   } else {
     headerHtml += '<div class="dash-search">' + DASH_SEARCH_ICON_SVG;
-    headerHtml += '<input id="urlLibSearchInput" class="dash-search-input" type="text" placeholder="모델명 또는 코드 검색..." value="' + escapeAttrSheet(_urlLibFilter.search) + '" oninput="urlLibOnSearchInput(this)">';
+    headerHtml += '<input id="urlLibSearchInput" class="dash-search-input" type="text" aria-label="Search model or code" placeholder="Search model or code..." value="' + escapeAttrSheet(_urlLibFilter.search) + '" oninput="urlLibOnSearchInput(this)">';
     headerHtml += '<button type="button" class="dash-search-clear' + (_urlLibFilter.search ? ' dash-search-clear-visible' : '') + '" id="urlLibSearchClear" onclick="urlLibClearSearch()" aria-label="Clear search">&times;</button>';
     headerHtml += '</div>';
   }
-  headerHtml += '<select class="url-lib-select" id="urlLibCategorySelect" onchange="urlLibSetFilter(\'category\',this.value)">';
+  headerHtml += '<select class="url-lib-select" id="urlLibCategorySelect"' + urlLibSelectA11y('Category filter') + ' onchange="urlLibSetFilter(\'category\',this.value)">';
   headerHtml += '<option value="">All Categories</option>';
   categories.forEach(function(cat) {
     headerHtml += '<option value="' + escapeAttrSheet(cat) + '"' + (_urlLibFilter.category === cat ? ' selected' : '') + '>' + escapeHtmlSheet(cat) + '</option>';
   });
   headerHtml += '</select>';
-  headerHtml += '<select class="url-lib-select" id="urlLibStatusSelect" onchange="urlLibSetFilter(\'status\',this.value)">';
+  headerHtml += '<select class="url-lib-select" id="urlLibStatusSelect"' + urlLibSelectA11y('Status filter') + ' onchange="urlLibSetFilter(\'status\',this.value)">';
   headerHtml += '<option value="">All Status</option>';
   statusOptions.forEach(function(s) {
     headerHtml += '<option value="' + s + '"' + (_urlLibFilter.status === s ? ' selected' : '') + '>' + s + '</option>';
   });
   headerHtml += '</select>';
   if (_urlLibViewMode !== 'country') {
-    headerHtml += '<select class="url-lib-select" id="urlLibLocaleSelect" onchange="urlLibSetFilter(\'locale\',this.value)">';
+    headerHtml += '<select class="url-lib-select" id="urlLibLocaleSelect"' + urlLibSelectA11y('Country filter') + ' onchange="urlLibSetFilter(\'locale\',this.value)">';
     headerHtml += '<option value="">All Countries</option>';
     localeTokens.forEach(function(token) {
       var lm = localeMeta[token] || {};
@@ -2578,13 +2489,13 @@ function renderUrlLibModelView(allModels) {
   listHtml += '</div>';
 
   if (!filtered.length) {
-    listHtml += '<div class="url-lib-empty">조건에 맞는 결과가 없습니다</div></div>';
+    listHtml += urlLibEmptyStateMarkup('조건에 맞는 모델이 없습니다.') + '</div>';
     wrap.insertAdjacentHTML('beforeend', listHtml);
     return;
   }
 
   listHtml += '<div class="url-lib-model-list">';
-  pageModels.forEach(function(model) {
+  pageModels.forEach(function(model, modelIndex) {
     var isExpanded = _urlLibExpandedModel === model.modelName;
     // 목록 필터(status·locale)와 같은 기준으로 걸러진 로케일만 통계·상세에 쓴다.
     // 예전엔 상세 테이블이 model.locales 전체를 그렸기 때문에 ACTIVE로 걸러놓고 펼치면
@@ -2592,21 +2503,22 @@ function renderUrlLibModelView(allModels) {
     var shownLocales = (typeof urlLibMatchedLocales === 'function')
       ? urlLibMatchedLocales(model, _urlLibFilter) : model.locales;
     var activeCount = shownLocales.filter(function(l) { return l.status === 'ACTIVE'; }).length;
-    listHtml += '<div class="url-lib-model-row' + (isExpanded ? ' url-lib-model-row-active' : '') + '" data-mk="' + escapeAttrSheet(model.modelName) + '" onclick="toggleUrlLibModel(this.getAttribute(\'data-mk\'))">';
-    listHtml += '<div class="url-lib-model-main">';
-    listHtml += '<div>';
+    var detailId = 'urlLibModelDetail-' + page + '-' + modelIndex;
+    listHtml += '<div class="url-lib-model-row' + (isExpanded ? ' url-lib-model-row-active' : '') + '">';
+    listHtml += '<button type="button" class="url-lib-model-main" data-mk="' + escapeAttrSheet(model.modelName) + '" aria-expanded="' + (isExpanded ? 'true' : 'false') + '" aria-controls="' + detailId + '" onclick="toggleUrlLibModel(this.getAttribute(\'data-mk\'))">';
+    listHtml += '<span class="url-lib-model-identity">';
     listHtml += '<span class="url-lib-model-name">' + escapeHtmlSheet(model.modelName) + '</span>';
     listHtml += '<span class="url-lib-model-cat">' + escapeHtmlSheet(model.category) + '</span>';
-    listHtml += '</div>';
-    listHtml += '<div style="display:flex;align-items:center;gap:10px">';
+    listHtml += '</span>';
+    listHtml += '<span class="url-lib-model-stats">';
     listHtml += '<span style="font-size:var(--fs-caption);color:#10B981;font-weight:700">ACTIVE ' + activeCount + '</span>';
     // 같은 국가의 언어별 사이트는 1개국으로 — "N개국 · M개 사이트" (2026-07-16 사용자 지시)
     listHtml += '<span style="font-size:var(--fs-caption);color:#64748B">' + urlLibCountryCount({ locales: shownLocales }) + '개국 · ' + shownLocales.length + '개 사이트</span>';
     listHtml += '<span style="color:#94A3B8">' + (isExpanded ? '▲' : '▼') + '</span>';
-    listHtml += '</div></div>';
+    listHtml += '</span></button>';
 
     if (isExpanded) {
-      listHtml += '<div class="url-lib-detail-table" onclick="event.stopPropagation()">';
+      listHtml += '<div class="url-lib-detail-table" id="' + detailId + '">';
       listHtml += '<table class="url-lib-table"><thead><tr>';
       listHtml += '<th>Locale</th><th>Country</th><th>Status</th><th>Live URL</th>';
       listHtml += '</tr></thead><tbody>';
@@ -2661,7 +2573,7 @@ function renderUrlLibCountryView() {
 
     var html = '<div style="padding:12px 24px">';
     if (!matched.length) {
-      html += '<div class="url-lib-empty">조건에 맞는 결과가 없습니다</div></div>';
+      html += urlLibEmptyStateMarkup('조건에 맞는 국가가 없습니다.') + '</div>';
       wrap.insertAdjacentHTML('beforeend', html);
       return;
     }
@@ -2669,12 +2581,12 @@ function renderUrlLibCountryView() {
     html += '<div class="url-lib-country-grid">';
     matched.forEach(function(token) {
       var count = countByToken[token];
-      html += '<div class="url-lib-country-card" data-token="' + escapeAttrSheet(token) + '" onclick="urlLibSelectLocale(this.getAttribute(\'data-token\'))">';
-      var cm = _urlLibCountryMeta[token] || {};
-      html += '<div class="url-lib-country-name">' + escapeHtmlSheet(urlLibLocaleDisplayName(token, cm.lang, cm.withLang)) + '</div>';
-      html += '<div class="url-lib-country-token">' + escapeHtmlSheet(token) + '</div>';
-      html += '<div class="url-lib-country-count">' + count.toLocaleString() + '개 제품</div>';
-      html += '</div>';
+      html += '<button type="button" class="url-lib-country-card" data-token="' + escapeAttrSheet(token) + '" onclick="urlLibSelectLocale(this.getAttribute(\'data-token\'))">';
+      var cm = (typeof _urlLibCountryMeta !== 'undefined' && _urlLibCountryMeta[token]) || {};
+      html += '<span class="url-lib-country-name">' + escapeHtmlSheet(urlLibLocaleDisplayName(token, cm.lang, cm.withLang)) + '</span>';
+      html += '<span class="url-lib-country-token">' + escapeHtmlSheet(token) + '</span>';
+      html += '<span class="url-lib-country-count">' + count.toLocaleString() + '개 제품</span>';
+      html += '</button>';
     });
     html += '</div></div>';
     wrap.insertAdjacentHTML('beforeend', html);
@@ -2687,15 +2599,15 @@ function renderUrlLibCountryView() {
   var catSummary = Object.keys(catCounts).sort().map(function(c) { return c + ' ' + catCounts[c]; }).join(' · ');
 
   var html2 = '<div style="padding:12px 24px">';
-  html2 += '<div class="url-lib-country-back" data-token="' + escapeAttrSheet(_urlLibSelectedLocale) + '" onclick="urlLibSelectLocale(this.getAttribute(\'data-token\'))">← 국가 목록으로</div>';
+  html2 += '<button type="button" class="url-lib-country-back" data-token="' + escapeAttrSheet(_urlLibSelectedLocale) + '" onclick="urlLibSelectLocale(this.getAttribute(\'data-token\'))">← 국가 목록으로</button>';
   html2 += '<div class="ov-head-total-num ov-head-total-sites" style="margin:8px 0">';
-  var sm = _urlLibCountryMeta[_urlLibSelectedLocale] || {};
+  var sm = (typeof _urlLibCountryMeta !== 'undefined' && _urlLibCountryMeta[_urlLibSelectedLocale]) || {};
   html2 += escapeHtmlSheet(urlLibLocaleDisplayName(_urlLibSelectedLocale, sm.lang, sm.withLang)) + ' (' + escapeHtmlSheet(_urlLibSelectedLocale) + ') · <strong>' + entries.length.toLocaleString() + '</strong>개 IT 제품 라이브';
   if (catSummary) html2 += '<span style="color:#94A3B8;font-size:var(--fs-caption);font-weight:500;margin-left:8px">(' + escapeHtmlSheet(catSummary) + ')</span>';
   html2 += '</div>';
 
   if (!entries.length) {
-    html2 += '<div class="url-lib-empty">조건에 맞는 결과가 없습니다</div></div>';
+    html2 += urlLibEmptyStateMarkup('조건에 맞는 제품이 없습니다.') + '</div>';
     wrap.insertAdjacentHTML('beforeend', html2);
     return;
   }
@@ -2737,6 +2649,8 @@ function urlLibResetFilter() {
   if (statusSel) statusSel.value = '';
   var localeSel = document.getElementById('urlLibLocaleSelect');
   if (localeSel) localeSel.value = '';
+  var activeChk = document.getElementById('urlLibActiveOnly');
+  if (activeChk) activeChk.checked = true;
   urlLibRenderResults();
 }
 
@@ -2748,7 +2662,6 @@ function toggleUrlLibModel(modelName) {
 // ── RENDER CONTENT ───────────────────────────────────────────
 function renderContent() {
   // ── 커스텀 섹션 분기 ──
-  if (currentKey === 'npi') { renderNpiContent(); return; }
   if (currentKey === 'npi_product_status') { renderNpiProductStatusContent(); return; }
   if (currentKey === 'url_library') { renderUrlLibraryContent(); return; }
 
@@ -3231,16 +3144,16 @@ function buildNewBanner(){
   curList.forEach(function(it){ if (ids[itemIdOf(it,key)]) disp.push(itemNameOf(it,key)); });
   var listTxt = disp.slice(0,20).join(', ') + (disp.length>20?(' 외 '+(disp.length-20)):'');
   return '<div style="background:#EEF6FF;border:1px solid #3B82F633;border-left:3px solid #3B82F6;border-radius:8px;padding:11px 15px;margin-bottom:14px;font-size:11.5px;color:#1E40AF;line-height:1.6">' +
-    '<span style="display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 7px;border-radius:4px;background:#3B82F6;color:#fff;font-size:9px;font-weight:800;margin-right:6px;vertical-align:middle">금주 업데이트</span>' +
+    '<span style="display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 5px;border-radius:4px;background:#3B82F6;color:#fff;font-size:9px;font-weight:800;margin-right:6px;vertical-align:middle">NEW</span>' +
     '<b>' + wk + ' 신규 업데이트</b> — 이번 주차에 새로 완료된 항목 <b>' + disp.length + '건</b>입니다.<br>' +
     '<span style="display:inline-block;margin-top:5px;color:#2952A3">신규 항목: <b>' + listTxt + '</b></span>' +
   '</div>';
 }
-// 행 금주 업데이트 배지 (id가 신규면 표시)
+// 행 NEW 배지 (id가 신규면 표시)
 function newRowBadge(it, key, idsCache){
   var ids = idsCache || newItemIds(key);
   var id = itemIdOf(it, key);
-  if (id && ids[id]) return '<span style="display:inline-block;margin-left:5px;padding:0 6px;height:15px;line-height:15px;border-radius:3px;background:#3B82F6;color:#fff;font-size:8px;font-weight:800;vertical-align:middle;white-space:nowrap">금주 업데이트</span>';
+  if (id && ids[id]) return '<span style="display:inline-block;margin-left:5px;padding:0 4px;height:14px;line-height:14px;border-radius:3px;background:#3B82F6;color:#fff;font-size:8px;font-weight:800;vertical-align:middle">N</span>';
   return '';
 }
 
@@ -3823,6 +3736,42 @@ function syncNavBadges() {
     else { bg = 'rgba(148,163,184,.2)'; tc = '#94A3B8'; }
     badge.style.background = bg;
     badge.style.color = tc;
+  });
+  syncNavWeeklyBadges();
+}
+
+// gr-changes.json 기준 금주 변경이 있는 GR 태스크에 사이드바 N 배지를 붙인다.
+// (행 NEW/UPDATED 배지·Overall Status "금주 변경 N건"과 같은 changes 출처)
+function syncNavWeeklyBadges() {
+  var changes = _grChanges && _grChanges.changes;
+  if (!changes || typeof grTaskKeyOf !== 'function' || typeof grCountTaskChanges !== 'function') return;
+  document.querySelectorAll('.nav-item[data-key]').forEach(function(el) {
+    var key = el.getAttribute('data-key');
+    var d = DATA[key];
+    if (!d || d._custom) {
+      var gone = el.querySelector('.ni-weekly-badge');
+      if (gone) gone.remove();
+      return;
+    }
+    var title = d.displayTitle || d.sheetTabName || d.sheetTitle || d.title || key;
+    var taskKey = grTaskKeyOf(title);
+    var c = taskKey ? grCountTaskChanges(changes, taskKey) : { total: 0, added: 0 };
+    var badge = el.querySelector('.ni-weekly-badge');
+    if (!c.total) {
+      if (badge) badge.remove();
+      return;
+    }
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.className = 'ni-weekly-badge';
+      var pctBadge = el.querySelector('.ni-badge');
+      if (pctBadge) el.insertBefore(badge, pctBadge);
+      else el.appendChild(badge);
+    }
+    badge.textContent = 'N';
+    var tip = '금주 변경 ' + c.total + '건' + (c.added ? ' (신규 ' + c.added + ')' : '');
+    badge.title = tip;
+    badge.setAttribute('aria-label', tip);
   });
 }
 
@@ -6011,7 +5960,6 @@ document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeSta
 /* ===== moved from inline <script> block 2 ===== */
 
 
-
 // ── GR(Global Request) 탭 전용: 주간 변경 배지 + 국가별 URL 모달 ──
 // data/gr-changes.json · data/gr-urls.json은 GR 탭(displayTitle이 "W<n> - ..." 형식)
 // 최초 렌더 시에만 lazy fetch한다. js-lib/gr-meta.js(grNormalizeCountryCode/grTaskKeyOf/
@@ -6038,7 +5986,10 @@ function ensureGrDataLoaded() {
   fetch('data/gr-changes.json' + bust).then(function(r) { return r.ok ? r.json() : null; }).then(function(data) {
     _grChanges = data || null;
     window._grChanges = _grChanges;
-    if (_grChanges) maybeRerenderGrTab();
+    if (_grChanges) {
+      maybeRerenderGrTab();
+      if (typeof syncNavWeeklyBadges === 'function') syncNavWeeklyBadges();
+    }
   }).catch(function() { _grChanges = null; window._grChanges = null; });
   fetch('data/gr-urls.json' + bust).then(function(r) { return r.ok ? r.json() : null; }).then(function(data) {
     _grUrls = data || null;
@@ -6063,7 +6014,10 @@ function ensureGrDataLoaded() {
     window._grTitleToTask = titleToTask;
     // 담당자(태스크키 → 이름). 검색 대상이자 GR 헤더 표시용 — 없으면 조용히 무시한다.
     window._grOwners = (data && data.owners) || null;
-    if (titleToTask) maybeRerenderGrTab();
+    if (titleToTask) {
+      maybeRerenderGrTab();
+      if (typeof syncNavWeeklyBadges === 'function') syncNavWeeklyBadges();
+    }
   }).catch(function() { window._grTitles = null; window._grTitleToTask = null; window._grOwners = null; });
   // 사이드바 In Progress/Done 그룹의 수동 오버라이드. 사이드바는 이 파일이 오기 전에 이미
   // 자동 판정(완료율)으로 렌더돼 있으므로, 도착 후 nav만 다시 그려 보정한다(404면 조용히 무시).
@@ -6150,9 +6104,18 @@ function buildGrWeeklyChangeSummaryHtml(d) {
 var GR_URL_MODAL_MAX_OPEN = 15;
 
 function grOpenUrlModal(taskKey, code, countryLabel, fallbackUrls) {
-  var urls = (window._grUrls && typeof grLookup === 'function') ? grLookup(window._grUrls, taskKey, code) : null;
-  if (!urls || !urls.length) urls = (fallbackUrls || []).filter(function(u) { return /^https?:\/\//i.test(String(u || '')); });
-  if (!urls || !urls.length) return;
+  var mappedUrls = (window._grUrls && typeof grLookup === 'function') ? grLookup(window._grUrls, taskKey, code) : null;
+  var urls;
+  if (typeof grMergeUrls === 'function') {
+    urls = grMergeUrls(mappedUrls, fallbackUrls);
+  } else if (mappedUrls && mappedUrls.length) {
+    urls = mappedUrls;
+  } else {
+    urls = (fallbackUrls || []).filter(function(u) {
+      return /^https?:\/\//i.test(String(u || ''));
+    });
+  }
+  if (!urls.length) return;
 
   var rowsHtml = urls.map(function(u) {
     var short = (typeof urlLibDisplayUrl === 'function') ? urlLibDisplayUrl(u) : u;
@@ -6375,7 +6338,7 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
         }
         var html = renderSheetCell(value, h, row, d);
         if (isNewRow && cellClasses.indexOf('sheet-country-col') !== -1) {
-          html += ' <span class="sheet-new-badge">금주 업데이트</span>';
+          html += ' <span class="sheet-new-badge">NEW</span>';
         }
         if (isCountryCell) {
           html += grChangeBadgeHtml(grDisplayTitle, row[h]);
@@ -6447,15 +6410,17 @@ function groupRowsByRegion(rows, headers) {
   return groups;
 }
 
+// 국가 통합용 상태 진행도(작을수록 덜 완료). 취소는 별도 처리.
 function grDisplayStatusRank(v) {
   var order = { '사전검토': 0, '작업중': 1, '법인리뷰': 2, '완료': 3 };
   var k = String(v || '').trim();
   return order.hasOwnProperty(k) ? order[k] : 99;
 }
 
-// 같은 국가(countryHeader) 행들을 모델 무관 첫 행으로 병합(렌더 전용).
-// 병합 행 Status는 취소 제외 최소진행도(가장 덜 완료된 상태), 전부 취소면 취소.
-// Remark에는 병합된 행들의 모델 토큰(Remark 첫 토큰)을 중복 제거해 나열.
+// 같은 국가(countryHeader) 행들을 국가 셀 하나(rowspan) 아래 Status별 서브행으로 병합(렌더 전용).
+// 국가 내 서브행은 완료→법인리뷰→작업중→사전검토→취소 순으로 정렬해 진척이 먼저 보이게 한다.
+// 각 서브행의 Remark에는 해당 상태 모델 토큰을 중복 제거해 나열, Page#는 숫자 합계.
+// 첫 서브행에 __ctrySpan=N(국가 셀 rowspan), 나머지는 __ctrySpan=0(국가 셀 생략) 마킹.
 function collapseRowsByCountry(rows, countryHeader, remarkHeader, statusHeader, pageHeader) {
   if (!countryHeader) return rows || [];
   var dispOrder = { '완료': 0, '법인리뷰': 1, '작업중': 2, '사전검토': 3, '취소': 4 };
@@ -6848,7 +6813,7 @@ function renderSheetCell(value, header, row, sheetData) {
         var grCountryRaw = grRowCountryRaw(row);
         var grCode = (typeof grNormalizeCountryCode === 'function') ? grNormalizeCountryCode(grCountryRaw) : '';
         var grCountryLabel = displayCountryFullName(grCountryRaw);
-        var fallbackUrlsJson = JSON.stringify([linkUrl]);
+        var fallbackUrlsJson = JSON.stringify((row.__grUrls && row.__grUrls.length) ? row.__grUrls : [linkUrl]);
         var grOnclickExpr = "grOpenUrlModal('" + grJsStrEscape(grTaskKey) + "','" + grJsStrEscape(grCode) + "','" + grJsStrEscape(grCountryLabel) + "'," + fallbackUrlsJson + ');return false;';
         return '<a class="sheet-status-pill sheet-status-pill-link" href="' + escapeAttrSheet(linkUrl) + '" target="_blank" rel="noopener" onclick="' + escapeAttrSheet(grOnclickExpr) + '" style="background:' + cfg.bg + ';color:' + cfg.tc + ';text-decoration:none" title="클릭 시 URL 목록 보기"><span style="background:' + cfg.dot + '"></span>' + escapeHtmlSheet(chipLabel) + '</a>';
       }
@@ -6907,6 +6872,7 @@ function escapeHtmlSheet(value) {
 function escapeAttrSheet(value) {
   return escapeHtmlSheet(value);
 }
+
 // ── 상단바 통합 검색 (2026-08-10 사용자 요청) ──────────────────────────
 // 세 화면(GR 태스크 · IT 제품 현황 · URL Library)이 각자 검색을 갖고 있어
 // "이 모델이 어디 있나"를 보려면 탭을 옮겨 다녀야 했다. 한 곳에서 훑고
