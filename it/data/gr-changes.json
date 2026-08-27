@@ -1,324 +1,53 @@
 {
-  "baseDate": "20260825",
-  "prevDate": "20260818",
+  "baseDate": "20260827",
+  "prevDate": "20260825",
   "changes": {
-    "FAQ Request (UltraGear PLP)|AU": {
+    "UltraGear Buying Guide|BR": {
       "type": "status",
       "from": "법인리뷰",
       "to": "완료"
     },
-    "FAQ Request (UltraGear PLP)|DE": {
+    "UltraGear Buying Guide|CN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UltraGear Buying Guide|CO": {
       "type": "status",
       "from": "법인리뷰",
       "to": "완료"
     },
-    "UltraGear OLED FAQ Update|FR": {
+    "UltraGear Buying Guide|GR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "UltraGear Buying Guide|IT": {
       "type": "status",
       "from": "법인리뷰",
       "to": "완료"
     },
-    "Copilot+ Hero Banner|CN": {
-      "type": "status",
-      "from": "작업중",
-      "to": "취소"
-    },
-    "UltraGear 1000Hz FAQ|AU": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "UltraGear 1000Hz FAQ|CA_EN": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "UltraGear 1000Hz FAQ|CA_FR": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "UltraGear 1000Hz FAQ|DE": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "UltraGear 1000Hz FAQ|ES": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "UltraGear 1000Hz FAQ|FR": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "UltraGear 1000Hz FAQ|IT": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "UltraGear 1000Hz FAQ|JP": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "UltraGear 1000Hz FAQ|NL": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "UltraGear 1000Hz FAQ|SE": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "UltraGear 1000Hz FAQ|UK": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "Digital Trends Award 삭제|AE": {
+    "UltraGear Buying Guide|JP": {
       "type": "status",
       "from": "작업중",
       "to": "완료"
     },
-    "Digital Trends Award 삭제|AE_AR": {
+    "UltraGear Buying Guide|PL": {
       "type": "status",
-      "from": "작업중",
+      "from": "법인리뷰",
       "to": "완료"
     },
-    "Digital Trends Award 삭제|AR": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|AT": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|AU": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|BE": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|BE_FR": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|BG": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|BR": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|CA_EN": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|CA_FR": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|CL": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|CN": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|CO": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|CZ": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|DE": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|DK": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|ES": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|FR": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|GLOBAL": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|HK": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|HK_EN": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|ID": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|IN": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|IT": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|JP": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|KZ": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|MX": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|NL": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|NZ": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|PA": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|PE": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|PH": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|PL": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|SA": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|SA_EN": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|SE": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|SG": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|TH": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|TR": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|TW": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|UK": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|VN": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "Digital Trends Award 삭제|ZA": {
+    "UltraGear Buying Guide|PT": {
       "type": "status",
       "from": "작업중",
       "to": "완료"
     }
   },
   "taskSummary": {
-    "FAQ Request (UltraGear PLP)": {
-      "changed": 2,
-      "new": 0
-    },
-    "UltraGear OLED FAQ Update": {
-      "changed": 1,
-      "new": 0
-    },
-    "Copilot+ Hero Banner": {
-      "changed": 1,
-      "new": 0
-    },
-    "UltraGear 1000Hz FAQ": {
-      "changed": 11,
-      "new": 0
-    },
-    "Digital Trends Award 삭제": {
-      "changed": 44,
+    "UltraGear Buying Guide": {
+      "changed": 8,
       "new": 0
     }
   },
-  "generatedAt": "2026-08-25"
+  "generatedAt": "2026-08-27"
 }
