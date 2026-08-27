@@ -41,12 +41,64 @@
       "type": "status",
       "from": "작업중",
       "to": "완료"
+    },
+    "Digital Trends Award 삭제|CZ": {
+      "type": "url"
+    },
+    "Digital Trends Award 삭제|EE": {
+      "type": "new_country"
+    },
+    "Digital Trends Award 삭제|FI": {
+      "type": "new_country"
+    },
+    "Digital Trends Award 삭제|HR": {
+      "type": "new_country"
+    },
+    "Digital Trends Award 삭제|LT": {
+      "type": "new_country"
+    },
+    "Digital Trends Award 삭제|LV": {
+      "type": "new_country"
+    },
+    "Digital Trends Award 삭제|NO": {
+      "type": "new_country"
+    },
+    "Digital Trends Award 삭제|RO": {
+      "type": "new_country"
+    },
+    "Digital Trends Award 삭제|RS": {
+      "type": "new_country"
+    },
+    "Digital Trends Award 삭제|RU": {
+      "type": "new_country"
+    },
+    "Digital Trends Award 삭제|IL": {
+      "type": "new_country"
+    },
+    "Digital Trends Award 삭제|GT": {
+      "type": "new_country"
+    },
+    "Digital Trends Award 삭제|EC": {
+      "type": "new_country"
+    },
+    "Digital Trends Award 삭제|SK": {
+      "type": "new_country"
+    },
+    "Digital Trends Award 삭제|GR": {
+      "type": "new_country"
+    },
+    "Digital Trends Award 삭제|HU": {
+      "type": "new_country"
     }
   },
   "taskSummary": {
     "UltraGear Buying Guide": {
       "changed": 8,
       "new": 0
+    },
+    "Digital Trends Award 삭제": {
+      "changed": 1,
+      "new": 15
     }
   },
   "generatedAt": "2026-08-27"
