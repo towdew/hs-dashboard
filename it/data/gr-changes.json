@@ -85,7 +85,9 @@
       "type": "new_country"
     },
     "Digital Trends Award 삭제|GR": {
-      "type": "new_country"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "Digital Trends Award 삭제|HU": {
       "type": "new_country"
@@ -97,7 +99,7 @@
       "new": 0
     },
     "Digital Trends Award 삭제": {
-      "changed": 1,
+      "changed": 2,
       "new": 15
     }
   },
