@@ -1,107 +1,63 @@
 {
-  "baseDate": "20260827",
-  "prevDate": "20260825",
+  "baseDate": "20260828",
+  "prevDate": "20260827",
   "changes": {
-    "UltraGear Buying Guide|BR": {
+    "gram Secure Lock|TW": {
       "type": "status",
-      "from": "법인리뷰",
-      "to": "완료"
+      "from": "작업중",
+      "to": "법인리뷰"
     },
-    "UltraGear Buying Guide|CN": {
+    "gram Secure Lock|DE": {
       "type": "status",
       "from": "작업중",
       "to": "완료"
     },
-    "UltraGear Buying Guide|CO": {
-      "type": "status",
-      "from": "법인리뷰",
-      "to": "완료"
-    },
-    "UltraGear Buying Guide|GR": {
+    "gram Secure Lock|VN": {
       "type": "status",
       "from": "작업중",
       "to": "완료"
     },
-    "UltraGear Buying Guide|IT": {
-      "type": "status",
-      "from": "법인리뷰",
-      "to": "완료"
-    },
-    "UltraGear Buying Guide|JP": {
+    "gram Secure Lock|ES": {
       "type": "status",
       "from": "작업중",
       "to": "완료"
     },
-    "UltraGear Buying Guide|PL": {
+    "gram Secure Lock|SG": {
       "type": "status",
-      "from": "법인리뷰",
-      "to": "완료"
+      "from": "작업중",
+      "to": "법인리뷰"
     },
-    "UltraGear Buying Guide|PT": {
+    "gram Secure Lock|UK": {
       "type": "status",
       "from": "작업중",
       "to": "완료"
     },
-    "Digital Trends Award 삭제|CZ": {
-      "type": "url"
-    },
-    "Digital Trends Award 삭제|EE": {
-      "type": "new_country"
-    },
-    "Digital Trends Award 삭제|FI": {
-      "type": "new_country"
-    },
-    "Digital Trends Award 삭제|HR": {
-      "type": "new_country"
-    },
-    "Digital Trends Award 삭제|LT": {
-      "type": "new_country"
-    },
-    "Digital Trends Award 삭제|LV": {
-      "type": "new_country"
-    },
-    "Digital Trends Award 삭제|NO": {
-      "type": "new_country"
-    },
-    "Digital Trends Award 삭제|RO": {
-      "type": "new_country"
-    },
-    "Digital Trends Award 삭제|RS": {
-      "type": "new_country"
-    },
-    "Digital Trends Award 삭제|RU": {
-      "type": "new_country"
-    },
-    "Digital Trends Award 삭제|IL": {
-      "type": "new_country"
-    },
-    "Digital Trends Award 삭제|GT": {
-      "type": "new_country"
-    },
-    "Digital Trends Award 삭제|EC": {
-      "type": "new_country"
-    },
-    "Digital Trends Award 삭제|SK": {
-      "type": "new_country"
-    },
-    "Digital Trends Award 삭제|GR": {
+    "gram Secure Lock|IT": {
       "type": "status",
       "from": "작업중",
       "to": "완료"
     },
-    "Digital Trends Award 삭제|HU": {
-      "type": "new_country"
+    "gram Secure Lock|CA_EN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "gram Secure Lock|CA_FR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "gram Secure Lock|AU": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     }
   },
   "taskSummary": {
-    "UltraGear Buying Guide": {
-      "changed": 8,
+    "gram Secure Lock": {
+      "changed": 10,
       "new": 0
-    },
-    "Digital Trends Award 삭제": {
-      "changed": 2,
-      "new": 15
     }
   },
-  "generatedAt": "2026-08-27"
+  "generatedAt": "2026-08-28"
 }
