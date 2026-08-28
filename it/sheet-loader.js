@@ -344,7 +344,12 @@ async function loadDashboardFromPublishedHtml() {
   });
 
   renderSidebarNavFromSheets(keys);
-  forceCurrentSheetTitle(keys[0]);
+  forceCurrentSheetTitle(typeof pickDefaultGrNavKey === 'function' ? pickDefaultGrNavKey(keys) : keys[0]);
+}
+
+if (typeof window !== 'undefined') {
+  window.pickDefaultGrNavKey = pickDefaultGrNavKey;
+  window.buildGrNavGroups = buildGrNavGroups;
 }
 
 async function loadSheetsFromPublishedXlsx(xlsxUrl) {
@@ -1360,6 +1365,7 @@ function buildSheetDashboardData(table, sheetTitle) {
       overall: status,
       pages: Number(pickValue(row, ['Page#', 'Pg#', 'Pages', 'Page', 'pages', 'Total Page#', 'Total Pages']) || 0),
       url: pickValue(row, ['URL', 'Url', 'url', 'Page URL']) || '',
+      date: pickValue(row, ['완료일', '완료 일', 'Complete Date', 'Date', 'date', 'Publish Date']) || '',
       remark: pickValue(row, ['Remark', 'remark', '비고']) || ''
     };
   });
@@ -1676,6 +1682,63 @@ function grNavWeeklyBadgeMarkup(title) {
   return '<span class="ni-weekly-badge" title="' + escapeAttrForLoader(tip) + '" aria-label="' + escapeAttrForLoader(tip) + '">N</span>';
 }
 
+function grWeekNumFromTitle(title) {
+  var m = String(title == null ? '' : title).match(/\bW(\d{1,2})\b/i);
+  return m ? parseInt(m[1], 10) : 0;
+}
+
+function grTabPctForNav(key) {
+  if (typeof contentStats !== 'function') return null;
+  try {
+    var cs = contentStats(key);
+    var eff = Math.max((cs.total || 0) - (cs.Cancel || 0), 0);
+    return eff > 0 ? Math.round((cs.Done || 0) / eff * 100) : 0;
+  } catch (e) { return null; }
+}
+
+function buildGrNavGroups(grKeys) {
+  var stateMap = (window._grTaskState && window._grTaskState.state) || {};
+  var canGroup = (typeof contentStats === 'function' && typeof grTaskGroupOf === 'function');
+  var groups = { planned: [], in_progress: [], done: [] };
+  (grKeys || []).forEach(function(key) {
+    var d0 = window.DATA && window.DATA[key];
+    if (d0 && d0._custom) return;
+    if (!canGroup) { groups.in_progress.push(key); return; }
+    var d = window.DATA && window.DATA[key];
+    var title = (d && (d.displayTitle || d.sheetTabName || d.sheetTitle || d.title)) || key;
+    var override = stateMap[typeof grTaskKeyOf === 'function' ? grTaskKeyOf(title) : title];
+    var g = grTaskGroupOf(grTabPctForNav(key), override);
+    (groups[g] || groups.in_progress).push(key);
+  });
+  return { groups: groups, canGroup: canGroup };
+}
+
+function pickNewestGrKeyFromPool(pool, grKeys) {
+  if (!pool || !pool.length) return null;
+  var indexOf = {};
+  (grKeys || []).forEach(function(k, i) { indexOf[k] = i; });
+  var sorted = pool.slice().sort(function(a, b) {
+    var da = window.DATA && window.DATA[a];
+    var db = window.DATA && window.DATA[b];
+    var wa = grWeekNumFromTitle(da && (da.displayTitle || da.sheetTabName || da.sheetTitle || da.title));
+    var wb = grWeekNumFromTitle(db && (db.displayTitle || db.sheetTabName || db.sheetTitle || db.title));
+    if (wb !== wa) return wb - wa;
+    return (indexOf[b] || 0) - (indexOf[a] || 0);
+  });
+  return sorted[0];
+}
+
+// 첫 진입 시 In Progress 그룹에서 주차(W)가 가장 높은 태스크를 기본 선택한다.
+function pickDefaultGrNavKey(keys) {
+  var customKeys = CUSTOM_NAV_TABS.map(function(t) { return t.key; });
+  var grKeys = (keys || []).filter(function(k) { return customKeys.indexOf(k) === -1; });
+  if (!grKeys.length) return (keys && keys[0]) || null;
+  var built = buildGrNavGroups(grKeys);
+  var pool = built.groups.in_progress;
+  if (!pool.length && built.canGroup) return null;
+  return pickNewestGrKeyFromPool(pool.length ? pool : grKeys, grKeys) || grKeys[grKeys.length - 1];
+}
+
 function renderSidebarNavFromSheets(keys) {
   const section = document.getElementById('sheetNavList') || document.querySelector('.sb-section');
   if (!section) return;
@@ -1687,31 +1750,11 @@ function renderSidebarNavFromSheets(keys) {
   var html = [];
 
   // ── Global Request 섹션 — 진행/완료 2분할 (태스크가 많아져 현재 작업이 묻히는 문제) ──
-  // 완료율은 contentStats(취소 제외 분모)를 쓴다. 이 함수는 applySheetData 이후에 호출되므로
-  // DATA가 이미 채워져 있다. 로드 순서 예외 시에는 단일 목록으로 폴백한다.
-  function grTabPct(key) {
-    if (typeof contentStats !== 'function') return null;
-    try {
-      var cs = contentStats(key);
-      var eff = Math.max((cs.total || 0) - (cs.Cancel || 0), 0);
-      return eff > 0 ? Math.round((cs.Done || 0) / eff * 100) : 0;
-    } catch (e) { return null; }
-  }
-  var stateMap = (window._grTaskState && window._grTaskState.state) || {};
-  var canGroup = (typeof contentStats === 'function' && typeof grTaskGroupOf === 'function');
-  var groups = { planned: [], in_progress: [], done: [] };
-  grKeys.forEach(function(key) {
-    var d0 = window.DATA && window.DATA[key];
-    // 커스텀 탭(IT 제품 현황·URL Library)은 GR 그룹에서 제외. 라이브는 CUSTOM_NAV_TABS 구성이
-    // 달라(npi_product_status가 게이트 밖 등록) grKeys에 섞여 들어오므로 _custom으로 방어한다.
-    if (d0 && d0._custom) return;
-    if (!canGroup) { groups.in_progress.push(key); return; }
-    var d = window.DATA && window.DATA[key];
-    var title = (d && (d.displayTitle || d.sheetTabName || d.sheetTitle || d.title)) || key;
-    var override = stateMap[typeof grTaskKeyOf === 'function' ? grTaskKeyOf(title) : title];
-    var g = grTaskGroupOf(grTabPct(key), override);
-    (groups[g] || groups.in_progress).push(key);
-  });
+  var built = buildGrNavGroups(grKeys);
+  var groups = built.groups;
+  var canGroup = built.canGroup;
+  var defaultKey = pickDefaultGrNavKey(keys);
+  if (typeof window !== 'undefined') window.__DEFAULT_GR_NAV_KEY = defaultKey;
 
   var navIdx = 0;
   // collapseId를 주면 라벨 클릭으로 접히는 아코디언이 된다(기본 열림, 상태는 localStorage 유지).
@@ -1739,7 +1782,7 @@ function renderSidebarNavFromSheets(keys) {
       var navTitle = grNavShortTitle(title);
       var abbr = makeNavAbbr(navTitle, navIdx);
       var total = d && d.stats ? (d.stats.Total || 0) : 0;
-      html.push('<div class="nav-item ' + (navIdx === 0 ? 'active' : '') + '" data-key="' + escapeAttrForLoader(key) + '" onclick="switchMenu(this)" title="' + escapeAttrForLoader(title) + '">' +
+      html.push('<div class="nav-item ' + (key === defaultKey ? 'active' : '') + '" data-key="' + escapeAttrForLoader(key) + '" onclick="switchMenu(this)" title="' + escapeAttrForLoader(title) + '">' +
         '<span class="ni-text" data-abbr="' + escapeAttrForLoader(abbr) + '">' + escapeHtmlForLoader(navTitle) + '</span>' +
         grNavWeeklyBadgeMarkup(title) +
         '<span class="ni-badge" style="background:rgba(148,163,184,.16);color:#64748B">' + total.toLocaleString() + '</span>' +

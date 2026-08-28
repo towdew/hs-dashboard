@@ -100,7 +100,7 @@ function buildSegmentedBar(counts, opts) {
         'Corp. Review':'법인리뷰','Done':'완료','Cancel':'취소'
       })[st] || st;
       const showNum = opts.showNumbers && w >= 6;
-      return `<div class="seg" style="width:${w}%;background:${cfg.dot}" data-tooltip="${label} ${c}건">
+      return `<div class="seg" style="width:${w}%;background:${cfg.dot}" data-tooltip="${label} ${c}사이트">
         ${showNum ? `<span class="seg-num">${c}</span>` : ''}
       </div>`;
     }).join('');
@@ -1078,6 +1078,28 @@ function isUrlLikeSheetValue(value) {
   return /href=["']https?:\/\//i.test(text);
 }
 
+function sheetSiteStatusRank(status) {
+  var st = normalizeStatus(status) || detectSheetStatusValue(status) || '';
+  var order = { 'Pre-Review': 0, 'In Progress': 1, 'Corp. Review': 2, 'Done': 3, 'Cancel': 4 };
+  return order.hasOwnProperty(st) ? order[st] : 99;
+}
+
+function normalizeSheetSiteKey(raw) {
+  return String(raw == null ? '' : raw).replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim().toUpperCase();
+}
+
+// 같은 사이트(국가)에 여러 행이 있으면 진척이 가장 낮은 상태(취소 제외)를 사이트 상태로 본다.
+// 예: 완료+작업중 → 작업중. 취소만 있으면 Cancel.
+function mergeSheetSiteStatus(prevStatus, nextStatus) {
+  var next = normalizeStatus(nextStatus) || detectSheetStatusValue(nextStatus) || '';
+  if (!next) return prevStatus || '';
+  if (!prevStatus) return next;
+  var prev = normalizeStatus(prevStatus) || prevStatus;
+  if (next === 'Cancel') return prev === 'Cancel' ? 'Cancel' : prev;
+  if (prev === 'Cancel') return next;
+  return sheetSiteStatusRank(next) < sheetSiteStatusRank(prev) ? next : prev;
+}
+
 function getSheetPageCountInfo(d) {
   d = d || {};
   var rows = Array.isArray(d.tableRows) ? d.tableRows : [];
@@ -1088,23 +1110,34 @@ function getSheetPageCountInfo(d) {
     hasPages: false,
     hasPageColumn: false,
     isStatusFallback: false,
+    // 완료율(byStatus/total)은 **사이트(고유 국가) 기준** — 국가×모델 다행 시트에서
+    // 행 수를 쓰면 Sites와 %가 어긋난다(실측: gram Secure Lock 92행/11국).
     total: 0,
     byStatus: { Done:0, 'Corp. Review':0, 'In Progress':0, 'Pre-Review':0, Cancel:0 },
+    // 행 단위 집계 — 탭 필터·행 리스트용(완료율에는 쓰지 않음).
+    rowTotal: 0,
+    byStatusRows: { Done:0, 'Corp. Review':0, 'In Progress':0, 'Pre-Review':0, Cancel:0 },
     // Page#(페이지 수) 합계는 완료율 분모와 분리된 별도 통계입니다 — "N Pages" 표시 전용.
     pagesTotal: 0,
     pagesByStatus: { Done:0, 'Corp. Review':0, 'In Progress':0, 'Pre-Review':0, Cancel:0 }
   };
 
-  // 완료율(byStatus/total)은 국가(행/아이템) 단위 집계 — Page# 유무와 무관하게 status가 있으면 1건.
-  // 주의: 이 함수는 contentStats를 통해 HS 유래 페이지-가중 탭(alttext/pdp_gallery/vacuum/wmo_faq)과도
-  // 공유되지만, IT 대시보드에서는 해당 *_WEEKS 전역이 빈 객체로만 초기화되고(sheet-loader.js initBaseGlobals)
-  // 메뉴에도 없어 도달 불가. 그 탭들을 살리려면 완료율 단위(페이지 가중 vs 국가 단위)를 재검토할 것.
-  function addCount(status, count) {
-    status = normalizeStatus(status);
+  function addSiteCount(status, count) {
+    status = normalizeStatus(status) || detectSheetStatusValue(status) || status;
     count = Number(count || 0);
+    if (!status || !count) return;
     if (info.byStatus[status] == null) info.byStatus[status] = 0;
     info.byStatus[status] += count;
     info.total += count;
+  }
+
+  function addRowCount(status, count) {
+    status = normalizeStatus(status) || detectSheetStatusValue(status) || status;
+    count = Number(count || 0);
+    if (!status || !count) return;
+    if (info.byStatusRows[status] == null) info.byStatusRows[status] = 0;
+    info.byStatusRows[status] += count;
+    info.rowTotal += count;
   }
 
   // 페이지 수(pagesByStatus/pagesTotal)는 Page# 컬럼 합계 — "N Pages" 표시 전용, 완료율에는 쓰지 않음.
@@ -1117,6 +1150,9 @@ function getSheetPageCountInfo(d) {
   }
 
   if (rows.length) {
+    var countryHeader = findCountryValueHeaderForCount(d);
+    var bySite = Object.create(null);
+
     rows.forEach(function(row) {
       var rawStatus = pickSheetRowValue(row, statusCandidates);
       var rawPage = pickSheetRowValue(row, pageCandidates);
@@ -1124,12 +1160,28 @@ function getSheetPageCountInfo(d) {
 
       if (rawStatus !== '') {
         info.hasPages = true;
-        addCount(rawStatus, 1);
+        addRowCount(rawStatus, 1);
+        if (countryHeader) {
+          var siteKey = normalizeSheetSiteKey(row && row[countryHeader]);
+          if (siteKey) {
+            bySite[siteKey] = mergeSheetSiteStatus(bySite[siteKey], rawStatus);
+          } else {
+            addSiteCount(rawStatus, 1);
+          }
+        } else {
+          addSiteCount(rawStatus, 1);
+        }
       }
       if (rawPage !== '') {
         addPageCount(rawStatus, toSheetStatNumber(rawPage));
       }
     });
+
+    if (countryHeader) {
+      Object.keys(bySite).forEach(function(siteKey) {
+        addSiteCount(bySite[siteKey], 1);
+      });
+    }
 
     // Page# 컬럼도 없고 Status 컬럼도 없는 시트는 표 안의 실제 Status 값 개수를 대체 집계합니다.
     // 완료 / 법인리뷰 / 진행중 / 사전검토 같은 상태값 셀 1개 = 1건으로 계산합니다.
@@ -1141,22 +1193,33 @@ function getSheetPageCountInfo(d) {
         info.isStatusFallback = true;
         Object.keys(cellCounts).forEach(function(st) {
           if (st === 'total' || !cellCounts[st]) return;
-          addCount(st, cellCounts[st]);
+          addSiteCount(st, cellCounts[st]);
+          addRowCount(st, cellCounts[st]);
           if (info.hasPageColumn) addPageCount(st, cellCounts[st]);
         });
       });
     }
   } else {
+    var bySiteItem = Object.create(null);
     items.forEach(function(item) {
       if (!item) return;
       var st = item.overall || item.status || '';
       if (st === '') return;
       info.hasPages = true;
-      addCount(st, 1);
+      addRowCount(st, 1);
+      var siteKey = normalizeSheetSiteKey(item.country || item.locale);
+      if (siteKey) {
+        bySiteItem[siteKey] = mergeSheetSiteStatus(bySiteItem[siteKey], st);
+      } else {
+        addSiteCount(st, 1);
+      }
       if (item.pages != null && item.pages !== '') {
         info.hasPageColumn = true;
         addPageCount(st, toSheetStatNumber(item.pages));
       }
+    });
+    Object.keys(bySiteItem).forEach(function(siteKey) {
+      addSiteCount(bySiteItem[siteKey], 1);
     });
 
     if (!info.hasPages && items.length) {
@@ -1166,7 +1229,8 @@ function getSheetPageCountInfo(d) {
         if (!st2) return;
         info.hasPages = true;
         info.isStatusFallback = true;
-        addCount(st2, 1);
+        addSiteCount(st2, 1);
+        addRowCount(st2, 1);
       });
     }
   }
@@ -2744,7 +2808,7 @@ function renderContent() {
           <span class="ov-progress-pct-new">${pct}<span style="font-size:14px;font-weight:700">%</span></span>
         </div>
         ${buildSegmentedBar(s, {showNumbers:true, showIcons:true})}
-        <div class="ov-progress-sub-new">전체 ${effTotal.toLocaleString()}건 중 <strong style="color:#1A1D2E">${done.toLocaleString()}건 등록 완료</strong> · 잔여 ${Math.max(effTotal-done,0).toLocaleString()}건${cancelCnt ? ' · 취소 ' + cancelCnt.toLocaleString() + '건 제외' : ''} — 사전검토 → 작업중 → 법인검토 → 등록 완료</div>
+        <div class="ov-progress-sub-new">전체 ${effTotal.toLocaleString()}개 사이트 중 <strong style="color:#1A1D2E">${done.toLocaleString()}개 등록 완료</strong> · 잔여 ${Math.max(effTotal-done,0).toLocaleString()}개${cancelCnt ? ' · 취소 ' + cancelCnt.toLocaleString() + '개 사이트 제외' : ''} — 사전검토 → 작업중 → 법인검토 → 등록 완료</div>
       </div>
 
       <!-- Stat Cards -->
@@ -2768,12 +2832,18 @@ function buildTabs(s) {
   const d = DATA[currentKey];
   const allItems = d.items || d.articles || [];
   var pageCountInfo = getSheetPageCountInfo(d);
+  // 탭 숫자는 행 단위(필터와 일치). 완료율/% 배지는 contentStats(사이트 기준).
+  var rowStats = pageCountInfo.rowTotal
+    ? pageCountInfo.byStatusRows
+    : null;
   let tabCounts = {
-    all: pageCountInfo.hasPages ? (s.total || s.Total || pageCountInfo.total || 0) : allItems.length,
-    Done: s.Done||0,
-    'Corp. Review': s['Corp. Review']||0,
-    'In Progress': s['In Progress']||0,
-    'Pre-Review': s['Pre-Review']||0,
+    all: pageCountInfo.hasPages
+      ? (rowStats ? pageCountInfo.rowTotal : (s.total || s.Total || pageCountInfo.total || 0))
+      : allItems.length,
+    Done: (rowStats && rowStats.Done) || s.Done || 0,
+    'Corp. Review': (rowStats && rowStats['Corp. Review']) || s['Corp. Review'] || 0,
+    'In Progress': (rowStats && rowStats['In Progress']) || s['In Progress'] || 0,
+    'Pre-Review': (rowStats && rowStats['Pre-Review']) || s['Pre-Review'] || 0,
   };
 
   // stats가 셀 단위인 경우 → 아이템 단위로 재계산. Page#가 있는 시트는 Page# 합계 기준 유지.
@@ -5635,8 +5705,18 @@ function dashboardInit() {
   if (window.__dashboardInitDone) return;
   window.__dashboardInitDone = true;
   if (window.__DASHBOARD_KEYS && window.__DASHBOARD_KEYS.length) {
-    currentKey = window.__DASHBOARD_KEYS[0];
-    document.querySelectorAll('.nav-item').forEach(function(n, i) { n.classList.toggle('active', i === 0); });
+    // sheet-loader는 common.js보다 먼저 실행되어 contentStats 없이 nav를 그릴 수 있다.
+    // dashboardInit 시점에 In Progress 그룹핑·최신 태스크 선택을 확정한다.
+    if (typeof renderSidebarNavFromSheets === 'function' && typeof contentStats === 'function') {
+      renderSidebarNavFromSheets(window.__DASHBOARD_KEYS);
+    }
+    var initKey = (typeof pickDefaultGrNavKey === 'function' && pickDefaultGrNavKey(window.__DASHBOARD_KEYS)) ||
+      window.__DEFAULT_GR_NAV_KEY ||
+      window.__DASHBOARD_KEYS[0];
+    currentKey = initKey;
+    document.querySelectorAll('.nav-item').forEach(function(n) {
+      n.classList.toggle('active', n.dataset.key === currentKey);
+    });
   }
   updateHQ();
   updateTopbarTitle();
@@ -6028,8 +6108,9 @@ function ensureGrDataLoaded() {
         typeof renderSidebarNavFromSheets === 'function' && window.__DASHBOARD_KEYS) {
       renderSidebarNavFromSheets(window.__DASHBOARD_KEYS);
       if (typeof syncNavBadges === 'function') syncNavBadges();  // 재렌더로 지워진 % 배지 복원
-      var active = document.querySelector('.nav-item[data-key="' + currentKey + '"]');
-      if (active) active.classList.add('active');
+      document.querySelectorAll('.nav-item').forEach(function(n) {
+        n.classList.toggle('active', n.dataset.key === currentKey);
+      });
     }
   }).catch(function() { window._grTaskState = null; });
 }
@@ -6281,8 +6362,12 @@ function buildSheetDrivenTableHtml(headers, rows, sheetData, filterHtml) {
     var mergeStatusHeader = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h) === 'status'; })[0] || null;
     var mergeRemarkHeader = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h) === 'remark'; })[0] || null;
     var mergePageHeader = displayHeaders.filter(function(h) { return normalizeSheetHeaderName(h).indexOf('page') === 0; })[0] || null;
+    var mergeDateHeader = displayHeaders.filter(function(h) {
+      var n = normalizeSheetHeaderName(h);
+      return n === '완료일' || n === 'completedate' || n === 'date' || n.indexOf('publish') >= 0;
+    })[0] || null;
     groupedRows = groupedRows.map(function(group) {
-      return { region: group.region, rows: collapseRowsByCountry(group.rows, countryDisplayHeader, mergeRemarkHeader, mergeStatusHeader, mergePageHeader) };
+      return { region: group.region, rows: collapseRowsByCountry(group.rows, countryDisplayHeader, mergeRemarkHeader, mergeStatusHeader, mergePageHeader, mergeDateHeader) };
     });
   }
   var headerRowsForDisplay = disableRegion ? [] : (d.tableHeaderRows || []);
@@ -6421,7 +6506,7 @@ function grDisplayStatusRank(v) {
 // 국가 내 서브행은 완료→법인리뷰→작업중→사전검토→취소 순으로 정렬해 진척이 먼저 보이게 한다.
 // 각 서브행의 Remark에는 해당 상태 모델 토큰을 중복 제거해 나열, Page#는 숫자 합계.
 // 첫 서브행에 __ctrySpan=N(국가 셀 rowspan), 나머지는 __ctrySpan=0(국가 셀 생략) 마킹.
-function collapseRowsByCountry(rows, countryHeader, remarkHeader, statusHeader, pageHeader) {
+function collapseRowsByCountry(rows, countryHeader, remarkHeader, statusHeader, pageHeader, dateHeader) {
   if (!countryHeader) return rows || [];
   var dispOrder = { '완료': 0, '법인리뷰': 1, '작업중': 2, '사전검토': 3, '취소': 4 };
   var byCountry = {}, seq = [], out = [];
@@ -6440,6 +6525,16 @@ function collapseRowsByCountry(rows, countryHeader, remarkHeader, statusHeader, 
       var sum = 0, numeric = true;
       members.forEach(function(m) { var n = parseFloat(String(m[pageHeader] == null ? '' : m[pageHeader]).replace(/[^0-9.]/g, '')); if (isNaN(n)) numeric = false; else sum += n; });
       if (numeric && sum > 0) base[pageHeader] = sum;
+    }
+    if (dateHeader && members.length > 1) {
+      var latest = '';
+      members.forEach(function(m) {
+        var d = formatSheetCompletionDate(m[dateHeader]);
+        if (d && (!latest || d > latest)) latest = d;
+      });
+      if (latest) base[dateHeader] = latest;
+    } else if (dateHeader) {
+      base[dateHeader] = formatSheetCompletionDate(base[dateHeader]) || base[dateHeader];
     }
     if (remarkHeader) {
       var seen = {}, models = [];
@@ -6486,6 +6581,20 @@ function findCountryHeader(headers) {
 
 function normalizeSheetHeaderName(value) {
   return String(value || '').toLowerCase().replace(/[\s_\-/.]+/g, '');
+}
+
+function formatSheetCompletionDate(value) {
+  if (value == null || value === '') return '';
+  if (value instanceof Date && !isNaN(value.getTime())) {
+    return value.getFullYear() + '-' + String(value.getMonth() + 1).padStart(2, '0') + '-' + String(value.getDate()).padStart(2, '0');
+  }
+  var text = String(value).trim();
+  if (!text || text === '완료일') return '';
+  var m = text.match(/(20\d{2})[-/.](\d{1,2})[-/.](\d{1,2})/);
+  if (m) return m[1] + '-' + String(m[2]).padStart(2, '0') + '-' + String(m[3]).padStart(2, '0');
+  m = text.match(/(20\d{2})(\d{2})(\d{2})/);
+  if (m) return m[1] + '-' + m[2] + '-' + m[3];
+  return text;
 }
 
 function normalizeDisplayRegion(value) {
@@ -6833,6 +6942,22 @@ function renderSheetCell(value, header, row, sheetData) {
   if (/^status\d*$/.test(normalizeSheetHeaderName(header))) {
     // Status 컬럼인데 정규화 실패한 비어있지 않은 값 → 일반 텍스트 대신 중립 회색 칩으로 렌더.
     return '<span class="sheet-status-pill" style="background:#F1F5F9;color:#64748B" title="' + escapeAttrSheet(text) + '"><span style="background:#94A3B8"></span>' + escapeHtmlSheet(text) + '</span>';
+  }
+
+  if (normalizeSheetHeaderName(header) === 'remark') {
+    var scopePill = '';
+    if (/어워드\s*외|갤러리\/PDP\s*이미지\s*수정/.test(text)) {
+      scopePill = '<span class="sheet-scope-pill" style="display:inline-block;font-size:9px;font-weight:800;padding:1px 6px;border-radius:3px;background:#FFF0F2;color:#A50034;margin-right:4px;vertical-align:middle" title="어워드 삭제 외 추가 이미지 수정">어워드外</span>';
+    } else if (/갤러리\/PDP\s*체크/.test(text)) {
+      scopePill = '<span class="sheet-scope-pill" style="display:inline-block;font-size:9px;font-weight:700;padding:1px 6px;border-radius:3px;background:#EFF6FF;color:#1E40AF;margin-right:4px;vertical-align:middle" title="갤러리/PDP 이미지 체크 완료">G/PDP</span>';
+    }
+    if (scopePill) return scopePill + escapeHtmlSheet(text);
+  }
+
+  var dateHeaderName = normalizeSheetHeaderName(header);
+  if (dateHeaderName === '완료일' || dateHeaderName === 'completedate' || (dateHeaderName.indexOf('publish') >= 0 && dateHeaderName.indexOf('date') >= 0)) {
+    var dateText = formatSheetCompletionDate(text);
+    if (dateText) return '<span class="sheet-date-cell" style="font-size:10px;font-weight:600;color:#475569;white-space:nowrap">' + escapeHtmlSheet(dateText) + '</span>';
   }
 
   return escapeHtmlSheet(text);
