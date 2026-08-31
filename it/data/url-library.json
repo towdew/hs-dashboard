@@ -3466,7 +3466,7 @@
     {
       "modelName": "14Z90U-G",
       "salesModelCode": "14Z90U-G",
-      "salesSuffixCode": "AU85J",
+      "salesSuffixCode": "AU85BN",
       "category": "Laptops",
       "locales": [
         {
@@ -3482,6 +3482,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/es/portatiles/gram/14z90u-g-au85bn/",
           "publishUpdateDate": "2026-04-10"
+        },
+        {
+          "locale": "GLOBAL : GLOBAL (en)",
+          "country": "GLOBAL : GLOBAL (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/14z90u/",
+          "publishUpdateDate": "2026-08-10"
         },
         {
           "locale": "IT : IT (it)",
@@ -3672,7 +3679,7 @@
     {
       "modelName": "14Z95U-G",
       "salesModelCode": "14Z95U-G",
-      "salesSuffixCode": "AU86J",
+      "salesSuffixCode": "AU86A3",
       "category": "Laptops",
       "locales": [
         {
@@ -3702,6 +3709,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/es/business/informatica/ordenadores/portatiles-para-creadores/14z95u-g-au88bn/",
           "publishUpdateDate": "2026-05-26"
+        },
+        {
+          "locale": "GLOBAL : GLOBAL (en)",
+          "country": "GLOBAL : GLOBAL (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/14z95u/",
+          "publishUpdateDate": "2026-08-11"
         },
         {
           "locale": "JP : JP (ja)",
@@ -4364,6 +4378,21 @@
       ]
     },
     {
+      "modelName": "14ZB90S-G",
+      "salesModelCode": "14ZB90S-G",
+      "salesSuffixCode": "AA54J",
+      "category": "Laptops",
+      "locales": [
+        {
+          "locale": "JP : JP (ja)",
+          "country": "JP : JP (JA)",
+          "status": "HIDDEN",
+          "prodUrl": "https://www.lg.com/jp/mobile-pc/gram/14zb90s-ga54j/",
+          "publishUpdateDate": "2026-07-15"
+        }
+      ]
+    },
+    {
       "modelName": "14ZD90RU-G",
       "salesModelCode": "14ZD90RU-G",
       "salesSuffixCode": "AX55B",
@@ -4540,7 +4569,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/14zt980-l",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/14zt980-l/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -4695,7 +4724,7 @@
         {
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
-          "status": "SUSPENDED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/fr/pc-portables/gram/lg-15u50t-g-ar53f/",
           "publishUpdateDate": "2025-06-30"
         },
@@ -4774,9 +4803,16 @@
     {
       "modelName": "15U50U-G",
       "salesModelCode": "15U50U-G",
-      "salesSuffixCode": "AA55A3",
+      "salesSuffixCode": "AA52AN",
       "category": "Laptops",
       "locales": [
+        {
+          "locale": "GLOBAL : GLOBAL (en)",
+          "country": "GLOBAL : GLOBAL (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-book/15u50u/",
+          "publishUpdateDate": "2026-08-11"
+        },
         {
           "locale": "IT : IT (it)",
           "country": "IT : IT (IT)",
@@ -4797,6 +4833,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/sg/laptops/gram/15u50u-16mr70/",
           "publishUpdateDate": "2026-06-16"
+        },
+        {
+          "locale": "UK : GB (en)",
+          "country": "UK : GB (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/uk/laptops/gram-books/15u50u-g-aa55an/",
+          "publishUpdateDate": "2026-05-01"
         },
         {
           "locale": "VN : VN (vi)",
@@ -5033,7 +5076,7 @@
         {
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
-          "status": "SUSPENDED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/fr/pc-portables/gram/lg-15z80t-g-az78f/",
           "publishUpdateDate": "2025-05-26"
         },
@@ -6280,7 +6323,7 @@
         {
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/fr/pc-portables/gram-superslim/lg-15z90st-g-ad78f-ultra-7-32Go-1To-win-11-home/",
           "publishUpdateDate": "2024-04-30"
         },
@@ -6443,6 +6486,21 @@
       ]
     },
     {
+      "modelName": "15Z90U-H",
+      "salesModelCode": "15Z90U-H",
+      "salesSuffixCode": "AU87U1",
+      "category": "Laptops",
+      "locales": [
+        {
+          "locale": "GLOBAL : GLOBAL (en)",
+          "country": "GLOBAL : GLOBAL (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/15z90u/",
+          "publishUpdateDate": "2026-08-10"
+        }
+      ]
+    },
+    {
       "modelName": "15Z95P-G",
       "salesModelCode": "15Z95P-G",
       "salesSuffixCode": "AA75A8",
@@ -6496,6 +6554,21 @@
           "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/th/laptops/gram/15z95p-g-ah54a6/",
           "publishUpdateDate": "2021-12-27"
+        }
+      ]
+    },
+    {
+      "modelName": "15Z95U-H",
+      "salesModelCode": "15Z95U-H",
+      "salesSuffixCode": "AU87U1",
+      "category": "Laptops",
+      "locales": [
+        {
+          "locale": "GLOBAL : GLOBAL (en)",
+          "country": "GLOBAL : GLOBAL (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/15z95u/",
+          "publishUpdateDate": "2026-08-10"
         }
       ]
     },
@@ -7212,7 +7285,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/15zt90p-g",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/15zt90p-g/",
           "publishUpdateDate": ""
         }
       ]
@@ -8232,6 +8305,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/global/business/monitors-pcs/laptops/2-in-1-laptops/16t95tp/",
           "publishUpdateDate": "2026-07-20"
+        },
+        {
+          "locale": "UK : GB (en)",
+          "country": "UK : GB (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/uk/laptops/gram-pro-2in1/16t95tp-k/",
+          "publishUpdateDate": "2026-05-01"
         }
       ]
     },
@@ -8275,7 +8355,7 @@
     {
       "modelName": "16U55U-G",
       "salesModelCode": "16U55U-G",
-      "salesSuffixCode": "AU75A3",
+      "salesSuffixCode": "AU88BN",
       "category": "Laptops",
       "locales": [
         {
@@ -8312,6 +8392,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/es/portatiles/gram-book/16u55u-g-au88bn/",
           "publishUpdateDate": "2026-04-27"
+        },
+        {
+          "locale": "GLOBAL : GLOBAL (en)",
+          "country": "GLOBAL : GLOBAL (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-book/16u55u/",
+          "publishUpdateDate": "2026-08-12"
         },
         {
           "locale": "SG : SG (en)",
@@ -8643,7 +8730,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/16ut70q-g",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/16ut70q-g/",
           "publishUpdateDate": ""
         }
       ]
@@ -10620,7 +10707,7 @@
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/pc-portables/pc-portables-professionnels/16z90r-g-ap78f-i7-16go-1to-win-11-pro/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/pc-portables/16z90r-g-ap78f-i7-16go-1to-win-11-pro/",
           "publishUpdateDate": "2023-04-30"
         },
         {
@@ -13092,6 +13179,13 @@
           "publishUpdateDate": "2025-11-11"
         },
         {
+          "locale": "UK : GB (en)",
+          "country": "UK : GB (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/uk/laptops/gram/16z90tl-g-au75an/",
+          "publishUpdateDate": "2026-06-19"
+        },
+        {
           "locale": "VN : VN (vi)",
           "country": "VN : VN (VI)",
           "status": "SUSPENDED",
@@ -13547,7 +13641,7 @@
           "locale": "ES : ES (es)",
           "country": "ES : ES (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/es/portatiles/16z90u-g-au88bn/",
+          "prodUrl": "https://www.lg.com/es/portatiles/gram-pro/16z90u-g-au88bn/",
           "publishUpdateDate": "2026-04-14"
         },
         {
@@ -13607,6 +13701,13 @@
           "publishUpdateDate": "2026-02-04"
         },
         {
+          "locale": "JP : JP (ja)",
+          "country": "JP : JP (JA)",
+          "status": "HIDDEN",
+          "prodUrl": "https://www.lg.com/jp/mobile-pc/gram/16z90u-kub4j/",
+          "publishUpdateDate": "2026-07-30"
+        },
+        {
           "locale": "SG : SG (en)",
           "country": "SG : SG (EN)",
           "status": "ACTIVE",
@@ -13654,6 +13755,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/tw/laptops/gram-pro/16z90u-g-au87c2/",
           "publishUpdateDate": "2026-02-23"
+        },
+        {
+          "locale": "UK : GB (en)",
+          "country": "UK : GB (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/uk/laptops/gram-pro/16z90u-h-au78an/",
+          "publishUpdateDate": "2026-05-01"
         },
         {
           "locale": "VN : VN (vi)",
@@ -18378,6 +18486,20 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/uk/laptops/gram/17z90tl-g-32u721s/",
           "publishUpdateDate": "2026-05-13"
+        },
+        {
+          "locale": "UK : GB (en)",
+          "country": "UK : GB (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/uk/laptops/gram/17z90tl-g-au88an/",
+          "publishUpdateDate": "2026-06-18"
+        },
+        {
+          "locale": "UK : GB (en)",
+          "country": "UK : GB (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/uk/laptops/gram/17z90tl-g-au78an/",
+          "publishUpdateDate": "2026-06-19"
         }
       ]
     },
@@ -19386,7 +19508,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/zero-clients/20cav37k-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/zero-clients/20cav37k-b/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -19697,7 +19819,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/zero-clients/24cav37k-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/zero-clients/24cav37k-b/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -19831,7 +19953,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/24ck550n-3a",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/24ck550n-3a/",
           "publishUpdateDate": "2020-08-03"
         }
       ]
@@ -19958,7 +20080,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/24ck560n-3a",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/24ck560n-3a/",
           "publishUpdateDate": "2020-08-03"
         }
       ]
@@ -20383,7 +20505,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/24cn670n-6a",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/24cn670n-6a/",
           "publishUpdateDate": "2021-09-26"
         }
       ]
@@ -20519,7 +20641,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/24cq650n-6n",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/24cq650n-6n/",
           "publishUpdateDate": "2024-07-22"
         }
       ]
@@ -20572,6 +20694,13 @@
           "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/de/business/monitore/cloud-devices/all-in-one-thin-clients/24cq651i-2p/",
           "publishUpdateDate": "2025-11-30"
+        },
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-24cq651i-6p-24cq651i-6p",
+          "publishUpdateDate": ""
         }
       ]
     },
@@ -20767,6 +20896,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/de/business/monitore/cloud-devices/all-in-one-thin-clients/24cr670n-6p/",
           "publishUpdateDate": "2025-07-21"
+        },
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-24cr670n-6p",
+          "publishUpdateDate": ""
         }
       ]
     },
@@ -20825,7 +20961,7 @@
     {
       "modelName": "24CR671N-2P",
       "salesModelCode": "24CR671N-2P",
-      "salesSuffixCode": "ARD",
+      "salesSuffixCode": "AEU",
       "category": "Laptops",
       "locales": [
         {
@@ -20869,6 +21005,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/de/business/monitore/cloud-devices/all-in-one-thin-clients/24cr671n-2p/",
           "publishUpdateDate": "2025-07-21"
+        },
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-24cr671n-6p",
+          "publishUpdateDate": ""
         },
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -21229,14 +21372,14 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/27cn650n-6a",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/27cn650n-6a/",
           "publishUpdateDate": "2020-08-03"
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/27cn650n-6n",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/27cn650n-6n/",
           "publishUpdateDate": "2021-10-06"
         }
       ]
@@ -21265,7 +21408,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/27cq650n-6n",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/27cq650n-6n/",
           "publishUpdateDate": "2025-01-10"
         }
       ]
@@ -21488,14 +21631,14 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/34cn650n-6a",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/34cn650n-6a/",
           "publishUpdateDate": "2020-08-03"
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/34cn650n-6n",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/34cn650n-6n/",
           "publishUpdateDate": "2022-11-03"
         }
       ]
@@ -21532,7 +21675,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/34cr650n-6n",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/34cr650n-6n/",
           "publishUpdateDate": "2024-09-25"
         }
       ]
@@ -21649,7 +21792,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/38ck900g-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/38ck900g-b/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -21905,7 +22048,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/38cl950n-1c",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/38cl950n-1c/",
           "publishUpdateDate": "2020-09-04"
         }
       ]
@@ -21941,7 +22084,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/38cl950p-1c",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/38cl950p-1c/",
           "publishUpdateDate": "2020-09-08"
         }
       ]
@@ -22282,7 +22425,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/ck500w-3a",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/ck500w-3a/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -22480,28 +22623,28 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/cl600n-6a",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/cl600n-6a/",
           "publishUpdateDate": "2020-08-03"
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/cl600n-6n",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/cl600n-6n/",
           "publishUpdateDate": "2021-10-06"
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/cl600n-1n",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/cl600n-1n/",
           "publishUpdateDate": ""
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/cl600n-1p",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/cl600n-1p/",
           "publishUpdateDate": ""
         }
       ]
@@ -22740,7 +22883,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/cl600w-ac",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/cl600w-ac/",
           "publishUpdateDate": "2020-08-03"
         }
       ]
@@ -22867,7 +23010,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/desktop-thin-clients/cq600i-6p",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/mobile-thin-clients/cq600i-6p/",
           "publishUpdateDate": "2024-09-19"
         }
       ]
@@ -22959,7 +23102,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/desktop-thin-clients/cq600n-6n",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/thin-clients/mobile-thin-clients/cq600n-6n/",
           "publishUpdateDate": "2024-09-19"
         }
       ]
@@ -23306,7 +23449,7 @@
         {
           "locale": "AU : AU (en)",
           "country": "AU : AU (EN)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/au/care-accessories/laptops/adapter-power-cord/eay65895901/",
           "publishUpdateDate": "2026-06-26"
         },
@@ -24413,7 +24556,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/detectores-digitales-de-rayos-x/14hk701g-wp",
+          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/detectores-digitales-de-rayos-x/14hk701g-wp/",
           "publishUpdateDate": "2022-01-02"
         },
         {
@@ -24462,14 +24605,14 @@
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/capteurs-plans/14hk701g-wp-capteur-plan-avec-aws/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/capteurs-plans-old/14hk701g-wp-capteur-plan-avec-aws/",
           "publishUpdateDate": "2022-06-23"
         },
         {
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/capteurs-plans/14hk701g-wa-capteur-plan/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/capteurs-plans-old/14hk701g-wa-capteur-plan/",
           "publishUpdateDate": "2022-06-23"
         },
         {
@@ -24778,7 +24921,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/detectores-digitales-de-rayos-x/14hq701g-bp",
+          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/detectores-digitales-de-rayos-x/14hq701g-bp/",
           "publishUpdateDate": "2023-06-30"
         },
         {
@@ -24883,14 +25026,14 @@
           "locale": "TR : TR (tr)",
           "country": "TR : TR (TR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/tr/business/monitorler/medikal-goruntuleme-teknolojileri/dijital-rontgen-dedektorler-dxd/14hq701g-bp",
+          "prodUrl": "https://www.lg.com/tr/business/monitorler/medikal-goruntuleme-teknolojileri/dijital-rontgen-dedektorler-dxd/14hq701g-bp/",
           "publishUpdateDate": "2025-07-30"
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/digital-x-ray-detectors/14hq701g-bp",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/digital-x-ray-detectors/14hq701g-bp/",
           "publishUpdateDate": "2023-05-18"
         }
       ]
@@ -25018,13 +25161,13 @@
           "locale": "MX : MX (es)",
           "country": "MX : MX (ES)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/mx/business/pantallas-comerciales/senalizacion-digital/lg-kiosk-touch/17br30t-b/",
+          "prodUrl": "https://www.lg.com/mx/business/pantallas-comerciales/senalizacion-digital/especial-senalizacion-digital/17br30t-b/",
           "publishUpdateDate": "2024-08-21"
         },
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-17br30t-b",
           "publishUpdateDate": "2024-08-27"
         },
@@ -25180,14 +25323,14 @@
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/capteurs-plans/17hk700g-wp-capteur-plan-avec-aws/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/capteurs-plans-old/17hk700g-wp-capteur-plan-avec-aws/",
           "publishUpdateDate": "2022-06-23"
         },
         {
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/capteurs-plans/17hk700g-wa-capteur-plan/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/capteurs-plans-old/17hk700g-wa-capteur-plan/",
           "publishUpdateDate": "2022-06-23"
         },
         {
@@ -25376,14 +25519,14 @@
           "locale": "TR : TR (tr)",
           "country": "TR : TR (TR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/tr/business/monitorler/medikal-goruntuleme-teknolojileri/dijital-rontgen-dedektorler-dxd/17hk700g-wa",
+          "prodUrl": "https://www.lg.com/tr/business/monitorler/medikal-goruntuleme-teknolojileri/dijital-rontgen-dedektorler-dxd/17hk700g-wa/",
           "publishUpdateDate": "2019-10-31"
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/digital-x-ray-detectors/17hk700g-wp",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/digital-x-ray-detectors/17hk700g-wp/",
           "publishUpdateDate": "2023-05-22"
         },
         {
@@ -25545,14 +25688,14 @@
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/capteurs-plans/17hk701g-wa-capteur-plan/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/capteurs-plans-old/17hk701g-wa-capteur-plan/",
           "publishUpdateDate": "2022-06-23"
         },
         {
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/capteurs-plans/17hk701g-wp-capteur-plan-avec-aws/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/capteurs-plans-old/17hk701g-wp-capteur-plan-avec-aws/",
           "publishUpdateDate": "2022-06-23"
         },
         {
@@ -25840,14 +25983,14 @@
           "locale": "TR : TR (tr)",
           "country": "TR : TR (TR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/tr/business/monitorler/medikal-goruntuleme-teknolojileri/dijital-rontgen-dedektorler-dxd/17hq701g-bp",
+          "prodUrl": "https://www.lg.com/tr/business/monitorler/medikal-goruntuleme-teknolojileri/dijital-rontgen-dedektorler-dxd/17hq701g-bp/",
           "publishUpdateDate": "2025-07-30"
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/digital-x-ray-detectors/17hq701g-bp",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/digital-x-ray-detectors/17hq701g-bp/",
           "publishUpdateDate": "2023-05-22"
         }
       ]
@@ -25925,7 +26068,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/digital-x-ray-detectors/17hq901g-bp",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/digital-x-ray-detectors/17hq901g-bp/",
           "publishUpdateDate": "2023-05-22"
         }
       ]
@@ -26671,7 +26814,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-de-revision-clinica/19hk312c-b",
+          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-de-revision-clinica/19hk312c-b/",
           "publishUpdateDate": "2022-01-31"
         },
         {
@@ -26706,7 +26849,7 @@
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-cliniciens/19hk312c-b/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-cliniciens-old/19hk312c-b/",
           "publishUpdateDate": ""
         },
         {
@@ -26874,7 +27017,7 @@
           "locale": "TR : TR (tr)",
           "country": "TR : TR (TR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/tr/business/monitorler/medikal-goruntuleme-teknolojileri/klinik-degerlendirme-monitorler/19hk312c-b",
+          "prodUrl": "https://www.lg.com/tr/business/monitorler/medikal-goruntuleme-teknolojileri/klinik-degerlendirme-monitorler/19hk312c-b/",
           "publishUpdateDate": "2020-02-23"
         },
         {
@@ -28736,7 +28879,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/20m38a-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/20m38a-b/",
           "publishUpdateDate": "2020-01-29"
         },
         {
@@ -30091,7 +30234,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/21hk512d-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/21hk512d-b/",
           "publishUpdateDate": "2020-09-02"
         }
       ]
@@ -30295,7 +30438,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-de-diagnostico/21hq513d-s",
+          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-de-diagnostico/21hq513d-s/",
           "publishUpdateDate": "2025-12-31"
         },
         {
@@ -30358,14 +30501,14 @@
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-de-diagnostic/21hq513d-b/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-de-diagnostic-old/21hq513d-b/",
           "publishUpdateDate": ""
         },
         {
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-de-diagnostic/lg-21hq513d-s-moniteur-de-diagnostic/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-de-diagnostic-old/lg-21hq513d-s-moniteur-de-diagnostic/",
           "publishUpdateDate": "2024-10-17"
         },
         {
@@ -30589,21 +30732,21 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/21hq513d-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/21hq513d-b/",
           "publishUpdateDate": "2021-10-07"
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/21hq513d-s",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/21hq513d-s/",
           "publishUpdateDate": "2025-01-10"
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/21hq513d-m",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/21hq513d-m/",
           "publishUpdateDate": "2025-02-24"
         },
         {
@@ -32302,7 +32445,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22m38a-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22m38a-b/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -32786,7 +32929,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22m47vq-p",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22m47vq-p/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -33437,7 +33580,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22mb65pm-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22mb65pm-b/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -35197,7 +35340,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22mn430m-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22mn430m-b/",
           "publishUpdateDate": "2020-10-19"
         },
         {
@@ -36441,7 +36584,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22mp48d-p",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22mp48d-p/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -37559,7 +37702,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22mp58vq-p",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22mp58vq-p/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -38014,7 +38157,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22mp68vq-p",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22mp68vq-p/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -38854,7 +38997,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22mt48df-pz",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22mt48df-pz/",
           "publishUpdateDate": "2020-01-12"
         }
       ]
@@ -39175,7 +39318,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22mt58df-pz",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/22mt58df-pz/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -42037,7 +42180,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/23mp68vq-p",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/23mp68vq-p/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -42794,7 +42937,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24ba550-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24ba550-b/",
           "publishUpdateDate": "2025-10-27"
         }
       ]
@@ -42924,6 +43067,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/es/business/informatica/monitores/monitores-ips/24ba560-b/",
           "publishUpdateDate": "2024-10-31"
+        },
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-24ba560-t",
+          "publishUpdateDate": ""
         },
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -43144,6 +43294,13 @@
           "publishUpdateDate": "2024-12-30"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-24ba650-t",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "GLOBAL : GLOBAL (en)",
           "country": "GLOBAL : GLOBAL (EN)",
           "status": "ACTIVE",
@@ -43233,6 +43390,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/no/skjermer/lg-24ba650-b",
           "publishUpdateDate": "2025-07-17"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-24ba650-t",
+          "publishUpdateDate": ""
         },
         {
           "locale": "PT : PT (pt)",
@@ -43397,6 +43561,13 @@
           "publishUpdateDate": "2024-12-30"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-24ba750-t",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "GLOBAL : GLOBAL (en)",
           "country": "GLOBAL : GLOBAL (EN)",
           "status": "ACTIVE",
@@ -43453,11 +43624,25 @@
           "publishUpdateDate": "2025-07-01"
         },
         {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-24ba750-t",
+          "publishUpdateDate": "2026-08-29"
+        },
+        {
           "locale": "SE : SE (sv)",
           "country": "SE : SE (SV)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/se/foretagsskarmar/alla-foretagsskarmar/24ba750-b/",
           "publishUpdateDate": "2025-03-24"
+        },
+        {
+          "locale": "SE : SE (sv)",
+          "country": "SE : SE (SV)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/se/foretagsskarmar/alla-foretagsskarmar/24ba750-t/",
+          "publishUpdateDate": "2026-07-21"
         },
         {
           "locale": "UK : GB (en)",
@@ -43634,6 +43819,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/no/skjermer/lg-24ba850-b",
           "publishUpdateDate": "2025-07-01"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-24ba850-t",
+          "publishUpdateDate": ""
         },
         {
           "locale": "PT : PT (pt)",
@@ -44177,7 +44369,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24bk550y-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24bk550y-b/",
           "publishUpdateDate": "2021-03-24"
         }
       ]
@@ -44685,7 +44877,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24bk55yp-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24bk55yp-b/",
           "publishUpdateDate": "2024-03-26"
         }
       ]
@@ -46530,9 +46722,16 @@
           "publishUpdateDate": ""
         },
         {
+          "locale": "AE_AR : AE (ar)",
+          "country": "AE",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ae_ar/consumer-monitors/lg-24g411b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "BR : BR (pt)",
           "country": "BR : BR (PT)",
-          "status": "ACTIVE",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/br/monitores/monitores-ultragear/24g411b-b/",
           "publishUpdateDate": "2026-06-17"
         },
@@ -46556,6 +46755,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/id/monitor/gaming/24g411b-b/",
           "publishUpdateDate": "2026-04-14"
+        },
+        {
+          "locale": "IN : IN (en)",
+          "country": "IN : IN (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/in/monitors/gaming/24g411b-b/",
+          "publishUpdateDate": "2026-06-17"
         },
         {
           "locale": "JP : JP (ja)",
@@ -46584,6 +46790,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/mx/monitores/monitores-gaming/24g411b-b/",
           "publishUpdateDate": "2026-05-20"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-24g411b-b",
+          "publishUpdateDate": ""
         },
         {
           "locale": "PA : PA (es)",
@@ -48636,7 +48849,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24gn60r-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24gn60r-b/",
           "publishUpdateDate": "2024-03-26"
         },
         {
@@ -49515,7 +49728,7 @@
           "locale": "TH : TH (th)",
           "country": "TH : TH (TH)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/24gq50f-b",
+          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/24gq50f-b/",
           "publishUpdateDate": ""
         },
         {
@@ -49809,7 +50022,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-24gs50f-b",
           "publishUpdateDate": "2024-08-27"
         },
@@ -51280,7 +51493,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24m38h-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24m38h-b/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -51529,7 +51742,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24m47vq-p",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24m47vq-p/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -51716,7 +51929,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24mb35ph-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24mb35ph-b/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -53801,7 +54014,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24mk600m-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24mk600m-b/",
           "publishUpdateDate": "2020-10-19"
         },
         {
@@ -56661,7 +56874,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24mp58vq-p",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24mp58vq-p/",
           "publishUpdateDate": "2020-01-29"
         },
         {
@@ -58395,7 +58608,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ips/24mr400-b",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ips/24mr400-b/",
           "publishUpdateDate": "2025-02-28"
         },
         {
@@ -58625,7 +58838,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-24mr400-b",
           "publishUpdateDate": "2023-11-09"
         },
@@ -58689,7 +58902,7 @@
           "locale": "TH : TH (th)",
           "country": "TH : TH (TH)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/24mr400-b",
+          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/24mr400-b/",
           "publishUpdateDate": ""
         },
         {
@@ -59308,7 +59521,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24mt35s-pz",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24mt35s-pz/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -59702,7 +59915,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "SUSPENDED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24mt47s-bz",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24mt47s-bz/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -59987,7 +60200,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24mt48df-pz",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24mt48df-pz/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -60685,7 +60898,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24mt58df-pz",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/24mt58df-pz/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -62605,14 +62818,14 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-24tq510s-wz",
           "publishUpdateDate": "2022-05-25"
         },
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-24tq510s-pz",
           "publishUpdateDate": "2022-05-25"
         },
@@ -63119,7 +63332,7 @@
         {
           "locale": "BR : BR (pt)",
           "country": "BR : BR (PT)",
-          "status": "ACTIVE",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/br/monitores/monitores-full-hd-qhd/24u411b-b/",
           "publishUpdateDate": "2026-06-17"
         },
@@ -63143,6 +63356,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/cl/monitores/fhd-y-qhd/24u411b/",
           "publishUpdateDate": "2026-04-30"
+        },
+        {
+          "locale": "CN : CN (zh)",
+          "country": "CN : CN (ZH)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/cn/monitors/lg-24u411b-b",
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "CO : CO (es)",
@@ -63206,6 +63426,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/pe/monitores/fhd-y-qhd/24u411b-b/",
           "publishUpdateDate": "2026-06-01"
+        },
+        {
+          "locale": "RO : RO (ro)",
+          "country": "RO : RO (RO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ro/monitoare/lg-24u411b-b",
+          "publishUpdateDate": "2026-08-25"
         },
         {
           "locale": "RU : RU (ru)",
@@ -63570,7 +63797,7 @@
         {
           "locale": "BR : BR (pt)",
           "country": "BR : BR (PT)",
-          "status": "ACTIVE",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/br/monitores/smart-monitors/24u511sb-b/",
           "publishUpdateDate": "2026-06-01"
         },
@@ -64177,7 +64404,7 @@
         {
           "locale": "BR : BR (pt)",
           "country": "BR : BR (PT)",
-          "status": "ACTIVE",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/br/monitores/monitores-ultragear/25g523b-b/",
           "publishUpdateDate": "2026-06-17"
         },
@@ -64221,6 +64448,20 @@
           "country": "EE : EE (ET)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ee/monitorid/lg-25g523b-b",
+          "publishUpdateDate": "2026-08-30"
+        },
+        {
+          "locale": "ES : ES (es)",
+          "country": "ES : ES (ES)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/es/monitores/monitores-ultragear-gaming/25g523b-b/",
+          "publishUpdateDate": "2026-04-27"
+        },
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-25g523b-b",
           "publishUpdateDate": ""
         },
         {
@@ -64266,18 +64507,25 @@
           "publishUpdateDate": "2026-04-13"
         },
         {
+          "locale": "KZ : KZ (ru)",
+          "country": "KZ : KZ (RU)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/kz/monitors/gaming/25g523b-b/",
+          "publishUpdateDate": "2026-05-20"
+        },
+        {
           "locale": "LT : LT (lt)",
           "country": "LT : LT (LT)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/lt/monitoriai/lg-25g523b-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-30"
         },
         {
           "locale": "LV : LV (lv)",
           "country": "LV : LV (LV)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/lv/monitori/lg-25g523b-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-30"
         },
         {
           "locale": "MX : MX (es)",
@@ -64285,6 +64533,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/mx/monitores/gaming/25g523b-b/",
           "publishUpdateDate": "2026-04-25"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-25g523b-b",
+          "publishUpdateDate": ""
         },
         {
           "locale": "PA : PA (es)",
@@ -64319,7 +64574,7 @@
           "country": "RO : RO (RO)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-25g523b-b",
-          "publishUpdateDate": "2026-08-21"
+          "publishUpdateDate": "2026-08-28"
         },
         {
           "locale": "RU : RU (ru)",
@@ -64336,11 +64591,60 @@
           "publishUpdateDate": "2026-04-14"
         },
         {
+          "locale": "SA : SA (ar)",
+          "country": "SA : SA (AR)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa/monitors/ultragear-gaming-oled/25g523b-b-29u5001/",
+          "publishUpdateDate": "2026-08-24"
+        },
+        {
+          "locale": "SA : SA (ar)",
+          "country": "SA : SA (AR)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa/monitors/ultragear-gaming-oled/25g523b-b-s75t001/",
+          "publishUpdateDate": "2026-08-24"
+        },
+        {
+          "locale": "SA : SA (ar)",
+          "country": "SA : SA (AR)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa/monitors/ultragear-gaming-oled/25g523b-b-sh5a001/",
+          "publishUpdateDate": "2026-08-24"
+        },
+        {
           "locale": "SA_EN : SA (en)",
           "country": "SA",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/sa_en/monitors/ultragear-gaming-oled/25g523b-b/",
           "publishUpdateDate": "2026-04-14"
+        },
+        {
+          "locale": "SA_EN : SA (en)",
+          "country": "SA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa_en/monitors/ultragear-gaming-oled/25g523b-b-29u5001/",
+          "publishUpdateDate": "2026-08-24"
+        },
+        {
+          "locale": "SA_EN : SA (en)",
+          "country": "SA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa_en/monitors/ultragear-gaming-oled/25g523b-b-s75t001/",
+          "publishUpdateDate": "2026-08-24"
+        },
+        {
+          "locale": "SA_EN : SA (en)",
+          "country": "SA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa_en/monitors/ultragear-gaming-oled/25g523b-b-sh5a001/",
+          "publishUpdateDate": "2026-08-24"
+        },
+        {
+          "locale": "SA_EN : SA (en)",
+          "country": "SA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa_en/monitors/ultragear-gaming-oled/25g523b-b-ltt2001/",
+          "publishUpdateDate": "2026-08-25"
         },
         {
           "locale": "TR : TR (tr)",
@@ -64492,6 +64796,13 @@
           "publishUpdateDate": "2026-06-05"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-25g590b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "HIDDEN",
@@ -64499,11 +64810,25 @@
           "publishUpdateDate": "2026-06-17"
         },
         {
+          "locale": "JP : JP (ja)",
+          "country": "JP : JP (JA)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/jp/monitors/gaming-monitors/25g590b-b/",
+          "publishUpdateDate": "2026-06-10"
+        },
+        {
           "locale": "MX : MX (es)",
           "country": "MX : MX (ES)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/mx/monitores/gaming/25g590b-b/",
           "publishUpdateDate": "2026-06-30"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-25g590b-b",
+          "publishUpdateDate": ""
         },
         {
           "locale": "PL : PL (pl)",
@@ -64520,11 +64845,53 @@
           "publishUpdateDate": "2026-06-17"
         },
         {
+          "locale": "SA : SA (ar)",
+          "country": "SA : SA (AR)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa/monitors/ultragear-gaming-oled/25g590b-b-rnc5001/",
+          "publishUpdateDate": "2026-08-24"
+        },
+        {
+          "locale": "SA : SA (ar)",
+          "country": "SA : SA (AR)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa/monitors/ultragear-gaming-oled/25g590b-b-s45t001/",
+          "publishUpdateDate": "2026-08-24"
+        },
+        {
+          "locale": "SA : SA (ar)",
+          "country": "SA : SA (AR)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa/monitors/ultragear-gaming-oled/25g590b-b-29u5001/",
+          "publishUpdateDate": "2026-08-26"
+        },
+        {
           "locale": "SA_EN : SA (en)",
           "country": "SA",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/sa_en/monitors/ultragear-gaming-oled/25g590b-b/",
           "publishUpdateDate": "2026-06-17"
+        },
+        {
+          "locale": "SA_EN : SA (en)",
+          "country": "SA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa_en/monitors/ultragear-gaming-oled/25g590b-b-rnc5001/",
+          "publishUpdateDate": "2026-08-24"
+        },
+        {
+          "locale": "SA_EN : SA (en)",
+          "country": "SA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa_en/monitors/ultragear-gaming-oled/25g590b-b-s45t001/",
+          "publishUpdateDate": "2026-08-24"
+        },
+        {
+          "locale": "SA_EN : SA (en)",
+          "country": "SA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa_en/monitors/ultragear-gaming-oled/25g590b-b-29u5001/",
+          "publishUpdateDate": "2026-08-26"
         },
         {
           "locale": "UK : GB (en)",
@@ -64771,7 +65138,7 @@
           "locale": "TR : TR (tr)",
           "country": "TR : TR (TR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/tr/business/monitorler/tum-monitorler/fhd-qhd/25ms500-b",
+          "prodUrl": "https://www.lg.com/tr/business/monitorler/tum-monitorler/fhd-qhd/25ms500-b/",
           "publishUpdateDate": "2025-11-30"
         },
         {
@@ -64870,7 +65237,7 @@
           "locale": "TR : TR (tr)",
           "country": "TR : TR (TR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/tr/business/monitorler/tum-monitorler/fhd-qhd/25ms550-b",
+          "prodUrl": "https://www.lg.com/tr/business/monitorler/tum-monitorler/fhd-qhd/25ms550-b/",
           "publishUpdateDate": "2025-11-30"
         },
         {
@@ -66316,7 +66683,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27ba450-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27ba450-b/",
           "publishUpdateDate": "2024-12-03"
         }
       ]
@@ -66361,6 +66728,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ee/monitorid/lg-27ba45qb-b",
           "publishUpdateDate": "2025-02-28"
+        },
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27ba45qb-b",
+          "publishUpdateDate": ""
         },
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -66490,6 +66864,13 @@
           "publishUpdateDate": "2025-08-04"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27ba45u-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "GLOBAL : GLOBAL (en)",
           "country": "GLOBAL : GLOBAL (EN)",
           "status": "ACTIVE",
@@ -66516,6 +66897,20 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/lv/monitori/lg-27ba45u-b",
           "publishUpdateDate": "2025-08-04"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-27ba45u-b",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "SE : SE (sv)",
+          "country": "SE : SE (SV)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/se/foretagsskarmar/alla-foretagsskarmar/27ba45u-b/",
+          "publishUpdateDate": "2025-12-04"
         }
       ]
     },
@@ -66538,6 +66933,20 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ee/monitorid/lg-27ba54qb-b",
           "publishUpdateDate": "2025-11-11"
+        },
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27ba54qb-b",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27ba54qb-t",
+          "publishUpdateDate": ""
         },
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -66568,10 +66977,31 @@
           "publishUpdateDate": "2025-11-11"
         },
         {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-27ba54qb-b",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-27ba54qb-t",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "SE : SE (sv)",
           "country": "SE : SE (SV)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/se/foretagsskarmar/alla-foretagsskarmar/27ba54qb-b/",
+          "publishUpdateDate": "2026-07-21"
+        },
+        {
+          "locale": "SE : SE (sv)",
+          "country": "SE : SE (SV)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/se/foretagsskarmar/alla-foretagsskarmar/27ba54qb-t/",
           "publishUpdateDate": "2026-07-21"
         }
       ]
@@ -66906,6 +67336,13 @@
           "publishUpdateDate": "2025-02-23"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27ba560-t",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "DISCONTINUED",
@@ -66960,6 +67397,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/no/skjermer/lg-27ba560-b",
           "publishUpdateDate": "2025-06-20"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-27ba560-t",
+          "publishUpdateDate": "2026-08-29"
         },
         {
           "locale": "PL : PL (pl)",
@@ -67237,6 +67681,20 @@
           "publishUpdateDate": "2025-02-28"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27ba65qb-b",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27ba65qb-t",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "GLOBAL : GLOBAL (en)",
           "country": "GLOBAL : GLOBAL (EN)",
           "status": "ACTIVE",
@@ -67293,6 +67751,20 @@
           "publishUpdateDate": "2024-11-25"
         },
         {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-27ba65qb-b",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-27ba65qb-t",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "RU : RU (ru)",
           "country": "RU : RU (RU)",
           "status": "ACTIVE",
@@ -67305,6 +67777,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ru/business/monitors/lg-27ba65qb-b",
           "publishUpdateDate": "2025-12-15"
+        },
+        {
+          "locale": "SE : SE (sv)",
+          "country": "SE : SE (SV)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/se/foretagsskarmar/alla-foretagsskarmar/27ba65qb-t/",
+          "publishUpdateDate": "2026-07-21"
         },
         {
           "locale": "SK : SK (sk)",
@@ -67547,6 +68026,13 @@
           "publishUpdateDate": "2025-06-30"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27ba75qb-t",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "GLOBAL : GLOBAL (en)",
           "country": "GLOBAL : GLOBAL (EN)",
           "status": "ACTIVE",
@@ -67596,11 +68082,25 @@
           "publishUpdateDate": "2025-07-01"
         },
         {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-27ba75qb-t",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "SE : SE (sv)",
           "country": "SE : SE (SV)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/se/foretagsskarmar/alla-foretagsskarmar/27ba75qb-b/",
           "publishUpdateDate": "2025-03-20"
+        },
+        {
+          "locale": "SE : SE (sv)",
+          "country": "SE : SE (SV)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/se/foretagsskarmar/alla-foretagsskarmar/27ba75qb-t/",
+          "publishUpdateDate": "2026-07-21"
         },
         {
           "locale": "SG : SG (en)",
@@ -68328,7 +68828,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27bk55yp-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27bk55yp-b/",
           "publishUpdateDate": "2024-02-27"
         }
       ]
@@ -68667,7 +69167,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27bl650c-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27bl650c-b/",
           "publishUpdateDate": "2020-06-08"
         }
       ]
@@ -69005,7 +69505,7 @@
         {
           "locale": "JP : JP (ja)",
           "country": "JP : JP (JA)",
-          "status": "DISCONTINUED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/jp/monitors/fhd-qhd/27bq410b-b/",
           "publishUpdateDate": "2026-06-10"
         }
@@ -70764,7 +71264,7 @@
         {
           "locale": "PE : PE (es)",
           "country": "PE : PE (ES)",
-          "status": "DISCONTINUED",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/pe/monitores/fhd-y-qhd/27g411a-b/",
           "publishUpdateDate": "2025-09-30"
         },
@@ -70910,9 +71410,16 @@
           "publishUpdateDate": ""
         },
         {
+          "locale": "AE_AR : AE (ar)",
+          "country": "AE",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ae_ar/consumer-monitors/lg-27g411b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "BR : BR (pt)",
           "country": "BR : BR (PT)",
-          "status": "HIDDEN",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/br/monitores/monitores-ultragear/27g411b-b/",
           "publishUpdateDate": "2026-05-20"
         },
@@ -70964,6 +71471,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/mx/monitores/monitores-gaming/27g411b-b/",
           "publishUpdateDate": "2026-05-20"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-27g411b-b",
+          "publishUpdateDate": ""
         },
         {
           "locale": "PA : PA (es)",
@@ -71030,6 +71544,13 @@
           "publishUpdateDate": "2026-06-11"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27g414b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "HK : HK (zh)",
           "country": "HK : HK (ZH)",
           "status": "ACTIVE",
@@ -71051,6 +71572,13 @@
           "publishUpdateDate": "2026-04-11"
         },
         {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-27g414b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "PE : PE (es)",
           "country": "PE : PE (ES)",
           "status": "ACTIVE",
@@ -71070,6 +71598,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ru/monitors/lg-27g414b-b",
           "publishUpdateDate": ""
+        },
+        {
+          "locale": "UK : GB (en)",
+          "country": "UK : GB (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/uk/monitors/gaming/27g414b-b/",
+          "publishUpdateDate": "2026-05-20"
         },
         {
           "locale": "VN : VN (vi)",
@@ -71182,7 +71717,7 @@
           "country": "GR : GR (EL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/gr/othones/lg-27g440a-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "KZ : KZ (ru)",
@@ -71398,6 +71933,13 @@
           "publishUpdateDate": "2026-05-01"
         },
         {
+          "locale": "CZ : CZ (cs)",
+          "country": "CZ : CZ (CS)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/cz/monitory/ultragear-gaming/27g523b-b/",
+          "publishUpdateDate": "2026-05-20"
+        },
+        {
           "locale": "DE : DE (de)",
           "country": "DE : DE (DE)",
           "status": "ACTIVE",
@@ -71416,6 +71958,20 @@
           "country": "EE : EE (ET)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ee/monitorid/lg-27g523b-b",
+          "publishUpdateDate": "2026-08-30"
+        },
+        {
+          "locale": "ES : ES (es)",
+          "country": "ES : ES (ES)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/es/monitores/monitores-ultragear-gaming/27g523b-b/",
+          "publishUpdateDate": "2026-06-23"
+        },
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27g523b-b",
           "publishUpdateDate": ""
         },
         {
@@ -71451,14 +72007,14 @@
           "country": "LT : LT (LT)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/lt/monitoriai/lg-27g523b-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-30"
         },
         {
           "locale": "LV : LV (lv)",
           "country": "LV : LV (LV)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/lv/monitori/lg-27g523b-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-30"
         },
         {
           "locale": "MX : MX (es)",
@@ -71466,6 +72022,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/mx/monitores/gaming/27g523b-b/",
           "publishUpdateDate": "2026-04-25"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-27g523b-b",
+          "publishUpdateDate": ""
         },
         {
           "locale": "PE : PE (es)",
@@ -71487,6 +72050,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/pl/monitory/ultragear-gaming/27g523b-b/",
           "publishUpdateDate": "2026-04-27"
+        },
+        {
+          "locale": "RO : RO (ro)",
+          "country": "RO : RO (RO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ro/monitoare/lg-27g523b-b",
+          "publishUpdateDate": "2026-08-28"
         },
         {
           "locale": "RU : RU (ru)",
@@ -71574,6 +72144,13 @@
           "publishUpdateDate": "2026-04-14"
         },
         {
+          "locale": "BR : BR (pt)",
+          "country": "BR : BR (PT)",
+          "status": "HIDDEN",
+          "prodUrl": "https://www.lg.com/br/monitores/monitores-ultragear/27g550b-b/",
+          "publishUpdateDate": "2026-06-30"
+        },
+        {
           "locale": "CL : CL (es)",
           "country": "CL : CL (ES)",
           "status": "ACTIVE",
@@ -71602,6 +72179,13 @@
           "publishUpdateDate": "2026-08-05"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27g550b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "HK : HK (zh)",
           "country": "HK : HK (ZH)",
           "status": "ACTIVE",
@@ -71623,6 +72207,13 @@
           "publishUpdateDate": "2026-04-14"
         },
         {
+          "locale": "KZ : KZ (ru)",
+          "country": "KZ : KZ (RU)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/kz/monitors/gaming/27g550b-b/",
+          "publishUpdateDate": "2026-05-20"
+        },
+        {
           "locale": "LT : LT (lt)",
           "country": "LT : LT (LT)",
           "status": "ACTIVE",
@@ -71637,6 +72228,13 @@
           "publishUpdateDate": "2026-08-05"
         },
         {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-27g550b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "PL : PL (pl)",
           "country": "PL : PL (PL)",
           "status": "ACTIVE",
@@ -71648,7 +72246,7 @@
           "country": "RO : RO (RO)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-27g550b-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "RU : RU (ru)",
@@ -71866,7 +72464,7 @@
           "country": "GR : GR (EL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/gr/othones/lg-27g610a-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "HK : HK (zh)",
@@ -72584,7 +73182,7 @@
           "country": "GR : GR (EL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/gr/othones/lg-27g810a-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "HK : HK (zh)",
@@ -72710,7 +73308,7 @@
           "country": "RO : RO (RO)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-27g810a-b",
-          "publishUpdateDate": "2026-07-24"
+          "publishUpdateDate": "2026-08-28"
         },
         {
           "locale": "RS : RS (sr)",
@@ -72915,7 +73513,7 @@
           "country": "GR : GR (EL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/gr/othones/lg-27g850a-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "HK : HK (zh)",
@@ -73032,7 +73630,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-27g850a-b",
           "publishUpdateDate": "2025-05-27"
         },
@@ -75584,7 +76182,7 @@
           "locale": "TH : TH (th)",
           "country": "TH : TH (TH)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/27gn650-b",
+          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/27gn650-b/",
           "publishUpdateDate": ""
         },
         {
@@ -78131,7 +78729,7 @@
           "locale": "TH : TH (th)",
           "country": "TH : TH (TH)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/27gp850-b",
+          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/27gp850-b/",
           "publishUpdateDate": ""
         },
         {
@@ -79356,7 +79954,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores-gaming/27gq50f-b/",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/lg-ultragear/27gq50f-b/",
           "publishUpdateDate": "2022-11-16"
         },
         {
@@ -79608,7 +80206,7 @@
           "locale": "TH : TH (th)",
           "country": "TH : TH (TH)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/27gq50f-b",
+          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/27gq50f-b/",
           "publishUpdateDate": "2023-12-31"
         },
         {
@@ -80219,7 +80817,7 @@
         {
           "locale": "PE : PE (es)",
           "country": "PE : PE (ES)",
-          "status": "DISCONTINUED",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/pe/monitores/gamer/27gr83q-b/",
           "publishUpdateDate": "2023-08-31"
         },
@@ -81486,7 +82084,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-27gs50f-b",
           "publishUpdateDate": "2024-08-27"
         },
@@ -83979,7 +84577,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-27gs95qe-b",
           "publishUpdateDate": "2024-03-26"
         },
@@ -84593,7 +85191,7 @@
           "country": "GR : GR (EL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/gr/othones/lg-27gx704a-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "HK : HK (zh)",
@@ -85194,7 +85792,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-27gx790a-b",
           "publishUpdateDate": "2025-05-28"
         },
@@ -85512,7 +86110,7 @@
           "country": "RO : RO (RO)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-27gx790b-b",
-          "publishUpdateDate": "2026-08-24"
+          "publishUpdateDate": "2026-08-28"
         },
         {
           "locale": "RS : RS (sr)",
@@ -85694,7 +86292,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-quirurgicos/27hj710s-w",
+          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-quirurgicos/27hj710s-w/",
           "publishUpdateDate": "2019-07-04"
         },
         {
@@ -86073,7 +86671,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-de-revision-clinica/27hj713c-b",
+          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-de-revision-clinica/27hj713c-b/",
           "publishUpdateDate": "2022-01-31"
         },
         {
@@ -86122,7 +86720,7 @@
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-cliniciens/27hj713c-b-moniteurs-medicaux/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-cliniciens-old/27hj713c-b-moniteurs-medicaux/",
           "publishUpdateDate": ""
         },
         {
@@ -86240,7 +86838,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-27hj713c-b",
           "publishUpdateDate": "2023-07-17"
         },
@@ -86283,14 +86881,14 @@
           "locale": "TH : TH (th)",
           "country": "TH : TH (TH)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/medical-displays/clinical-review-monitors/27hj713c",
+          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/medical-displays/clinical-review-monitors/27hj713c/",
           "publishUpdateDate": "2021-05-21"
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/clinical-monitors/27hj713c-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/clinical-monitors/27hj713c-b/",
           "publishUpdateDate": "2020-09-02"
         },
         {
@@ -86627,7 +87225,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/surgical-monitors/27hk510s-w",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/surgical-monitors/27hk510s-w/",
           "publishUpdateDate": "2020-09-02"
         },
         {
@@ -86733,7 +87331,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-quirurgicos/27hq710s-w",
+          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-quirurgicos/27hq710s-w/",
           "publishUpdateDate": "2023-06-30"
         },
         {
@@ -86761,7 +87359,7 @@
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-chirurgicaux/27hq710s-w-moniteur-chirurgical/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-chirurgicaux-old/27hq710s-w-moniteur-chirurgical/",
           "publishUpdateDate": "2023-01-06"
         },
         {
@@ -86887,7 +87485,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/surgical-monitors/27hq710s-w",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/surgical-monitors/27hq710s-w/",
           "publishUpdateDate": "2023-02-23"
         }
       ]
@@ -87035,7 +87633,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/clinical-monitors/27hs713c-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/clinical-monitors/27hs713c-b/",
           "publishUpdateDate": "2025-07-18"
         }
       ]
@@ -87250,7 +87848,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27m47vq-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27m47vq-b/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -88304,7 +88902,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/27md5kl-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-ultrafine/27md5kl-b/",
           "publishUpdateDate": "2020-10-30"
         }
       ]
@@ -89148,7 +89746,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27mk430h-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27mk430h-b/",
           "publishUpdateDate": "2020-10-21"
         }
       ]
@@ -89521,7 +90119,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27mk600m-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27mk600m-b/",
           "publishUpdateDate": "2020-10-21"
         },
         {
@@ -93892,7 +94490,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ips/27mr400-b",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ips/27mr400-b/",
           "publishUpdateDate": "2025-02-28"
         },
         {
@@ -94115,7 +94713,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-27mr400-b",
           "publishUpdateDate": "2023-11-09"
         },
@@ -94515,7 +95113,7 @@
           "locale": "TR : TR (tr)",
           "country": "TR : TR (TR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/tr/business/monitorler/tum-monitorler/fhd-qhd/27ms550-b",
+          "prodUrl": "https://www.lg.com/tr/business/monitorler/tum-monitorler/fhd-qhd/27ms550-b/",
           "publishUpdateDate": "2025-11-30"
         },
         {
@@ -95312,7 +95910,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27qn600-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27qn600-b/",
           "publishUpdateDate": "2020-10-29"
         },
         {
@@ -95776,7 +96374,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27qn880-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/27qn880-b/",
           "publishUpdateDate": "2020-10-29"
         },
         {
@@ -96829,7 +97427,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-27sr50f-w",
           "publishUpdateDate": "2024-03-25"
         },
@@ -96928,7 +97526,7 @@
           "locale": "TH : TH (th)",
           "country": "TH : TH (TH)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/27sr50f-w",
+          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/27sr50f-w/",
           "publishUpdateDate": ""
         },
         {
@@ -97611,7 +98209,7 @@
         {
           "locale": "PE : PE (es)",
           "country": "PE : PE (ES)",
-          "status": "DISCONTINUED",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/pe/monitores/fhd-y-qhd/27u411a-b/",
           "publishUpdateDate": "2025-12-22"
         },
@@ -97731,7 +98329,7 @@
         {
           "locale": "CN : CN (zh)",
           "country": "CN : CN (ZH)",
-          "status": "SUSPENDED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/cn/monitors/lg-27u411b-b",
           "publishUpdateDate": "2026-08-05"
         },
@@ -97741,6 +98339,20 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/co/monitores/fhd-qhd/27u411b-b/",
           "publishUpdateDate": "2026-05-01"
+        },
+        {
+          "locale": "CZ : CZ (cs)",
+          "country": "CZ : CZ (CS)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/cz/monitory/ultrafine-uhd-4k-monitory/27u411b-b/",
+          "publishUpdateDate": "2026-04-27"
+        },
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27u411b-b",
+          "publishUpdateDate": ""
         },
         {
           "locale": "HK : HK (zh)",
@@ -97785,6 +98397,13 @@
           "publishUpdateDate": "2026-04-30"
         },
         {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-27u411b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "PE : PE (es)",
           "country": "PE : PE (ES)",
           "status": "ACTIVE",
@@ -97792,11 +98411,25 @@
           "publishUpdateDate": "2026-05-28"
         },
         {
+          "locale": "RO : RO (ro)",
+          "country": "RO : RO (RO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ro/monitoare/lg-27u411b-b",
+          "publishUpdateDate": "2026-08-25"
+        },
+        {
           "locale": "RU : RU (ru)",
           "country": "RU : RU (RU)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ru/monitors/lg-27u411b-b",
           "publishUpdateDate": ""
+        },
+        {
+          "locale": "SE : SE (sv)",
+          "country": "SE : SE (SV)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/se/monitor/full-hd-qhd/27u411b-b/",
+          "publishUpdateDate": "2026-04-30"
         },
         {
           "locale": "SG : SG (en)",
@@ -98282,7 +98915,7 @@
           "country": "GR : GR (EL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/gr/othones/lg-27u511sa-w",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "HK : HK (zh)",
@@ -98498,7 +99131,7 @@
         {
           "locale": "BR : BR (pt)",
           "country": "BR : BR (PT)",
-          "status": "ACTIVE",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/br/monitores/smart-monitors/27u511sb-b/",
           "publishUpdateDate": "2026-05-29"
         },
@@ -98918,6 +99551,13 @@
           "publishUpdateDate": "2026-08-14"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27u710b-b-27u710b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "IN : IN (en)",
           "country": "IN : IN (EN)",
           "status": "ACTIVE",
@@ -98960,11 +99600,25 @@
           "publishUpdateDate": "2026-04-27"
         },
         {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-27u710b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "PA : PA (es)",
           "country": "PA : PA (ES)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/pa/monitores/ultrafine-monitores/27u710b-b/",
           "publishUpdateDate": "2026-05-20"
+        },
+        {
+          "locale": "SE : SE (sv)",
+          "country": "SE : SE (SV)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/se/monitor/ultrafine-uhd-4k-5k/27u710b-b/",
+          "publishUpdateDate": "2026-07-21"
         },
         {
           "locale": "UK : GB (en)",
@@ -99001,6 +99655,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/co/monitores/uhd-4k/27u711b-b/",
           "publishUpdateDate": "2026-05-01"
+        },
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27u711b-b",
+          "publishUpdateDate": ""
         },
         {
           "locale": "HK : HK (zh)",
@@ -99394,7 +100055,7 @@
           "country": "CN : CN (ZH)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/cn/monitors/lg-27u730b-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "CZ : CZ (cs)",
@@ -99409,6 +100070,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ee/monitorid/lg-27u730b-b",
           "publishUpdateDate": "2026-08-14"
+        },
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-27u730b-b",
+          "publishUpdateDate": ""
         },
         {
           "locale": "HK : HK (zh)",
@@ -99460,6 +100128,13 @@
           "publishUpdateDate": "2026-08-05"
         },
         {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-27u730b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "PE : PE (es)",
           "country": "PE : PE (ES)",
           "status": "ACTIVE",
@@ -99479,6 +100154,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/sa_en/monitors/uhd-4k-5k/27u730b-b/",
           "publishUpdateDate": "2026-04-27"
+        },
+        {
+          "locale": "SA_EN : SA (en)",
+          "country": "SA",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/sa_en/monitors/uhd-4k-5k/27u730b-b-ltt2001/",
+          "publishUpdateDate": "2026-08-25"
         },
         {
           "locale": "SG : SG (en)",
@@ -99682,7 +100364,7 @@
         {
           "locale": "BR : BR (pt)",
           "country": "BR : BR (PT)",
-          "status": "ACTIVE",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/br/monitores/smart-monitors/27u731sb-w/",
           "publishUpdateDate": "2026-05-29"
         },
@@ -101339,7 +102021,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ips/27uk580-b",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ips/27uk580-b/",
           "publishUpdateDate": "2022-11-15"
         },
         {
@@ -102317,7 +102999,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/lg-ultrafine/27ul500-w",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/lg-ultrafine/27ul500-w/",
           "publishUpdateDate": "2024-03-01"
         },
         {
@@ -104146,7 +104828,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/lg-monitor/27un880-b",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/lg-monitor/27un880-b/",
           "publishUpdateDate": "2022-10-06"
         },
         {
@@ -105138,7 +105820,7 @@
           "locale": "TH : TH (th)",
           "country": "TH : TH (TH)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-ultrafine/27up600-w",
+          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-ultrafine/27up600-w/",
           "publishUpdateDate": ""
         },
         {
@@ -105710,7 +106392,7 @@
           "country": "GR : GR (EL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/gr/othones/lg-27up650k-w",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "HK : HK (zh)",
@@ -105820,7 +106502,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-27up650k-w",
           "publishUpdateDate": "2025-04-02"
         },
@@ -106533,7 +107215,7 @@
           "country": "GR : GR (EL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/gr/othones/lg-27up850k-w",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "HK : HK (zh)",
@@ -107345,6 +108027,28 @@
       ]
     },
     {
+      "modelName": "27UP85ZK-W",
+      "salesModelCode": "27UP85ZK-W",
+      "salesSuffixCode": "AEU",
+      "category": "Monitors",
+      "locales": [
+        {
+          "locale": "DE : DE (de)",
+          "country": "DE : DE (DE)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/de/monitore/uhd-4k-5k/27up85zk-w/",
+          "publishUpdateDate": "2026-04-29"
+        },
+        {
+          "locale": "UK : GB (en)",
+          "country": "UK : GB (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/uk/monitors/uhd-4k-5k/27up85zk-w/",
+          "publishUpdateDate": "2026-05-01"
+        }
+      ]
+    },
+    {
       "modelName": "27UQ750-W",
       "salesModelCode": "27UQ750-W",
       "salesSuffixCode": "AMA",
@@ -107995,7 +108699,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/lg-ultrafine/27us500-w",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/lg-ultrafine/27us500-w/",
           "publishUpdateDate": "2024-09-22"
         },
         {
@@ -108232,7 +108936,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-27us500-w",
           "publishUpdateDate": "2024-11-14"
         },
@@ -108298,6 +109002,21 @@
           "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/za/monitors/ultrafine-uhd-4k/27us500-w/",
           "publishUpdateDate": "2025-05-22"
+        }
+      ]
+    },
+    {
+      "modelName": "27US50Z-W",
+      "salesModelCode": "27US50Z-W",
+      "salesSuffixCode": "AEK",
+      "category": "Monitors",
+      "locales": [
+        {
+          "locale": "UK : GB (en)",
+          "country": "UK : GB (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/uk/monitors/uhd-4k-5k/27us50z-w/",
+          "publishUpdateDate": "2026-04-30"
         }
       ]
     },
@@ -108415,14 +109134,14 @@
         {
           "locale": "ES : ES (es)",
           "country": "ES : ES (ES)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/es/monitores/monitores-ultrafine-uhd-4k-5k/27us550-w/",
           "publishUpdateDate": "2024-12-30"
         },
         {
           "locale": "ES : ES (es)",
           "country": "ES : ES (ES)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/es/outlet/outlet-informatica/monitores/27us550-w-outlet/",
           "publishUpdateDate": "2025-10-09"
         },
@@ -108884,7 +109603,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/lg-monitor/28mq780-b",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/lg-monitor/28mq780-b/",
           "publishUpdateDate": "2022-09-28"
         },
         {
@@ -109571,7 +110290,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/28mt48df-pz",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/28mt48df-pz/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -116887,7 +117606,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ultrawide/29wn600-w",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ultrawide/29wn600-w/",
           "publishUpdateDate": "2022-09-28"
         },
         {
@@ -117877,7 +118596,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ultrawide/29wq500-b",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ultrawide/29wq500-b/",
           "publishUpdateDate": "2025-02-28"
         },
         {
@@ -118602,7 +119321,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-de-diagnostico/31hn713d-b",
+          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-de-diagnostico/31hn713d-b/",
           "publishUpdateDate": "2022-03-12"
         },
         {
@@ -118658,14 +119377,14 @@
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-de-diagnostic/31hn713d-ba-moniteur-de-diagnostic-mammaire/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-de-diagnostic-old/31hn713d-ba-moniteur-de-diagnostic-mammaire/",
           "publishUpdateDate": "2022-06-16"
         },
         {
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-de-diagnostic/lg-31hn713d-m-moniteur-de-diagnostic/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-de-diagnostic-old/lg-31hn713d-m-moniteur-de-diagnostic/",
           "publishUpdateDate": "2025-08-04"
         },
         {
@@ -118847,14 +119566,14 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/31hn713d-ba",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/31hn713d-ba/",
           "publishUpdateDate": "2020-11-25"
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/31hn713d-m",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/31hn713d-m/",
           "publishUpdateDate": "2025-02-21"
         },
         {
@@ -119301,6 +120020,13 @@
           "publishUpdateDate": "2026-02-15"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-32br55uk-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "HK : HK (zh)",
           "country": "HK : HK (ZH)",
           "status": "ACTIVE",
@@ -119334,6 +120060,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/lv/monitori/lg-32br55uk-b",
           "publishUpdateDate": "2026-02-17"
+        },
+        {
+          "locale": "SE : SE (sv)",
+          "country": "SE : SE (SV)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/se/monitor/foeretagsskaermar/alla-foeretagsskaermar/32br55uk-b/",
+          "publishUpdateDate": "2025-10-23"
         }
       ]
     },
@@ -119698,7 +120431,7 @@
         {
           "locale": "BR : BR (pt)",
           "country": "BR : BR (PT)",
-          "status": "ACTIVE",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/br/monitores/monitores-ultragear/32g403b-b/",
           "publishUpdateDate": "2026-06-17"
         },
@@ -120083,6 +120816,13 @@
           "publishUpdateDate": "2026-06-11"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-32g620b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
@@ -120143,7 +120883,7 @@
           "country": "LT : LT (LT)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/lt/monitoriai/lg-32g620b-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-30"
         },
         {
           "locale": "LV : LV (lv)",
@@ -120158,6 +120898,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/mx/monitores/gaming/32g620b-b/",
           "publishUpdateDate": "2026-04-25"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-32g620b-b",
+          "publishUpdateDate": ""
         },
         {
           "locale": "PE : PE (es)",
@@ -120188,6 +120935,13 @@
           "publishUpdateDate": "2026-05-20"
         },
         {
+          "locale": "SE : SE (sv)",
+          "country": "SE : SE (SV)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/se/monitor/ultragear-gaming/32g620b-b/",
+          "publishUpdateDate": "2026-07-21"
+        },
+        {
           "locale": "SG : SG (en)",
           "country": "SG : SG (EN)",
           "status": "ACTIVE",
@@ -120214,6 +120968,13 @@
           "country": "CN : CN (ZH)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/cn/monitors/lg-32g650b-b",
+          "publishUpdateDate": "2026-08-24"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-32g650b-b",
           "publishUpdateDate": ""
         }
       ]
@@ -122648,7 +123409,7 @@
           "locale": "TH : TH (th)",
           "country": "TH : TH (TH)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/32gn650-b",
+          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/32gn650-b/",
           "publishUpdateDate": ""
         },
         {
@@ -124738,7 +125499,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-32gs60qc-b",
           "publishUpdateDate": "2024-08-21"
         },
@@ -126470,7 +127231,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-32gs95uv-b",
           "publishUpdateDate": "2025-02-21"
         },
@@ -126831,7 +127592,7 @@
           "country": "GR : GR (EL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/gr/othones/lg-32gx850a-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "HK : HK (zh)",
@@ -127133,7 +127894,7 @@
           "country": "GR : GR (EL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/gr/othones/lg-32gx870a-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "HK : HK (zh)",
@@ -127259,7 +128020,7 @@
           "locale": "CA_FR : CA (fr)",
           "country": "CA",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/ca_fr/moniteurs/gaming/32gx870b/",
+          "prodUrl": "https://www.lg.com/ca_fr/moniteurs/ultragear-gaming-oled/32gx870b-b/",
           "publishUpdateDate": "2026-04-30"
         },
         {
@@ -127302,7 +128063,7 @@
           "country": "IL : IL (IW)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/il/monitors/lg-32gx870b-b",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-26"
         },
         {
           "locale": "JP : JP (ja)",
@@ -127330,6 +128091,13 @@
           "country": "RO : RO (RO)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-32gx870b-b",
+          "publishUpdateDate": "2026-08-24"
+        },
+        {
+          "locale": "RU : RU (ru)",
+          "country": "RU : RU (RU)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ru/monitors/lg-32gx870b-b",
           "publishUpdateDate": ""
         },
         {
@@ -127345,6 +128113,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/tr/monitor/smart-monitorleri/32gx870b-b/",
           "publishUpdateDate": "2026-07-21"
+        },
+        {
+          "locale": "UK : GB (en)",
+          "country": "UK : GB (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/uk/monitors/gaming/32gx870b-b/",
+          "publishUpdateDate": "2026-04-30"
         },
         {
           "locale": "VN : VN (vi)",
@@ -127477,7 +128252,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-de-diagnostico/32hl512d-b",
+          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-de-diagnostico/32hl512d-b/",
           "publishUpdateDate": "2021-07-27"
         },
         {
@@ -127526,7 +128301,7 @@
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-de-diagnostic/32hl512d-b-moniteur-de-diagnostic/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-de-diagnostic-old/32hl512d-b-moniteur-de-diagnostic/",
           "publishUpdateDate": "2023-07-25"
         },
         {
@@ -127722,7 +128497,7 @@
           "locale": "TR : TR (tr)",
           "country": "TR : TR (TR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/tr/business/monitorler/medikal-goruntuleme-teknolojileri/teshis-monitorler/32hl512d-b",
+          "prodUrl": "https://www.lg.com/tr/business/monitorler/medikal-goruntuleme-teknolojileri/teshis-monitorler/32hl512d-b/",
           "publishUpdateDate": "2020-04-17"
         },
         {
@@ -127736,14 +128511,14 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/32hl512d-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/32hl512d-b/",
           "publishUpdateDate": "2020-09-02"
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/32hl512d-m",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/32hl512d-m/",
           "publishUpdateDate": "2025-02-21"
         },
         {
@@ -127898,7 +128673,7 @@
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-chirurgicaux/32hl710s-w-moniteur-chirurgical/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-chirurgicaux-old/32hl710s-w-moniteur-chirurgical/",
           "publishUpdateDate": "2022-06-16"
         },
         {
@@ -128094,14 +128869,14 @@
           "locale": "TR : TR (tr)",
           "country": "TR : TR (TR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/tr/business/monitorler/medikal-goruntuleme-teknolojileri/cerrahi-monitorler/32hl710s-w",
+          "prodUrl": "https://www.lg.com/tr/business/monitorler/medikal-goruntuleme-teknolojileri/cerrahi-monitorler/32hl710s-w/",
           "publishUpdateDate": "2021-02-26"
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/surgical-monitors/32hl710s-w",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/surgical-monitors/32hl710s-w/",
           "publishUpdateDate": "2020-09-02"
         },
         {
@@ -128249,7 +129024,7 @@
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-chirurgicaux/32hl714s-w-moniteur-chirurgical/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-chirurgicaux-old/32hl714s-w-moniteur-chirurgical/",
           "publishUpdateDate": "2023-01-05"
         },
         {
@@ -128424,14 +129199,14 @@
           "locale": "TR : TR (tr)",
           "country": "TR : TR (TR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/tr/business/monitorler/medikal-goruntuleme-teknolojileri/cerrahi-monitorler/32hl714s-w",
+          "prodUrl": "https://www.lg.com/tr/business/monitorler/medikal-goruntuleme-teknolojileri/cerrahi-monitorler/32hl714s-w/",
           "publishUpdateDate": "2021-03-09"
         },
         {
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/surgical-monitors/32hl714s-w",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/surgical-monitors/32hl714s-w/",
           "publishUpdateDate": "2020-08-26"
         },
         {
@@ -128544,7 +129319,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-de-diagnostico/32hq713d-b",
+          "prodUrl": "https://www.lg.com/co/business/monitores/medical-displays/monitores-de-diagnostico/32hq713d-b/",
           "publishUpdateDate": "2024-10-07"
         },
         {
@@ -128586,7 +129361,7 @@
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-de-diagnostic/lg-32hq713d-m-moniteur-de-diagnostic/",
+          "prodUrl": "https://www.lg.com/fr/business/moniteurs-pcs/ecran-medicaux/moniteurs-de-diagnostic-old/lg-32hq713d-m-moniteur-de-diagnostic/",
           "publishUpdateDate": "2025-08-04"
         },
         {
@@ -128719,7 +129494,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/32hq713d-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/medical-displays/diagnostic-monitors/32hq713d-b/",
           "publishUpdateDate": "2023-05-19"
         },
         {
@@ -129765,7 +130540,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/32ml600m-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/32ml600m-b/",
           "publishUpdateDate": "2020-10-28"
         }
       ]
@@ -130840,7 +131615,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ips/32mr50c-b",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ips/32mr50c-b/",
           "publishUpdateDate": "2025-02-28"
         },
         {
@@ -132749,7 +133524,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-32sr50f-w",
           "publishUpdateDate": "2024-03-23"
         },
@@ -133455,6 +134230,13 @@
           "publishUpdateDate": "2026-08-11"
         },
         {
+          "locale": "AE_AR : AE (ar)",
+          "country": "AE",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ae_ar/consumer-monitors/lg-32u501sb-w",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
@@ -133474,6 +134256,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/in/monitors/smart-monitors/32u501sb-b/",
           "publishUpdateDate": "2026-05-16"
+        },
+        {
+          "locale": "IT : IT (it)",
+          "country": "IT : IT (IT)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/it/monitor/smart-my-view/32u501sb-b-aeu/",
+          "publishUpdateDate": "2026-04-27"
         },
         {
           "locale": "JP : JP (ja)",
@@ -133888,7 +134677,7 @@
         {
           "locale": "BR : BR (pt)",
           "country": "BR : BR (PT)",
-          "status": "ACTIVE",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/br/monitores/smart-monitors/32u701sb-b/",
           "publishUpdateDate": "2026-06-01"
         },
@@ -133935,11 +134724,32 @@
           "publishUpdateDate": "2026-06-12"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-32u701sb-b-32u701sb-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "IN : IN (en)",
           "country": "IN : IN (EN)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/in/monitors/smart-monitors/32u701sb-b/",
           "publishUpdateDate": "2026-05-19"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-32u701sb-b",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "SE : SE (sv)",
+          "country": "SE : SE (SV)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/se/monitor/smart-monitor/32u701sb-b/",
+          "publishUpdateDate": "2026-07-21"
         },
         {
           "locale": "TR : TR (tr)",
@@ -134465,6 +135275,13 @@
       "category": "Monitors",
       "locales": [
         {
+          "locale": "CZ : CZ (cs)",
+          "country": "CZ : CZ (CS)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/cz/monitory/smart/32u721sb-w/",
+          "publishUpdateDate": "2026-04-27"
+        },
+        {
           "locale": "ID : ID (in)",
           "country": "ID : ID (IN)",
           "status": "ACTIVE",
@@ -134491,6 +135308,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/sg/consumer-monitors/smart-monitors/32u721sb-w/",
           "publishUpdateDate": "2026-04-28"
+        },
+        {
+          "locale": "UK : GB (en)",
+          "country": "UK : GB (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/uk/monitors/ultrawide/32u721sb-w/",
+          "publishUpdateDate": "2026-04-30"
         }
       ]
     },
@@ -134694,14 +135518,14 @@
         {
           "locale": "ES : ES (es)",
           "country": "ES : ES (ES)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/es/monitores/myview-smart-monitor/32u850sa-w/",
           "publishUpdateDate": "2025-06-04"
         },
         {
           "locale": "ES : ES (es)",
           "country": "ES : ES (ES)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/es/outlet/outlet-informatica/monitores/32u850sa-w-outlet/",
           "publishUpdateDate": "2025-09-22"
         },
@@ -135488,7 +136312,7 @@
           "locale": "TR : TR (tr)",
           "country": "TR : TR (TR)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/tr/business/monitorler/tum-monitorler/lg-akilli-monitor/32u889sa-w",
+          "prodUrl": "https://www.lg.com/tr/business/monitorler/tum-monitorler/lg-akilli-monitor/32u889sa-w/",
           "publishUpdateDate": "2025-11-30"
         },
         {
@@ -135714,7 +136538,7 @@
           "country": "GR : GR (EL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/gr/othones/lg-32u990a-s",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-26"
         },
         {
           "locale": "HK : HK (zh)",
@@ -135817,7 +136641,7 @@
         {
           "locale": "PL : PL (pl)",
           "country": "PL : PL (PL)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/pl/monitory/ultrafine-4k-5k-uhd/32u990a-s/",
           "publishUpdateDate": "2025-12-11"
         },
@@ -136874,7 +137698,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/lg-monitor/32uk580-b",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/lg-monitor/32uk580-b/",
           "publishUpdateDate": "2022-11-03"
         },
         {
@@ -137419,13 +138243,6 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/de/business/alle-monitore/32ul950-w/",
           "publishUpdateDate": "2020-12-07"
-        },
-        {
-          "locale": "DE : DE (de)",
-          "country": "DE : DE (DE)",
-          "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/de/business/alle-monitore/32UL950-W/",
-          "publishUpdateDate": "2019-03-13"
         },
         {
           "locale": "DK : DK (da)",
@@ -138128,7 +138945,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/lg-ultrafine/32un550-w",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/lg-ultrafine/32un550-w/",
           "publishUpdateDate": "2022-09-28"
         },
         {
@@ -138640,7 +139457,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-32un650k-w",
           "publishUpdateDate": "2025-01-27"
         },
@@ -139546,7 +140363,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-32un880k-b",
           "publishUpdateDate": "2024-11-14"
         },
@@ -141431,7 +142248,7 @@
           "locale": "TH : TH (th)",
           "country": "TH : TH (TH)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-ultrafine/32ur500-b",
+          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-ultrafine/32ur500-b/",
           "publishUpdateDate": ""
         },
         {
@@ -141648,7 +142465,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-32ur500k-b",
           "publishUpdateDate": "2025-04-28"
         },
@@ -142325,7 +143142,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-ultrawide/34ba75qe-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-ultrawide/34ba75qe-b/",
           "publishUpdateDate": "2025-01-10"
         }
       ]
@@ -142683,9 +143500,16 @@
     {
       "modelName": "34BQ65VA-B",
       "salesModelCode": "34BQ65VA-B",
-      "salesSuffixCode": "AUB",
+      "salesSuffixCode": "AEU",
       "category": "Monitors",
       "locales": [
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-34bq65va-b",
+          "publishUpdateDate": ""
+        },
         {
           "locale": "GLOBAL : GLOBAL (en)",
           "country": "GLOBAL : GLOBAL (EN)",
@@ -143094,7 +143918,7 @@
           "country": "EE : EE (ET)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ee/monitorid/lg-34g600a-b",
-          "publishUpdateDate": "2025-09-27"
+          "publishUpdateDate": "2026-08-26"
         },
         {
           "locale": "ES : ES (es)",
@@ -143199,14 +144023,14 @@
           "country": "LT : LT (LT)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/lt/monitoriai/lg-34g600a-b",
-          "publishUpdateDate": "2025-09-29"
+          "publishUpdateDate": "2026-08-28"
         },
         {
           "locale": "LV : LV (lv)",
           "country": "LV : LV (LV)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/lv/monitori/lg-34g600a-b",
-          "publishUpdateDate": "2025-09-27"
+          "publishUpdateDate": "2026-08-26"
         },
         {
           "locale": "MX : MX (es)",
@@ -143460,7 +144284,7 @@
           "country": "GR : GR (EL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/gr/othones/lg-34g630a-b",
-          "publishUpdateDate": "2026-03-30"
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "HK : HK (zh)",
@@ -145940,7 +146764,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-34gs95qe-b",
           "publishUpdateDate": "2025-02-12"
         },
@@ -146771,7 +147595,7 @@
         {
           "locale": "PE : PE (es)",
           "country": "PE : PE (ES)",
-          "status": "HIDDEN",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/pe/monitores/gamer/34gx90sb-w/",
           "publishUpdateDate": "2026-06-12"
         },
@@ -146785,7 +147609,7 @@
         {
           "locale": "VN : VN (vi)",
           "country": "VN : VN (VI)",
-          "status": "ACTIVE",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/vn/man-hinh-may-tinh/man-hinh-gaming-oled-ultragear-oled/34gx90sb-w/",
           "publishUpdateDate": "2026-06-17"
         }
@@ -147437,7 +148261,14 @@
           "country": "CN : CN (ZH)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/cn/monitors/lg-34u601b-b",
-          "publishUpdateDate": "2026-05-28"
+          "publishUpdateDate": "2026-08-24"
+        },
+        {
+          "locale": "DE : DE (de)",
+          "country": "DE : DE (DE)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/de/monitore/ultrawide/34u601b/",
+          "publishUpdateDate": "2026-04-27"
         },
         {
           "locale": "EE : EE (et)",
@@ -147452,6 +148283,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/es/monitores/monitores-ultrawide/34u601b-b/",
           "publishUpdateDate": "2026-04-24"
+        },
+        {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-34u601b-b",
+          "publishUpdateDate": ""
         },
         {
           "locale": "ID : ID (in)",
@@ -147508,6 +148346,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/nl/monitoren/ultrawide-monitoren/34u601b-b/",
           "publishUpdateDate": "2026-04-27"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-34u601b-b",
+          "publishUpdateDate": ""
         },
         {
           "locale": "ZA : ZA (en)",
@@ -147613,7 +148458,7 @@
           "country": "IL : IL (IW)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/il/monitors/lg-34u601sa-w",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-26"
         },
         {
           "locale": "NO : NO (no)",
@@ -147704,7 +148549,7 @@
         {
           "locale": "BR : BR (pt)",
           "country": "BR : BR (PT)",
-          "status": "ACTIVE",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/br/monitores/monitores-ultrawide/34u620b-b/",
           "publishUpdateDate": "2026-06-17"
         },
@@ -147769,7 +148614,7 @@
           "country": "RO : RO (RO)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-34u620b-b",
-          "publishUpdateDate": "2026-08-24"
+          "publishUpdateDate": "2026-08-28"
         },
         {
           "locale": "RS : RS (sr)",
@@ -147784,6 +148629,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ru/monitors/lg-34u620b-b",
           "publishUpdateDate": ""
+        },
+        {
+          "locale": "UK : GB (en)",
+          "country": "UK : GB (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/uk/monitors/ultrawide/34u620b-b/",
+          "publishUpdateDate": "2026-04-28"
         }
       ]
     },
@@ -147806,6 +148658,21 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/mx/monitores/monitores-smart/34u620sb-b/",
           "publishUpdateDate": "2026-06-17"
+        }
+      ]
+    },
+    {
+      "modelName": "34U62TB-B",
+      "salesModelCode": "34U62TB-B",
+      "salesSuffixCode": "AEK",
+      "category": "Monitors",
+      "locales": [
+        {
+          "locale": "UK : GB (en)",
+          "country": "UK : GB (EN)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/uk/monitors/ultrawide/34u62tb-b/",
+          "publishUpdateDate": "2026-04-28"
         }
       ]
     },
@@ -147900,6 +148767,13 @@
           "publishUpdateDate": "2026-06-12"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-34u640b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
           "status": "ACTIVE",
@@ -147970,6 +148844,13 @@
           "publishUpdateDate": "2026-04-27"
         },
         {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-34u640b-b-34u640b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "PH : PH (en)",
           "country": "PH : PH (EN)",
           "status": "ACTIVE",
@@ -147981,7 +148862,7 @@
           "country": "RO : RO (RO)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-34u640b-b",
-          "publishUpdateDate": "2026-08-24"
+          "publishUpdateDate": "2026-08-28"
         },
         {
           "locale": "RS : RS (sr)",
@@ -147995,7 +148876,7 @@
           "country": "RU : RU (RU)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ru/monitors/lg-34u640b-b",
-          "publishUpdateDate": "2026-07-21"
+          "publishUpdateDate": "2026-08-28"
         },
         {
           "locale": "SA : SA (ar)",
@@ -148030,7 +148911,7 @@
     {
       "modelName": "34U640SB-W",
       "salesModelCode": "34U640SB-W",
-      "salesSuffixCode": "AJL",
+      "salesSuffixCode": "AEU",
       "category": "Monitors",
       "locales": [
         {
@@ -148041,11 +148922,32 @@
           "publishUpdateDate": "2026-05-20"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-34u640sb-w-34u640sb-w",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "JP : JP (ja)",
           "country": "JP : JP (JA)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/jp/monitors/smart-monitors/34u640sb-w/",
           "publishUpdateDate": "2026-04-29"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-34u640sb-w",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "SE : SE (sv)",
+          "country": "SE : SE (SV)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/se/monitor/ultrawide-monitor/34u640sb-w/",
+          "publishUpdateDate": "2026-07-21"
         }
       ]
     },
@@ -154801,7 +155703,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/34wn650-w",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-monitor/34wn650-w/",
           "publishUpdateDate": "2020-11-11"
         },
         {
@@ -157102,7 +158004,7 @@
           "locale": "TH : TH (th)",
           "country": "TH : TH (TH)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-ultrawide/34wp65g-b",
+          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-ultrawide/34wp65g-b/",
           "publishUpdateDate": ""
         },
         {
@@ -157979,7 +158881,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ultrawide/34wq500-b",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ultrawide/34wq500-b/",
           "publishUpdateDate": "2025-02-28"
         },
         {
@@ -158118,7 +159020,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-34wq500-b",
           "publishUpdateDate": "2024-08-21"
         },
@@ -158632,7 +159534,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-34wq650-w",
           "publishUpdateDate": "2024-07-24"
         },
@@ -159477,7 +160379,7 @@
           "locale": "TH : TH (th)",
           "country": "TH : TH (TH)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-ultrawide/34wr50qc-b",
+          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-ultrawide/34wr50qc-b/",
           "publishUpdateDate": "2024-01-31"
         },
         {
@@ -159869,7 +160771,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-34wr50qk-b",
           "publishUpdateDate": "2024-10-21"
         },
@@ -161639,7 +162541,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-35wn75cp-b",
           "publishUpdateDate": "2023-04-11"
         },
@@ -161808,7 +162710,7 @@
         {
           "locale": "PL : PL (pl)",
           "country": "PL : PL (PL)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/pl/monitory/ultragear-gaming/37g800a-b/",
           "publishUpdateDate": "2026-03-05"
         },
@@ -162173,6 +163075,13 @@
           "publishUpdateDate": "2025-06-30"
         },
         {
+          "locale": "FI : FI (fi)",
+          "country": "FI : FI (FI)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/fi/naytot/lg-38br85qc-w",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "GLOBAL : GLOBAL (en)",
           "country": "GLOBAL : GLOBAL (EN)",
           "status": "ACTIVE",
@@ -162192,6 +163101,20 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/hu/monitorok/ultrawide-monitor/38br85qc-w/",
           "publishUpdateDate": "2026-02-04"
+        },
+        {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-38br85qc-w",
+          "publishUpdateDate": ""
+        },
+        {
+          "locale": "RO : RO (ro)",
+          "country": "RO : RO (RO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ro/monitoare/lg-38br85qc-w",
+          "publishUpdateDate": "2026-08-28"
         },
         {
           "locale": "RS : RS (sr)",
@@ -164561,14 +165484,14 @@
         {
           "locale": "HK : HK (zh)",
           "country": "HK : HK (ZH)",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/hk/monitors/ultrawide/38wr85qc-w/",
           "publishUpdateDate": "2024-06-13"
         },
         {
           "locale": "HK_EN : HK (en)",
           "country": "HK",
-          "status": "ACTIVE",
+          "status": "DISCONTINUED",
           "prodUrl": "https://www.lg.com/hk_en/monitors/ultrawide/38wr85qc-w/",
           "publishUpdateDate": "2024-06-13"
         },
@@ -164687,7 +165610,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-38wr85qc-w",
           "publishUpdateDate": "2024-01-10"
         },
@@ -165714,7 +166637,7 @@
         {
           "locale": "PE : PE (es)",
           "country": "PE : PE (ES)",
-          "status": "HIDDEN",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/pe/monitores/ultragear-gaming-oled/39gx90sb-w/",
           "publishUpdateDate": "2026-06-17"
         }
@@ -165771,7 +166694,7 @@
         {
           "locale": "BR : BR (pt)",
           "country": "BR : BR (PT)",
-          "status": "ACTIVE",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/br/monitores/monitores-ultragear-oled/39gx950b-b/",
           "publishUpdateDate": "2026-06-17"
         },
@@ -165920,13 +166843,20 @@
           "country": "RO : RO (RO)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-39gx950b-b",
-          "publishUpdateDate": "2026-08-13"
+          "publishUpdateDate": "2026-08-28"
         },
         {
           "locale": "RS : RS (sr)",
           "country": "RS : RS (SR)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/rs/monitori/lg-39gx950b-b",
+          "publishUpdateDate": "2026-08-26"
+        },
+        {
+          "locale": "RU : RU (ru)",
+          "country": "RU : RU (RU)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/ru/monitors/lg-39gx950b-b",
           "publishUpdateDate": ""
         },
         {
@@ -166202,7 +167132,7 @@
           "country": "GR : GR (EL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/gr/othones/lg-40u990a-w",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "HR : HR (hr)",
@@ -166238,6 +167168,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/in/monitors/uhd-4k-5k/40u990a-w/",
           "publishUpdateDate": "2026-04-25"
+        },
+        {
+          "locale": "IT : IT (it)",
+          "country": "IT : IT (IT)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/it/monitor/ultra-hd-4k/40u990a-w-aeu/",
+          "publishUpdateDate": "2026-04-30"
         },
         {
           "locale": "JP : JP (ja)",
@@ -168359,7 +169296,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-ultrafine/43un700-b",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/monitors/lg-ultrafine/43un700-b1/",
           "publishUpdateDate": "2020-11-06"
         }
       ]
@@ -169240,7 +170177,7 @@
           "locale": "TH : TH (th)",
           "country": "TH : TH (TH)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/45gr95qe-b",
+          "prodUrl": "https://www.lg.com/th/business/monitors-pcs/monitors/lg-monitor/45gr95qe-b/",
           "publishUpdateDate": ""
         },
         {
@@ -169653,7 +170590,7 @@
         {
           "locale": "RO : RO (ro)",
           "country": "RO : RO (RO)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-45gs95qe-b",
           "publishUpdateDate": "2024-09-17"
         },
@@ -170281,7 +171218,7 @@
         {
           "locale": "PE : PE (es)",
           "country": "PE : PE (ES)",
-          "status": "DISCONTINUED",
+          "status": "HIDDEN",
           "prodUrl": "https://www.lg.com/pe/monitores/ultragear-gaming-oled/45gx90sa-b/",
           "publishUpdateDate": "2025-09-30"
         },
@@ -170774,7 +171711,7 @@
           "locale": "SE : SE (sv)",
           "country": "SE : SE (SV)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/se/monitor/ultragear-gaming-oled/45gx950a-b/",
+          "prodUrl": "https://www.lg.com/se/monitor/ultragear-gaming/45gx950a-b/",
           "publishUpdateDate": "2025-03-26"
         },
         {
@@ -170882,6 +171819,13 @@
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/hk_en/monitors/gaming/45gx950b-b/",
           "publishUpdateDate": "2026-04-23"
+        },
+        {
+          "locale": "IT : IT (it)",
+          "country": "IT : IT (IT)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/it/monitor/ultragear-gaming-oled/45gx950b-b-aeu/",
+          "publishUpdateDate": "2026-05-29"
         },
         {
           "locale": "JP : JP (ja)",
@@ -171794,7 +172738,7 @@
           "country": "GR : GR (EL)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/gr/othones/lg-49u950a-w",
-          "publishUpdateDate": ""
+          "publishUpdateDate": "2026-08-24"
         },
         {
           "locale": "HR : HR (hr)",
@@ -172193,7 +173137,7 @@
           "locale": "CO : CO (es)",
           "country": "CO : CO (ES)",
           "status": "ACTIVE",
-          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ultrawide/49wl95c-w",
+          "prodUrl": "https://www.lg.com/co/business/monitores/monitores/monitores-ultrawide/49wl95c-w/",
           "publishUpdateDate": "2022-10-06"
         },
         {
@@ -173222,6 +174166,13 @@
           "publishUpdateDate": "2026-04-21"
         },
         {
+          "locale": "NO : NO (no)",
+          "country": "NO : NO (NO)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/no/skjermer/lg-52g930b-b",
+          "publishUpdateDate": ""
+        },
+        {
           "locale": "PL : PL (pl)",
           "country": "PL : PL (PL)",
           "status": "ACTIVE",
@@ -173233,7 +174184,7 @@
           "country": "RO : RO (RO)",
           "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/ro/monitoare/lg-52g930b-b",
-          "publishUpdateDate": "2026-08-24"
+          "publishUpdateDate": "2026-08-28"
         },
         {
           "locale": "RS : RS (sr)",
@@ -182010,7 +182961,7 @@
         {
           "locale": "AU : AU (en)",
           "country": "AU : AU (EN)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/au/care-accessories/monitors/adapter-power-cord/eay65068601/",
           "publishUpdateDate": "2026-06-04"
         },
@@ -182081,7 +183032,7 @@
         {
           "locale": "AU : AU (en)",
           "country": "AU : AU (EN)",
-          "status": "ACTIVE",
+          "status": "SUSPENDED",
           "prodUrl": "https://www.lg.com/au/care-accessories/monitors/adapter-power-cord/eay65068604/",
           "publishUpdateDate": "2026-06-26"
         },
@@ -203051,6 +204002,21 @@
       ]
     },
     {
+      "modelName": "HU925V",
+      "salesModelCode": "HU925V",
+      "salesSuffixCode": "ACN",
+      "category": "Projectors",
+      "locales": [
+        {
+          "locale": "CN : CN (zh)",
+          "country": "CN : CN (ZH)",
+          "status": "ACTIVE",
+          "prodUrl": "https://www.lg.com/cn/projectors/lg-hu925v",
+          "publishUpdateDate": ""
+        }
+      ]
+    },
+    {
       "modelName": "HUCQS",
       "salesModelCode": "HUCQS",
       "salesSuffixCode": "710PB",
@@ -203986,7 +204952,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/projectors/pf1000u",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/projectors/pf1000u/",
           "publishUpdateDate": "2020-01-29"
         },
         {
@@ -204297,7 +205263,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/projectors/pf1500g",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/projectors/pf1500g/",
           "publishUpdateDate": "2020-01-29"
         },
         {
@@ -206221,7 +207187,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/projectors/ph450ug",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/projectors/ph450ug/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -206827,7 +207793,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/projectors/ph550g",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/projectors/ph550g/",
           "publishUpdateDate": "2020-01-29"
         },
         {
@@ -206941,7 +207907,7 @@
         {
           "locale": "FR : FR (fr)",
           "country": "FR : FR (FR)",
-          "status": "SUSPENDED",
+          "status": "ACTIVE",
           "prodUrl": "https://www.lg.com/fr/videoprojecteurs/videoprojecteurs-portables-lifestyle/lg-pu600u-s20a-bundle/",
           "publishUpdateDate": "2025-09-02"
         },
@@ -207568,7 +208534,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/projectors/pv150g",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/projectors/pv150g/",
           "publishUpdateDate": "2020-01-29"
         },
         {
@@ -207780,7 +208746,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/projectors/pw1000g",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/projectors/pw1000g/",
           "publishUpdateDate": "2020-01-29"
         }
       ]
@@ -208472,7 +209438,7 @@
           "locale": "UK : GB (en)",
           "country": "UK : GB (EN)",
           "status": "DISCONTINUED",
-          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/projectors/pw800g",
+          "prodUrl": "https://www.lg.com/uk/business/monitors-pcs/projectors/pw800g/",
           "publishUpdateDate": "2020-01-29"
         },
         {
@@ -208597,8 +209563,8 @@
     "Monitors",
     "Projectors"
   ],
-  "totalModels": 2028,
-  "totalUrls": 27481,
-  "generatedAt": "2026-08-25",
-  "cmsSource": "cms_merged_view_20260824_083247.csv"
+  "totalModels": 2035,
+  "totalUrls": 27611,
+  "generatedAt": "2026-08-31",
+  "cmsSource": "cms_merged_view_20260831_121318.csv"
 }
