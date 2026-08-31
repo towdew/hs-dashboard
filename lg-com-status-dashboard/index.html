@@ -2997,7 +2997,7 @@ function isInProgressTask(task){
 function statusFor(r){
   const task = norm(r.task);
   const taskLower = task.toLowerCase();
-  const isNewRequestTask = taskLower === '[wpl] new request';
+  const isPreCheckTask = taskLower === '[wpl] new request' || taskLower === '[wpl] create request';
   const isClientReviewTask = taskLower === '[wpl] client review';
   const isClarificationTask = taskLower === '[wpl] request clarification' || taskLower === '[wpl] change req. need close';
 
@@ -3023,7 +3023,7 @@ function statusFor(r){
     return { signal:'Blue', title:'In Progress', aging:'', periodText:'', reason:'Task Status = ' + task };
   }
 
-  // Pre check: [WPL] New Request 전체를 LDM assigned date부터 계산합니다.
+  // Pre check: [WPL] New Request / [WPL] Create Request 전체를 LDM assigned date부터 계산합니다.
   const ldmAssignedAge = ageDays(r.ldmAssigned);
   const ldmAssignedDate = formatDateValue(r.ldmAssigned) || 'N/A';
 
@@ -3041,7 +3041,7 @@ function statusFor(r){
   if(isClarificationTask && commentAge !== null && commentAge >= 14){
     return { signal:'Red', title:'Request Clarification', aging:commentAge, periodText:elapsedText(commentAge), reason:`Last comment date (${commentDate}) is ${commentAge} days old (≥14)` };
   }
-  if(isNewRequestTask && ldmAssignedAge !== null && ldmAssignedAge >= 14){
+  if(isPreCheckTask && ldmAssignedAge !== null && ldmAssignedAge >= 14){
     return { signal:'Red', title:'Pre-check', aging:ldmAssignedAge, periodText:elapsedText(ldmAssignedAge), reason:`LDM assigned date (${ldmAssignedDate}) is ${ldmAssignedAge} days old (≥14)` };
   }
 
@@ -3051,7 +3051,7 @@ function statusFor(r){
   if(isClarificationTask && commentAge !== null && commentAge >= 7){
     return { signal:'Orange', title:'Request Clarification', aging:commentAge, periodText:elapsedText(commentAge), reason:`Last comment date (${commentDate}) is ${commentAge} days old (≥7)` };
   }
-  if(isNewRequestTask && ldmAssignedAge !== null && ldmAssignedAge >= 7){
+  if(isPreCheckTask && ldmAssignedAge !== null && ldmAssignedAge >= 7){
     return { signal:'Orange', title:'Pre-check', aging:ldmAssignedAge, periodText:elapsedText(ldmAssignedAge), reason:`LDM assigned date (${ldmAssignedDate}) is ${ldmAssignedAge} days old (≥7)` };
   }
 
@@ -3064,7 +3064,7 @@ function statusFor(r){
     const aging = commentAge !== null && commentAge >= 0 ? commentAge : '';
     return { signal:'None', title:'Request Clarification', aging:aging, periodText:aging === '' ? '' : elapsedText(aging), reason:'Task Status = ' + task };
   }
-  if(isNewRequestTask){
+  if(isPreCheckTask){
     const aging = ldmAssignedAge !== null && ldmAssignedAge >= 0 ? ldmAssignedAge : '';
     return { signal:'None', title:'Pre-check', aging:aging, periodText:aging === '' ? '' : elapsedText(aging), reason:`Task Status = ${task}; LDM assigned date = ${ldmAssignedDate}` };
   }
