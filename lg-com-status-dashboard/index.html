@@ -1134,7 +1134,16 @@
     .mx-art-label{ font-size:12px; font-weight:700; color:#1A1A1A; line-height:1.3; }
     .mx-article .mx-art-done{ font-size:12px; font-weight:700 !important; color:#1A1A1A; line-height:1.5; }
     .mx-art-total{ font-size:12px; font-weight:700; color:#1A1A1A; line-height:1.5; }
-    .mx-art-ratio{ font-size:13px; font-weight:800; color:#1A1A1A; margin-top:2px; letter-spacing:.2px; }
+    .mx-art-ratio{ font-size:12px; font-weight:800; color:#1A1A1A; margin-top:2px; letter-spacing:.2px; }
+    .mx-art-complete-dot{
+      display:inline-block;
+      width:9px;
+      height:9px;
+      margin-right:5px;
+      border-radius:50%;
+      background:var(--s-green);
+      vertical-align:middle;
+    }
     .mx-table td.mx-article.orange .mx-art-label,
     .mx-table td.mx-article.orange .mx-art-ratio{ color:var(--s-orange); }
     .mx-table td.mx-article.red .mx-art-label,
@@ -3915,8 +3924,9 @@ function buildArticleCell(country, product){
     cancelCount:x,
     urls:Array.isArray(data.urls) ? data.urls : []
   });
+  const completeDot = done ? '<span class="mx-art-complete-dot" aria-label="Complete"></span>' : '';
   return '<td class="mx-cell mx-article ' + sc + ' cst-clickable" style="cursor:pointer" data-article-detail="' + esc(detail) + '">'
-    + '<div class="mx-art-ratio"><b>' + c + ' Done</b> /</div>'
+    + '<div class="mx-art-ratio">' + completeDot + '<b>' + c + ' Done</b> /</div>'
     + '<div class="mx-art-total">' + effectiveTotal + ' Total</div>'
     + (x > 0 ? '<span class="mx-art-cancel">(' + x + ' cancelled)</span>' : '')
     + '</td>';
