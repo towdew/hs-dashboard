@@ -1,7 +1,10 @@
 (function () {
   'use strict';
 
+  // Fixed ES snapshot files.
+  // Current: es-global-request.xlsx / Last Week: es-global-request-prev.xlsx
   var ES_WORKBOOK_FILE = './es-global-request.xlsx';
+  var ES_PREV_WORKBOOK_FILE = './es-global-request-prev.xlsx';
 
   var STATUS_CONFIG = {
     'Pre-Review':   { label:'사전검토', dot:'#94A3B8', bg:'#F1F5F9', tc:'#64748B' },
@@ -395,29 +398,74 @@
     window.inferRegionFromCountry = inferRegionFromCountry;
   }
 
-  function loadDashboardFromPublishedHtml() {
-    if (typeof XLSX === 'undefined') {
-      return Promise.reject(new Error('XLSX 라이브러리를 불러오지 못했습니다.'));
-    }
-
-    return fetch(ES_WORKBOOK_FILE, { cache: 'no-store' })
+  function loadWorkbookData(file) {
+    return fetch(file, { cache: 'no-store' })
       .then(function (response) {
-        if (!response.ok) throw new Error(ES_WORKBOOK_FILE + ' 파일을 찾을 수 없습니다.');
+        if (!response.ok) throw new Error(file + ' 파일을 찾을 수 없습니다.');
         return response.arrayBuffer();
       })
       .then(function (buffer) {
         var workbook = XLSX.read(buffer, { type: 'array', cellDates: true, cellStyles: true });
         var sheets = readWorkbookRows(workbook);
         var result = buildDashboardData(sheets);
-
         if (!result.keys.length) {
-          throw new Error('Country / Status 기준의 시트 데이터를 찾지 못했습니다.');
+          throw new Error(file + ': Country / Status 기준의 시트 데이터를 찾지 못했습니다.');
         }
-
-        installGlobals(result.data, result.keys);
-        renderNavigation(result.keys, result.data);
-        return result.data;
+        return result;
       });
+  }
+
+  function normalizePrevSheetMatchKey(value) {
+    return String(value || '')
+      .replace(/&amp;/gi, '&')
+      .replace(/[\u00A0\s]+/g, ' ')
+      .replace(/[^a-z0-9가-힣]+/gi, '')
+      .toLowerCase();
+  }
+
+  function attachPrevWeekData(currentResult, prevResult) {
+    if (!currentResult || !currentResult.data || !prevResult || !prevResult.data) return;
+
+    var prevByTitle = {};
+    (prevResult.keys || []).forEach(function (key) {
+      var d = prevResult.data[key];
+      var titleKey = normalizePrevSheetMatchKey(d && (d.displayTitle || d.title || d.sheetName));
+      if (titleKey && !prevByTitle[titleKey]) prevByTitle[titleKey] = d;
+    });
+
+    (currentResult.keys || []).forEach(function (key) {
+      var d = currentResult.data[key];
+      var titleKey = normalizePrevSheetMatchKey(d && (d.displayTitle || d.title || d.sheetName));
+      d.prevWeekData = (titleKey && prevByTitle[titleKey]) || null;
+    });
+  }
+
+  async function loadDashboardFromPublishedHtml() {
+    if (typeof XLSX === 'undefined') {
+      throw new Error('XLSX 라이브러리를 불러오지 못했습니다.');
+    }
+
+    var currentResult = await loadWorkbookData(ES_WORKBOOK_FILE);
+    var prevResult = null;
+
+    // Previous workbook is optional. If it is missing, the dashboard still works
+    // and the Last Week comparison is simply hidden.
+    try {
+      prevResult = await loadWorkbookData(ES_PREV_WORKBOOK_FILE);
+      attachPrevWeekData(currentResult, prevResult);
+    } catch (e) {
+      console.warn('[ES dashboard] Previous snapshot could not be loaded:', ES_PREV_WORKBOOK_FILE, e);
+    }
+
+    window.__ES_CURRENT_WORKBOOK_FILE = ES_WORKBOOK_FILE;
+    window.__ES_PREV_WORKBOOK_FILE = prevResult ? ES_PREV_WORKBOOK_FILE : '';
+
+    console.info('[ES dashboard] current snapshot:', ES_WORKBOOK_FILE);
+    if (prevResult) console.info('[ES dashboard] Last Week snapshot:', ES_PREV_WORKBOOK_FILE);
+
+    installGlobals(currentResult.data, currentResult.keys);
+    renderNavigation(currentResult.keys, currentResult.data);
+    return currentResult.data;
   }
 
   window.loadDashboardFromPublishedHtml = loadDashboardFromPublishedHtml;
