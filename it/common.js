@@ -7016,12 +7016,14 @@ function dashGlobalSearchSources() {
     var title = d.displayTitle || d.sheetTabName || d.sheetTitle || d.title || k;
     grTasks.push({ key: k, title: title, owner: grOwnerOf(title) });
   });
-  var products = (typeof npiPsFlatRows === 'function' ? npiPsFlatRows() : []).map(function (it) {
-    return {
-      model: it.row.model, locale: it.row.locale, salesModelKey: it.row.salesModelKey,
-      stage: it.stage, status: it.status,
-    };
-  });
+  var products = (typeof window !== 'undefined' && window.HIDE_NPI_NAV)
+    ? []
+    : (typeof npiPsFlatRows === 'function' ? npiPsFlatRows() : []).map(function (it) {
+      return {
+        model: it.row.model, locale: it.row.locale, salesModelKey: it.row.salesModelKey,
+        stage: it.stage, status: it.status,
+      };
+    });
   var urlModels = (_urlLibData && _urlLibData.models) || [];
   return { grTasks: grTasks, products: products, urlModels: urlModels };
 }
