@@ -1509,6 +1509,7 @@ function renderContent() {
   const d = DATA[currentKey];
   const cs = contentStats(currentKey);
   const s = cs;
+  const prevStats = d && d.prevWeekData ? contentStatsForData(d.prevWeekData, currentKey) : null;
   const done = cs.Done || 0, total = cs.total || 1;
   const pct = Math.round(done/total*100);
   // 블록형 통계: 국가 수 / 콘텐츠(항목) 수
@@ -1536,7 +1537,10 @@ function renderContent() {
         ${localeCount ? `<span class="stat-locale-info">(${localeCount}개국)</span>` : ''}
         
       </div>
-      <div class="stat-new-num">${v.toLocaleString()}</div>
+      <div class="stat-new-value-row">
+        <div class="stat-new-num">${v.toLocaleString()}</div>
+        ${renderPrevWeekStatDelta(v, prevStats, k)}
+      </div>
       <div class="stat-new-meta">
         <span class="stat-new-pct">${sharePct}%</span>
         <div class="stat-new-bar"><div class="stat-new-fill" style="width:${sharePct}%;background:${cfg.dot}"></div></div>
@@ -2423,8 +2427,8 @@ function setBgWeek(w) {
 })();
 
 // ── 컨텐츠 건수 기반 통계 (파이프라인·리전요약 공통 기준) ──────
-function contentStats(key) {
-  var d = DATA[key];
+function contentStatsForData(d, key) {
+  d = d || {};
   var c = { Done:0,'Corp. Review':0,'In Progress':0,'Pre-Review':0,'Cancel':0, total:0 };
   function add(st, n) { if (c[st] !== undefined) c[st] += n; c.total += n; }
   var sheetPageInfo = getSheetPageCountInfo(d);
@@ -2450,6 +2454,7 @@ function contentStats(key) {
       c['Done']=st['Done']||0; c['Corp. Review']=st['Corp. Review']||0;
       c['In Progress']=st['In Progress']||0; c['Pre-Review']=st['Pre-Review']||0;
       c['Cancel']=st['Cancel']||0; c.total=st['Total']||0;
+      c.done=c.Done; c.Total=c.total;
       return c;
     }
     var arts = d.articles || [];
@@ -2461,8 +2466,31 @@ function contentStats(key) {
     var it4 = d.items || [];
     for (var i4=0;i4<it4.length;i4++){ add(it4[i4].status||'Pre-Review', 1); }
   }
-  c.Done = c.Done; c.done = c.Done; c.Total = c.total;
+  c.done = c.Done; c.Total = c.total;
   return c;
+}
+
+function contentStats(key) {
+  return contentStatsForData(DATA[key], key);
+}
+
+function renderPrevWeekStatDelta(currentValue, prevStats, statusKey) {
+  if (!prevStats) return '';
+  var prevValue = Number(prevStats[statusKey] || 0);
+  var current = Number(currentValue || 0);
+  var delta = current - prevValue;
+  if (!delta) return '';
+
+  var sign = delta > 0 ? '+' : '';
+  var deltaColor = delta > 0 ? '#10B981' : '#E5484D';
+  var title = 'Last Week 대비 변동';
+  return '<div class="stat-prev-change" title="' + title + '">' +
+    '<span class="stat-prev-label">Last Week</span>' +
+    '<span class="stat-prev-values">' +
+      '<span class="stat-prev-value">' + prevValue.toLocaleString() + '</span>' +
+      '<span class="stat-prev-delta" style="color:' + deltaColor + '">' + sign + delta.toLocaleString() + '</span>' +
+    '</span>' +
+  '</div>';
 }
 
 
