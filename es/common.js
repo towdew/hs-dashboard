@@ -428,7 +428,7 @@ function showCountryModal(locale) {
                 if (!s) return '';
                 const tlc = {
                   'Done':        {color:'#10B981',glow:'rgba(16,185,129,.35)',pulse:false},
-                  'Corp. Review':{color:'#EF4444',glow:'rgba(239,68,68,.35)',pulse:true},
+                  'Corp. Review':{color:'#EA1917',glow:'rgba(239,68,68,.35)',pulse:true},
                   'In Progress': {color:'#F59E0B',glow:'rgba(245,158,11,.35)',pulse:false},
                   'Pre-Review':  {color:'#D1D5DB',glow:'transparent',pulse:false},
                 }[s] || {color:'#D1D5DB',glow:'transparent',pulse:false};
@@ -469,7 +469,7 @@ function showCountryModal(locale) {
     // ═══ Simple 탭용 모달 — BG 완전 동일 구조 ═══
     const TL_S = {
       'Done':        { color:'#10B981', glow:'rgba(16,185,129,.35)',  label:'완료',    pulse:false },
-      'Corp. Review':{ color:'#EF4444', glow:'rgba(239,68,68,.35)',   label:'법인리뷰', pulse:true  },
+      'Corp. Review':{ color:'#EA1917', glow:'rgba(239,68,68,.35)',   label:'법인리뷰', pulse:true  },
       'In Progress': { color:'#F59E0B', glow:'rgba(245,158,11,.35)',  label:'작업중',  pulse:false },
       'Pre-Review':  { color:'#D1D5DB', glow:'transparent',           label:'사전검토', pulse:false },
     };
@@ -606,7 +606,7 @@ function showCountryModal(locale) {
   const TL = {
     'Done':         { color:'#10B981', glow:'rgba(16,185,129,.35)',  label:'완료',    pulse:false },
     'In Progress':  { color:'#F59E0B', glow:'rgba(245,158,11,.35)',  label:'작업중',  pulse:false },
-    'Corp. Review': { color:'#EF4444', glow:'rgba(239,68,68,.35)',   label:'법인리뷰', pulse:true },
+    'Corp. Review': { color:'#EA1917', glow:'rgba(239,68,68,.35)',   label:'법인리뷰', pulse:true },
     'Pre-Review':   { color:'#D1D5DB', glow:'transparent',           label:'사전검토', pulse:false },
   };
 
@@ -614,7 +614,7 @@ function showCountryModal(locale) {
   const hasYellow = safeStatuses.some(s => s === 'In Progress');
 
   const tlBadge = hasRed
-    ? `<span class="tl-status-badge" style="color:#EF4444">🔴${days ? ` ${days}일 지연` : ' 법인리뷰 적체'}</span>`
+    ? `<span class="tl-status-badge" style="color:#EA1917">🔴${days ? ` ${days}일 지연` : ' 법인리뷰 적체'}</span>`
     : hasYellow
     ? `<span class="tl-status-badge" style="color:#D97706">🟡 작업 진행중</span>`
     : isDone
