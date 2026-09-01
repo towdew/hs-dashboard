@@ -1,63 +1,38 @@
 {
-  "baseDate": "20260828",
-  "prevDate": "20260827",
+  "baseDate": "20260901",
+  "prevDate": "20260831",
   "changes": {
     "gram Secure Lock|TW": {
       "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "gram Secure Lock|DE": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "gram Secure Lock|VN": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "gram Secure Lock|ES": {
-      "type": "status",
-      "from": "작업중",
+      "from": "법인리뷰",
       "to": "완료"
     },
     "gram Secure Lock|SG": {
       "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "gram Secure Lock|UK": {
-      "type": "status",
-      "from": "작업중",
+      "from": "법인리뷰",
       "to": "완료"
     },
-    "gram Secure Lock|IT": {
+    "gram Secure Lock|JP": {
       "type": "status",
       "from": "작업중",
       "to": "완료"
     },
     "gram Secure Lock|CA_EN": {
       "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
+      "from": "법인리뷰",
+      "to": "완료"
     },
     "gram Secure Lock|CA_FR": {
       "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "gram Secure Lock|AU": {
-      "type": "status",
-      "from": "작업중",
+      "from": "법인리뷰",
       "to": "완료"
     }
   },
   "taskSummary": {
     "gram Secure Lock": {
-      "changed": 10,
+      "changed": 5,
       "new": 0
     }
   },
-  "generatedAt": "2026-08-28"
+  "generatedAt": "2026-09-01"
 }
