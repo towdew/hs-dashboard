@@ -1,38 +1,68 @@
 {
-  "baseDate": "20260901",
-  "prevDate": "20260831",
+  "baseDate": "20260902",
+  "prevDate": "20260901",
   "changes": {
-    "gram Secure Lock|TW": {
+    "UltraGear 1000Hz FAQ|AU": {
       "type": "status",
       "from": "법인리뷰",
       "to": "완료"
     },
-    "gram Secure Lock|SG": {
+    "UltraGear 1000Hz FAQ|CA_EN": {
       "type": "status",
       "from": "법인리뷰",
       "to": "완료"
     },
-    "gram Secure Lock|JP": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "gram Secure Lock|CA_EN": {
+    "UltraGear 1000Hz FAQ|CA_FR": {
       "type": "status",
       "from": "법인리뷰",
       "to": "완료"
     },
-    "gram Secure Lock|CA_FR": {
+    "UltraGear 1000Hz FAQ|DE": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "완료"
+    },
+    "UltraGear 1000Hz FAQ|ES": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "완료"
+    },
+    "UltraGear 1000Hz FAQ|FR": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "완료"
+    },
+    "UltraGear 1000Hz FAQ|IT": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "완료"
+    },
+    "UltraGear 1000Hz FAQ|JP": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "완료"
+    },
+    "UltraGear 1000Hz FAQ|NL": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "완료"
+    },
+    "UltraGear 1000Hz FAQ|SE": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "완료"
+    },
+    "UltraGear 1000Hz FAQ|UK": {
       "type": "status",
       "from": "법인리뷰",
       "to": "완료"
     }
   },
   "taskSummary": {
-    "gram Secure Lock": {
-      "changed": 5,
+    "UltraGear 1000Hz FAQ": {
+      "changed": 11,
       "new": 0
     }
   },
-  "generatedAt": "2026-09-01"
+  "generatedAt": "2026-09-02"
 }
