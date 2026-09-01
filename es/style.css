@@ -1216,10 +1216,10 @@ body{
 }
 .cell-days-ind{
   display:inline-flex;align-items:center;gap:5px;
-  font-size:11px;font-weight:700;color:#EF4444;
+  font-size:11px;font-weight:700;color:#EA1917;
 }
 .cell-days-dot{
-  width:8px;height:8px;border-radius:50%;background:#EF4444;
+  width:8px;height:8px;border-radius:50%;background:#EA1917;
   flex-shrink:0;
 }
 .country-cell-code{
@@ -1508,10 +1508,10 @@ body{
 }
 .lock-input::placeholder{color:#B0B8D0;letter-spacing:normal}
 .lock-input-wrap.error .lock-input{
-  border-color:#EF4444;background:#FEF2F2;
+  border-color:#EA1917;background:#FEF2F2;
 }
 .lock-error{
-  font-size:11.5px;color:#EF4444;font-weight:600;
+  font-size:11.5px;color:#EA1917;font-weight:600;
   margin-top:-12px;margin-bottom:12px;
   visibility:hidden;
 }
