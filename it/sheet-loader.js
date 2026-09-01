@@ -1635,10 +1635,14 @@ function applySheetData(key, data) {
   target.matrix = data.matrix || target.matrix || [];
 }
 
+// NPI 사이드바 메뉴 숨김 (IT 제품 현황). 데이터·라우트는 유지 — 재노출 시 false.
+var HIDE_NPI_NAV = true;
+
 var CUSTOM_NAV_TABS = [
   { key: 'npi_product_status', label: 'IT 제품 현황', abbr: 'PS', section: 'NPI' },
   { key: 'url_library', label: 'Live URL Library', abbr: 'UL', section: 'Live URL' },
 ];
+if (typeof window !== 'undefined') window.HIDE_NPI_NAV = HIDE_NPI_NAV;
 
 // 사이드바 표시용 제목: "GR26-" 접두와 주차 뒤 조직·채널 코드(MS/IT/ITB2C/B2C/B2B/PC)를 걷어내
 // 태스크명이 먼저 보이게 한다. 주차(W16…)는 식별에 필요해 남기고, PDP·모델명처럼 의미 있는
@@ -1804,12 +1808,14 @@ function renderSidebarNavFromSheets(keys) {
     pushGrSection('Global Request', grKeys);
   }
 
-  // ── NPI 섹션 ──
-  html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">NPI</div>');
-  html.push('<div class="nav-item nav-item-custom" data-key="npi_product_status" onclick="switchMenu(this)">' +
-    '<span class="ni-text" data-abbr="PS">IT 제품 현황</span>' +
-    '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">PS</span>' +
-    '</div>');
+  // ── NPI 섹션 (HIDE_NPI_NAV로 사이드바 비표시) ──
+  if (!HIDE_NPI_NAV) {
+    html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">NPI</div>');
+    html.push('<div class="nav-item nav-item-custom" data-key="npi_product_status" onclick="switchMenu(this)">' +
+      '<span class="ni-text" data-abbr="PS">IT 제품 현황</span>' +
+      '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">PS</span>' +
+      '</div>');
+  }
 
   // ── Live URL 섹션 ──
   html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">Live URL</div>');
