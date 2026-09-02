@@ -6182,7 +6182,8 @@ function buildGrWeeklyChangeSummaryHtml(d) {
 }
 
 // ── GR 국가별 전체 URL 모달 ────────────────────────────────
-var GR_URL_MODAL_MAX_OPEN = 15;
+// 전체 열기는 건수 제한 없음. URL 배열을 onclick JSON에 넣으면 다량·특수문자에서
+// 속성이 깨져 버튼이 동작하지 않으므로 window._grUrlModalUrls에 보관한다.
 
 function grOpenUrlModal(taskKey, code, countryLabel, fallbackUrls) {
   var mappedUrls = (window._grUrls && typeof grLookup === 'function') ? grLookup(window._grUrls, taskKey, code) : null;
@@ -6198,19 +6199,14 @@ function grOpenUrlModal(taskKey, code, countryLabel, fallbackUrls) {
   }
   if (!urls.length) return;
 
+  window._grUrlModalUrls = urls.slice();
+
   var rowsHtml = urls.map(function(u) {
     var short = (typeof urlLibDisplayUrl === 'function') ? urlLibDisplayUrl(u) : u;
     return '<div class="country-cell-row">' +
       '<div class="country-cell-left"><a href="' + escapeAttrSheet(u) + '" target="_blank" rel="noopener" style="font-size:11px;color:#3B82F6;word-break:break-all">' + escapeHtmlSheet(short) + '</a></div>' +
     '</div>';
   }).join('');
-
-  var openCount = Math.min(urls.length, GR_URL_MODAL_MAX_OPEN);
-  var openAllWarning = urls.length > GR_URL_MODAL_MAX_OPEN
-    ? '<div style="padding:0 20px;font-size:11px;color:#C2410C">전체 ' + urls.length + '개 중 최대 ' + GR_URL_MODAL_MAX_OPEN + '개까지만 새 탭으로 엽니다.</div>'
-    : '';
-  var urlsJson = JSON.stringify(urls.slice(0, GR_URL_MODAL_MAX_OPEN));
-  var onclickExpr = 'grOpenAllUrls(' + urlsJson + ')';
 
   var html = '' +
     '<div class="modal-overlay" id="grUrlModal" onclick="if(event.target===this)closeGrUrlModal()">' +
@@ -6223,9 +6219,8 @@ function grOpenUrlModal(taskKey, code, countryLabel, fallbackUrls) {
           '<button class="modal-close-btn" onclick="closeGrUrlModal()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>' +
         '</div>' +
         '<div class="country-modal-cells" style="max-height:360px;overflow:auto">' + rowsHtml + '</div>' +
-        openAllWarning +
         '<div class="country-modal-actions">' +
-          '<button class="country-action-btn" style="flex:1;justify-content:center" onclick="' + escapeAttrSheet(onclickExpr) + '">전체 열기 (' + openCount + ')</button>' +
+          '<button class="country-action-btn" style="flex:1;justify-content:center" onclick="grOpenAllUrls()">전체 열기 (' + urls.length + ')</button>' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -6253,6 +6248,7 @@ function closeGrUrlModal() {
     document.removeEventListener('keydown', window._grUrlModalEscHandler);
     window._grUrlModalEscHandler = null;
   }
+  window._grUrlModalUrls = null;
   var m = document.getElementById('grUrlModal');
   if (!m) return;
   m.classList.remove('modal-show');
@@ -6260,7 +6256,8 @@ function closeGrUrlModal() {
 }
 
 function grOpenAllUrls(urls) {
-  (urls || []).forEach(function(u) { window.open(u, '_blank', 'noopener'); });
+  var list = (urls && urls.length) ? urls : (window._grUrlModalUrls || []);
+  list.forEach(function(u) { window.open(u, '_blank', 'noopener'); });
 }
 
 // ── Google Sheet Published HTML raw table renderer ───────────
@@ -7054,6 +7051,7 @@ function dashGlobalSearchGo(kind, key, term) {
   dashGlobalSearchClose();
   if (kind === 'gr') { dashSwitchToNavKey(key); return; }
   if (kind === 'product') {
+    if (window.HIDE_NPI_NAV) return;
     if (dashSwitchToNavKey('npi_product_status')) dashInjectTabSearch('npiPsSearchInput', 'npiPsOnSearchInput', term);
     return;
   }
