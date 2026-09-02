@@ -1441,11 +1441,11 @@ function renderWeeklyUpdateSection(d) {
   }).join('');
 
   return '' +
-    '<section class="weekly-update-section" aria-label="이번주 업데이트 사항">' +
+    '<section class="weekly-update-section" aria-label="이번 주 업데이트 사항">' +
       '<div class="weekly-update-notice">' +
         '<div class="weekly-update-mainline">' +
           '<span class="weekly-update-new-badge">NEW</span>' +
-          '<span class="weekly-update-desc">이번 주에 새로 완료된 항목 ' + completedCount.toLocaleString() + '건입니다.</span>' +
+          '<span class="weekly-update-desc">이번 주 업데이트된 항목 ' + completedCount.toLocaleString() + '건입니다.</span>' +
         '</div>' +
         '<div class="weekly-update-items">' + list + '</div>' +
       '</div>' +
@@ -1977,7 +1977,7 @@ function buildNewBanner(){
   var listTxt = disp.slice(0,20).join(', ') + (disp.length>20?(' 외 '+(disp.length-20)):'');
   return '<div style="background:#EEF6FF;border:1px solid #3B82F633;border-left:3px solid #3B82F6;border-radius:8px;padding:11px 15px;margin-bottom:14px;font-size:11.5px;color:#1E40AF;line-height:1.6">' +
     '<span style="display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 5px;border-radius:4px;background:#3B82F6;color:#fff;font-size:9px;font-weight:800;margin-right:6px;vertical-align:middle">NEW</span>' +
-    '<b>' + wk + ' 신규 업데이트</b> — 이번 주차에 새로 완료된 항목 <b>' + disp.length + '건</b>입니다.<br>' +
+    '<b>' + wk + ' 신규 업데이트</b> — 이번 주 업데이트된 항목 <b>' + disp.length + '건</b>입니다.<br>' +
     '<span style="display:inline-block;margin-top:5px;color:#2952A3">신규 항목: <b>' + listTxt + '</b></span>' +
   '</div>';
 }
