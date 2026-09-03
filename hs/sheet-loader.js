@@ -1179,8 +1179,11 @@ function parseCSV(csvText) {
 }
 
 function normalizeMatrix(matrix) {
+  // Matrix 정규화 단계에서는 셀 내부 줄바꿈을 없애지 않습니다.
+  // 이후 헤더/일반 텍스트는 cleanText()에서 한 줄로 정리하고,
+  // URL 컬럼은 cleanTextPreserveLines()로 여러 URL의 줄바꿈을 유지합니다.
   const rows = (matrix || []).map(function(row) {
-    return (row || []).map(function(cell) { return cleanText(cell); });
+    return (row || []).map(function(cell) { return cleanTextPreserveLines(cell); });
   });
   let maxLen = rows.reduce(function(max, row) { return Math.max(max, row.length); }, 0);
   return rows.map(function(row) {

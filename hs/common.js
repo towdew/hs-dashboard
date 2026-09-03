@@ -5342,7 +5342,7 @@ function renderSheetCell(value, header, row, sheetData) {
 
     return '<div class="sheet-multi-links">' + urlLines.map(function(url) {
       if (isExceptionUrl) return exceptionRules.renderDonePill(url);
-      return '<a class="sheet-link" href="' + escapeAttrSheet(url) + '" target="_blank" rel="noopener">' + escapeHtmlSheet(shortenUrlSheet(url)) + '</a>';
+      return '<a class="sheet-link" href="' + escapeAttrSheet(url) + '" target="_blank" rel="noopener">' + escapeHtmlSheet(url) + '</a>';
     }).join('') + '</div>';
   }
 
@@ -5367,7 +5367,7 @@ function normalizeSheetRendererStatus(value) {
 }
 
 function shortenUrlSheet(url) {
-  return url.length > 54 ? url.slice(0, 28) + '…' + url.slice(-18) : url;
+  return String(url || '');
 }
 
 function escapeHtmlSheet(value) {
