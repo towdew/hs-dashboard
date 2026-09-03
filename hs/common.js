@@ -5331,15 +5331,19 @@ function renderSheetCell(value, header, row, sheetData) {
 
   if (!text) return '<span class="sheet-empty">—</span>';
 
-  if (/^https?:\/\//i.test(text)) {
-    if (exceptionRules && typeof exceptionRules.isExceptionSheet === 'function' &&
-        typeof exceptionRules.isUrlHeader === 'function' &&
-        exceptionRules.isExceptionSheet(sheetData || DATA[currentKey] || {}) &&
-        exceptionRules.isUrlHeader(header) &&
-        typeof exceptionRules.renderDonePill === 'function') {
-      return exceptionRules.renderDonePill(text);
-    }
-    return '<a class="sheet-link" href="' + escapeAttrSheet(text) + '" target="_blank" rel="noopener">' + escapeHtmlSheet(shortenUrlSheet(text)) + '</a>';
+  // 한 셀에 줄바꿈으로 여러 URL이 들어온 경우 모든 URL을 각각 표시합니다.
+  var urlLines = text.split(/\r?\n/).map(function(v) { return String(v || '').trim(); }).filter(Boolean);
+  if (urlLines.length && urlLines.every(function(v) { return /^https?:\/\//i.test(v); })) {
+    var isExceptionUrl = exceptionRules && typeof exceptionRules.isExceptionSheet === 'function' &&
+      typeof exceptionRules.isUrlHeader === 'function' &&
+      exceptionRules.isExceptionSheet(sheetData || DATA[currentKey] || {}) &&
+      exceptionRules.isUrlHeader(header) &&
+      typeof exceptionRules.renderDonePill === 'function';
+
+    return '<div class="sheet-multi-links">' + urlLines.map(function(url) {
+      if (isExceptionUrl) return exceptionRules.renderDonePill(url);
+      return '<a class="sheet-link" href="' + escapeAttrSheet(url) + '" target="_blank" rel="noopener">' + escapeHtmlSheet(shortenUrlSheet(url)) + '</a>';
+    }).join('') + '</div>';
   }
 
   var status = normalizeSheetRendererStatus(text);

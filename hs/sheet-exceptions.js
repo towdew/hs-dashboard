@@ -245,8 +245,12 @@
       }
 
       // 예외시트 1, 2에서 URL 값은 raw URL 링크가 아니라 완료 pill 링크로 표시합니다.
-      if (text && isUrl(text) && isUrlHeader(header)) {
-        return getDonePill(text);
+      // 한 셀에 여러 URL이 줄바꿈으로 입력된 경우 모두 각각 표시합니다.
+      if (text && isUrlHeader(header)) {
+        var urls = text.split(/\r?\n/).map(function(v) { return String(v || '').trim(); }).filter(Boolean);
+        if (urls.length && urls.every(isUrl)) {
+          return '<div class="sheet-multi-links">' + urls.map(getDonePill).join('') + '</div>';
+        }
       }
 
       return null;
