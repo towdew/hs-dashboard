@@ -428,7 +428,7 @@ function showCountryModal(locale) {
                 if (!s) return '';
                 const tlc = {
                   'Done':        {color:'#10B981',glow:'rgba(16,185,129,.35)',pulse:false},
-                  'Corp. Review':{color:'#EF4444',glow:'rgba(239,68,68,.35)',pulse:true},
+                  'Corp. Review':{color:'#EA1917',glow:'rgba(239,68,68,.35)',pulse:true},
                   'In Progress': {color:'#F59E0B',glow:'rgba(245,158,11,.35)',pulse:false},
                   'Pre-Review':  {color:'#D1D5DB',glow:'transparent',pulse:false},
                 }[s] || {color:'#D1D5DB',glow:'transparent',pulse:false};
@@ -469,7 +469,7 @@ function showCountryModal(locale) {
     // ═══ Simple 탭용 모달 — BG 완전 동일 구조 ═══
     const TL_S = {
       'Done':        { color:'#10B981', glow:'rgba(16,185,129,.35)',  label:'완료',    pulse:false },
-      'Corp. Review':{ color:'#EF4444', glow:'rgba(239,68,68,.35)',   label:'법인리뷰', pulse:true  },
+      'Corp. Review':{ color:'#EA1917', glow:'rgba(239,68,68,.35)',   label:'법인리뷰', pulse:true  },
       'In Progress': { color:'#F59E0B', glow:'rgba(245,158,11,.35)',  label:'작업중',  pulse:false },
       'Pre-Review':  { color:'#D1D5DB', glow:'transparent',           label:'사전검토', pulse:false },
     };
@@ -606,7 +606,7 @@ function showCountryModal(locale) {
   const TL = {
     'Done':         { color:'#10B981', glow:'rgba(16,185,129,.35)',  label:'완료',    pulse:false },
     'In Progress':  { color:'#F59E0B', glow:'rgba(245,158,11,.35)',  label:'작업중',  pulse:false },
-    'Corp. Review': { color:'#EF4444', glow:'rgba(239,68,68,.35)',   label:'법인리뷰', pulse:true },
+    'Corp. Review': { color:'#EA1917', glow:'rgba(239,68,68,.35)',   label:'법인리뷰', pulse:true },
     'Pre-Review':   { color:'#D1D5DB', glow:'transparent',           label:'사전검토', pulse:false },
   };
 
@@ -614,7 +614,7 @@ function showCountryModal(locale) {
   const hasYellow = safeStatuses.some(s => s === 'In Progress');
 
   const tlBadge = hasRed
-    ? `<span class="tl-status-badge" style="color:#EF4444">🔴${days ? ` ${days}일 지연` : ' 법인리뷰 적체'}</span>`
+    ? `<span class="tl-status-badge" style="color:#EA1917">🔴${days ? ` ${days}일 지연` : ' 법인리뷰 적체'}</span>`
     : hasYellow
     ? `<span class="tl-status-badge" style="color:#D97706">🟡 작업 진행중</span>`
     : isDone
@@ -1441,11 +1441,11 @@ function renderWeeklyUpdateSection(d) {
   }).join('');
 
   return '' +
-    '<section class="weekly-update-section" aria-label="이번주 업데이트 사항">' +
+    '<section class="weekly-update-section" aria-label="이번 주 업데이트 사항">' +
       '<div class="weekly-update-notice">' +
         '<div class="weekly-update-mainline">' +
           '<span class="weekly-update-new-badge">NEW</span>' +
-          '<span class="weekly-update-desc">이번 주에 새로 완료된 항목 ' + completedCount.toLocaleString() + '건입니다.</span>' +
+          '<span class="weekly-update-desc">이번 주 업데이트된 항목 ' + completedCount.toLocaleString() + '건입니다.</span>' +
         '</div>' +
         '<div class="weekly-update-items">' + list + '</div>' +
       '</div>' +
@@ -1977,7 +1977,7 @@ function buildNewBanner(){
   var listTxt = disp.slice(0,20).join(', ') + (disp.length>20?(' 외 '+(disp.length-20)):'');
   return '<div style="background:#EEF6FF;border:1px solid #3B82F633;border-left:3px solid #3B82F6;border-radius:8px;padding:11px 15px;margin-bottom:14px;font-size:11.5px;color:#1E40AF;line-height:1.6">' +
     '<span style="display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 5px;border-radius:4px;background:#3B82F6;color:#fff;font-size:9px;font-weight:800;margin-right:6px;vertical-align:middle">NEW</span>' +
-    '<b>' + wk + ' 신규 업데이트</b> — 이번 주차에 새로 완료된 항목 <b>' + disp.length + '건</b>입니다.<br>' +
+    '<b>' + wk + ' 신규 업데이트</b> — 이번 주 업데이트된 항목 <b>' + disp.length + '건</b>입니다.<br>' +
     '<span style="display:inline-block;margin-top:5px;color:#2952A3">신규 항목: <b>' + listTxt + '</b></span>' +
   '</div>';
 }

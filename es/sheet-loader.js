@@ -11,7 +11,7 @@
     'In Progress':  { label:'작업중',   dot:'#3B82F6', bg:'#EFF6FF', tc:'#1D4ED8' },
     'Corp. Review': { label:'법인리뷰', dot:'#F59E0B', bg:'#FFFBEB', tc:'#B45309' },
     'Done':         { label:'완료',     dot:'#10B981', bg:'#ECFDF5', tc:'#047857' },
-    'Cancel':       { label:'취소',     dot:'#EF4444', bg:'#FEF2F2', tc:'#B91C1C' }
+    'Cancel':       { label:'취소',     dot:'#EA1917', bg:'#FEF2F2', tc:'#B91C1C' }
   };
 
   var REGION_ORDER_LIST = ['EU', 'ASIA', 'CIS', 'LATAM', 'MEA', 'INDIA', 'NA', 'ETC'];
