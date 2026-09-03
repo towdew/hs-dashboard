@@ -1456,7 +1456,8 @@ function buildHeadMarkedRows(matrix, dataStart, dataEnd, colIndexes, headers, st
     let nonEmpty = 0;
     headers.forEach(function(h, i) {
       const ci = colIndexes[i];
-      const value = cleanText(src[ci]);
+      // URL 컬럼은 셀 내부 줄바꿈을 유지합니다.
+      const value = isMultiLineUrlHeader(h) ? cleanTextPreserveLines(src[ci]) : cleanText(src[ci]);
       obj[h] = value;
       obj.__styles[h] = normalizeFillColor(styles[r] && styles[r][ci]);
       if (value) nonEmpty++;
@@ -1847,6 +1848,26 @@ function calcStats(items) {
 
 function normalizeName(value) { return String(value || '').toLowerCase().replace(/[\s_\-/.]+/g, ' ').trim(); }
 function cleanText(value) { return String(value == null ? '' : value).replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim(); }
+
+// 셀 안의 줄바꿈은 유지하면서 각 줄의 불필요한 공백만 정리합니다.
+// 완료 URL처럼 한 셀에 여러 값이 줄바꿈으로 입력되는 경우에 사용합니다.
+function cleanTextPreserveLines(value) {
+  return String(value == null ? '' : value)
+    .replace(/\u00a0/g, ' ')
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .split('\n')
+    .map(function(line) { return line.replace(/[\t ]+/g, ' ').trim(); })
+    .filter(function(line) { return line !== ''; })
+    .join('\n')
+    .trim();
+}
+
+function isMultiLineUrlHeader(value) {
+  var h = cleanText(value).toLowerCase().replace(/[\s_\-/.]+/g, '');
+  return h === 'url' || h === 'pageurl' || h === 'liveurl' || h === 'completedurl' ||
+    h === 'completeurl' || h.indexOf('url') >= 0;
+}
 function stripTags(html) { return String(html || '').replace(/<[^>]*>/g, ' '); }
 function decodeHtmlEntities(text) {
   const el = document.createElement('textarea');
