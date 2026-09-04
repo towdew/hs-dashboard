@@ -1635,8 +1635,17 @@ function applySheetData(key, data) {
   target.matrix = data.matrix || target.matrix || [];
 }
 
-// NPI 사이드바 메뉴 숨김 (IT 제품 현황). 데이터·라우트는 유지 — 재노출 시 false.
-var HIDE_NPI_NAV = true;
+// NPI 사이드바: 기본 숨김. 프리뷰는 ?npi=1 (또는 npi=true) — 데이터·라우트는 유지.
+function npiNavPreviewEnabled() {
+  try {
+    var q = new URLSearchParams(window.location.search || '');
+    var v = String(q.get('npi') || '').trim().toLowerCase();
+    return v === '1' || v === 'true' || v === 'yes';
+  } catch (e) {
+    return false;
+  }
+}
+var HIDE_NPI_NAV = !npiNavPreviewEnabled();
 
 var CUSTOM_NAV_TABS = [
   { key: 'npi_product_status', label: 'IT 제품 현황', abbr: 'PS', section: 'NPI' },
