@@ -124,10 +124,10 @@ function countsFromStatuses(statuses) {
 // ── 💎 Toss 스타일 4-Stage 파이프라인 ────────────────────────
 function buildTossPipeline(stats, total) {
   const stages = [
-    { key:'Pre-Review',   label:'사전검토', color:'#94A3B8' },
-    { key:'In Progress',  label:'작업중',   color:'#3B82F6' },
-    { key:'Corp. Review', label:'법인리뷰', color:'#F59E0B' },
-    { key:'Done',         label:'완료',     color:'#10B981' },
+    { key:'Pre-Review',   label:'사전검토', color:'#F6C94C' },
+    { key:'In Progress',  label:'작업중',   color:'#4F7DF3' },
+    { key:'Corp. Review', label:'법인리뷰', color:'#FF745C' },
+    { key:'Done',         label:'완료',     color:'#20C49A' },
   ];
 
   // 최다 stage 찾기
@@ -265,7 +265,7 @@ function openCountryListModal() {
   if (!entries.length) return;
 
   const groups = statusOrder.map((st, idx) => {
-    const cfg = SC[st] || { dot:'#94A3B8', bg:'#F5F6FA', tc:'#6B7280' };
+    const cfg = SC[st] || { dot:'#F6C94C', bg:'#FFF9E7', tc:'#806300' };
     const locs = entries.filter(([_,s]) => s === st).map(([loc]) => loc).sort();
     if (!locs.length) return '';
     const chips = locs.map(loc => {
@@ -430,10 +430,10 @@ function showCountryModal(locale) {
                 const s = a.statuses[locale];
                 if (!s) return '';
                 const tlc = {
-                  'Done':        {color:'#10B981',glow:'rgba(16,185,129,.35)',pulse:false},
-                  'Corp. Review':{color:'#EA1917',glow:'rgba(239,68,68,.35)',pulse:true},
-                  'In Progress': {color:'#F59E0B',glow:'rgba(245,158,11,.35)',pulse:false},
-                  'Pre-Review':  {color:'#D1D5DB',glow:'transparent',pulse:false},
+                  'Done':        {color:'#20C49A',glow:'rgba(32,196,154,.35)',pulse:false},
+                  'Corp. Review':{color:'#FF745C',glow:'rgba(255,116,92,.35)',pulse:true},
+                  'In Progress': {color:'#4F7DF3',glow:'rgba(79,125,243,.35)',pulse:false},
+                  'Pre-Review':  {color:'#F6C94C',glow:'rgba(246,201,76,.28)',pulse:false},
                 }[s] || {color:'#D1D5DB',glow:'transparent',pulse:false};
                 return '<div class="tl-dot-wrap"><div class="tl-dot '+(tlc.pulse?'tl-dot-pulse':'')+'" style="background:'+tlc.color+';box-shadow:0 2px 8px '+tlc.glow+'"></div><div class="tl-dot-label">#'+a.no+'</div></div>';
               }).filter(Boolean).join('')}
@@ -471,10 +471,10 @@ function showCountryModal(locale) {
   if (!isBG) {
     // ═══ Simple 탭용 모달 — BG 완전 동일 구조 ═══
     const TL_S = {
-      'Done':        { color:'#10B981', glow:'rgba(16,185,129,.35)',  label:'완료',    pulse:false },
-      'Corp. Review':{ color:'#EA1917', glow:'rgba(239,68,68,.35)',   label:'법인리뷰', pulse:true  },
-      'In Progress': { color:'#F59E0B', glow:'rgba(245,158,11,.35)',  label:'작업중',  pulse:false },
-      'Pre-Review':  { color:'#D1D5DB', glow:'transparent',           label:'사전검토', pulse:false },
+      'Done':        { color:'#20C49A', glow:'rgba(32,196,154,.35)',  label:'완료',    pulse:false },
+      'Corp. Review':{ color:'#FF745C', glow:'rgba(255,116,92,.35)',   label:'법인리뷰', pulse:true  },
+      'In Progress': { color:'#4F7DF3', glow:'rgba(79,125,243,.35)',  label:'작업중',  pulse:false },
+      'Pre-Review':  { color:'#F6C94C', glow:'rgba(246,201,76,.28)',           label:'사전검토', pulse:false },
     };
     const tl  = TL_S[status] || TL_S['Pre-Review'];
     const pct = status==='Done'?100:status==='Corp. Review'?75:status==='In Progress'?50:5;
@@ -607,22 +607,22 @@ function showCountryModal(locale) {
 
   // 🚦 신호등 색상 정의
   const TL = {
-    'Done':         { color:'#10B981', glow:'rgba(16,185,129,.35)',  label:'완료',    pulse:false },
-    'In Progress':  { color:'#F59E0B', glow:'rgba(245,158,11,.35)',  label:'작업중',  pulse:false },
-    'Corp. Review': { color:'#EA1917', glow:'rgba(239,68,68,.35)',   label:'법인리뷰', pulse:true },
-    'Pre-Review':   { color:'#D1D5DB', glow:'transparent',           label:'사전검토', pulse:false },
+    'Done':         { color:'#20C49A', glow:'rgba(32,196,154,.35)',  label:'완료',    pulse:false },
+    'In Progress':  { color:'#4F7DF3', glow:'rgba(79,125,243,.35)',  label:'작업중',  pulse:false },
+    'Corp. Review': { color:'#FF745C', glow:'rgba(255,116,92,.35)',   label:'법인리뷰', pulse:true },
+    'Pre-Review':   { color:'#F6C94C', glow:'rgba(246,201,76,.28)',           label:'사전검토', pulse:false },
   };
 
   const hasRed    = safeStatuses.some(s => s === 'Corp. Review');
   const hasYellow = safeStatuses.some(s => s === 'In Progress');
 
   const tlBadge = hasRed
-    ? `<span class="tl-status-badge" style="color:#EA1917">🔴${days ? ` ${days}일 지연` : ' 법인리뷰 적체'}</span>`
+    ? `<span class="tl-status-badge" style="color:#FF745C">🔴${days ? ` ${days}일 지연` : ' 법인리뷰 적체'}</span>`
     : hasYellow
-    ? `<span class="tl-status-badge" style="color:#D97706">🟡 작업 진행중</span>`
+    ? `<span class="tl-status-badge" style="color:#4F7DF3">🟡 작업 진행중</span>`
     : isDone
-    ? `<span class="tl-status-badge" style="color:#047857">🟢 전체 완료</span>`
-    : `<span class="tl-status-badge" style="color:#9BA3BF">⚪ 미시작</span>`;
+    ? `<span class="tl-status-badge" style="color:#20C49A">🟢 전체 완료</span>`
+    : `<span class="tl-status-badge" style="color:#806300">⚪ 미시작</span>`;
 
   const tlDots = cols.map((col, i) => {
     const s  = safeStatuses[i];
@@ -1086,7 +1086,7 @@ function getSheetPageCountInfo(d) {
       if (!item || item.pages == null || item.pages === '') return;
       info.hasPageColumn = true;
       info.hasPages = true;
-      addCount(item.overall || item.status || 'Internal Review', toSheetStatNumber(item.pages));
+      addCount(item.overall || item.status || 'Pre-Review', toSheetStatNumber(item.pages));
     });
 
     if (!info.hasPageColumn && items.length) {
@@ -1905,7 +1905,7 @@ function buildCountryVariation(rows, opts) {
     return '<div style="display:flex;align-items:center;gap:12px;padding:7px 0">' +
       '<div style="width:128px;flex-shrink:0;font-size:11px;font-weight:700;color:#1A1D2E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + r.name + '</div>' +
       '<div style="flex:1;height:5px;border-radius:3px;background:#EDEFF3;overflow:hidden">' +
-        '<div style="height:100%;width:' + pct + '%;background:#22C55E;border-radius:3px"></div></div>' +
+        '<div style="height:100%;width:' + pct + '%;background:#20C49A;border-radius:3px"></div></div>' +
       '<div style="width:36px;flex-shrink:0;font-size:11px;font-weight:700;color:#6B7280;text-align:right">' + pct + '%</div>' +
       '<div style="width:34px;flex-shrink:0;text-align:center"><div style="font-size:8px;color:#9BA3BF;font-weight:700;letter-spacing:.05em">PUB</div><div style="font-size:12px;font-weight:800;color:#1A1D2E">' + r.pub + '</div></div>' +
       '<div style="width:38px;flex-shrink:0;text-align:center"><div style="font-size:8px;color:#9BA3BF;font-weight:700;letter-spacing:.05em">TOTAL</div><div style="font-size:12px;font-weight:800;color:#9BA3BF">' + r.total + '</div></div>' +
@@ -2029,10 +2029,10 @@ function bgTableInsight(items) {
   }
   if (!preCountries.length) return '';
   var listTxt = preCountries.join(', ');
-  return '<div style="background:#FEF6F0;border:1px solid #F59E0B33;border-left:3px solid #F59E0B;border-radius:8px;padding:11px 15px;margin-bottom:14px;font-size:11.5px;color:#92400E;line-height:1.6">' +
+  return '<div style="background:#FFF9E7;border:1px solid #F6C94C66;border-left:3px solid #F6C94C;border-radius:8px;padding:11px 15px;margin-bottom:14px;font-size:11.5px;color:#806300;line-height:1.6">' +
     '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">' +
       '<div style="flex:1">' +
-        warnIcon('#F59E0B') +
+        warnIcon('#F6C94C') +
         '<b>본부 액션 필요</b> — 사전검토 상태 <b>' + preCountries.length + '개국</b>은 법인 검토가 진행되지 않은 건으로, 본부에서 해당 법인에 검토·진행을 독려해야 합니다.<br>' +
         '<span style="display:inline-block;margin-top:5px;color:#7C4A12">대상 국가: <b>' + listTxt + '</b></span>' +
       '</div>' +
@@ -2150,10 +2150,10 @@ function buildActionBanner() {
   var pre = getPreReviewItems(key);
   if (!pre.length) return '';
   var unit = (key === 'article_list') ? '건' : '개국';
-  return '<div style="background:#FEF6F0;border:1px solid #F59E0B33;border-left:3px solid #F59E0B;border-radius:8px;padding:11px 15px;margin-bottom:14px;font-size:11.5px;color:#92400E;line-height:1.6">' +
+  return '<div style="background:#FFF9E7;border:1px solid #F6C94C66;border-left:3px solid #F6C94C;border-radius:8px;padding:11px 15px;margin-bottom:14px;font-size:11.5px;color:#806300;line-height:1.6">' +
     '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">' +
       '<div style="flex:1">' +
-        warnIcon('#F59E0B') +
+        warnIcon('#F6C94C') +
         '<b>본부 액션 필요</b> — 사전검토 상태 <b>' + pre.length + unit + '</b>은 법인 검토가 진행되지 않은 건으로, 본부에서 해당 법인에 검토·진행을 독려해야 합니다.' +
       '</div>' +
       '<button onclick="openActionModal()" style="flex-shrink:0;display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border:1px solid #A50034;border-radius:6px;background:#A50034;color:#fff;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:opacity .15s" onmouseover="this.style.opacity=0.88" onmouseout="this.style.opacity=1">' +
@@ -2163,7 +2163,7 @@ function buildActionBanner() {
     '</div>' +
   '</div>';
 }
-function dotColor(s){ return (s==='Done')?'#22C55E':(s==='Corp. Review'||s==='Cancel')?'#F59E0B':(s==='In Progress')?'#3B82F6':'#CBD5E1'; }
+function dotColor(s){ return s==='Done'?'#20C49A':s==='Corp. Review'?'#FF745C':s==='Cancel'?'#A50034':s==='In Progress'?'#4F7DF3':s==='Pre-Review'?'#F6C94C':s==='Internal Review'?'#C4CCD8':'#CBD5E1'; }
 function openActionModal() {
   var key = currentKey;
   var d = DATA[key];
@@ -2215,7 +2215,7 @@ function openActionModal() {
           '<td style="position:sticky;left:0;background:#fff;padding:7px 10px;font-size:11px;font-weight:700;color:#1A1D2E;white-space:nowrap">'+name+'</td>' +
           '<td style="text-align:center;padding:7px 8px;font-size:10px;color:#6B7280">'+(it.phase==='Phase 1'?'1차':(it.phase==='Phase 2'?'2차':(it.phase||'')))+'</td>' +
           tds +
-          '<td style="text-align:center;padding:7px 10px;font-size:11px;font-weight:800;color:#94A3B8">'+(it.pre||0)+'/'+(it.total||0)+'</td>' +
+          '<td style="text-align:center;padding:7px 10px;font-size:11px;font-weight:800;color:#806300">'+(it.pre||0)+'/'+(it.total||0)+'</td>' +
         '</tr>';
       }
     }
@@ -2259,7 +2259,7 @@ function openActionModal() {
         rows3 += '<tr style="border-top:1px solid #F0F1F8">' +
           regionCell +
           '<td style="padding:7px 10px;font-size:11px;font-weight:700;color:#1A1D2E;white-space:nowrap">'+(it.country||it.locale)+'</td>' +
-          '<td style="text-align:center;padding:7px 10px"><span style="font-size:10px;color:#94A3B8">사전검토</span></td>' +
+          '<td style="text-align:center;padding:7px 10px"><span style="font-size:10px;color:#806300">사전검토</span></td>' +
           (hasPages?('<td style="text-align:center;padding:7px 10px;font-size:11px;font-weight:700;color:#1A1D2E">'+(it.pages||0)+'</td>'):'') +
         '</tr>';
       }
@@ -2618,10 +2618,10 @@ function contentStatsForData(d, key) {
     for (var i2=0;i2<arts.length;i2++){ var m=arts[i2].statuses||{}; for(var loc in m){ if(m.hasOwnProperty(loc)&&m[loc]) add(m[loc],1); } }
   } else if (pagesTabs[key]) {
     var it3 = d.items || [];
-    for (var i3=0;i3<it3.length;i3++){ add(it3[i3].status||'Internal Review', parseInt(it3[i3].pages)||0); }
+    for (var i3=0;i3<it3.length;i3++){ add(it3[i3].status||'Pre-Review', parseInt(it3[i3].pages)||0); }
   } else {
     var it4 = d.items || [];
-    for (var i4=0;i4<it4.length;i4++){ add(it4[i4].status||'Internal Review', 1); }
+    for (var i4=0;i4<it4.length;i4++){ add(it4[i4].status||'Pre-Review', 1); }
   }
   c.done = c.Done; c.Total = c.total;
   return c;
@@ -2766,7 +2766,7 @@ function getInternalReviewSummaryInfo(d) {
   } else {
     items.forEach(function(item) {
       if (!item) return;
-      var st = item.overall || item.status || 'Internal Review';
+      var st = detectSheetStatusValue(item.overall || item.status || '');
       if (st !== 'Internal Review') return;
       addCountry(item.country || item.locale || '', item.pages ? toSheetStatNumber(item.pages) : 1);
     });
@@ -2817,10 +2817,10 @@ function syncNavBadges() {
     if (!badge) return;
     badge.textContent = pct + '%';
     var bg;
-    if (pct >= 70) bg = '#10B981';
-    else if (pct >= 40) bg = '#3B82F6';
-    else if (pct >= 15) bg = '#F59E0B';
-    else bg = '#94A3B8';
+    if (pct >= 70) bg = '#20C49A';
+    else if (pct >= 40) bg = '#4F7DF3';
+    else if (pct >= 15) bg = '#FF745C';
+    else bg = '#C4CCD8';
     badge.style.background = bg;
     badge.style.color = '#FFFFFF';
   });
@@ -3096,20 +3096,20 @@ function renderBG(area) {
     if (!s) return '<td style="text-align:center"><span style="color:#E2E8F0;font-size:10px">\u2014</span></td>';
     if (s==='Done') {
       // URL 있으면 클릭 가능한 초록 동그라미, 없으면 정적 초록 동그라미
-      var dot = '<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#22C55E"></span>';
+      var dot = '<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>';
       if (url) {
         return '<td style="text-align:center"><a href="'+url+'" target="_blank" rel="noopener" title="'+url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a></td>';
       }
       return '<td style="text-align:center">'+dot+'</td>';
     }
     if (s==='Corp. Review')
-      return '<td style="text-align:center"><span style="font-size:10px;font-weight:800;color:#F59E0B">\uBC95\uC778\uB9AC\uBDF0</span></td>';
+      return '<td style="text-align:center"><span style="font-size:10px;font-weight:800;color:#FF745C">\uBC95\uC778\uB9AC\uBDF0</span></td>';
     if (s==='Cancel')
-      return '<td style="text-align:center"><span style="font-size:10px;font-weight:800;color:#F59E0B">Cancel</span></td>';
+      return '<td style="text-align:center"><span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span></td>';
     if (s==='In Progress')
-      return '<td style="text-align:center"><span style="font-size:10px;font-weight:700;color:#3B82F6">\uC791\uC5C5\uC911</span></td>';
+      return '<td style="text-align:center"><span style="font-size:10px;font-weight:700;color:#4F7DF3">\uC791\uC5C5\uC911</span></td>';
     // Pre-Review
-    return '<td style="text-align:center"><span style="font-size:10px;color:#94A3B8">\uC0AC\uC804\uAC80\uD1A0</span></td>';
+    return '<td style="text-align:center"><span style="font-size:10px;color:#806300">\uC0AC\uC804\uAC80\uD1A0</span></td>';
   }
 
   // ── 헤더 행1
@@ -3434,14 +3434,14 @@ function buildArticleActionSection() {
     '<div style="font-size:15px;font-weight:800;color:#1A1D2E;margin-bottom:14px">hub제작국가 진행 현황 보고 (Article List)</div>' +
 
     // 요약 배너
-    '<div style="background:#FEF6F0;border:1px solid #F59E0B33;border-left:3px solid #F59E0B;border-radius:8px;padding:11px 14px;margin-bottom:18px;font-size:12px;color:#92400E;line-height:1.6;display:flex;align-items:flex-start">' +
-      warnIcon('#F59E0B') +
-      '<span>hub제작국가 총 <b>'+totalHub+'개국</b> 중 완료 <b style="color:#166534">'+done.length+'</b> · 법인리뷰 <b style="color:#92400E">'+review.length+'</b> · 작업요청 <b style="color:#1E40AF">'+request.length+'</b>. 법인리뷰·작업요청 건은 본부의 진행 독려 및 일정 확인이 필요합니다.</span>' +
+    '<div style="background:#FFF0ED;border:1px solid #FF745C55;border-left:3px solid #FF745C;border-radius:8px;padding:11px 14px;margin-bottom:18px;font-size:12px;color:#C94D39;line-height:1.6;display:flex;align-items:flex-start">' +
+      warnIcon('#FF745C') +
+      '<span>hub제작국가 총 <b>'+totalHub+'개국</b> 중 완료 <b style="color:#147F68">'+done.length+'</b> · 법인리뷰 <b style="color:#C94D39">'+review.length+'</b> · 작업요청 <b style="color:#315CC4">'+request.length+'</b>. 법인리뷰·작업요청 건은 본부의 진행 독려 및 일정 확인이 필요합니다.</span>' +
     '</div>' +
 
-    statBlock('완료', done, '#10B981', '#047857', '#ECFDF5', true) +
-    statBlock('법인리뷰 (본부 독려 필요)', review, '#F59E0B', '#92400E', '#FFFBEB') +
-    statBlock('작업요청 (착수 일정 확인)', request, '#3B82F6', '#1E40AF', '#EFF6FF') +
+    statBlock('완료', done, '#20C49A', '#147F68', '#EAFBF7', true) +
+    statBlock('법인리뷰 (본부 독려 필요)', review, '#FF745C', '#C94D39', '#FFF0ED') +
+    statBlock('작업요청 (착수 일정 확인)', request, '#4F7DF3', '#315CC4', '#EEF3FF') +
     (etc.length ? statBlock('기타/미표기', etc, '#94A3B8', '#475569', '#F8FAFC') : '') +
   '</div>';
 }
@@ -3499,14 +3499,14 @@ function renderArticle(area) {
   function cellHtml(s, url) {
     if (!s) return '<td style="text-align:center;background:#FAFAFB"><span style="font-size:9px;color:#E2E5EC">\uc9c4\ud589\uc548\ud568</span></td>';
     if (s==='Done') {
-      var dot = '<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#22C55E"></span>';
+      var dot = '<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>';
       if (url) return '<td style="text-align:center"><a href="'+url+'" target="_blank" rel="noopener" title="'+url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a></td>';
       return '<td style="text-align:center">'+dot+'</td>';
     }
-    if (s==='Corp. Review') return '<td style="text-align:center"><span style="font-size:10px;font-weight:800;color:#F59E0B">\ubc95\uc778\ub9ac\ubdf0</span></td>';
-    if (s==='Cancel')       return '<td style="text-align:center"><span style="font-size:10px;font-weight:800;color:#F59E0B">Cancel</span></td>';
-    if (s==='In Progress')  return '<td style="text-align:center"><span style="font-size:10px;font-weight:700;color:#3B82F6">\uc791\uc5c5\uc911</span></td>';
-    return '<td style="text-align:center"><span style="font-size:10px;color:#94A3B8">\uc0ac\uc804\uac80\ud1a0</span></td>';
+    if (s==='Corp. Review') return '<td style="text-align:center"><span style="font-size:10px;font-weight:800;color:#FF745C">\ubc95\uc778\ub9ac\ubdf0</span></td>';
+    if (s==='Cancel')       return '<td style="text-align:center"><span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span></td>';
+    if (s==='In Progress')  return '<td style="text-align:center"><span style="font-size:10px;font-weight:700;color:#4F7DF3">\uc791\uc5c5\uc911</span></td>';
+    return '<td style="text-align:center"><span style="font-size:10px;color:#806300">\uc0ac\uc804\uac80\ud1a0</span></td>';
   }
 
   // ── 제품 그룹 배지
@@ -3540,7 +3540,7 @@ function renderArticle(area) {
     }
     var hub = a.hub ? '<span style="font-size:10px;color:#475569">'+a.hub+'</span>' : '';
     var prog = a.progress ? '<span style="font-size:10px;color:#6B7280">'+a.progress+'</span>' : '';
-    var urlCell = a.url ? '<a href="'+a.url+'" target="_blank" rel="noopener" title="'+a.url+'" style="color:#22C55E"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#22C55E"></span></a>' : '';
+    var urlCell = a.url ? '<a href="'+a.url+'" target="_blank" rel="noopener" title="'+a.url+'" style="color:#20C49A"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#20C49A"></span></a>' : '';
     rows.push('<tr>' +
       '<td style="position:sticky;left:0;background:#fff;z-index:1;text-align:center">'+prodBadge(a.product)+'</td>' +
       damIcon(a.dam) +
@@ -3582,8 +3582,8 @@ function bgArticleInsight(arts, countries) {
   for (var i=0;i<arts.length;i++){ if (arts[i].overall==='Pre-Review') preTitles.push(arts[i].title); }
   if (!preTitles.length) return '';
   var listTxt = preTitles.slice(0,8).join(', ') + (preTitles.length>8?(' 외 '+(preTitles.length-8)+'건'):'');
-  return '<div style="background:#FEF6F0;border:1px solid #F59E0B33;border-left:3px solid #F59E0B;border-radius:8px;padding:11px 15px;margin-bottom:14px;font-size:11.5px;color:#92400E;line-height:1.6">' +
-    warnIcon('#F59E0B') +
+  return '<div style="background:#FFF9E7;border:1px solid #F6C94C66;border-left:3px solid #F6C94C;border-radius:8px;padding:11px 15px;margin-bottom:14px;font-size:11.5px;color:#806300;line-height:1.6">' +
+    warnIcon('#F6C94C') +
     '<b>본부 액션 필요</b> — 사전검토 상태 아티클 <b>' + preTitles.length + '건</b>은 법인 검토가 진행되지 않은 건으로, 본부에서 해당 법인에 검토·진행을 독려해야 합니다.<br>' +
     '<span style="display:inline-block;margin-top:5px;color:#7C4A12">대상: <b>' + listTxt + '</b></span>' +
   '</div>';
@@ -3753,11 +3753,11 @@ function renderWashTower(area) {
     for (var ii=0;ii<ritems.length;ii++){
       var item=ritems[ii];
       var statusCell;
-      if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#22C55E"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
-      else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#F59E0B">법인리뷰</span>';
-      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#F59E0B">Cancel</span>';
-      else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#3B82F6">작업중</span>';
-      else statusCell='<span style="font-size:10px;color:#94A3B8">사전검토</span>';
+      if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
+      else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#FF745C">법인리뷰</span>';
+      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+      else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#4F7DF3">작업중</span>';
+      else statusCell='<span style="font-size:10px;color:#806300">사전검토</span>';
       var dateCell=item.date?'<span style="font-size:10px;color:#1A1D2E;font-weight:600">'+item.date+'</span>':'';
       var regionCell='';
       if(ii===0) regionCell='<td rowspan="'+ritems.length+'" style="width:130px;text-align:center;font-size:10px;font-weight:800;background:'+rcfg.bg+';color:'+rcfg.tc+';border-right:2px solid '+rcfg.border+';vertical-align:middle;white-space:nowrap">'+rcfg.label+'</td>';
@@ -3855,11 +3855,11 @@ function renderMicrosite(area) {
     for (var ii=0;ii<ritems.length;ii++){
       var item=ritems[ii];
       var statusCell;
-      if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#22C55E"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
-      else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#F59E0B">법인리뷰</span>';
-      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#F59E0B">Cancel</span>';
-      else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#3B82F6">작업중</span>';
-      else statusCell='<span style="font-size:10px;color:#94A3B8">사전검토</span>';
+      if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
+      else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#FF745C">법인리뷰</span>';
+      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+      else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#4F7DF3">작업중</span>';
+      else statusCell='<span style="font-size:10px;color:#806300">사전검토</span>';
       var dateCell=item.date?'<span style="font-size:10px;color:#1A1D2E;font-weight:600">'+item.date+'</span>':'';
       var remarkCell=item.remark?'<span style="font-size:10px;color:#6B7280">'+item.remark+'</span>':'';
       var regionCell='';
@@ -3947,18 +3947,18 @@ function renderIceSolution(area) {
 
       var statusCell;
       if (item.status === 'Done') {
-        var dot = '<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#22C55E"></span>';
+        var dot = '<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>';
         statusCell = item.url
           ? '<a href="' + item.url + '" target="_blank" rel="noopener" title="' + item.url + '" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">' + dot + '</a>'
           : dot;
       } else if (item.status === 'Corp. Review') {
-        statusCell = '<span style="font-size:10px;font-weight:800;color:#F59E0B">\ubc95\uc778\ub9ac\ubdf0</span>';
+        statusCell = '<span style="font-size:10px;font-weight:800;color:#FF745C">\ubc95\uc778\ub9ac\ubdf0</span>';
       } else if (item.status === 'Cancel') {
-        statusCell = '<span style="font-size:10px;font-weight:800;color:#F59E0B">Cancel</span>';
+        statusCell = '<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
       } else if (item.status === 'In Progress') {
-        statusCell = '<span style="font-size:10px;font-weight:700;color:#3B82F6">\uc791\uc5c5\uc911</span>';
+        statusCell = '<span style="font-size:10px;font-weight:700;color:#4F7DF3">\uc791\uc5c5\uc911</span>';
       } else {
-        statusCell = '<span style="font-size:10px;color:#94A3B8">\uc0ac\uc804\uac80\ud1a0</span>';
+        statusCell = '<span style="font-size:10px;color:#806300">\uc0ac\uc804\uac80\ud1a0</span>';
       }
 
       var dateCell = item.date
@@ -4079,11 +4079,11 @@ function renderAltText(area) {
     for (var ii=0;ii<ritems.length;ii++){
       var item=ritems[ii];
       var statusCell;
-      if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#22C55E"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
-      else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#F59E0B">법인리뷰</span>';
-      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#F59E0B">Cancel</span>';
-      else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#3B82F6">작업중</span>';
-      else statusCell='<span style="font-size:10px;color:#94A3B8">사전검토</span>';
+      if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
+      else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#FF745C">법인리뷰</span>';
+      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+      else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#4F7DF3">작업중</span>';
+      else statusCell='<span style="font-size:10px;color:#806300">사전검토</span>';
       var pgCell='<span style="font-size:11px;color:#1A1D2E;font-weight:700">'+(item.pages||0)+'</span>';
      
       var regionCell='';
@@ -4181,11 +4181,11 @@ function renderFaqHub(area) {
     for (var ii=0;ii<ritems.length;ii++){
       var item=ritems[ii];
       var statusCell;
-      if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#22C55E"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
-      else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#F59E0B">법인리뷰</span>';
-      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#F59E0B">Cancel</span>';
-      else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#3B82F6">작업중</span>';
-      else statusCell='<span style="font-size:10px;color:#94A3B8">사전검토</span>';
+      if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
+      else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#FF745C">법인리뷰</span>';
+      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+      else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#4F7DF3">작업중</span>';
+      else statusCell='<span style="font-size:10px;color:#806300">사전검토</span>';
       var pttCell=item.ptt?'<span style="font-size:9px;color:#6B7280">'+item.ptt+'</span>':'';
       var regionCell='';
       if(ii===0) regionCell='<td rowspan="'+ritems.length+'" style="width:130px;text-align:center;font-size:10px;font-weight:800;background:'+rcfg.bg+';color:'+rcfg.tc+';border-right:2px solid '+rcfg.border+';vertical-align:middle;white-space:nowrap">'+rcfg.label+'</td>';
@@ -4281,11 +4281,11 @@ function renderPdpGallery(area) {
     for (var ii=0;ii<ritems.length;ii++){
       var item=ritems[ii];
       var statusCell;
-      if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#22C55E"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
-      else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#F59E0B">법인리뷰</span>';
-      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#F59E0B">Cancel</span>';
-      else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#3B82F6">작업중</span>';
-      else statusCell='<span style="font-size:10px;color:#94A3B8">사전검토</span>';
+      if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
+      else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#FF745C">법인리뷰</span>';
+      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+      else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#4F7DF3">작업중</span>';
+      else statusCell='<span style="font-size:10px;color:#806300">사전검토</span>';
       var pgCell='<span style="font-size:11px;color:#1A1D2E;font-weight:700">'+(item.pages||0)+'</span>';
      
       var regionCell='';
@@ -4385,11 +4385,11 @@ function renderVacuum(area) {
     for (var ii=0;ii<ritems.length;ii++){
       var item=ritems[ii];
       var statusCell;
-      if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#22C55E"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
-      else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#F59E0B">법인리뷰</span>';
-      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#F59E0B">Cancel</span>';
-      else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#3B82F6">작업중</span>';
-      else statusCell='<span style="font-size:10px;color:#94A3B8">사전검토</span>';
+      if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
+      else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#FF745C">법인리뷰</span>';
+      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+      else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#4F7DF3">작업중</span>';
+      else statusCell='<span style="font-size:10px;color:#806300">사전검토</span>';
       var pgCell='<span style="font-size:11px;color:#1A1D2E;font-weight:700">'+(item.pages||0)+'</span>';
      
       var regionCell='';
@@ -4489,11 +4489,11 @@ function renderWmoFaq(area) {
     for (var ii=0;ii<ritems.length;ii++){
       var item=ritems[ii];
       var statusCell;
-      if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#22C55E"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
-      else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#F59E0B">법인리뷰</span>';
-      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#F59E0B">Cancel</span>';
-      else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#3B82F6">작업중</span>';
-      else statusCell='<span style="font-size:10px;color:#94A3B8">사전검토</span>';
+      if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
+      else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#FF745C">법인리뷰</span>';
+      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+      else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#4F7DF3">작업중</span>';
+      else statusCell='<span style="font-size:10px;color:#806300">사전검토</span>';
       var pgCell='<span style="font-size:11px;color:#1A1D2E;font-weight:700">'+(item.pages||0)+'</span>';
      
       var regionCell='';
@@ -4793,7 +4793,7 @@ function buildReportVisual() {
   var cards = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">' +
     '<div style="background:#FAFBFC;border:1px solid #E8EAF2;border-radius:10px;padding:14px"><div style="font-size:10px;font-weight:700;color:#9BA3BF;letter-spacing:.05em">전체 진행률</div><div style="font-size:24px;font-weight:800;color:#A50034;margin-top:4px">'+oPct+'%</div><div style="font-size:10px;color:#6B7280;margin-top:2px">'+fmt(tDone)+' / '+fmt(tTotal)+'</div></div>' +
     '<div style="background:#FAFBFC;border:1px solid #E8EAF2;border-radius:10px;padding:14px"><div style="font-size:10px;font-weight:700;color:#9BA3BF;letter-spacing:.05em">콘텐츠 수</div><div style="font-size:24px;font-weight:800;color:#1A1D2E;margin-top:4px">'+rows.length+'</div><div style="font-size:10px;color:#6B7280;margin-top:2px">운영 콘텐츠 유형</div></div>' +
-    '<div style="background:#FFF8F0;border:1px solid #F59E0B33;border-radius:10px;padding:14px"><div style="font-size:10px;font-weight:700;color:#B45309;letter-spacing:.05em">독려 필요(사전검토)</div><div style="font-size:24px;font-weight:800;color:#F59E0B;margin-top:4px">'+fmt(tPre)+'</div><div style="font-size:10px;color:#92400E;margin-top:2px">법인 검토 대기</div></div>' +
+    '<div style="background:#FFF9E7;border:1px solid #F6C94C66;border-radius:10px;padding:14px"><div style="font-size:10px;font-weight:700;color:#806300;letter-spacing:.05em">독려 필요(사전검토)</div><div style="font-size:24px;font-weight:800;color:#F6C94C;margin-top:4px">'+fmt(tPre)+'</div><div style="font-size:10px;color:#806300;margin-top:2px">법인 검토 대기</div></div>' +
   '</div>';
 
   var head = '<tr style="background:#2D2D2D;color:#fff">' +
@@ -4805,14 +4805,14 @@ function buildReportVisual() {
     '<th style="padding:9px 8px;font-size:11px">사전검토</th>' +
     '<th style="padding:9px 8px;font-size:11px">합계</th></tr>';
   var body = rows.map(function(r){
-    var barColor = r.pct>=70?'#22C55E':r.pct>=40?'#F59E0B':'#A50034';
+    var barColor = r.pct>=70?'#20C49A':r.pct>=40?'#4F7DF3':r.pct>=15?'#FF745C':'#C4CCD8';
     return '<tr style="border-bottom:1px solid #F0F1F8">' +
       '<td style="text-align:left;padding:8px 12px;font-size:11px;font-weight:700;color:#1A1D2E">'+r.title+'</td>' +
       '<td style="padding:8px 8px;text-align:center"><div style="display:flex;align-items:center;gap:6px;justify-content:center"><div style="width:54px;height:6px;border-radius:3px;background:#EEF0F5;overflow:hidden"><div style="width:'+r.pct+'%;height:100%;background:'+barColor+'"></div></div><span style="font-size:11px;font-weight:800;color:'+barColor+'">'+r.pct+'%</span></div></td>' +
-      '<td style="padding:8px 8px;text-align:center;font-size:11px;color:#22C55E;font-weight:700">'+fmt(r.done)+'</td>' +
-      '<td style="padding:8px 8px;text-align:center;font-size:11px;color:#F59E0B;font-weight:700">'+fmt(r.corp)+'</td>' +
-      '<td style="padding:8px 8px;text-align:center;font-size:11px;color:#3B82F6;font-weight:700">'+fmt(r.wip)+'</td>' +
-      '<td style="padding:8px 8px;text-align:center;font-size:11px;color:#94A3B8;font-weight:700">'+fmt(r.pre)+'</td>' +
+      '<td style="padding:8px 8px;text-align:center;font-size:11px;color:#20C49A;font-weight:700">'+fmt(r.done)+'</td>' +
+      '<td style="padding:8px 8px;text-align:center;font-size:11px;color:#FF745C;font-weight:700">'+fmt(r.corp)+'</td>' +
+      '<td style="padding:8px 8px;text-align:center;font-size:11px;color:#4F7DF3;font-weight:700">'+fmt(r.wip)+'</td>' +
+      '<td style="padding:8px 8px;text-align:center;font-size:11px;color:#806300;font-weight:700">'+fmt(r.pre)+'</td>' +
       '<td style="padding:8px 8px;text-align:center;font-size:11px;font-weight:800;color:#1A1D2E">'+fmt(r.total)+'</td>' +
     '</tr>';
   }).join('');

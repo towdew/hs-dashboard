@@ -14,7 +14,7 @@
     'In Progress':    { label:'작업중',   dot:'#4F7DF3', bg:'#EEF3FF', tc:'#315CC4' },
     'Corp. Review':   { label:'법인리뷰', dot:'#FF745C', bg:'#FFF0ED', tc:'#C94D39' },
     'Done':           { label:'완료',     dot:'#20C49A', bg:'#EAFBF7', tc:'#147F68' },
-    'Cancel':         { label:'취소',     dot:'#EA1917', bg:'#FEF2F2', tc:'#B91C1C' }
+    'Cancel':         { label:'취소',     dot:'#A50034', bg:'#FCE8EE', tc:'#A50034' }
   };
 
   var REGION_ORDER_LIST = ['EU', 'ASIA', 'CIS', 'LATAM', 'MEA', 'INDIA', 'NA', 'ETC'];
@@ -393,10 +393,10 @@
       var navPct = navTotal > 0
         ? Math.round(((Number(navStats.Done || 0) + Number(navStats.Cancel || 0)) / navTotal) * 100)
         : 0;
-      var navBg = navPct >= 70 ? '#10B981'
-        : navPct >= 40 ? '#3B82F6'
-        : navPct >= 15 ? '#F59E0B'
-        : '#94A3B8';
+      var navBg = navPct >= 70 ? '#20C49A'
+        : navPct >= 40 ? '#4F7DF3'
+        : navPct >= 15 ? '#FF745C'
+        : '#C4CCD8';
       html += '<div class="nav-item' + (index === 0 ? ' active' : '') + '" data-key="' + key + '" onclick="switchMenu(this)" title="' + escapeHtml(navTitle) + '">' +
         '<span class="ni-text" data-abbr="' + String(index + 1).padStart(2, '0') + '">' + escapeHtml(navTitle) + '</span>' +
         '<span class="ni-badge" style="background:' + navBg + ';color:#FFFFFF">' + navPct + '%</span>' +
