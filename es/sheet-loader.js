@@ -386,9 +386,20 @@
     keys.forEach(function (key, index) {
       var d = data[key];
       var navTitle = d.navTitle || d.sheetName || d.displayTitle;
+      // LNB %는 초기 렌더부터 실제 통계로 표시합니다.
+      // 이후 common.js의 syncNavBadges()도 같은 규칙으로 재동기화합니다.
+      var navStats = d.stats || {};
+      var navTotal = Number(navStats.Total || 0);
+      var navPct = navTotal > 0
+        ? Math.round(((Number(navStats.Done || 0) + Number(navStats.Cancel || 0)) / navTotal) * 100)
+        : 0;
+      var navBg = navPct >= 70 ? '#10B981'
+        : navPct >= 40 ? '#3B82F6'
+        : navPct >= 15 ? '#F59E0B'
+        : '#94A3B8';
       html += '<div class="nav-item' + (index === 0 ? ' active' : '') + '" data-key="' + key + '" onclick="switchMenu(this)" title="' + escapeHtml(navTitle) + '">' +
         '<span class="ni-text" data-abbr="' + String(index + 1).padStart(2, '0') + '">' + escapeHtml(navTitle) + '</span>' +
-        '<span class="ni-badge" style="background:rgba(148,163,184,.2);color:#94A3B8">0%</span>' +
+        '<span class="ni-badge" style="background:' + navBg + ';color:#FFFFFF">' + navPct + '%</span>' +
       '</div>';
     });
     nav.innerHTML = html;
