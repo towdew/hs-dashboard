@@ -74,36 +74,37 @@ var vacuumWeek = AUTO_WEEK;
 /* WMO_FAQ_WEEKS 데이터는 json.js로 분리됨 */
 
 var wmoWeek = AUTO_WEEK;
-DATA.wmo_faq = { title: 'MWO PLP FAQ', icon: '', isNew: true, items: [], stats: { Done:0,'Corp. Review':0,'In Progress':0,'Pre-Review':0,Cancel:0,Total:0 } };
+DATA.wmo_faq = { title: 'MWO PLP FAQ', icon: '', isNew: true, items: [], stats: { Done:0,'Corp. Review':0,'In Progress':0,'Pre-Review':0,'Internal Review':0,Cancel:0,Total:0 } };
 /* COL_FULL 데이터는 json.js로 분리됨 */
 
 
 // ── 🚌 세그먼트 진행 바 (다음지도 스타일) ─────────────────────
-// counts: { 'Pre-Review':n, 'In Progress':n, 'Corp. Review':n, 'Done':n }
+// counts: { 'Internal Review':n, 'Pre-Review':n, 'In Progress':n, 'Corp. Review':n, 'Done':n, 'Cancel':n }
 // opts: { compact: bool, showNumbers: bool, showIcons: bool }
 function buildSegmentedBar(counts, opts) {
   opts = opts || {};
-  const total = (counts['Pre-Review']||0) + (counts['In Progress']||0) +
-                (counts['Corp. Review']||0) + (counts['Done']||0) + (counts['Cancel']||0);
+  // Pipeline에는 취소를 넣지 않습니다. 취소는 별도 종결 상태로 하단에 표시합니다.
+  const total = (counts['Internal Review']||0) + (counts['Pre-Review']||0) +
+                (counts['In Progress']||0) + (counts['Corp. Review']||0) + (counts['Done']||0);
   if (total === 0) return '<div class="seg-bar seg-empty"></div>';
 
-  // 파이프라인 순서: 사전검토 → 작업중 → 법인리뷰 → 완료
-  const order = ['Pre-Review','In Progress','Corp. Review','Done','Cancel'];
-  const icons = { 'Pre-Review':'P', 'In Progress':'W', 'Corp. Review':'C', 'Done':'✓', 'Cancel':'×' };
+  // 파이프라인 순서: 내부검토 → 사전검토 → 작업중 → 법인리뷰 → 완료
+  const order = ['Internal Review','Pre-Review','In Progress','Corp. Review','Done'];
 
   const segs = order
     .filter(st => (counts[st]||0) > 0)
     .map(st => {
       const c = counts[st];
       const w = (c / total) * 100;
-      const cfg = SC[st] || { dot:'#94A3B8', label:st };
+      const cfg = SC[st] || { dot:'#C4CCD8', label:st };
       const label = ({
-        'Pre-Review':'사전검토','In Progress':'작업중',
-        'Corp. Review':'법인리뷰','Done':'완료','Cancel':'취소'
+        'Internal Review':'내부검토','Pre-Review':'사전검토','In Progress':'작업중',
+        'Corp. Review':'법인리뷰','Done':'완료'
       })[st] || st;
       const showNum = opts.showNumbers && w >= 6;
+      const numColor = (st === 'Internal Review' || st === 'Pre-Review') ? '#3F4856' : '#FFFFFF';
       return `<div class="seg" style="width:${w}%;background:${cfg.dot}" data-tooltip="${label} ${c}건">
-        ${showNum ? `<span class="seg-num">${c}</span>` : ''}
+        ${showNum ? `<span class="seg-num" style="color:${numColor}">${c}</span>` : ''}
       </div>`;
     }).join('');
 
@@ -118,13 +119,14 @@ function countsFromStatuses(statuses) {
   return c;
 }
 
-// ── 💎 Toss 스타일 4-Stage 파이프라인 ────────────────────────
+// ── 💎 Toss 스타일 파이프라인 ───────────────────────────────
 function buildTossPipeline(stats, total) {
   const stages = [
-    { key:'Pre-Review',   label:'사전검토', color:'#94A3B8' },
-    { key:'In Progress',  label:'작업중',   color:'#3B82F6' },
-    { key:'Corp. Review', label:'법인리뷰', color:'#F59E0B' },
-    { key:'Done',         label:'완료',     color:'#10B981' },
+    { key:'Internal Review', label:'내부검토', color:'#C4CCD8' },
+    { key:'Pre-Review',      label:'사전검토', color:'#F6C94C' },
+    { key:'In Progress',     label:'작업중',   color:'#4F7DF3' },
+    { key:'Corp. Review',    label:'법인리뷰', color:'#FF745C' },
+    { key:'Done',            label:'완료',     color:'#20C49A' },
   ];
 
   // 최다 stage 찾기
@@ -133,8 +135,9 @@ function buildTossPipeline(stats, total) {
     const c = stats[st.key] || 0;
     if (c > maxCnt) { maxCnt = c; maxIdx = i; }
   });
-  // 핀 위치: 각 stage가 25% 영역 (4분할) → 중앙 = (idx * 25 + 12.5)%
-  const pinPos = (maxIdx * 25) + 12.5;
+  // 핀 위치: 각 stage가 동일 영역을 사용합니다.
+  const stageSpan = 100 / stages.length;
+  const pinPos = (maxIdx * stageSpan) + (stageSpan / 2);
 
   const segHtml = stages.map((st, i) => {
     const cnt = stats[st.key] || 0;
@@ -970,8 +973,24 @@ function detectSheetStatusValue(value) {
   return '';
 }
 
+function findStatusFieldInSheetRow(row) {
+  row = row || {};
+  var candidates = ['Status', 'status', '진행상태', '상태', 'Task Status in PTT', 'Result'];
+  var keys = Object.keys(row);
+  for (var i = 0; i < candidates.length; i++) {
+    var target = normalizeSheetStatKey(candidates[i]);
+    for (var k = 0; k < keys.length; k++) {
+      if (keys[k] === '__styles') continue;
+      if (normalizeSheetStatKey(keys[k]) === target) {
+        return { found:true, key:keys[k], value:row[keys[k]] };
+      }
+    }
+  }
+  return { found:false, key:'', value:'' };
+}
+
 function countStatusCellsInSheetRow(row, sheetData) {
-  var counts = { Done:0, 'Corp. Review':0, 'In Progress':0, 'Pre-Review':0, Cancel:0, total:0 };
+  var counts = { Done:0, 'Corp. Review':0, 'In Progress':0, 'Pre-Review':0, 'Internal Review':0, Cancel:0, total:0 };
   var exceptionRules = window.SHEET_EXCEPTION_RULES || null;
   var isExceptionSheet = !!(exceptionRules && typeof exceptionRules.isExceptionSheet === 'function' && exceptionRules.isExceptionSheet(sheetData));
   var isDamHeaderFn = exceptionRules && typeof exceptionRules.isDamHeader === 'function' ? exceptionRules.isDamHeader : null;
@@ -1017,7 +1036,7 @@ function getSheetPageCountInfo(d) {
     hasPageColumn: false,
     isStatusFallback: false,
     total: 0,
-    byStatus: { Done:0, 'Corp. Review':0, 'In Progress':0, 'Pre-Review':0, Cancel:0 }
+    byStatus: { Done:0, 'Corp. Review':0, 'In Progress':0, 'Pre-Review':0, 'Internal Review':0, Cancel:0 }
   };
 
   function addCount(status, count) {
@@ -1041,6 +1060,17 @@ function getSheetPageCountInfo(d) {
     // 완료 / 법인리뷰 / 진행중 / 사전검토 같은 상태값 셀 1개 = 1 Page로 계산합니다.
     if (!info.hasPageColumn) {
       rows.forEach(function(row) {
+        var statusField = findStatusFieldInSheetRow(row);
+        if (statusField.found) {
+          var rawStatus = String(statusField.value == null ? '' : statusField.value).trim();
+          var rowStatus = rawStatus ? detectSheetStatusValue(statusField.value) : 'Internal Review';
+          if (rowStatus) {
+            info.hasPages = true;
+            info.isStatusFallback = true;
+            addCount(rowStatus, 1);
+            return;
+          }
+        }
         var cellCounts = countStatusCellsInSheetRow(row, d);
         if (!cellCounts.total) return;
         info.hasPages = true;
@@ -1056,7 +1086,7 @@ function getSheetPageCountInfo(d) {
       if (!item || item.pages == null || item.pages === '') return;
       info.hasPageColumn = true;
       info.hasPages = true;
-      addCount(item.overall || item.status || 'Pre-Review', toSheetStatNumber(item.pages));
+      addCount(item.overall || item.status || 'Internal Review', toSheetStatNumber(item.pages));
     });
 
     if (!info.hasPageColumn && items.length) {
@@ -1092,11 +1122,11 @@ function findCountryValueHeaderForCount(d) {
   function scoreHeader(h) {
     var n = normalizeSheetHeaderName(h);
     if (!n || n === 'region' || n === '__styles') return 999;
-    if (n === 'projectname') return 0;
-    if (n === 'contry') return 1;
-    if (n === 'country') return 2;
-    if (n === 'countryname') return 3;
-    if (n === 'pdpcountry') return 4;
+    if (n === 'contry') return 0;
+    if (n === 'country') return 1;
+    if (n === 'countryname') return 2;
+    if (n === 'pdpcountry') return 3;
+    if (n === 'projectname') return 4;
     if (n === 'locale') return 5;
     if (n === 'market' || n === '국가' || n === '법인' || n === 'subsidiary') return 6;
     if (n.indexOf('projectname') >= 0) return 7;
@@ -1131,29 +1161,30 @@ function countSheetCountrySites(d) {
 
   var rows = Array.isArray(d.tableRows) ? d.tableRows : [];
   var items = Array.isArray(d.items) ? d.items : [];
-  var count = 0;
+  var seen = {};
 
-  // Sheet 기반 대시보드는 실제 표의 Country/Contry 컬럼에 표시되는 값만 Sites로 계산합니다.
-  // 중복 제거하지 않으며, 빈 값은 제외합니다. CA-fr, SA_ar도 각각 1 Site입니다.
+  function addSiteValue(value) {
+    splitSheetCountrySiteValues(value).forEach(function(part) {
+      var key = String(part || '').replace(/\u00a0/g, ' ').trim().toLowerCase();
+      if (key) seen[key] = true;
+    });
+  }
+
+  // Sites = Country 기준 고유값 수. 동일 Country가 여러 row/URL에 반복돼도 1 Site로 계산합니다.
   if (rows.length) {
     var countryHeader = findCountryValueHeaderForCount(d);
     if (!countryHeader) return 0;
     rows.forEach(function(row) {
-      var c = row && row[countryHeader];
-      if (!c) return;
-      var parts = splitSheetCountrySiteValues(c);
-      count += parts.length || 1;
+      if (row) addSiteValue(row[countryHeader]);
     });
-    return count;
+    return Object.keys(seen).length;
   }
 
   items.forEach(function(x) {
-    var c = x && (x.country || x.locale);
-    if (!c) return;
-    var parts = splitSheetCountrySiteValues(c);
-    count += parts.length || 1;
+    if (!x) return;
+    addSiteValue(x.country || x.locale || '');
   });
-  return count || 0;
+  return Object.keys(seen).length;
 }
 
 function getSheetOverviewTotalInfo(d) {
@@ -1387,7 +1418,7 @@ function getSheetMetaValueByLabel(d, labels, fallbackCells) {
   }
 
   // A/B 메타 영역은 행 번호보다 A열 라벨을 우선해서 찾습니다.
-  // 따라서 본문 헤더 시작 행이 아래로 이동해도 Jira/Note 조회가 깨지지 않습니다.
+  // 따라서 본문 헤더 시작 행이 아래로 이동해도 Jira 조회가 깨지지 않습니다.
   var matrices = [d.rawMatrix, d.matrix];
   for (var mi = 0; mi < matrices.length; mi++) {
     var matrix = matrices[mi];
@@ -1433,44 +1464,33 @@ function getJiraTicketsFromSheetData(d) {
   }).filter(Boolean).slice(0, 2);
 }
 
-function getIssueNoteFromSheetData(d) {
-  return getSheetMetaValueByLabel(d, ['note'], ['B6']);
-}
-
 function renderIssueMetaSection(d) {
   var tickets = getJiraTicketsFromSheetData(d);
-  var note = getIssueNoteFromSheetData(d);
-  if (!tickets.length && !note) return '';
+  if (!tickets.length) return '';
 
-  var jiraHtml = '';
-  if (tickets.length) {
-    jiraHtml = '<div style="display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap">' +
-      '<span style="font-size:10px;font-weight:800;color:#6B7280;white-space:nowrap">Jira Ticket</span>' +
-      '<span style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">' +
-        tickets.map(function(ticket) {
-          return '<a href="' + escapeAttrSheet(ticket.url) + '" target="_blank" rel="noopener" ' +
+  var jiraHtml = '<div style="display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap">' +
+    '<span style="font-size:10px;font-weight:800;color:#6B7280;white-space:nowrap">Jira Ticket</span>' +
+    '<span style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">' +
+      tickets.map(function(ticket) {
+        return '<span style="display:inline-flex;align-items:center;border:1px solid #D8DEE9;border-radius:7px;background:#fff;overflow:hidden">' +
+          '<a href="' + escapeAttrSheet(ticket.url) + '" target="_blank" rel="noopener" ' +
             'title="' + escapeAttrSheet(ticket.url) + '" ' +
-            'style="display:inline-flex;align-items:center;gap:4px;padding:5px 9px;border:1px solid #D8DEE9;border-radius:7px;background:#fff;color:#2563EB;font-size:10px;font-weight:700;text-decoration:none;white-space:nowrap">' +
+            'style="display:inline-flex;align-items:center;gap:4px;padding:5px 8px;color:#2563EB;font-size:10px;font-weight:700;text-decoration:none;white-space:nowrap">' +
               escapeHtmlSheet(ticket.key) + '<span aria-hidden="true" style="font-size:10px">↗</span>' +
-          '</a>';
-        }).join('') +
-      '</span>' +
-    '</div>';
-  }
+          '</a>' +
+          '<button type="button" data-jira-url="' + escapeAttrSheet(ticket.url) + '" ' +
+            'onclick="copyToClipboard(this.getAttribute(\'data-jira-url\'))" ' +
+            'title="Jira 링크 복사" aria-label="Jira 링크 복사" ' +
+            'style="display:inline-flex;align-items:center;justify-content:center;width:27px;height:27px;border:0;border-left:1px solid #E5E7EB;background:#fff;color:#6B7280;cursor:pointer;padding:0">' +
+              '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>' +
+          '</button>' +
+        '</span>';
+      }).join('') +
+    '</span>' +
+  '</div>';
 
-  var noteHtml = note
-    ? '<div style="display:flex;align-items:flex-start;gap:8px;min-width:0;flex:1">' +
-        '<span style="font-size:10px;font-weight:800;color:#6B7280;white-space:nowrap;padding-top:2px">Note</span>' +
-        '<span style="font-size:11px;color:#4B5563;line-height:1.45;white-space:pre-wrap;word-break:break-word">' + escapeHtmlSheet(note) + '</span>' +
-      '</div>'
-    : '';
-
-  var divider = tickets.length && note
-    ? '<span aria-hidden="true" style="width:1px;align-self:stretch;min-height:22px;background:#E5E7EB;flex-shrink:0"></span>'
-    : '';
-
-  return '<div class="issue-meta-section" style="display:flex;align-items:stretch;gap:14px;flex-wrap:wrap;margin:10px 0 14px;padding:9px 12px;border:1px solid #E8EAF2;border-radius:9px;background:#FAFBFD">' +
-    jiraHtml + divider + noteHtml +
+  return '<div class="issue-meta-section" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:10px 0 14px;padding:9px 12px;border:1px solid #E8EAF2;border-radius:9px;background:#FAFBFD">' +
+    jiraHtml +
   '</div>';
 }
 
@@ -1677,11 +1697,12 @@ function renderContent() {
           <span class="ov-progress-pct-new">${pct}<span style="font-size:14px;font-weight:700">%</span></span>
         </div>
         ${buildSegmentedBar(s, {showNumbers:true, showIcons:true})}
-        <div class="ov-progress-sub-new">전체 ${total.toLocaleString()}건 중 <strong style="color:#1A1D2E">${completed.toLocaleString()}건 완료</strong> · 잔여 ${remaining.toLocaleString()}건 — 사전검토 → 작업중 → 법인검토 → 등록 완료</div>
+        <div class="ov-progress-sub-new"><strong style="color:#1A1D2E">${done.toLocaleString()}건 등록 완료</strong> · 취소 ${cancel.toLocaleString()}건 · 잔여 ${remaining.toLocaleString()}건</div>
       </div>
 
       <!-- Stat Cards -->
       <div class="stat-grid-new">${statBoxes}</div>
+      ${renderInternalReviewSummaryBelowStats(d, s)}
       ${renderCancelSummaryBelowStats(d, s)}
       ${renderWeeklyUpdateSection(d)}
 
@@ -2531,7 +2552,7 @@ function setBgWeek(w) {
 // ── 컨텐츠 건수 기반 통계 (파이프라인·리전요약 공통 기준) ──────
 function contentStatsForData(d, key) {
   d = d || {};
-  var c = { Done:0,'Corp. Review':0,'In Progress':0,'Pre-Review':0,'Cancel':0, total:0 };
+  var c = { Done:0,'Corp. Review':0,'In Progress':0,'Pre-Review':0,'Internal Review':0,'Cancel':0, total:0 };
   function add(st, n) { if (c[st] !== undefined) c[st] += n; c.total += n; }
   var sheetPageInfo = getSheetPageCountInfo(d);
   if (sheetPageInfo.hasPages) {
@@ -2539,6 +2560,7 @@ function contentStatsForData(d, key) {
     c['Corp. Review'] = sheetPageInfo.byStatus['Corp. Review'] || 0;
     c['In Progress'] = sheetPageInfo.byStatus['In Progress'] || 0;
     c['Pre-Review'] = sheetPageInfo.byStatus['Pre-Review'] || 0;
+    c['Internal Review'] = sheetPageInfo.byStatus['Internal Review'] || 0;
     c.Cancel = sheetPageInfo.byStatus.Cancel || 0;
     c.total = sheetPageInfo.total || 0;
     c.done = c.Done;
@@ -2555,7 +2577,7 @@ function contentStatsForData(d, key) {
       var st = d.stats;
       c['Done']=st['Done']||0; c['Corp. Review']=st['Corp. Review']||0;
       c['In Progress']=st['In Progress']||0; c['Pre-Review']=st['Pre-Review']||0;
-      c['Cancel']=st['Cancel']||0; c.total=st['Total']||0;
+      c['Internal Review']=st['Internal Review']||0; c['Cancel']=st['Cancel']||0; c.total=st['Total']||0;
       c.done=c.Done; c.Total=c.total;
       return c;
     }
@@ -2563,10 +2585,10 @@ function contentStatsForData(d, key) {
     for (var i2=0;i2<arts.length;i2++){ var m=arts[i2].statuses||{}; for(var loc in m){ if(m.hasOwnProperty(loc)&&m[loc]) add(m[loc],1); } }
   } else if (pagesTabs[key]) {
     var it3 = d.items || [];
-    for (var i3=0;i3<it3.length;i3++){ add(it3[i3].status||'Pre-Review', parseInt(it3[i3].pages)||0); }
+    for (var i3=0;i3<it3.length;i3++){ add(it3[i3].status||'Internal Review', parseInt(it3[i3].pages)||0); }
   } else {
     var it4 = d.items || [];
-    for (var i4=0;i4<it4.length;i4++){ add(it4[i4].status||'Pre-Review', 1); }
+    for (var i4=0;i4<it4.length;i4++){ add(it4[i4].status||'Internal Review', 1); }
   }
   c.done = c.Done; c.Total = c.total;
   return c;
@@ -2596,7 +2618,7 @@ function renderPrevWeekStatDelta(currentValue, prevStats, statusKey) {
 }
 
 
-function getCancelSummaryInfo(d) {
+function getStatusSummaryInfo(d, targetStatus) {
   d = d || {};
   var rows = Array.isArray(d.tableRows) ? d.tableRows : [];
   var items = Array.isArray(d.items) ? d.items : [];
@@ -2623,21 +2645,27 @@ function getCancelSummaryInfo(d) {
 
     rows.forEach(function(row) {
       if (!row) return;
+      var statusField = findStatusFieldInSheetRow(row);
       if (hasPageColumn) {
-        var st = detectSheetStatusValue(pickSheetRowValue(row, statusCandidates));
-        if (st !== 'Cancel') return;
+        var rawStatus = statusField.found ? String(statusField.value == null ? '' : statusField.value).trim() : '';
+        var st = statusField.found ? (rawStatus ? detectSheetStatusValue(statusField.value) : 'Internal Review') : detectSheetStatusValue(pickSheetRowValue(row, statusCandidates));
+        if (st !== targetStatus) return;
         var pg = toSheetStatNumber(pickSheetRowValue(row, pageCandidates)) || 1;
         addCountry(countryHeader ? row[countryHeader] : '', pg);
         return;
       }
 
       var fallbackCountry = countryHeader ? row[countryHeader] : '';
+      if (statusField.found) {
+        var rawStatus2 = String(statusField.value == null ? '' : statusField.value).trim();
+        var st2 = rawStatus2 ? detectSheetStatusValue(statusField.value) : 'Internal Review';
+        if (st2 === targetStatus) addCountry(fallbackCountry, 1);
+        return;
+      }
       Object.keys(row).forEach(function(k) {
         if (k === '__styles') return;
-        var st = detectSheetStatusValue(row[k]);
-        if (st !== 'Cancel') return;
-        // 국가가 th/header에 있는 예외 구조는 해당 header명을 국가로 사용합니다.
-        // 일반 Country 컬럼이 있는 구조는 row의 Country 값을 우선 사용합니다.
+        var st3 = detectSheetStatusValue(row[k]);
+        if (st3 !== targetStatus) return;
         var label = fallbackCountry;
         if (!label || isCountryDisplayHeader(k)) label = k;
         addCountry(label, 1);
@@ -2647,7 +2675,7 @@ function getCancelSummaryInfo(d) {
     items.forEach(function(item) {
       if (!item) return;
       var st = detectSheetStatusValue(item.overall || item.status || '');
-      if (st !== 'Cancel') return;
+      if (st !== targetStatus) return;
       addCountry(item.country || item.locale || '', item.pages ? toSheetStatNumber(item.pages) : 1);
     });
   }
@@ -2660,18 +2688,52 @@ function getCancelSummaryInfo(d) {
   return info;
 }
 
-function renderCancelSummaryBelowStats(d, stats) {
-  var info = getCancelSummaryInfo(d);
-  var total = info.total || (stats && stats.Cancel) || 0;
+function renderStatusSummaryBelowStats(d, stats, statusKey, label, extraClass) {
+  var info = getStatusSummaryInfo(d, statusKey);
+  var total = info.total || (stats && stats[statusKey]) || 0;
   if (!total) return '';
   var countryText = info.countries.length
     ? info.countries.map(function(x) { return escapeHtmlSheet(x.name) + (x.count > 1 ? ' ' + x.count.toLocaleString() : ''); }).join(', ')
     : 'Country 정보 없음';
-  return '<div class="stat-cancel-desc">' +
-    '<span class="stat-cancel-dot"></span>' +
-    '<strong>취소 ' + Number(total).toLocaleString() + '건</strong>' +
+  var cfg = (typeof SC !== 'undefined' && SC[statusKey]) ? SC[statusKey] : { dot:'#C4CCD8' };
+  return '<div class="stat-cancel-desc ' + (extraClass || '') + '">' +
+    '<span class="stat-cancel-dot" style="background:' + cfg.dot + '"></span>' +
+    '<strong>' + label + ' ' + Number(total).toLocaleString() + '건</strong>' +
     '<span class="stat-cancel-countries">' + countryText + '</span>' +
   '</div>';
+}
+
+function renderInternalReviewSummaryBelowStats(d, stats) {
+  var info = getStatusSummaryInfo(d, 'Internal Review');
+  var total = info.total || (stats && stats['Internal Review']) || 0;
+  if (!total) return '';
+
+  var countryText = '';
+  if (info.countries.length >= 10) {
+    // Country가 10개 이상이면 긴 목록은 생략하고, 생략 사유만 안내합니다.
+    countryText = 'Country ' + info.countries.length.toLocaleString() + '개 · 10개 이상으로 목록 생략';
+  } else if (info.countries.length) {
+    countryText = info.countries.map(function(x) {
+      return escapeHtmlSheet(x.name) + (x.count > 1 ? ' ' + x.count.toLocaleString() : '');
+    }).join(', ');
+  } else {
+    countryText = 'Country 정보 없음';
+  }
+
+  var cfg = (typeof SC !== 'undefined' && SC['Internal Review']) ? SC['Internal Review'] : { dot:'#C4CCD8' };
+  return '<div class="stat-cancel-desc stat-internal-review-desc">' +
+    '<span class="stat-cancel-dot" style="background:' + cfg.dot + '"></span>' +
+    '<strong>내부검토 ' + Number(total).toLocaleString() + '건</strong>' +
+    '<span class="stat-cancel-countries">' + countryText + '</span>' +
+  '</div>';
+}
+
+function getCancelSummaryInfo(d) {
+  return getStatusSummaryInfo(d, 'Cancel');
+}
+
+function renderCancelSummaryBelowStats(d, stats) {
+  return renderStatusSummaryBelowStats(d, stats, 'Cancel', '취소', '');
 }
 
 // ── 사이드바 메뉴 진행률 뱃지 동기화 (contentStats 기준) ──────
@@ -2686,13 +2748,13 @@ function syncNavBadges() {
     var badge = el.querySelector('.ni-badge');
     if (!badge) return;
     badge.textContent = pct + '%';
-    var bg, tc;
-    if (pct >= 70) { bg = 'rgba(16,185,129,.2)'; tc = '#10B981'; }
-    else if (pct >= 40) { bg = 'rgba(59,130,246,.2)'; tc = '#3B82F6'; }
-    else if (pct >= 15) { bg = 'rgba(245,158,11,.2)'; tc = '#F59E0B'; }
-    else { bg = 'rgba(148,163,184,.2)'; tc = '#94A3B8'; }
+    var bg;
+    if (pct >= 70) bg = '#10B981';
+    else if (pct >= 40) bg = '#3B82F6';
+    else if (pct >= 15) bg = '#F59E0B';
+    else bg = '#94A3B8';
     badge.style.background = bg;
-    badge.style.color = tc;
+    badge.style.color = '#FFFFFF';
   });
 }
 

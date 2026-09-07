@@ -7,11 +7,12 @@
   var ES_PREV_WORKBOOK_FILE = './es-global-request-prev.xlsx';
 
   var STATUS_CONFIG = {
-    'Pre-Review':   { label:'사전검토', dot:'#94A3B8', bg:'#F1F5F9', tc:'#64748B' },
-    'In Progress':  { label:'작업중',   dot:'#3B82F6', bg:'#EFF6FF', tc:'#1D4ED8' },
-    'Corp. Review': { label:'법인리뷰', dot:'#F59E0B', bg:'#FFFBEB', tc:'#B45309' },
-    'Done':         { label:'완료',     dot:'#10B981', bg:'#ECFDF5', tc:'#047857' },
-    'Cancel':       { label:'취소',     dot:'#EA1917', bg:'#FEF2F2', tc:'#B91C1C' }
+    'Internal Review':{ label:'내부검토', dot:'#C4CCD8', bg:'#F4F6F8', tc:'#667085' },
+    'Pre-Review':     { label:'사전검토', dot:'#F6C94C', bg:'#FFF9E7', tc:'#806300' },
+    'In Progress':    { label:'작업중',   dot:'#4F7DF3', bg:'#EEF3FF', tc:'#315CC4' },
+    'Corp. Review':   { label:'법인리뷰', dot:'#FF745C', bg:'#FFF0ED', tc:'#C94D39' },
+    'Done':           { label:'완료',     dot:'#20C49A', bg:'#EAFBF7', tc:'#147F68' },
+    'Cancel':         { label:'취소',     dot:'#A50034', bg:'#FCEEF3', tc:'#A50034' }
   };
 
   var REGION_ORDER_LIST = ['EU', 'ASIA', 'CIS', 'LATAM', 'MEA', 'INDIA', 'NA', 'ETC'];
@@ -177,9 +178,10 @@
       .replace(/<[^>]*>/g, ' ')
       .replace(/\s+/g, ' ')
       .toLowerCase();
-    if (!raw) return emptyIfUnknown ? '' : 'Pre-Review';
+    if (!raw) return 'Internal Review';
 
     if (/cancelled|canceled|\bcancel\b|취소/.test(raw)) return 'Cancel';
+    if (/internal\s*review|내부\s*검토/.test(raw)) return 'Internal Review';
     if (/\bclosed\b|completed|complete|\bdone\b|등록완료|완료/.test(raw)) return 'Done';
     if (/client\s*review|corp\.?\s*review|법인\s*리뷰/.test(raw)) return 'Corp. Review';
 
@@ -227,7 +229,7 @@
       var liveUrlHeader = findHeader(headers, ['Live URL', 'URL']);
 
       // 상단 A/B 메타 영역은 행 번호가 아니라 A열 라벨을 기준으로 읽습니다.
-      // Jira Ticket / Note 행이 추가되거나 순서가 바뀌어도 본문 헤더 탐지와 충돌하지 않습니다.
+      // Jira Ticket 행이 추가되거나 순서가 바뀌어도 본문 헤더 탐지와 충돌하지 않습니다.
       function findMetaValue(labels) {
         var targets = (labels || []).map(normalizeHeader);
         var maxRows = Math.min(headerIndex >= 0 ? headerIndex : matrix.length, 30);
@@ -245,15 +247,13 @@
       var metaDam = findMetaValue(['DAM']);
       var metaWeek = findMetaValue(['요청일(W)', '요청일']);
       var metaJira = findMetaValue(['Jira Ticket', 'Jira']);
-      var metaNote = findMetaValue(['Note']);
 
       var metaCells = {
         B1: metaTitle || cleanText(matrix[0] && matrix[0][1]),
         B2: metaWeekly || cleanText(matrix[1] && matrix[1][1]),
         B3: metaDam || cleanText(matrix[2] && matrix[2][1]),
         B4: metaWeek || cleanText(matrix[3] && matrix[3][1]),
-        B5: metaJira,
-        B6: metaNote
+        B5: metaJira
       };
       var records = [];
 
@@ -303,8 +303,7 @@
         weeklyUpdateText: metaCells.B2,
         dam: metaCells.B3,
         requestWeek: metaCells.B4,
-        jiraTicket: metaCells.B5,
-        note: metaCells.B6
+        jiraTicket: metaCells.B5
       });
     });
 
@@ -320,7 +319,7 @@
       var headers = (sheetInfo.headers || []).slice();
       var tableRows = [];
       var items = [];
-      var stats = { Done:0, 'Corp. Review':0, 'In Progress':0, 'Pre-Review':0, Cancel:0, Total:0 };
+      var stats = { Done:0, 'Corp. Review':0, 'In Progress':0, 'Pre-Review':0, 'Internal Review':0, Cancel:0, Total:0 };
 
       records.forEach(function (record) {
         tableRows.push(record.row);
@@ -352,7 +351,6 @@
         weeklyUpdateText: sheetInfo.weeklyUpdateText || '',
         dam: sheetInfo.dam || '',
         jiraTicket: sheetInfo.jiraTicket || '',
-        note: sheetInfo.note || '',
         metaCells: sheetInfo.metaCells || {},
         tableHeaders: headers,
         tableHeaderStyles: sheetInfo.headerStyles || {},
