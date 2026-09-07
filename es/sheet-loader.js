@@ -6,13 +6,15 @@
   var ES_WORKBOOK_FILE = './es-global-request.xlsx';
   var ES_PREV_WORKBOOK_FILE = './es-global-request-prev.xlsx';
 
+  // WPC 내부검토: Excel Status가 빈값이거나 '내부검토'로 입력된 경우 동일하게 처리합니다.
+  // 화면 표기는 '내부검토', 내부 key는 기존 영문 Status 체계에 맞춰 'Internal Review'를 사용합니다.
   var STATUS_CONFIG = {
     'Internal Review':{ label:'내부검토', dot:'#C4CCD8', bg:'#F4F6F8', tc:'#667085' },
     'Pre-Review':     { label:'사전검토', dot:'#F6C94C', bg:'#FFF9E7', tc:'#806300' },
     'In Progress':    { label:'작업중',   dot:'#4F7DF3', bg:'#EEF3FF', tc:'#315CC4' },
     'Corp. Review':   { label:'법인리뷰', dot:'#FF745C', bg:'#FFF0ED', tc:'#C94D39' },
     'Done':           { label:'완료',     dot:'#20C49A', bg:'#EAFBF7', tc:'#147F68' },
-    'Cancel':         { label:'취소',     dot:'#A50034', bg:'#FCEEF3', tc:'#A50034' }
+    'Cancel':         { label:'취소',     dot:'#EA1917', bg:'#FEF2F2', tc:'#B91C1C' }
   };
 
   var REGION_ORDER_LIST = ['EU', 'ASIA', 'CIS', 'LATAM', 'MEA', 'INDIA', 'NA', 'ETC'];
@@ -174,6 +176,7 @@
   }
 
   function normalizeStatus(value, emptyIfUnknown) {
+    // WPC 내부검토: 빈 Status와 명시 입력 '내부검토'는 같은 Status로 normalize합니다.
     var raw = cleanText(value)
       .replace(/<[^>]*>/g, ' ')
       .replace(/\s+/g, ' ')
