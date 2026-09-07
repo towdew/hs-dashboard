@@ -1378,6 +1378,102 @@ function renderRequestWeekMeta(d) {
   '</div>';
 }
 
+function getSheetMetaValueByLabel(d, labels, fallbackCells) {
+  d = d || {};
+  labels = (labels || []).map(function(v){ return String(v || '').trim().toLowerCase(); });
+
+  function clean(v) {
+    return String(v == null ? '' : v).replace(/\u00a0/g, ' ').trim();
+  }
+
+  // A/B 메타 영역은 행 번호보다 A열 라벨을 우선해서 찾습니다.
+  // 따라서 본문 헤더 시작 행이 아래로 이동해도 Jira/Note 조회가 깨지지 않습니다.
+  var matrices = [d.rawMatrix, d.matrix];
+  for (var mi = 0; mi < matrices.length; mi++) {
+    var matrix = matrices[mi];
+    if (!Array.isArray(matrix)) continue;
+    for (var ri = 0; ri < Math.min(matrix.length, 20); ri++) {
+      var row = matrix[ri];
+      if (!Array.isArray(row)) continue;
+      var label = clean(row[0]).toLowerCase();
+      if (labels.indexOf(label) >= 0) return clean(row[1]);
+    }
+  }
+
+  // sheet-loader가 개별 메타셀을 따로 보존하는 경우의 fallback
+  var cells = d.metaCells || {};
+  for (var ci = 0; ci < (fallbackCells || []).length; ci++) {
+    var cellValue = clean(cells[fallbackCells[ci]]);
+    if (cellValue) return cellValue;
+  }
+  return '';
+}
+
+function getJiraTicketsFromSheetData(d) {
+  var raw = getSheetMetaValueByLabel(d, ['jira ticket', 'jira'], ['B5']);
+  if (!raw) return [];
+
+  // 한 셀에 줄바꿈으로 1~2개 링크를 입력하는 구조를 기본으로 하되,
+  // 공백/쉼표/세미콜론으로 섞여 들어온 URL도 안전하게 추출합니다.
+  var urls = raw.match(/https?:\/\/[^\s,;]+/gi) || [];
+  if (!urls.length) {
+    urls = raw.split(/\r?\n+/).map(function(v){ return v.trim(); }).filter(function(v){
+      return /^https?:\/\//i.test(v);
+    });
+  }
+
+  var seen = {};
+  return urls.map(function(url) {
+    url = String(url || '').replace(/[)\].,;]+$/g, '');
+    if (!url || seen[url]) return null;
+    seen[url] = true;
+    var keyMatch = url.match(/\/browse\/([^/?#]+)/i) || url.match(/\/([A-Z][A-Z0-9_]+-\d+)(?:[/?#]|$)/i);
+    var key = keyMatch ? keyMatch[1] : 'Jira';
+    return { url:url, key:key };
+  }).filter(Boolean).slice(0, 2);
+}
+
+function getIssueNoteFromSheetData(d) {
+  return getSheetMetaValueByLabel(d, ['note'], ['B6']);
+}
+
+function renderIssueMetaSection(d) {
+  var tickets = getJiraTicketsFromSheetData(d);
+  var note = getIssueNoteFromSheetData(d);
+  if (!tickets.length && !note) return '';
+
+  var jiraHtml = '';
+  if (tickets.length) {
+    jiraHtml = '<div style="display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap">' +
+      '<span style="font-size:10px;font-weight:800;color:#6B7280;white-space:nowrap">Jira Ticket</span>' +
+      '<span style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">' +
+        tickets.map(function(ticket) {
+          return '<a href="' + escapeAttrSheet(ticket.url) + '" target="_blank" rel="noopener" ' +
+            'title="' + escapeAttrSheet(ticket.url) + '" ' +
+            'style="display:inline-flex;align-items:center;gap:4px;padding:5px 9px;border:1px solid #D8DEE9;border-radius:7px;background:#fff;color:#2563EB;font-size:10px;font-weight:700;text-decoration:none;white-space:nowrap">' +
+              escapeHtmlSheet(ticket.key) + '<span aria-hidden="true" style="font-size:10px">↗</span>' +
+          '</a>';
+        }).join('') +
+      '</span>' +
+    '</div>';
+  }
+
+  var noteHtml = note
+    ? '<div style="display:flex;align-items:flex-start;gap:8px;min-width:0;flex:1">' +
+        '<span style="font-size:10px;font-weight:800;color:#6B7280;white-space:nowrap;padding-top:2px">Note</span>' +
+        '<span style="font-size:11px;color:#4B5563;line-height:1.45;white-space:pre-wrap;word-break:break-word">' + escapeHtmlSheet(note) + '</span>' +
+      '</div>'
+    : '';
+
+  var divider = tickets.length && note
+    ? '<span aria-hidden="true" style="width:1px;align-self:stretch;min-height:22px;background:#E5E7EB;flex-shrink:0"></span>'
+    : '';
+
+  return '<div class="issue-meta-section" style="display:flex;align-items:stretch;gap:14px;flex-wrap:wrap;margin:10px 0 14px;padding:9px 12px;border:1px solid #E8EAF2;border-radius:9px;background:#FAFBFD">' +
+    jiraHtml + divider + noteHtml +
+  '</div>';
+}
+
 function renderWeeklyUpdateSection(d) {
   var items = getWeeklyUpdateItems(d);
   if (!items.length) return '';
@@ -1567,6 +1663,8 @@ function renderContent() {
           <div class="ov-head-total-num ov-head-total-sites">${renderOverviewTotalInfo(d)}</div>
         </div>
       </div>
+
+      ${renderIssueMetaSection(d)}
 
       <!-- Overall Progress — 세그먼트 파이프라인 바 -->
       <div class="ov-progress-new">
