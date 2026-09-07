@@ -2163,7 +2163,7 @@ function buildActionBanner() {
     '</div>' +
   '</div>';
 }
-function dotColor(s){ return s==='Done'?'#20C49A':s==='Corp. Review'?'#FF745C':s==='Cancel'?'#A50034':s==='In Progress'?'#4F7DF3':s==='Pre-Review'?'#F6C94C':s==='Internal Review'?'#C4CCD8':'#CBD5E1'; }
+function dotColor(s){ return s==='Done'?'#20C49A':s==='Corp. Review'?'#FF745C':s==='Cancel'?'#CBD5E1':s==='In Progress'?'#4F7DF3':s==='Pre-Review'?'#F6C94C':s==='Internal Review'?'#C4CCD8':'#CBD5E1'; }
 function openActionModal() {
   var key = currentKey;
   var d = DATA[key];
@@ -2723,7 +2723,7 @@ function renderCancelSummaryBelowStats(d, stats) {
     ? info.countries.map(function(x) { return escapeHtmlSheet(x.name) + (x.count > 1 ? ' ' + x.count.toLocaleString() : ''); }).join(', ')
     : 'Country 정보 없음';
   return '<div class="stat-cancel-desc">' +
-    '<span class="stat-cancel-dot"></span>' +
+    '<span class="stat-cancel-dot" style="background:#A50034"></span>' +
     '<strong>취소 ' + Number(total).toLocaleString() + '건</strong>' +
     '<span class="stat-cancel-countries">' + countryText + '</span>' +
   '</div>';
@@ -3105,7 +3105,7 @@ function renderBG(area) {
     if (s==='Corp. Review')
       return '<td style="text-align:center"><span style="font-size:10px;font-weight:800;color:#FF745C">\uBC95\uC778\uB9AC\uBDF0</span></td>';
     if (s==='Cancel')
-      return '<td style="text-align:center"><span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span></td>';
+      return '<td style="text-align:center"><span style="font-size:10px;font-weight:800;color:#64748B">Cancel</span></td>';
     if (s==='In Progress')
       return '<td style="text-align:center"><span style="font-size:10px;font-weight:700;color:#4F7DF3">\uC791\uC5C5\uC911</span></td>';
     // Pre-Review
@@ -3504,7 +3504,7 @@ function renderArticle(area) {
       return '<td style="text-align:center">'+dot+'</td>';
     }
     if (s==='Corp. Review') return '<td style="text-align:center"><span style="font-size:10px;font-weight:800;color:#FF745C">\ubc95\uc778\ub9ac\ubdf0</span></td>';
-    if (s==='Cancel')       return '<td style="text-align:center"><span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span></td>';
+    if (s==='Cancel')       return '<td style="text-align:center"><span style="font-size:10px;font-weight:800;color:#64748B">Cancel</span></td>';
     if (s==='In Progress')  return '<td style="text-align:center"><span style="font-size:10px;font-weight:700;color:#4F7DF3">\uc791\uc5c5\uc911</span></td>';
     return '<td style="text-align:center"><span style="font-size:10px;color:#806300">\uc0ac\uc804\uac80\ud1a0</span></td>';
   }
@@ -3755,7 +3755,7 @@ function renderWashTower(area) {
       var statusCell;
       if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
       else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#FF745C">법인리뷰</span>';
-      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#64748B">Cancel</span>';
       else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#4F7DF3">작업중</span>';
       else statusCell='<span style="font-size:10px;color:#806300">사전검토</span>';
       var dateCell=item.date?'<span style="font-size:10px;color:#1A1D2E;font-weight:600">'+item.date+'</span>':'';
@@ -3857,7 +3857,7 @@ function renderMicrosite(area) {
       var statusCell;
       if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
       else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#FF745C">법인리뷰</span>';
-      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#64748B">Cancel</span>';
       else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#4F7DF3">작업중</span>';
       else statusCell='<span style="font-size:10px;color:#806300">사전검토</span>';
       var dateCell=item.date?'<span style="font-size:10px;color:#1A1D2E;font-weight:600">'+item.date+'</span>':'';
@@ -3954,7 +3954,7 @@ function renderIceSolution(area) {
       } else if (item.status === 'Corp. Review') {
         statusCell = '<span style="font-size:10px;font-weight:800;color:#FF745C">\ubc95\uc778\ub9ac\ubdf0</span>';
       } else if (item.status === 'Cancel') {
-        statusCell = '<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+        statusCell = '<span style="font-size:10px;font-weight:800;color:#64748B">Cancel</span>';
       } else if (item.status === 'In Progress') {
         statusCell = '<span style="font-size:10px;font-weight:700;color:#4F7DF3">\uc791\uc5c5\uc911</span>';
       } else {
@@ -4081,7 +4081,7 @@ function renderAltText(area) {
       var statusCell;
       if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
       else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#FF745C">법인리뷰</span>';
-      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#64748B">Cancel</span>';
       else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#4F7DF3">작업중</span>';
       else statusCell='<span style="font-size:10px;color:#806300">사전검토</span>';
       var pgCell='<span style="font-size:11px;color:#1A1D2E;font-weight:700">'+(item.pages||0)+'</span>';
@@ -4183,7 +4183,7 @@ function renderFaqHub(area) {
       var statusCell;
       if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
       else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#FF745C">법인리뷰</span>';
-      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#64748B">Cancel</span>';
       else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#4F7DF3">작업중</span>';
       else statusCell='<span style="font-size:10px;color:#806300">사전검토</span>';
       var pttCell=item.ptt?'<span style="font-size:9px;color:#6B7280">'+item.ptt+'</span>':'';
@@ -4283,7 +4283,7 @@ function renderPdpGallery(area) {
       var statusCell;
       if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
       else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#FF745C">법인리뷰</span>';
-      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#64748B">Cancel</span>';
       else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#4F7DF3">작업중</span>';
       else statusCell='<span style="font-size:10px;color:#806300">사전검토</span>';
       var pgCell='<span style="font-size:11px;color:#1A1D2E;font-weight:700">'+(item.pages||0)+'</span>';
@@ -4387,7 +4387,7 @@ function renderVacuum(area) {
       var statusCell;
       if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
       else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#FF745C">법인리뷰</span>';
-      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#64748B">Cancel</span>';
       else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#4F7DF3">작업중</span>';
       else statusCell='<span style="font-size:10px;color:#806300">사전검토</span>';
       var pgCell='<span style="font-size:11px;color:#1A1D2E;font-weight:700">'+(item.pages||0)+'</span>';
@@ -4491,7 +4491,7 @@ function renderWmoFaq(area) {
       var statusCell;
       if (item.status==='Done'){ var dot='<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:#20C49A"></span>'; statusCell=item.url?'<a href="'+item.url+'" target="_blank" rel="noopener" title="'+item.url+'" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer">'+dot+'</a>':dot; }
       else if (item.status==='Corp. Review') statusCell='<span style="font-size:10px;font-weight:800;color:#FF745C">법인리뷰</span>';
-      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#A50034">Cancel</span>';
+      else if (item.status==='Cancel') statusCell='<span style="font-size:10px;font-weight:800;color:#64748B">Cancel</span>';
       else if (item.status==='In Progress') statusCell='<span style="font-size:10px;font-weight:700;color:#4F7DF3">작업중</span>';
       else statusCell='<span style="font-size:10px;color:#806300">사전검토</span>';
       var pgCell='<span style="font-size:11px;color:#1A1D2E;font-weight:700">'+(item.pages||0)+'</span>';
