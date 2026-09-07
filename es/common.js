@@ -74,11 +74,12 @@ var vacuumWeek = AUTO_WEEK;
 /* WMO_FAQ_WEEKS 데이터는 json.js로 분리됨 */
 
 var wmoWeek = AUTO_WEEK;
-DATA.wmo_faq = { title: 'MWO PLP FAQ', icon: '', isNew: true, items: [], stats: { Done:0,'Corp. Review':0,'In Progress':0,'Pre-Review':0,'Internal Review':0,Cancel:0,Total:0 } };
+DATA.wmo_faq = { title: 'MWO PLP FAQ', icon: '', isNew: true, items: [], stats: { Done:0,'Corp. Review':0,'In Progress':0,'Pre-Review':0,Cancel:0,Total:0 } };
 /* COL_FULL 데이터는 json.js로 분리됨 */
 
 
 // ── 🚌 세그먼트 진행 바 (다음지도 스타일) ─────────────────────
+// WPC 내부검토는 화면에서 '내부검토'로 표시하며, Excel의 빈 Status 또는 '내부검토' 입력을 동일하게 집계합니다.
 // counts: { 'Internal Review':n, 'Pre-Review':n, 'In Progress':n, 'Corp. Review':n, 'Done':n, 'Cancel':n }
 // opts: { compact: bool, showNumbers: bool, showIcons: bool }
 function buildSegmentedBar(counts, opts) {
@@ -90,6 +91,7 @@ function buildSegmentedBar(counts, opts) {
 
   // 파이프라인 순서: 내부검토 → 사전검토 → 작업중 → 법인리뷰 → 완료
   const order = ['Internal Review','Pre-Review','In Progress','Corp. Review','Done'];
+  const icons = { 'Pre-Review':'P', 'In Progress':'W', 'Corp. Review':'C', 'Done':'✓', 'Cancel':'×' };
 
   const segs = order
     .filter(st => (counts[st]||0) > 0)
@@ -119,14 +121,13 @@ function countsFromStatuses(statuses) {
   return c;
 }
 
-// ── 💎 Toss 스타일 파이프라인 ───────────────────────────────
+// ── 💎 Toss 스타일 4-Stage 파이프라인 ────────────────────────
 function buildTossPipeline(stats, total) {
   const stages = [
-    { key:'Internal Review', label:'내부검토', color:'#C4CCD8' },
-    { key:'Pre-Review',      label:'사전검토', color:'#F6C94C' },
-    { key:'In Progress',     label:'작업중',   color:'#4F7DF3' },
-    { key:'Corp. Review',    label:'법인리뷰', color:'#FF745C' },
-    { key:'Done',            label:'완료',     color:'#20C49A' },
+    { key:'Pre-Review',   label:'사전검토', color:'#94A3B8' },
+    { key:'In Progress',  label:'작업중',   color:'#3B82F6' },
+    { key:'Corp. Review', label:'법인리뷰', color:'#F59E0B' },
+    { key:'Done',         label:'완료',     color:'#10B981' },
   ];
 
   // 최다 stage 찾기
@@ -135,9 +136,8 @@ function buildTossPipeline(stats, total) {
     const c = stats[st.key] || 0;
     if (c > maxCnt) { maxCnt = c; maxIdx = i; }
   });
-  // 핀 위치: 각 stage가 동일 영역을 사용합니다.
-  const stageSpan = 100 / stages.length;
-  const pinPos = (maxIdx * stageSpan) + (stageSpan / 2);
+  // 핀 위치: 각 stage가 25% 영역 (4분할) → 중앙 = (idx * 25 + 12.5)%
+  const pinPos = (maxIdx * 25) + 12.5;
 
   const segHtml = stages.map((st, i) => {
     const cnt = stats[st.key] || 0;
@@ -1122,11 +1122,11 @@ function findCountryValueHeaderForCount(d) {
   function scoreHeader(h) {
     var n = normalizeSheetHeaderName(h);
     if (!n || n === 'region' || n === '__styles') return 999;
-    if (n === 'contry') return 0;
-    if (n === 'country') return 1;
-    if (n === 'countryname') return 2;
-    if (n === 'pdpcountry') return 3;
-    if (n === 'projectname') return 4;
+    if (n === 'projectname') return 0;
+    if (n === 'contry') return 1;
+    if (n === 'country') return 2;
+    if (n === 'countryname') return 3;
+    if (n === 'pdpcountry') return 4;
     if (n === 'locale') return 5;
     if (n === 'market' || n === '국가' || n === '법인' || n === 'subsidiary') return 6;
     if (n.indexOf('projectname') >= 0) return 7;
@@ -1142,6 +1142,39 @@ function findCountryValueHeaderForCount(d) {
     var sc = scoreHeader(h);
     if (sc < bestScore) {
       bestScore = sc;
+      best = h;
+    }
+  });
+  return bestScore < 999 ? best : '';
+}
+
+function findSiteCountryHeaderForCount(d) {
+  d = d || {};
+  var headers = Array.isArray(d.tableHeaders) ? d.tableHeaders : [];
+  if (!headers.length && Array.isArray(d.tableRows) && d.tableRows.length) {
+    headers = Object.keys(d.tableRows[0] || {}).filter(function(h) { return h !== '__styles' && h !== 'Region'; });
+  }
+
+  function scoreHeader(h) {
+    var n = normalizeSheetHeaderName(h);
+    if (!n || n === 'region' || n === '__styles') return 999;
+    if (n === 'contry') return 0;
+    if (n === 'country') return 1;
+    if (n === 'countryname') return 2;
+    if (n === 'pdpcountry') return 3;
+    if (n === 'projectname') return 4;
+    if (n === 'locale') return 5;
+    if (n === 'market' || n === '국가' || n === '법인' || n === 'subsidiary') return 6;
+    if (n.indexOf('country') >= 0 || n.indexOf('contry') >= 0) return 8;
+    return 999;
+  }
+
+  var best = '';
+  var bestScore = 999;
+  headers.forEach(function(h) {
+    var score = scoreHeader(h);
+    if (score < bestScore) {
+      bestScore = score;
       best = h;
     }
   });
@@ -1172,7 +1205,7 @@ function countSheetCountrySites(d) {
 
   // Sites = Country 기준 고유값 수. 동일 Country가 여러 row/URL에 반복돼도 1 Site로 계산합니다.
   if (rows.length) {
-    var countryHeader = findCountryValueHeaderForCount(d);
+    var countryHeader = findSiteCountryHeaderForCount(d);
     if (!countryHeader) return 0;
     rows.forEach(function(row) {
       if (row) addSiteValue(row[countryHeader]);
@@ -1697,7 +1730,7 @@ function renderContent() {
           <span class="ov-progress-pct-new">${pct}<span style="font-size:14px;font-weight:700">%</span></span>
         </div>
         ${buildSegmentedBar(s, {showNumbers:true, showIcons:true})}
-        <div class="ov-progress-sub-new"><strong style="color:#1A1D2E">${done.toLocaleString()}건 등록 완료</strong> · 취소 ${cancel.toLocaleString()}건 · 잔여 ${remaining.toLocaleString()}건</div>
+        <div class="ov-progress-sub-new"><strong style="color:#1A1D2E">${done.toLocaleString()}건 등록 완료</strong> · 취소 ${cancel.toLocaleString()}건 · 잔여 ${remaining.toLocaleString()}건 — 사전검토 → 작업중 → 법인검토 → 등록 완료</div>
       </div>
 
       <!-- Stat Cards -->
@@ -2618,7 +2651,7 @@ function renderPrevWeekStatDelta(currentValue, prevStats, statusKey) {
 }
 
 
-function getStatusSummaryInfo(d, targetStatus) {
+function getCancelSummaryInfo(d) {
   d = d || {};
   var rows = Array.isArray(d.tableRows) ? d.tableRows : [];
   var items = Array.isArray(d.items) ? d.items : [];
@@ -2637,7 +2670,7 @@ function getStatusSummaryInfo(d, targetStatus) {
   }
 
   if (rows.length) {
-    var countryHeader = findCountryValueHeaderForCount(d) || findCountryHeader(d.tableHeaders || []);
+    var countryHeader = findSiteCountryHeaderForCount(d) || findCountryHeader(d.tableHeaders || []);
     var hasPageColumn = false;
     rows.forEach(function(row) {
       if (pickSheetRowValue(row, pageCandidates) !== '') hasPageColumn = true;
@@ -2645,27 +2678,21 @@ function getStatusSummaryInfo(d, targetStatus) {
 
     rows.forEach(function(row) {
       if (!row) return;
-      var statusField = findStatusFieldInSheetRow(row);
       if (hasPageColumn) {
-        var rawStatus = statusField.found ? String(statusField.value == null ? '' : statusField.value).trim() : '';
-        var st = statusField.found ? (rawStatus ? detectSheetStatusValue(statusField.value) : 'Internal Review') : detectSheetStatusValue(pickSheetRowValue(row, statusCandidates));
-        if (st !== targetStatus) return;
+        var st = detectSheetStatusValue(pickSheetRowValue(row, statusCandidates));
+        if (st !== 'Cancel') return;
         var pg = toSheetStatNumber(pickSheetRowValue(row, pageCandidates)) || 1;
         addCountry(countryHeader ? row[countryHeader] : '', pg);
         return;
       }
 
       var fallbackCountry = countryHeader ? row[countryHeader] : '';
-      if (statusField.found) {
-        var rawStatus2 = String(statusField.value == null ? '' : statusField.value).trim();
-        var st2 = rawStatus2 ? detectSheetStatusValue(statusField.value) : 'Internal Review';
-        if (st2 === targetStatus) addCountry(fallbackCountry, 1);
-        return;
-      }
       Object.keys(row).forEach(function(k) {
         if (k === '__styles') return;
-        var st3 = detectSheetStatusValue(row[k]);
-        if (st3 !== targetStatus) return;
+        var st = detectSheetStatusValue(row[k]);
+        if (st !== 'Cancel') return;
+        // 국가가 th/header에 있는 예외 구조는 해당 header명을 국가로 사용합니다.
+        // 일반 Country 컬럼이 있는 구조는 row의 Country 값을 우선 사용합니다.
         var label = fallbackCountry;
         if (!label || isCountryDisplayHeader(k)) label = k;
         addCountry(label, 1);
@@ -2675,7 +2702,7 @@ function getStatusSummaryInfo(d, targetStatus) {
     items.forEach(function(item) {
       if (!item) return;
       var st = detectSheetStatusValue(item.overall || item.status || '');
-      if (st !== targetStatus) return;
+      if (st !== 'Cancel') return;
       addCountry(item.country || item.locale || '', item.pages ? toSheetStatNumber(item.pages) : 1);
     });
   }
@@ -2688,30 +2715,79 @@ function getStatusSummaryInfo(d, targetStatus) {
   return info;
 }
 
-function renderStatusSummaryBelowStats(d, stats, statusKey, label, extraClass) {
-  var info = getStatusSummaryInfo(d, statusKey);
-  var total = info.total || (stats && stats[statusKey]) || 0;
+function renderCancelSummaryBelowStats(d, stats) {
+  var info = getCancelSummaryInfo(d);
+  var total = info.total || (stats && stats.Cancel) || 0;
   if (!total) return '';
   var countryText = info.countries.length
     ? info.countries.map(function(x) { return escapeHtmlSheet(x.name) + (x.count > 1 ? ' ' + x.count.toLocaleString() : ''); }).join(', ')
     : 'Country 정보 없음';
-  var cfg = (typeof SC !== 'undefined' && SC[statusKey]) ? SC[statusKey] : { dot:'#C4CCD8' };
-  return '<div class="stat-cancel-desc ' + (extraClass || '') + '">' +
-    '<span class="stat-cancel-dot" style="background:' + cfg.dot + '"></span>' +
-    '<strong>' + label + ' ' + Number(total).toLocaleString() + '건</strong>' +
+  return '<div class="stat-cancel-desc">' +
+    '<span class="stat-cancel-dot"></span>' +
+    '<strong>취소 ' + Number(total).toLocaleString() + '건</strong>' +
     '<span class="stat-cancel-countries">' + countryText + '</span>' +
   '</div>';
 }
 
+function getInternalReviewSummaryInfo(d) {
+  d = d || {};
+  var rows = Array.isArray(d.tableRows) ? d.tableRows : [];
+  var items = Array.isArray(d.items) ? d.items : [];
+  var pageCandidates = ['Page#', 'Pg#', 'Pages', 'Page', 'Total Page#', 'Total Pages'];
+  var info = { total: 0, countries: [] };
+  var countryCounts = {};
+
+  function addCountry(label, count) {
+    count = Number(count || 0);
+    if (!count) return;
+    var name = displayCountryFullName(label || 'Unknown');
+    if (!name) name = 'Unknown';
+    countryCounts[name] = (countryCounts[name] || 0) + count;
+    info.total += count;
+  }
+
+  if (rows.length) {
+    var countryHeader = findSiteCountryHeaderForCount(d) || findCountryHeader(d.tableHeaders || []);
+    var hasPageColumn = false;
+    rows.forEach(function(row) {
+      if (pickSheetRowValue(row, pageCandidates) !== '') hasPageColumn = true;
+    });
+
+    rows.forEach(function(row) {
+      if (!row) return;
+      var statusField = findStatusFieldInSheetRow(row);
+      if (!statusField.found) return;
+      var rawStatus = String(statusField.value == null ? '' : statusField.value).trim();
+      var st = rawStatus ? detectSheetStatusValue(statusField.value) : 'Internal Review';
+      if (st !== 'Internal Review') return;
+      var count = hasPageColumn ? (toSheetStatNumber(pickSheetRowValue(row, pageCandidates)) || 1) : 1;
+      addCountry(countryHeader ? row[countryHeader] : '', count);
+    });
+  } else {
+    items.forEach(function(item) {
+      if (!item) return;
+      var st = item.overall || item.status || 'Internal Review';
+      if (st !== 'Internal Review') return;
+      addCountry(item.country || item.locale || '', item.pages ? toSheetStatNumber(item.pages) : 1);
+    });
+  }
+
+  info.countries = Object.keys(countryCounts).map(function(name) {
+    return { name: name, count: countryCounts[name] };
+  }).sort(function(a, b) {
+    return b.count - a.count || a.name.localeCompare(b.name);
+  });
+  return info;
+}
+
 function renderInternalReviewSummaryBelowStats(d, stats) {
-  var info = getStatusSummaryInfo(d, 'Internal Review');
+  var info = getInternalReviewSummaryInfo(d);
   var total = info.total || (stats && stats['Internal Review']) || 0;
   if (!total) return '';
 
   var countryText = '';
   if (info.countries.length >= 10) {
-    // Country가 10개 이상이면 긴 목록은 생략하고, 생략 사유만 안내합니다.
-    countryText = 'Country ' + info.countries.length.toLocaleString() + '개 · 10개 이상으로 목록 생략';
+    countryText = 'Country 10개 이상 시 목록 생략';
   } else if (info.countries.length) {
     countryText = info.countries.map(function(x) {
       return escapeHtmlSheet(x.name) + (x.count > 1 ? ' ' + x.count.toLocaleString() : '');
@@ -2720,20 +2796,12 @@ function renderInternalReviewSummaryBelowStats(d, stats) {
     countryText = 'Country 정보 없음';
   }
 
-  var cfg = (typeof SC !== 'undefined' && SC['Internal Review']) ? SC['Internal Review'] : { dot:'#C4CCD8' };
+  var dotColor = (typeof SC !== 'undefined' && SC['Internal Review']) ? SC['Internal Review'].dot : '#C4CCD8';
   return '<div class="stat-cancel-desc stat-internal-review-desc">' +
-    '<span class="stat-cancel-dot" style="background:' + cfg.dot + '"></span>' +
+    '<span class="stat-cancel-dot" style="background:' + dotColor + '"></span>' +
     '<strong>내부검토 ' + Number(total).toLocaleString() + '건</strong>' +
     '<span class="stat-cancel-countries">' + countryText + '</span>' +
   '</div>';
-}
-
-function getCancelSummaryInfo(d) {
-  return getStatusSummaryInfo(d, 'Cancel');
-}
-
-function renderCancelSummaryBelowStats(d, stats) {
-  return renderStatusSummaryBelowStats(d, stats, 'Cancel', '취소', '');
 }
 
 // ── 사이드바 메뉴 진행률 뱃지 동기화 (contentStats 기준) ──────
