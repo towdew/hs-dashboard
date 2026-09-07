@@ -1,22 +1,48 @@
 {
-  "baseDate": "20260903",
-  "prevDate": "20260902",
+  "baseDate": "20260907",
+  "prevDate": "20260903",
   "changes": {
-    "Smart Monitor Multi AI|AE": {
-      "type": "url"
-    },
-    "Smart Monitor Multi AI|AE_AR": {
-      "type": "url"
-    },
     "Smart Monitor Multi AI|CZ": {
-      "type": "url"
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Smart Monitor Multi AI|DE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Smart Monitor Multi AI|HK_EN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Smart Monitor Multi AI|IN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Smart Monitor Multi AI|PE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Smart Monitor Multi AI|SG": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Smart Monitor Multi AI|TR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     }
   },
   "taskSummary": {
     "Smart Monitor Multi AI": {
-      "changed": 3,
+      "changed": 7,
       "new": 0
     }
   },
-  "generatedAt": "2026-09-03"
+  "generatedAt": "2026-09-07"
 }
