@@ -1606,8 +1606,12 @@ function renderContent() {
   const cs = contentStats(currentKey);
   const s = cs;
   const prevStats = d && d.prevWeekData ? contentStatsForData(d.prevWeekData, currentKey) : null;
-  const done = cs.Done || 0, total = cs.total || 1;
-  const pct = Math.round(done/total*100);
+  const done = cs.Done || 0, cancel = cs.Cancel || 0, total = cs.total || 1;
+  // 전체 완료율에서는 최종 취소 건도 종결 건으로 포함합니다.
+  // 단, 상세 '완료' 카드는 실제 Done 건만 유지하고 Cancel은 별도 표기합니다.
+  const completed = done + cancel;
+  const remaining = Math.max(0, total - completed);
+  const pct = Math.round(completed/total*100);
   // 블록형 통계: 국가 수 / 콘텐츠(항목) 수
   var _list = (currentKey==='article_list') ? (d.articles||[]) : (d.items||[]);
   var _ctryset = {};
@@ -1673,7 +1677,7 @@ function renderContent() {
           <span class="ov-progress-pct-new">${pct}<span style="font-size:14px;font-weight:700">%</span></span>
         </div>
         ${buildSegmentedBar(s, {showNumbers:true, showIcons:true})}
-        <div class="ov-progress-sub-new">전체 ${total.toLocaleString()}건 중 <strong style="color:#1A1D2E">${done.toLocaleString()}건 등록 완료</strong> · 잔여 ${(total-done).toLocaleString()}건 — 사전검토 → 작업중 → 법인검토 → 등록 완료</div>
+        <div class="ov-progress-sub-new">전체 ${total.toLocaleString()}건 중 <strong style="color:#1A1D2E">${completed.toLocaleString()}건 완료</strong> · 잔여 ${remaining.toLocaleString()}건 — 사전검토 → 작업중 → 법인검토 → 등록 완료</div>
       </div>
 
       <!-- Stat Cards -->
@@ -2677,7 +2681,8 @@ function syncNavBadges() {
     var key = el.getAttribute('data-key');
     if (!DATA[key]) return;
     var cs = contentStats(key);
-    var pct = cs.total > 0 ? Math.round((cs.Done || 0) / cs.total * 100) : 0;
+    // LNB도 전체 완료율과 동일하게 Done + Cancel을 종결 건으로 계산합니다.
+    var pct = cs.total > 0 ? Math.round(((cs.Done || 0) + (cs.Cancel || 0)) / cs.total * 100) : 0;
     var badge = el.querySelector('.ni-badge');
     if (!badge) return;
     badge.textContent = pct + '%';

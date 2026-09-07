@@ -226,28 +226,34 @@
       ]);
       var liveUrlHeader = findHeader(headers, ['Live URL', 'URL']);
 
-      // 상단 관리 영역은 A열 라벨을 기준으로 B열 값을 읽습니다.
-      // 행이 추가/이동되어도 Jira Ticket / Note를 포함한 메타정보를 안정적으로 찾습니다.
-      function getMetaValueByLabel(label) {
-        var target = normalizeHeader(label);
-        var limit = headerIndex >= 0 ? headerIndex : matrix.length;
-        for (var m = 0; m < limit; m++) {
-          if (normalizeHeader(matrix[m] && matrix[m][0]) === target) {
-            return cleanText(matrix[m] && matrix[m][1]);
+      // 상단 A/B 메타 영역은 행 번호가 아니라 A열 라벨을 기준으로 읽습니다.
+      // Jira Ticket / Note 행이 추가되거나 순서가 바뀌어도 본문 헤더 탐지와 충돌하지 않습니다.
+      function findMetaValue(labels) {
+        var targets = (labels || []).map(normalizeHeader);
+        var maxRows = Math.min(headerIndex >= 0 ? headerIndex : matrix.length, 30);
+        for (var mi = 0; mi < maxRows; mi++) {
+          var metaRow = matrix[mi] || [];
+          if (targets.indexOf(normalizeHeader(metaRow[0])) >= 0) {
+            return cleanText(metaRow[1]);
           }
         }
         return '';
       }
 
+      var metaTitle = findMetaValue(['Title']);
+      var metaWeekly = findMetaValue(['이번 주 추가']);
+      var metaDam = findMetaValue(['DAM']);
+      var metaWeek = findMetaValue(['요청일(W)', '요청일']);
+      var metaJira = findMetaValue(['Jira Ticket', 'Jira']);
+      var metaNote = findMetaValue(['Note']);
+
       var metaCells = {
-        B1: getMetaValueByLabel('Title') || cleanText(matrix[0] && matrix[0][1]),
-        B2: getMetaValueByLabel('이번 주 추가') || cleanText(matrix[1] && matrix[1][1]),
-        B3: getMetaValueByLabel('DAM') || cleanText(matrix[2] && matrix[2][1]),
-        B4: getMetaValueByLabel('요청일(W)') || cleanText(matrix[3] && matrix[3][1]),
-        B5: getMetaValueByLabel('Jira Ticket'),
-        B6: getMetaValueByLabel('Note'),
-        jiraTicket: getMetaValueByLabel('Jira Ticket'),
-        note: getMetaValueByLabel('Note')
+        B1: metaTitle || cleanText(matrix[0] && matrix[0][1]),
+        B2: metaWeekly || cleanText(matrix[1] && matrix[1][1]),
+        B3: metaDam || cleanText(matrix[2] && matrix[2][1]),
+        B4: metaWeek || cleanText(matrix[3] && matrix[3][1]),
+        B5: metaJira,
+        B6: metaNote
       };
       var records = [];
 
@@ -297,8 +303,8 @@
         weeklyUpdateText: metaCells.B2,
         dam: metaCells.B3,
         requestWeek: metaCells.B4,
-        jiraTicket: metaCells.jiraTicket,
-        note: metaCells.note
+        jiraTicket: metaCells.B5,
+        note: metaCells.B6
       });
     });
 
