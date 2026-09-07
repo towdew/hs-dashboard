@@ -36,11 +36,26 @@
       "type": "status",
       "from": "작업중",
       "to": "완료"
+    },
+    "Smart Monitor Multi AI|HK": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Smart Monitor Multi AI|ID": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
+    },
+    "Smart Monitor Multi AI|MX": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     }
   },
   "taskSummary": {
     "Smart Monitor Multi AI": {
-      "changed": 7,
+      "changed": 10,
       "new": 0
     }
   },
