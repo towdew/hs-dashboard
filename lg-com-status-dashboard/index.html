@@ -4431,11 +4431,18 @@ function renderDashboard(rows, clickedCountry=null){
         if(s){ s.value=''; filterDropdown(''); if(window.innerWidth > 768) s.focus(); }
       }
     });
-    document.addEventListener('click', e => {
-      if(!dropdown.contains(e.target) && !(e.target.id === 'sheetBackdrop')){
-        closeCountryDropdown();
-      }
-    });
+    // renderDashboard()가 다시 실행되어도 document click 이벤트가 중복 등록되지 않도록 1회만 바인딩합니다.
+    // 현재 DOM의 #countryDropdown을 매 클릭마다 다시 찾아 이전 렌더의 stale element 참조를 피합니다.
+    if(!window.__countryDropdownOutsideClickBound){
+      document.addEventListener('click', e => {
+        const currentDropdown = document.getElementById('countryDropdown');
+        if(!currentDropdown) return;
+        if(!currentDropdown.contains(e.target) && !(e.target.id === 'sheetBackdrop')){
+          closeCountryDropdown();
+        }
+      });
+      window.__countryDropdownOutsideClickBound = true;
+    }
   }
 
   function filterDropdown(q){
