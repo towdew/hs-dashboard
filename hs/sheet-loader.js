@@ -1775,13 +1775,47 @@ function renderSidebarNavFromSheets(keys) {
     const d = window.DATA && window.DATA[key];
     const title = (d && (d.displayTitle || d.sheetTabName || d.sheetTitle || d.title)) || key;
     const abbr = makeNavAbbr(title, idx);
+    const order = String(idx + 1).padStart(2, '0');
     const total = d && d.stats ? (d.stats.Total || 0) : 0;
-    html.push('<div class="nav-item ' + (idx === 0 ? 'active' : '') + '" data-key="' + escapeAttrForLoader(key) + '" onclick="switchMenu(this)">' +
+    html.push('<div class="nav-item ' + (idx === 0 ? 'active' : '') + '" data-key="' + escapeAttrForLoader(key) + '" data-nav-title="' + escapeAttrForLoader(title) + '" ' +
+      'onmouseenter="showCollapsedNavTooltip(this)" onmouseleave="hideCollapsedNavTooltip()" onclick="hideCollapsedNavTooltip();switchMenu(this)">' +
+      '<span class="ni-order" aria-hidden="true">' + order + '</span>' +
       '<span class="ni-text" data-abbr="' + escapeAttrForLoader(abbr) + '">' + escapeHtmlForLoader(title) + '</span>' +
       '<span class="ni-badge" style="background:rgba(148,163,184,.16);color:#64748B">' + total.toLocaleString() + '</span>' +
       '</div>');
   });
   section.innerHTML = html.join('');
+}
+
+function getCollapsedNavTooltip() {
+  let tooltip = document.getElementById('collapsedNavTooltip');
+  if (tooltip) return tooltip;
+  tooltip = document.createElement('div');
+  tooltip.id = 'collapsedNavTooltip';
+  tooltip.className = 'collapsed-nav-tooltip';
+  tooltip.setAttribute('role', 'tooltip');
+  document.body.appendChild(tooltip);
+  return tooltip;
+}
+
+function showCollapsedNavTooltip(el) {
+  const sidebar = document.getElementById('sidebar');
+  if (!el || !sidebar || !sidebar.classList.contains('collapsed') || window.innerWidth <= 768) return;
+
+  const title = el.getAttribute('data-nav-title') || '';
+  if (!title) return;
+
+  const tooltip = getCollapsedNavTooltip();
+  const rect = el.getBoundingClientRect();
+  tooltip.textContent = title;
+  tooltip.style.left = Math.round(rect.right + 10) + 'px';
+  tooltip.style.top = Math.round(rect.top + rect.height / 2) + 'px';
+  tooltip.classList.add('show');
+}
+
+function hideCollapsedNavTooltip() {
+  const tooltip = document.getElementById('collapsedNavTooltip');
+  if (tooltip) tooltip.classList.remove('show');
 }
 
 function getPrevIsoWeekLabelForLoader() {
