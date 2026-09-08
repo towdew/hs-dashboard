@@ -397,13 +397,48 @@
         : navPct >= 40 ? '#4F7DF3'
         : navPct >= 15 ? '#FF745C'
         : '#C4CCD8';
-      html += '<div class="nav-item' + (index === 0 ? ' active' : '') + '" data-key="' + key + '" onclick="switchMenu(this)" title="' + escapeHtml(navTitle) + '">' +
-        '<span class="ni-text" data-abbr="' + String(index + 1).padStart(2, '0') + '">' + escapeHtml(navTitle) + '</span>' +
+      var navOrder = String(index + 1).padStart(2, '0');
+      html += '<div class="nav-item' + (index === 0 ? ' active' : '') + '" data-key="' + key + '" data-nav-title="' + escapeHtml(navTitle) + '" ' +
+        'onmouseenter="showCollapsedNavTooltip(this)" onmouseleave="hideCollapsedNavTooltip()" onclick="hideCollapsedNavTooltip();switchMenu(this)">' +
+        '<span class="ni-order" aria-hidden="true">' + navOrder + '</span>' +
+        '<span class="ni-text" data-abbr="' + navOrder + '">' + escapeHtml(navTitle) + '</span>' +
         '<span class="ni-badge" style="background:' + navBg + ';color:#FFFFFF">' + navPct + '%</span>' +
       '</div>';
     });
     nav.innerHTML = html;
   }
+
+
+  function getCollapsedNavTooltip() {
+    var tooltip = document.getElementById('collapsedNavTooltip');
+    if (tooltip) return tooltip;
+    tooltip = document.createElement('div');
+    tooltip.id = 'collapsedNavTooltip';
+    tooltip.className = 'collapsed-nav-tooltip';
+    tooltip.setAttribute('role', 'tooltip');
+    document.body.appendChild(tooltip);
+    return tooltip;
+  }
+
+  window.showCollapsedNavTooltip = function (el) {
+    var sidebar = document.getElementById('sidebar');
+    if (!el || !sidebar || !sidebar.classList.contains('collapsed') || window.innerWidth <= 768) return;
+
+    var title = el.getAttribute('data-nav-title') || '';
+    if (!title) return;
+
+    var tooltip = getCollapsedNavTooltip();
+    var rect = el.getBoundingClientRect();
+    tooltip.textContent = title;
+    tooltip.style.left = Math.round(rect.right + 10) + 'px';
+    tooltip.style.top = Math.round(rect.top + rect.height / 2) + 'px';
+    tooltip.classList.add('show');
+  };
+
+  window.hideCollapsedNavTooltip = function () {
+    var tooltip = document.getElementById('collapsedNavTooltip');
+    if (tooltip) tooltip.classList.remove('show');
+  };
 
   function installGlobals(data, keys) {
     window.DATA = data;
