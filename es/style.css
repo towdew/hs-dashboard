@@ -89,24 +89,60 @@ body{
 .nav-item.active{
   background:#FFF0F2;color:#A50034;font-weight:700;
 }
+.nav-item .ni-order{
+  display:none;
+  align-items:center;justify-content:center;
+  min-width:28px;height:28px;padding:0 5px;
+  border:1px solid #E6E9F0;border-radius:8px;
+  background:#F7F8FB;color:#8B93A7;
+  font-size:10px;font-weight:800;line-height:1;
+  letter-spacing:.02em;font-variant-numeric:tabular-nums;
+  flex-shrink:0;
+  transition:background .15s,border-color .15s,color .15s,transform .15s;
+}
 .nav-item .ni-text{
   flex:1;transition:opacity .2s,width .2s;
   overflow:hidden;text-overflow:ellipsis;
   font-size:12px;
 }
 .sidebar.collapsed .ni-text{
-  width:0;opacity:0;font-size:0;
+  flex:0 0 0;width:0;opacity:0;font-size:0;
 }
 .nav-item .ni-badge{
   margin-left:auto;flex-shrink:0;
   font-size:9px;font-weight:700;padding:1px 5px;border-radius:20px;
   transition:opacity .2s,width .2s;
 }
-.sidebar.collapsed .ni-badge{opacity:0;width:0;padding:0;margin:0;overflow:hidden}
+.sidebar.collapsed .ni-badge{flex:0 0 0;opacity:0;width:0;padding:0;margin:0;overflow:hidden}
 
-/* Collapsed: 아이콘 자리 회수 */
-.sidebar.collapsed .nav-item{padding:11px;margin:1px 8px;justify-content:center}
+/* Collapsed: Request 순번만 표시. 항목 수가 늘어나면 JS index 기준으로 자동 증가 */
+.sidebar.collapsed .nav-item{padding:5px 8px;margin:2px 8px;gap:0;justify-content:center;overflow:visible}
+.sidebar.collapsed .nav-item .ni-order{display:flex}
+.sidebar.collapsed .nav-item:hover .ni-order{
+  border-color:#D9DDE8;background:#FFFFFF;color:#4B556B;transform:translateX(1px);
+}
+.sidebar.collapsed .nav-item.active .ni-order{
+  border-color:#F3C3D1;background:#FFF0F2;color:#A50034;
+}
 .sidebar.collapsed .sb-section-label{height:0;padding:0}
+
+/* Collapsed LNB hover: sidebar 밖에 전체 메뉴명을 표시 */
+.collapsed-nav-tooltip{
+  position:fixed;z-index:9999;
+  max-width:320px;padding:8px 11px;
+  border:1px solid #E3E6EE;border-radius:8px;
+  background:#1A1D2E;color:#fff;
+  box-shadow:0 8px 24px rgba(15,18,30,.16);
+  font-size:11px;font-weight:700;line-height:1.35;
+  white-space:normal;word-break:keep-all;
+  pointer-events:none;
+  opacity:0;visibility:hidden;
+  transform:translate(4px,-50%);
+  transition:opacity .12s ease,transform .12s ease,visibility .12s;
+}
+.collapsed-nav-tooltip.show{
+  opacity:1;visibility:visible;transform:translate(0,-50%);
+}
 /* Traffic light bottom nav */
 .sb-tl-btn{
   display:flex;align-items:center;gap:10px;

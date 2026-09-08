@@ -192,6 +192,7 @@ let sidebarCollapsed = false;
 function toggleSidebar() {
   sidebarCollapsed = !sidebarCollapsed;
   document.getElementById('sidebar').classList.toggle('collapsed', sidebarCollapsed);
+  if (typeof hideCollapsedNavTooltip === 'function') hideCollapsedNavTooltip();
 }
 
 // ── MOBILE SIDEBAR ───────────────────────────────────────────
