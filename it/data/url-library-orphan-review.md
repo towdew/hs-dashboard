@@ -1,7 +1,7 @@
 # Live URL Library 검토 필요 모델 목록 (자동 병합 실패)
 
-생성일: 2026-08-31
-총 301건 — 1개국만 라이브 중이며 고신뢰도 매칭 규칙에 맞는 병합 대상을 찾지 못한 모델
+생성일: 2026-09-16
+총 303건 — 1개국만 라이브 중이며 고신뢰도 매칭 규칙에 맞는 병합 대상을 찾지 못한 모델
 
 ## Laptops
 
@@ -9,7 +9,6 @@
 - **14T90N-V** (JP : JP (ja)) — https://www.lg.com/jp/laptops/gram/14t90n-vr51j1/
 - **14U390-L** (BR : BR (pt)) — https://www.lg.com/br/computadores/ultra-pc/14u390-l-by36p1/
 - **14ZB90S-G** (JP : JP (ja)) — https://www.lg.com/jp/mobile-pc/gram/14zb90s-ga54j/
-- **14ZD90RU-G** (ES : ES (es)) — https://www.lg.com/es/portatiles/gram/14zd90ru-g-ax55b/
 - **14ZD90U-G** (ES : ES (es)) — https://www.lg.com/es/portatiles/gram/14zd90u-g/
 - **14ZT90R-G** (UK : GB (en)) — https://www.lg.com/uk/business/monitors-pcs/thin-clients/mobile-thin-clients/14zt90r-g-ax34a1/
 - **14ZT980-L** (UK : GB (en)) — https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/14zt980-l/
@@ -112,7 +111,6 @@
 - **23MT75V-PZ** (RU : RU (ru)) — https://www.lg.com/ru/monitors/lg-23mt75v-personal-tv
 - **23mt55v** (RU : RU (ru)) — https://www.lg.com/ru/monitors/lg-23mt55v-personal-tv
 - **244EA53T** (IL : IL (iw)) — https://www.lg.com/il/monitors/lg-244EA53T
-- **24BF410B-B** (JP : JP (ja)) — https://www.lg.com/jp/monitors/fhd-qhd/24bf410b-b/
 - **24BK55WP-B** (IL : IL (iw)) — https://www.lg.com/il/monitors/lg-24bk55wp-b
 - **24BR400-B** (IT : IT (it)) — https://www.lg.com/it/monitor/business/24br400-b/
 - **24EN33VW** (RU : RU (ru)) — https://www.lg.com/ru/monitors/lg-24EN33VW-led-monitors
@@ -137,7 +135,6 @@
 - **25UM64-S** (RU : RU (ru)) — https://www.lg.com/ru/monitors/lg-25UM64-ultrawide-monitors
 - **27BF410B-B** (JP : JP (ja)) — https://www.lg.com/jp/monitors/fhd-qhd/27bf410b-b/
 - **27BQ410B-B** (JP : JP (ja)) — https://www.lg.com/jp/monitors/fhd-qhd/27bq410b-b/
-- **27BQ450B-BD** (GLOBAL : GLOBAL (en)) — https://www.lg.com/global/business/monitors-pcs/monitors/view-all-monitors/27bq450b-b/
 - **27BR400-B** (IT : IT (it)) — https://www.lg.com/it/monitor/business/27br400-b/
 - **27BU650B-B** (GLOBAL : GLOBAL (en)) — https://www.lg.com/global/business/monitors-pcs/monitors/lg-ultrafine/27bu650b-b/
 - **27EA53V-P** (AU : AU (en)) — https://www.lg.com/au/monitors/full-hd-qhd/27ea53v/
@@ -186,7 +183,6 @@
 - **34BF550B-W** (GLOBAL : GLOBAL (en)) — https://www.lg.com/global/business/monitors-pcs/monitors/lg-ultrawide/34bf550b-w/
 - **34BK95U-W** (IL : IL (iw)) — https://www.lg.com/il/monitors/lg-34bk95u-w
 - **34BP65C-B** (AU : AU (en)) — https://www.lg.com/au/monitors/ultrawide/34bp65c-b/
-- **34G60ZA-B** (UK : GB (en)) — https://www.lg.com/uk/monitors/gaming/34g60za-b/
 - **34GX90** (UK : GB (en)) — https://www.lg.com/uk/monitors/gaming/34gx90-27gs7/
 - **34U60ZB-B** (JP : JP (ja)) — https://www.lg.com/jp/monitors/21-9-ultra-wide-monitors/34u60zb-b/
 - **34U62TB-B** (UK : GB (en)) — https://www.lg.com/uk/monitors/ultrawide/34u62tb-b/
@@ -201,12 +197,16 @@
 - **43SP520M-PM** (TW : TW (zh)) — https://www.lg.com/tw/monitors/ultrawide/43sp520m-pm/
 - **45GS95QX-B** (DE : DE (de)) — https://www.lg.com/de/monitore/gaming/45gs95qx-b/
 - **45GX90** (UK : GB (en)) — https://www.lg.com/uk/monitors/gaming/45gx90-27gs7/
+- **49BQ650B-W** (GLOBAL : GLOBAL (en)) — https://www.lg.com/global/business/monitors-pcs/monitors/view-all-monitors/49bq650b-w/
 - **49WQ900G-B** (JP : JP (ja)) — https://www.lg.com/jp/monitors/21-9-ultra-wide-monitors/49wq900g-b/
 - **60PZ9M** (AU : AU (en)) — https://www.lg.com/au/monitors/60pz9m/
 - **6410TJW006F** (JP : JP (ja)) — https://www.lg.com/jp/care-accessories/monitors/adapter/6410tjw006f/
+- **AAN00841902** (JP : JP (ja)) — https://www.lg.com/jp/care-accessories/monitors/stand-arm/aan00841902/
 - **AAN30033609** (PL : PL (pl)) — https://www.lg.com/pl/care-accessories/monitors/stand-arm/aan30033609/
 - **AAN30033610** (PL : PL (pl)) — https://www.lg.com/pl/care-accessories/monitors/stand-arm/aan30033610/
 - **AAN30067402** (JP : JP (ja)) — https://www.lg.com/jp/care-accessories/monitors/stand-arm/aan30067402/
+- **AAN76409401** (BR : BR (pt)) — https://www.lg.com/br/care-accessories/monitors/stand-arm/aan76409401/
+- **AAN76409928** (JP : JP (ja)) — https://www.lg.com/jp/care-accessories/monitors/stand-arm/aan76409928/
 - **AKB73715689** (BR : BR (pt)) — https://www.lg.com/br/care-accessories/monitors/others/akb73715689/
 - **AKB76043633** (JP : JP (ja)) — https://www.lg.com/jp/care-accessories/monitors/others/akb76043633/
 - **AKB76044701** (PL : PL (pl)) — https://www.lg.com/pl/care-accessories/monitors/others/akb76044701/
@@ -228,7 +228,9 @@
 - **EAD62348815** (JP : JP (ja)) — https://www.lg.com/jp/care-accessories/monitors/adapter/ead62348815/
 - **EAD63749401** (CL : CL (es)) — https://www.lg.com/cl/care-accessories/monitors/others/ead63749401/
 - **EAD63785912** (JP : JP (ja)) — https://www.lg.com/jp/care-accessories/monitors/adapter/ead63785912/
+- **EAD64108413** (JP : JP (ja)) — https://www.lg.com/jp/care-accessories/monitors/adapter/ead64108413/
 - **EAD64247302** (AU : AU (en)) — https://www.lg.com/au/care-accessories/monitors/others/ead64247302/
+- **EAD65845803** (JP : JP (ja)) — https://www.lg.com/jp/care-accessories/monitors/others/ead65845803/
 - **EAD65879601** (JP : JP (ja)) — https://www.lg.com/jp/care-accessories/monitors/others/ead65879601/
 - **EAD65912803** (CL : CL (es)) — https://www.lg.com/cl/care-accessories/monitors/others/ead65912803/
 - **EAY30146201** (JP : JP (ja)) — https://www.lg.com/jp/care-accessories/monitors/adapter-power-cord/eay30146201/
@@ -240,8 +242,9 @@
 - **EAY62933008** (TH : TH (th)) — https://www.lg.com/th/monitors/monitor-accessories/eay62933008/
 - **EAY63032208** (JP : JP (ja)) — https://www.lg.com/jp/care-accessories/monitors/adapter/eay63032208/
 - **EAY65689601** (PL : PL (pl)) — https://www.lg.com/pl/care-accessories/monitors/adapter-power-cord/eay65689601/
-- **EAY65890002** (JP : JP (ja)) — https://www.lg.com/jp/care-accessories/monitors/adapter/eay65890002/
 - **EAY65890003** (PL : PL (pl)) — https://www.lg.com/pl/care-accessories/monitors/adapter-power-cord/eay65890003/
+- **EAY65895713** (DE : DE (de)) — https://www.lg.com/de/care-accessories/monitors/adapter-power-cord/eay65895713/
+- **EAY65920201** (JP : JP (ja)) — https://www.lg.com/jp/care-accessories/monitors/adapter-power-cord/eay65920201/
 - **EBP64157901** (PL : PL (pl)) — https://www.lg.com/pl/care-accessories/monitors/others/ebp64157901/
 - **IPS225P-BN** (AU : AU (en)) — https://www.lg.com/au/monitors/full-hd-qhd/ips225p-bn/
 - **IPS235G-BN** (JP : JP (ja)) — https://www.lg.com/jp/monitors/fhd-qhd/ips235g-bn/
@@ -301,7 +304,6 @@
 - **CJH310N** (JP : JP (ja)) — https://www.lg.com/jp/projectors/cjh310n/
 - **EAY62990921** (BR : BR (pt)) — https://www.lg.com/br/care-accessories/projectors/others/eay62990921/
 - **HU810PB** (JP : JP (ja)) — https://www.lg.com/jp/projectors/hu810pb/
-- **HU925V** (CN : CN (zh)) — https://www.lg.com/cn/projectors/lg-hu925v
 - **HUCQS** (TW : TW (zh)) — https://www.lg.com/tw/projectors/cinebeam/hucqs-710pb/
 - **HW300TC** (CN : CN (zh)) — https://www.lg.com/cn/projectors/lg-HW300TC
 - **Minibeam** (LEVANT_EN : JO (en)) — https://www.lg.com/levant_en/projectors/lg-Minibeam
