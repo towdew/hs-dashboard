@@ -43,6 +43,10 @@ function grDeepLinkEntryTitles(entry) {
   if (!entry) return out;
   if (entry.shortTitle) out.push(entry.shortTitle);
   if (entry.title && entry.title !== entry.shortTitle) out.push(entry.title);
+  // xlsx 탭 이름("W18 - FAQ Request (UltraGear PL")도 받는다 — 사람들이 시트를 부를 때 쓰는 이름이다.
+  if (entry.tabName && out.indexOf(entry.tabName) < 0) out.push(entry.tabName);
+  // 커스텀 탭 별칭(npi_product_status 등)도 부분 일치 대상 — `?task=npi`로 들어올 수 있게.
+  (entry.aliases || []).forEach(function (a) { if (a && out.indexOf(a) < 0) out.push(a); });
   return out;
 }
 
