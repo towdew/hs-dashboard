@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-16T07:39:55+00:00",
+  "generatedAt": "2026-09-16T07:43:37+00:00",
   "baseUrl": "https://lge-gmc.atlassian.net",
   "scope": "involved",
   "doneDays": 30,
-  "count": 13,
+  "count": 16,
   "tickets": [
     {
       "key": "BTOBGLOBAL-1445",
@@ -120,6 +120,25 @@
       "descriptionExcerpt": "저희 commercial display 하단 SNS 컴포넌트를 수동 말고 자동으로 바꿀 수 있을까요 ?\n원래 자동 컴포넌트인데 저희가 수동으로 요청해서 현재 수동 컴포넌트로 들어간 것으로 기억합니다 ㅠㅠ\n자동으로 바꿔주시면 감사하겠습니닷.\n채널 | URL\nYouTube | www.youtube.com/@LGCommercialDisplayGlobal\nLinkedIn | www.linkedin.com/company/lg-commercial-display-global\nFacebook | www.facebook.com/LGCommercialDisplayGlobal"
     },
     {
+      "key": "LGCOMPE-1541",
+      "title": "CREATE GNB SUBCAT",
+      "status": "PRE-CHECK",
+      "statusCategory": "new",
+      "assignee": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+      "reporter": "Ignacio Castro/LGEPR Marketing",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "LGCOMPE",
+      "parent": null,
+      "created": "2026-09-09T23:52:36.297+0900",
+      "resolved": null,
+      "updated": "2026-09-14T17:08:17.715+0900",
+      "due": null,
+      "stageSince": "2026-09-14T17:08:17.715+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/LGCOMPE-1541",
+      "descriptionExcerpt": ""
+    },
+    {
       "key": "BTOBGLOBAL-1372",
       "title": "[Case Study Creation] Rose Salgado Elementary School Case Study Creation_LG.com/global",
       "status": "RESOLVED / CLOSED",
@@ -234,6 +253,25 @@
       "descriptionExcerpt": ""
     },
     {
+      "key": "LGCOMPE-1475",
+      "title": "CREATION OF NEW CATEGORIES ",
+      "status": "REJECTED",
+      "statusCategory": "done",
+      "assignee": "Ignacio Castro/LGEPR Marketing",
+      "reporter": "Ignacio Castro/LGEPR Marketing",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "LGCOMPE",
+      "parent": null,
+      "created": "2026-07-31T02:00:48.682+0900",
+      "resolved": "2026-09-01T09:08:51.796+0900",
+      "updated": "2026-09-01T09:08:54.780+0900",
+      "due": null,
+      "stageSince": "2026-09-01T09:08:51.814+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/LGCOMPE-1475",
+      "descriptionExcerpt": ""
+    },
+    {
       "key": "BTOBGLOBAL-1262",
       "title": "[Case Study Creation] Sahuarita School Case Study Creation_LG.com/global",
       "status": "RESOLVED / CLOSED",
@@ -250,6 +288,25 @@
       "due": null,
       "stageSince": "2026-08-21T10:31:41.239+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1262",
+      "descriptionExcerpt": ""
+    },
+    {
+      "key": "BTOBGLOBAL-1146",
+      "title": "Home>Commercial Display 내 배너 교체 요청",
+      "status": "RESOLVED / CLOSED",
+      "statusCategory": "done",
+      "assignee": "김상모/책임/MS B2B디지털이노베이션파트",
+      "reporter": "김상모/책임/MS B2B디지털이노베이션파트",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
+      "created": "2026-07-02T19:18:47.564+0900",
+      "resolved": "2026-08-26T12:54:22.844+0900",
+      "updated": "2026-08-26T16:22:12.609+0900",
+      "due": null,
+      "stageSince": "2026-08-26T12:54:22.932+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1146",
       "descriptionExcerpt": ""
     }
   ]
