@@ -111,9 +111,10 @@ function renderSidebar() {
     });
     if (collapsible) html.push('</div>');
   }
+  groups.done.sort(function (a, b) { return String(b.resolved || b.stageSince || '').localeCompare(String(a.resolved || a.stageSince || '')); });
   section('In Progress', 'in_progress', groups.in_progress, false);
   section('Planned', 'planned', groups.planned, true);
-  section('Done', 'done', groups.done, true);
+  section(DATA.doneDays ? 'Done · ' + DATA.doneDays + '일' : 'Done', 'done', groups.done, true);
   if (!all.length) html.push('<div class="sb-empty">표시할 ID 티켓이 없습니다.</div>');
   $('ticketNavList').innerHTML = html.join('');
   applySearchToNav();
@@ -222,17 +223,20 @@ function renderOverview() {
   var hold = all.filter(function (t) { return stageOf(t) === '응답 대기'; }).length;
   var overdue = all.filter(isOverdue).length;
   var stale = all.filter(isStale).length;
+  var doneN = all.filter(function (t) { return stageOf(t) === '완료'; }).length;
+  var openN = all.length - doneN;
 
   var h = [];
   h.push('<div class="card">');
   h.push('<div class="ov-head"><div><div class="eyebrow">Jira follow-up · ID</div><div class="h1">ID 업무 진행 현황</div>' +
-    '<div class="sub">내가 담당·보고·관찰하는 ID 사업부 티켓. Jira 기준 ' + esc(fmtDateTime(DATA.generatedAt)) + '</div></div>' +
-    '<div class="ov-total"><div class="ov-total-label">Tickets</div><div class="ov-total-num">' + all.length + '</div></div></div>');
+    '<div class="sub">내가 담당·보고·관찰하는 ID 사업부 티켓 — 진행 중 전체' + (DATA.doneDays ? ' + 최근 ' + DATA.doneDays + '일 완료' : '') + '. Jira 기준 ' + esc(fmtDateTime(DATA.generatedAt)) + '</div></div>' +
+    '<div class="ov-total"><div class="ov-total-label">In Progress</div><div class="ov-total-num">' + openN + '</div></div></div>');
   h.push('<div class="kpi-row">' +
     kpi(review, '검토·승인 대기') + '<div class="kpi-div"></div>' +
     kpi(hold, '응답 대기') + '<div class="kpi-div"></div>' +
     kpi(overdue, '마감일 초과', overdue > 0) + '<div class="kpi-div"></div>' +
-    kpi(stale, '7일 이상 변경 없음', stale > 0) + '</div>');
+    kpi(stale, '7일 이상 변경 없음', stale > 0) + '<div class="kpi-div"></div>' +
+    kpi(doneN, (DATA.doneDays ? '최근 ' + DATA.doneDays + '일 ' : '') + '완료') + '</div>');
   h.push('<div class="chips" role="group" aria-label="단계 필터">' + [''].concat(STAGES).map(function (s) {
     var n = s ? all.filter(function (t) { return stageOf(t) === s; }).length : all.length;
     if (s && !n) return '';
@@ -251,11 +255,11 @@ function renderOverview() {
       '<td><div class="t-title">' + esc(t.title) + '</div><div class="t-key">' + esc(t.key) + (t.parent && t.parent.key ? ' · 상위 ' + esc(t.parent.key) : '') + '</div></td>' +
       '<td><span class="badge ' + stageClass(t) + '">' + esc(t.status) + '</span></td>' +
       '<td>' + esc(t.assignee) + '</td>' +
-      '<td class="t-num' + (isOverdue(t) ? ' overdue' : '') + '">' + (t.due ? esc(t.due) : '미정') + '</td>' +
+      '<td class="t-num' + (isOverdue(t) ? ' overdue' : '') + '">' + (stageOf(t) === '완료' ? '<span class="muted">완료 ' + esc(day(t.resolved || t.stageSince)) + '</span>' : (t.due ? esc(t.due) : '미정')) + '</td>' +
       '<td class="t-num">' + esc(day(t.updated)) + '<span class="t-sub">' + esc(ago(t.updated)) + '</span></td></tr>');
   });
   h.push('</tbody></table></div>');
-  h.push('<p class="sub" style="margin-top:12px">완료율은 계산하지 않습니다 — 기본 조회에서 숨긴 완료 티켓이 모집단에 없기 때문입니다. 단계는 Jira 상태명으로 판정합니다.</p>');
+  h.push('<p class="sub" style="margin-top:12px">완료 티켓은 최근 ' + (DATA.doneDays || 0) + '일 내 완료 전환된 건만 포함되며, 그 이전 완료건은 표시하지 않습니다. 단계는 Jira 상태명으로 판정합니다.</p>');
   h.push('</div>');
   return h.join('');
 }
@@ -280,6 +284,7 @@ function renderTicket(t) {
   if (isStale(t)) alerts.push('<div class="alert">' + daysSince(t.updated) + '일 동안 Jira 업데이트가 없습니다.</div>');
   if (stage === '응답 대기') alerts.push('<div class="alert info">응답 대기 상태 — 요청자/법인 회신을 확인하세요.</div>');
   if (stage === '검토·승인') alerts.push('<div class="alert info">승인 대기 상태 — 법인 승인 진행을 확인하세요.</div>');
+  if (stage === '완료') alerts.push('<div class="alert done">' + esc(day(t.resolved || t.stageSince)) + ' 완료 (' + esc(t.status) + ')</div>');
   if (alerts.length) h.push('<div class="alerts">' + alerts.join('') + '</div>');
   h.push('</div>');
 
@@ -291,7 +296,9 @@ function renderTicket(t) {
     meta('프로젝트', t.project) +
     meta('상위 티켓', t.parent && t.parent.key ? '<a class="link" href="' + esc(DATA.baseUrl + '/browse/' + t.parent.key) + '" target="_blank" rel="noopener">' + esc(t.parent.key) + '</a>' : '—', t.parent && t.parent.title ? t.parent.title : '', true) +
     meta('생성', day(t.created) || '—', ago(t.created)) +
-    meta('마감일', t.due ? '<span' + (isOverdue(t) ? ' class="overdue"' : '') + '>' + esc(t.due) + '</span>' : '미정', untilDue == null ? '' : (untilDue < 0 ? Math.abs(untilDue) + '일 초과' : untilDue + '일 남음'), true) +
+    (stage === '완료'
+      ? meta('완료일', day(t.resolved || t.stageSince) || '—', ago(t.resolved || t.stageSince))
+      : meta('마감일', t.due ? '<span' + (isOverdue(t) ? ' class="overdue"' : '') + '>' + esc(t.due) + '</span>' : '미정', untilDue == null ? '' : (untilDue < 0 ? Math.abs(untilDue) + '일 초과' : untilDue + '일 남음'), true)) +
     meta('최근 변경', day(t.updated) || '—', ago(t.updated)) +
     meta('상태 그룹 변경', day(t.stageSince) || '—', sinceStage == null ? '' : sinceStage + '일 경과 · 개별 상태 체류시간 아님') +
     '</dl></div>');

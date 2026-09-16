@@ -163,6 +163,8 @@ tbody tr.row-link:hover{background:#FAFBFD}
 .alerts{display:flex;flex-direction:column;gap:8px;margin-top:16px}
 .alert{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;font-size:12px;font-weight:600;background:#FFF7ED;color:#9A3412;border:1px solid #FED7AA}
 .alert.info{background:#F8FAFC;color:#475569;border-color:#E2E8F0}
+.alert.done{background:#F0FDF4;color:#15803D;border-color:#BBF7D0}
+.nav-item .ni-badge.st-done{opacity:.85}
 .meta-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px 22px}
 .meta dt{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#9BA3BF;margin-bottom:5px}
 .meta dd{font-size:13px;font-weight:600;color:#1A1D2E;line-height:1.4;word-break:break-word}
