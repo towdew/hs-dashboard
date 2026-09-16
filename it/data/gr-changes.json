@@ -1,5 +1,5 @@
 {
-  "baseDate": "20260915",
+  "baseDate": "20260916",
   "prevDate": "20260903",
   "changes": {
     "Smart Monitor Multi AI|CZ": {
@@ -85,6 +85,11 @@
     },
     "GNB Structure|RS": {
       "type": "new_country"
+    },
+    "GNB Structure|CH_FR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "취소"
     }
   },
   "taskSummary": {
@@ -97,9 +102,9 @@
       "new": 0
     },
     "GNB Structure": {
-      "changed": 4,
+      "changed": 5,
       "new": 3
     }
   },
-  "generatedAt": "2026-09-15"
+  "generatedAt": "2026-09-16"
 }

@@ -304,6 +304,8 @@ async function loadDashboardFromPublishedHtml() {
       dashboardData.sheetTitle = displayTitle || key;
       dashboardData.sheetTabName = displayTitle || key;
       dashboardData.originalSheetName = key;
+      // xlsx 탭 이름(예: "W18 - FAQ Request (UltraGear PL") — ?task= 딥링크 매칭에 쓴다.
+      dashboardData.tabName = payload.tabName || '';
       dashboardData.sourceUrl = payload.sourceUrl || '';
       dashboardData.matrix = payload.matrix || [];
       dashboardData.rawMatrix = payload.rawMatrix || payload.matrix || [];
@@ -380,6 +382,7 @@ async function loadSheetsFromPublishedXlsx(xlsxUrl) {
         sheetName: displaySheetName,
         displayTitle: displaySheetName,
         originalSheetName: 'sheet_' + (idx + 1),
+        tabName: sheetName,
         matrix: cleaned,
         rawMatrix: matrix,
         styles: normalizeStyleMatrix(styleMatrix, cleaned),
@@ -1614,6 +1617,7 @@ function applySheetData(key, data) {
   target.sheetTitle = title;
   target.sheetTabName = title;
   target.originalSheetName = data.originalSheetName || target.originalSheetName || '';
+  target.tabName = data.tabName || target.tabName || '';
   target.tableHeaders = data.tableHeaders;
   target.tableRows = data.tableRows;
   target.headerRows = data.headerRows;
@@ -1640,7 +1644,10 @@ function npiNavPreviewEnabled() {
   try {
     var q = new URLSearchParams(window.location.search || '');
     var v = String(q.get('npi') || '').trim().toLowerCase();
-    return v === '1' || v === 'true' || v === 'yes';
+    if (v === '1' || v === 'true' || v === 'yes') return true;
+    // ?task= 딥링크가 NPI 탭을 가리키면 숨김을 풀어야 그 화면이 열린다.
+    var task = String(q.get('task') || '').trim().toLowerCase().replace(/[^a-z0-9\uac00-\ud7a3]+/g, '');
+    return task === 'npiproductstatus' || task === 'npi' || task === '제품현황' || task === 'it제품현황';
   } catch (e) {
     return false;
   }

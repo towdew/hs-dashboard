@@ -1519,7 +1519,7 @@ function grDeepLinkEntries() {
     var d = window.DATA && window.DATA[key];
     var title = (d && getDashboardDisplayTitle(d)) || key;
     var shortTitle = typeof grNavShortTitle === 'function' ? grNavShortTitle(title) : title;
-    entries.push({ key: key, title: title, shortTitle: shortTitle });
+    entries.push({ key: key, title: title, shortTitle: shortTitle, tabName: (d && d.tabName) || '' });
   });
   return entries;
 }
