@@ -4,7 +4,7 @@
 <title>LG IT Dashboard</title>
 <link rel="icon" type="image/x-icon" href="./favicon.ico">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=0.6.82">
+<link rel="stylesheet" href="style.css?v=0.6.83">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body style="">
@@ -57,6 +57,7 @@
     </button>
     <div class="topbar-titlewrap">
       <span class="topbar-title" id="topTitle">Loading IT Global Request</span>
+      <button type="button" class="topbar-link-btn" onclick="copyTaskLink()" title="이 화면 링크 복사 (?task=…)" aria-label="이 화면 링크 복사"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></button>
     </div>
     <span class="topbar-meta" id="topMeta">W--</span>
     <div class="topbar-rpt-group" style="display:flex;align-items:center;gap:6px">
@@ -253,12 +254,13 @@
     }, 360);
   }
 </script>
-<script>var __BUILD_V = '0.6.82';</script>
-<script src="./sheet-loader.js?v=0.6.82"></script>
-<script src="./js-lib/global-search.js?v=0.6.82"></script>
-<script src="./js-lib/gr-meta.js?v=0.6.82"></script>
-<script src="./js-lib/url-lib-locale.js?v=0.6.82"></script>
-<script src="./js-lib/npi-product-status.js?v=0.6.82"></script>
+<script>var __BUILD_V = '0.6.83';</script>
+<script src="./sheet-loader.js?v=0.6.83"></script>
+<script src="./js-lib/global-search.js?v=0.6.83"></script>
+<script src="./js-lib/gr-meta.js?v=0.6.83"></script>
+<script src="./js-lib/gr-deeplink.js?v=0.6.83"></script>
+<script src="./js-lib/url-lib-locale.js?v=0.6.83"></script>
+<script src="./js-lib/npi-product-status.js?v=0.6.83"></script>
 <script>
   function loadScript(src) {
     return new Promise(function (resolve, reject) {
@@ -271,11 +273,11 @@
   }
 
   loadDashboardFromPublishedHtml().then(function () {
-    return loadScript('./sheet-exceptions.js?v=0.6.82')
+    return loadScript('./sheet-exceptions.js?v=0.6.83')
       .catch(function (err) {
         console.warn('[sheet-exceptions-load-warning]', err);
       })
-      .then(function () { return loadScript('./common.js?v=0.6.82'); });
+      .then(function () { return loadScript('./common.js?v=0.6.83'); });
   }).then(function () {
     if (typeof dashboardInit === 'function') {
       dashboardInit();
