@@ -1499,6 +1499,59 @@ function updateTopbarTitle() {
   if (meta) meta.textContent = getPrevIsoWeekLabelForMeta();
 }
 
+// ── DEEP LINK (?task=…) ──────────────────────────────────────
+// 매칭 대상 목록: GR 시트(제목·짧은 제목) + 커스텀 탭(고정 별칭). 순수 계산은 js-lib/gr-deeplink.js.
+function grDeepLinkEntries() {
+  var entries = [];
+  var seen = {};
+  var keys = (window.__DASHBOARD_KEYS || []).slice();
+  var custom = (typeof CUSTOM_NAV_TABS !== 'undefined' && CUSTOM_NAV_TABS) || [];
+  custom.forEach(function (t) { if (keys.indexOf(t.key) < 0) keys.push(t.key); });
+  keys.forEach(function (key) {
+    if (seen[key]) return;
+    seen[key] = true;
+    var tab = null;
+    for (var i = 0; i < custom.length; i++) if (custom[i].key === key) { tab = custom[i]; break; }
+    if (tab) {
+      entries.push({ key: key, title: tab.label, shortTitle: tab.label, aliases: [key, tab.abbr].filter(Boolean) });
+      return;
+    }
+    var d = window.DATA && window.DATA[key];
+    var title = (d && getDashboardDisplayTitle(d)) || key;
+    var shortTitle = typeof grNavShortTitle === 'function' ? grNavShortTitle(title) : title;
+    entries.push({ key: key, title: title, shortTitle: shortTitle });
+  });
+  return entries;
+}
+
+// 첫 진입 시 URL의 task 값을 시트 키로. 못 찾으면 null(기본 선택으로 폴백). 여럿에 걸치면 경고만 남기고 첫 후보.
+function grInitialKeyFromUrl() {
+  if (typeof grResolveTaskParam !== 'function') return null;
+  var raw = '';
+  try { raw = new URLSearchParams(window.location.search).get(GR_DEEPLINK_PARAM) || ''; } catch (e) { return null; }
+  if (!raw) return null;
+  var hit = grResolveTaskParam(raw, grDeepLinkEntries());
+  if (!hit) { console.warn('[deeplink] ?task=' + raw + ' 에 해당하는 시트가 없어 기본 화면을 엽니다.'); return null; }
+  if (hit.ambiguous) console.warn('[deeplink] ?task=' + raw + ' 가 여러 시트에 걸립니다 → ' + hit.candidates.join(', ') + ' 중 첫 번째를 엽니다.');
+  return hit.key;
+}
+
+// 현재 화면을 주소창에 반영(replaceState — 뒤로가기 히스토리는 쌓지 않는다). 주소를 그대로 복사하면 공유 링크.
+function grSyncTaskUrl() {
+  if (typeof grBuildTaskParam !== 'function' || !currentKey) return;
+  try {
+    var value = grBuildTaskParam(grDeepLinkEntries(), currentKey);
+    var next = grWithTaskParam(window.location.search, value);
+    if (next === window.location.search) return;
+    window.history.replaceState(window.history.state, '', window.location.pathname + next + window.location.hash);
+  } catch (e) { /* file:// 등 replaceState 불가 환경 — 딥링크만 포기 */ }
+}
+
+function copyTaskLink() {
+  grSyncTaskUrl();
+  copyToClipboard(window.location.href);
+}
+
 // ── MENU SWITCH ──────────────────────────────────────────────
 function switchMenu(el) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -1509,6 +1562,7 @@ function switchMenu(el) {
   updateTopbarTitle();
   updateHQ();
   renderContent();
+  grSyncTaskUrl();
   // 모바일에서 메뉴 선택 시 자동으로 사이드바 닫기
   if (window.innerWidth <= 768) closeMobileSidebar();
 }
@@ -5710,7 +5764,9 @@ function dashboardInit() {
     if (typeof renderSidebarNavFromSheets === 'function' && typeof contentStats === 'function') {
       renderSidebarNavFromSheets(window.__DASHBOARD_KEYS);
     }
-    var initKey = (typeof pickDefaultGrNavKey === 'function' && pickDefaultGrNavKey(window.__DASHBOARD_KEYS)) ||
+    // URL의 ?task= 가 우선 — 공유 링크로 들어온 사람은 "최신 진행 건"이 아니라 그 건을 보러 왔다.
+    var initKey = grInitialKeyFromUrl() ||
+      (typeof pickDefaultGrNavKey === 'function' && pickDefaultGrNavKey(window.__DASHBOARD_KEYS)) ||
       window.__DEFAULT_GR_NAV_KEY ||
       window.__DASHBOARD_KEYS[0];
     currentKey = initKey;
@@ -5722,6 +5778,7 @@ function dashboardInit() {
   updateTopbarTitle();
   if (typeof updateNewContentVisibility==='function') updateNewContentVisibility(typeof currentWeek!=='undefined'?currentWeek:AUTO_WEEK);
   renderContent();
+  grSyncTaskUrl();
 }
 
 if (document.readyState === 'loading') {
