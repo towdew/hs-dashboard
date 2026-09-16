@@ -2,15 +2,16 @@
 <html lang="ko"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LG ID Dashboard</title>
+<title>LG IT/B2B Dashboard</title>
 <link rel="icon" type="image/x-icon" href="../it/favicon.ico">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=0.1.3">
+<link rel="stylesheet" href="../id/style.css?v=0.1.3">
 </head>
 <body>
 
 <div class="app">
 
+<!-- /it-b2b — id/ 와 같은 정적 티켓 대시보드. 스타일·로직은 ../id/ 를 공유한다. -->
 <!-- ══════════════════ SIDEBAR ══════════════════ -->
 <aside class="sidebar" id="sidebar">
   <div class="sb-logo">
@@ -18,15 +19,15 @@
       <div class="hb"><span></span><span></span><span></span></div>
     </button>
     <div class="sidebar-text-group">
-      <div class="sb-logo-text">ID Dashboard</div>
-      <div class="sb-logo-sub">Jira follow-up · ID 사업부</div>
+      <div class="sb-logo-text">IT/B2B Dashboard</div>
+      <div class="sb-logo-sub">Jira follow-up · IT B2B</div>
     </div>
   </div>
 
   <div class="sb-section" id="ticketNavList">
     <div class="sb-section-label">Overview</div>
     <div class="nav-item active" data-key="overview" onclick="switchTicket(this)">
-      <span class="ni-text" data-abbr="ID">ID 업무 현황</span>
+      <span class="ni-text" data-abbr="IT">IT/B2B 업무 현황</span>
       <span class="ni-badge ni-badge-muted" id="navTotalBadge">-</span>
     </div>
     <div class="sb-section-label" style="margin-top:10px">Tickets</div>
@@ -48,7 +49,7 @@
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </button>
     <div class="topbar-titlewrap">
-      <span class="topbar-title" id="topTitle">ID 업무 현황</span>
+      <span class="topbar-title" id="topTitle">IT/B2B 업무 현황</span>
       <button type="button" class="topbar-link-btn" onclick="copyTicketLink()" title="이 화면 링크 복사 (?ticket=…)" aria-label="이 화면 링크 복사"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></button>
     </div>
     <span class="topbar-meta" id="topMeta">Jira 기준 —</span>
@@ -65,7 +66,7 @@
   <div class="content-wrap" id="contentWrap">
     <div class="dashboard-loading-shell" id="dashboardLoading">
       <div class="dashboard-loading-card">
-        <div class="dashboard-loading-head"><span class="dashboard-loading-dot"></span><span>ID Jira 티켓 현황</span></div>
+        <div class="dashboard-loading-head"><span class="dashboard-loading-dot"></span><span>IT/B2B Jira 티켓 현황</span></div>
         <div class="dashboard-loading-sub">tickets.json을 불러오는 중입니다</div>
         <div class="dashboard-loading-bar"><span></span></div>
       </div>
@@ -77,6 +78,15 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script>var __BUILD_V = '0.1.3';</script>
-<script src="app.js?v=0.1.3"></script>
+<script>
+var __BUILD_V = '0.1.3';
+// id/app.js 공유 — 보드 문구만 바꾼다
+window.DASH_CONFIG = {
+  board: 'it-b2b',
+  logoText: 'IT/B2B Dashboard', logoSub: 'Jira follow-up · IT B2B',
+  navAbbr: 'IT', title: 'IT/B2B 업무 현황', eyebrow: 'Jira follow-up · IT B2B', heading: 'IT/B2B 업무 진행 현황',
+  subject: 'IT B2B 티켓', docTitle: 'LG IT/B2B Dashboard'
+};
+</script>
+<script src="../id/app.js?v=0.1.3"></script>
 </body></html>

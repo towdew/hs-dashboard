@@ -2,6 +2,14 @@
 // ID Dashboard — data/tickets.json(export_id_tickets.py 산출물)을 읽어 사이드바 탭(=티켓)과 본문을 그린다.
 // /it 와 같은 chrome. 데이터는 정적 파일이므로 Jira 연결은 없다.
 
+// 보드별 문구 — it-b2b/index.html 이 window.DASH_CONFIG 로 덮어쓴다(같은 app.js·style.css 공유).
+var CFG = Object.assign({
+  board: 'id',
+  logoText: 'ID Dashboard', logoSub: 'Jira follow-up · ID 사업부',
+  navAbbr: 'ID', title: 'ID 업무 현황', eyebrow: 'Jira follow-up · ID', heading: 'ID 업무 진행 현황',
+  subject: 'ID 사업부 티켓', docTitle: 'LG ID Dashboard', dataPath: './data/tickets.json'
+}, window.DASH_CONFIG || {});
+
 var DATA = null;              // tickets.json 전체
 var currentKey = 'overview';  // 'overview' | 티켓 키
 var stageFilter = '';         // Overview 단계 칩
@@ -68,7 +76,7 @@ function findTicket(key) {
 
 // ── 사이드바 ─────────────────────────────────────────────
 function navSectionCollapsed(id) {
-  try { return localStorage.getItem('id-nav-collapsed:' + id) === '1'; } catch (e) { return false; }
+  try { return localStorage.getItem(CFG.board + '-nav-collapsed:' + id) === '1'; } catch (e) { return false; }
 }
 function toggleNavSection(id) {
   var label = document.querySelector('.sb-section-label-toggle[data-section="' + id + '"]');
@@ -78,7 +86,7 @@ function toggleNavSection(id) {
   body.classList.toggle('is-collapsed', collapsed);
   label.classList.toggle('is-collapsed', collapsed);
   label.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
-  try { localStorage.setItem('id-nav-collapsed:' + id, collapsed ? '1' : '0'); } catch (e) { /* ignore */ }
+  try { localStorage.setItem(CFG.board + '-nav-collapsed:' + id, collapsed ? '1' : '0'); } catch (e) { /* ignore */ }
 }
 
 function renderSidebar() {
@@ -87,8 +95,8 @@ function renderSidebar() {
   all.forEach(function (t) { groups[groupOf(t)].push(t); });
   var html = [];
   html.push('<div class="sb-section-label">Overview</div>');
-  html.push('<div class="nav-item' + (currentKey === 'overview' ? ' active' : '') + '" data-key="overview" data-abbr="ID" onclick="switchTicket(this)" title="ID 업무 현황">' +
-    '<span class="ni-text">ID 업무 현황</span><span class="ni-badge ni-badge-muted" id="navTotalBadge">' + all.length + '</span></div>');
+  html.push('<div class="nav-item' + (currentKey === 'overview' ? ' active' : '') + '" data-key="overview" data-abbr="' + esc(CFG.navAbbr) + '" onclick="switchTicket(this)" title="' + esc(CFG.title) + '">' +
+    '<span class="ni-text">' + esc(CFG.title) + '</span><span class="ni-badge ni-badge-muted" id="navTotalBadge">' + all.length + '</span></div>');
 
   function section(label, id, list, collapsible) {
     if (!list.length) return;
@@ -115,14 +123,14 @@ function renderSidebar() {
   section('In Progress', 'in_progress', groups.in_progress, false);
   section('Planned', 'planned', groups.planned, true);
   section(DATA.doneDays ? 'Done · ' + DATA.doneDays + '일' : 'Done', 'done', groups.done, true);
-  if (!all.length) html.push('<div class="sb-empty">표시할 ID 티켓이 없습니다.</div>');
+  if (!all.length) html.push('<div class="sb-empty">표시할 티켓이 없습니다.</div>');
   $('ticketNavList').innerHTML = html.join('');
   applySearchToNav();
 }
 
 // 제목 접두 "[ID]", "ID)", "Medical)" 등은 사이드바에서는 노이즈 — 표시용으로만 뗀다.
 function shortTitle(title) {
-  return String(title || '').replace(/^\s*(\[[^\]]*\]\s*|ID사업부\s*|ID\s*\)\s*|Medical\s*\)\s*)+/i, '').trim() || title;
+  return String(title || '').replace(/^\s*(\[[^\]]*\]\s*|\(IT\s*B2B\)\s*|IT\s*B2B\s*\)\s*|ID사업부\s*|ID\s*\)\s*|Medical\s*\)\s*)+/i, '').trim() || title;
 }
 function stageShort(t) {
   return { '사전검토': '사전검토', '진행 중': '진행', '검토·승인': '승인대기', '응답 대기': '응답대기', '완료': '완료' }[stageOf(t)];
@@ -197,11 +205,11 @@ function applySearchToNav() {
 function renderContent() {
   var wrap = $('contentWrap');
   var t = currentKey === 'overview' ? null : findTicket(currentKey);
-  $('topTitle').textContent = t ? t.key + ' · ' + shortTitle(t.title) : 'ID 업무 현황';
+  $('topTitle').textContent = t ? t.key + ' · ' + shortTitle(t.title) : CFG.title;
   var jira = $('topJiraLink');
   if (t) { jira.href = t.url; jira.style.display = 'inline-flex'; } else { jira.style.display = 'none'; }
   wrap.innerHTML = t ? renderTicket(t) : renderOverview();
-  document.title = (t ? t.key + ' · ' : '') + 'LG ID Dashboard';
+  document.title = (t ? t.key + ' · ' : '') + CFG.docTitle;
 }
 
 function renderOverview() {
@@ -228,8 +236,8 @@ function renderOverview() {
 
   var h = [];
   h.push('<div class="card">');
-  h.push('<div class="ov-head"><div><div class="eyebrow">Jira follow-up · ID</div><div class="h1">ID 업무 진행 현황</div>' +
-    '<div class="sub">내가 담당·보고·관찰하는 ID 사업부 티켓 — 진행 중 전체' + (DATA.doneDays ? ' + 최근 ' + DATA.doneDays + '일 완료' : '') + '. Jira 기준 ' + esc(fmtDateTime(DATA.generatedAt)) + '</div></div>' +
+  h.push('<div class="ov-head"><div><div class="eyebrow">' + esc(CFG.eyebrow) + '</div><div class="h1">' + esc(CFG.heading) + '</div>' +
+    '<div class="sub">내가 담당·보고·관찰하는 ' + esc(CFG.subject) + ' — 진행 중 전체' + (DATA.doneDays ? ' + 최근 ' + DATA.doneDays + '일 완료' : '') + '. Jira 기준 ' + esc(fmtDateTime(DATA.generatedAt)) + '</div></div>' +
     '<div class="ov-total"><div class="ov-total-label">In Progress</div><div class="ov-total-num">' + openN + '</div></div></div>');
   h.push('<div class="kpi-row">' +
     kpi(review, '검토·승인 대기') + '<div class="kpi-div"></div>' +
@@ -317,15 +325,24 @@ function meta(label, value, small, raw) {
 function toggleSidebar() {
   var sb = $('sidebar');
   sb.classList.toggle('collapsed');
-  try { localStorage.setItem('id-sidebar-collapsed', sb.classList.contains('collapsed') ? '1' : '0'); } catch (e) { /* ignore */ }
+  try { localStorage.setItem(CFG.board + '-sidebar-collapsed', sb.classList.contains('collapsed') ? '1' : '0'); } catch (e) { /* ignore */ }
 }
 function openMobileSidebar() { $('sidebar').classList.add('mobile-open'); $('sbBackdrop').classList.add('show'); }
 function closeMobileSidebar() { $('sidebar').classList.remove('mobile-open'); $('sbBackdrop').classList.remove('show'); }
 
 // ── 초기화 ───────────────────────────────────────────────
+function applyConfigToChrome() {
+  var el;
+  if ((el = document.querySelector('.sb-logo-text'))) el.textContent = CFG.logoText;
+  if ((el = document.querySelector('.sb-logo-sub'))) el.textContent = CFG.logoSub;
+  if ((el = $('topTitle'))) el.textContent = CFG.title;
+  document.title = CFG.docTitle;
+}
+
 function init() {
-  try { if (localStorage.getItem('id-sidebar-collapsed') === '1') $('sidebar').classList.add('collapsed'); } catch (e) { /* ignore */ }
-  fetch('./data/tickets.json?v=' + Date.now(), { cache: 'no-store' })
+  applyConfigToChrome();
+  try { if (localStorage.getItem(CFG.board + '-sidebar-collapsed') === '1') $('sidebar').classList.add('collapsed'); } catch (e) { /* ignore */ }
+  fetch(CFG.dataPath + '?v=' + Date.now(), { cache: 'no-store' })
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (json) {
       DATA = json;
@@ -339,7 +356,7 @@ function init() {
     })
     .catch(function (e) {
       console.error('[id-dashboard] tickets.json 로드 실패', e);
-      $('contentWrap').innerHTML = '<div class="notice">티켓 데이터를 불러오지 못했습니다 (' + esc(e.message) + '). export_id_tickets.py 로 data/tickets.json 을 갱신했는지 확인하세요.</div>';
+      $('contentWrap').innerHTML = '<div class="notice">티켓 데이터를 불러오지 못했습니다 (' + esc(e.message) + '). export_id_tickets.py --board ' + esc(CFG.board) + ' 로 data/tickets.json 을 갱신했는지 확인하세요.</div>';
       $('ticketNavList').innerHTML = '<div class="sb-empty">데이터 없음</div>';
     });
 }
