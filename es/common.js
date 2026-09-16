@@ -192,7 +192,6 @@ let sidebarCollapsed = false;
 function toggleSidebar() {
   sidebarCollapsed = !sidebarCollapsed;
   document.getElementById('sidebar').classList.toggle('collapsed', sidebarCollapsed);
-  if (typeof hideCollapsedNavTooltip === 'function') hideCollapsedNavTooltip();
 }
 
 // ── MOBILE SIDEBAR ───────────────────────────────────────────
@@ -1679,16 +1678,21 @@ function renderContent() {
     const v = s[k] || 0;
     const cfg = SC[k];
     const sharePct = total > 0 ? Math.round(v/total*100) : 0;
-    // 로케일/국가 수 계산 (overall 또는 status 기준)
+    // Page 컬럼을 사용하는 시트에서는 Status 카드의 보조 단위도 Page 기준으로 표시합니다.
+    // Page 기준이 아닌 기존 시트는 기존 표시 규칙을 유지합니다.
+    const pageCountInfoForCard = getSheetPageCountInfo(d);
     const localeCount = d.items
       ? d.items.filter(x => (x.overall || x.status) === k).length
       : 0;
+    const statUnitInfo = pageCountInfoForCard.hasPages
+      ? (v ? `<span class="stat-locale-info">(${v.toLocaleString()} Pages)</span>` : '')
+      : (localeCount ? `<span class="stat-locale-info">(${localeCount}개국)</span>` : '');
     return `
     <div class="stat-new" style="--sc:${cfg.dot}" >
       <div class="stat-new-head">
         <span class="stat-new-dot" style="background:${cfg.dot}"></span>
         <span class="stat-new-label">${cfg.label}</span>
-        ${localeCount ? `<span class="stat-locale-info">(${localeCount}개국)</span>` : ''}
+        ${statUnitInfo}
         
       </div>
       <div class="stat-new-value-row">
