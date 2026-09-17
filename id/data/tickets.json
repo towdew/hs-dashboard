@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-17T07:07:34+00:00",
+  "generatedAt": "2026-09-17T08:07:51+00:00",
   "baseUrl": "https://lge-gmc.atlassian.net",
   "scope": "involved",
   "board": "id",
@@ -23,7 +23,25 @@
       "due": null,
       "stageSince": "2026-08-13T15:20:57.232+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1289",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 33,
+      "comments": [
+        {
+          "author": "조덕호/선임/MS B2B제품마케팅팀",
+          "created": "2026-09-17T10:48:14.942+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 차장님, 하기 PANEL 항목은 전체 삭제 부탁드리며 Aspect Ratio는 요청드린 것과 같이 반영 부탁드리겠습니다."
+        },
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-17T10:14:55.054+0900",
+          "text": "@조덕호/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n55MH5K의 경우 다른 스펙과는 달리 일부 스펙이 PANEL 하위에 위치해있습니다.\nMDMS 에 따른 스펙구성이 다른점이 있어 이부분 확인 부탁드립니다.\n\n감사합니다.\ncc @김영민/(협력사) 책임/B2B디지털채널팀 @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀@강경희/(협력사) 부장/D2C플랫폼개발팀"
+        },
+        {
+          "author": "조덕호/선임/MS B2B제품마케팅팀",
+          "created": "2026-09-17T09:26:13.763+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 차장님,\n55MH5K 스펙에 Resolution 다음 Aspect Ratio, 16:9가 빠져있습니다.\n\nSize[Inch] / Pixel Pitch / Resolution / Aspect Ratio\nBacklight Technology / Panel Type / Peak Brightness(Typ.)[cd/m²] / Brightness(Typ.)[cd/m²]\nContrast Ratio(Typ.) / Color Bit / Color Gamut(Typ.) / Response Time\nViewing Angle(CR≥10) / Surface Treatment\n요청 드린 스펙으로 다시 확인 부탁드립니다.\n\n감사합니다."
+        }
+      ]
     },
     {
       "key": "BTOBGLOBAL-1445",
@@ -42,7 +60,25 @@
       "due": null,
       "stageSince": "2026-09-16T11:06:36.462+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1445",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 5,
+      "comments": [
+        {
+          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
+          "created": "2026-09-17T09:19:15.677+0900",
+          "text": "Hello @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\nPlease proceed with the banner update as requested below:\n- Scope of Work:\n- Replace the existing 2D Liam banner with the new 3D Liam banner (Image replacement only).\n- Copy & CTA Links: Keep all existing text/copy and CTA links as-is (No changes to text or link URLs).\n- Content Matrix: Please note that there is no separate Content Matrix for this request since i…"
+        },
+        {
+          "author": "장현주/선임/MS B2B디지털이노베이션파트",
+          "created": "2026-09-16T15:24:25.226+0900",
+          "text": "@박나은/(협력사) 선임/B2B디지털채널팀 네 맞습니다 !!"
+        },
+        {
+          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
+          "created": "2026-09-16T14:28:02.670+0900",
+          "text": "@장현주/선임/MS B2B디지털이노베이션파트 선임님,\n\n확인 감사합니다.\n\n연결 링크, 배너 문구, 제품군 페이지 하단에 공통영역 내 문구, GNB배너 내 문구도 기존과 동일하게 유지하고\n이미지만 변경 원하시는게 맞을지만 확인 부탁드리겠습니다.\n\nCTA 링크: https://www.lgcommercialdisplay.com/\n\n감사합니다.\n박나은 드림\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박준상/(협력사) 차장/D2C플랫폼개발팀"
+        }
+      ]
     },
     {
       "key": "BTOBGLOBAL-1415",
@@ -61,7 +97,25 @@
       "due": null,
       "stageSince": "2026-09-11T17:14:58.842+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1415",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 14,
+      "comments": [
+        {
+          "author": "김정모/선임/MS B2B제품마케팅팀",
+          "created": "2026-09-17T09:47:11.459+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 SUSGLJR로 진행 부탁드립니다."
+        },
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-16T14:08:23.408+0900",
+          "text": "@김정모/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n주신 모델 코드로 입력시에 하기와 같이 메시지가 나와 등록되지 않습니다.\n\n혹시 다른 모델 코드는 없는지 여쭤봅니다.\n감사합니다.\n\ncc @김영민/(협력사) 책임/B2B디지털채널팀   @서동한/(협력사) 책임/B2B디지털채널팀  @김나영/(협력사) 책임/B2B디지털채널팀  @박나은/(협력사) 선임/B2B디지털채널팀  @강경희/(협력사) 부장/D2C플랫폼개발팀"
+        },
+        {
+          "author": "김정모/선임/MS B2B제품마케팅팀",
+          "created": "2026-09-16T14:00:11.457+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀  상품기획으로부터 하기의 모델 라인업으로 진행해 달라고 의견 받았는데 조회가 안되시나요?"
+        }
+      ]
     },
     {
       "key": "BTOBGLOBAL-1373",
@@ -80,7 +134,25 @@
       "due": null,
       "stageSince": "2026-09-07T09:24:44.803+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1373",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 42,
+      "comments": [
+        {
+          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
+          "created": "2026-09-17T09:03:02.332+0900",
+          "text": "Hello@JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\n\nThank you for the work.\nI will go ahead and check.\n\nAre you still working on discontinuing the products for D2C countries?\n\nBest Regards,\nMarina\ncc @박준상/(협력사) 차장/D2C플랫폼개발팀@서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀"
+        },
+        {
+          "author": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
+          "created": "2026-09-16T22:56:55.236+0900",
+          "text": "Dear @박나은/(협력사) 선임/B2B디지털채널팀 ,\nB2B AEM site completed.\nAs there are too many pages, you can view the details on PTT.\nCountries in scope for this request:\n- Already operating B2B:\n- Global (Global) No need\n- India (IN) WR2333510JW\n- Australia (AU) WR2333511JW\n- Saudi Arabia (SA, SA_EN) WR2336013JW , WR2336014JW\n- Germany (DE)WR2333480JW (Model: lscb018-gk , lscb018-rk，43uh5n-m-bulk，43um662h4lc-bulk…"
+        },
+        {
+          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-09-15T18:29:06.622+0900",
+          "text": "Dear @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\n'Admin modification' is complete, and 'Save to PROD' is working normally.\nPlease refer to the screenshot.\n- 55VL5F-A\n- 32LT340CBUB\nThank you.\ncc @조승은/(협력사) 부장/B2B디지털채널팀 @신은아/(협력사) 선임/B2B디지털채널팀 @박호경/(협력사) 책임/B2B디지털채널팀 @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀 @박준상/(협력사) 차장/D2C플랫폼개발팀"
+        }
+      ]
     },
     {
       "key": "BTOBGLOBAL-1441",
@@ -99,7 +171,20 @@
       "due": null,
       "stageSince": "2026-09-15T15:13:17.940+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1441",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 2,
+      "comments": [
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-15T15:13:14.056+0900",
+          "text": "Dear @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\nPlease review the link below and create the page.\nhttps://author-p155411-e1648866.adobeaemcloud.com/ui#/aem/assets.html/content/dam/channelbtb/lgcom/global/ms/id/common/2026/casestudy/portland-international-airport\nThank you.\ncc @김영민/(협력사) 책임/B2B디지털채널팀 @서동한/(협력사) 책임/B2B디지털채널팀  @김나연/(협력사) 사원/HS디지털컨텐츠팀  @박나은/(협력사) 선임/B2B디지털채널팀  @강경희/(협력사) 부장/D2C플랫폼개발팀"
+        },
+        {
+          "author": "박성운/선임/MS B2B마케팅전략팀",
+          "created": "2026-09-15T14:48:26.902+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 @박나은/(협력사) 선임/B2B디지털채널팀 @김시용/책임/MS B2B제품마케팅팀\n박준상 차장님, 박나은 선임님 수고 많으십니다.\nDAM이관이 많이 지연되어, LG.com  B2B 업로드 빠른 진행 부탁드리겠습니다..!"
+        }
+      ]
     },
     {
       "key": "BTOBGLOBAL-1231",
@@ -118,7 +203,25 @@
       "due": null,
       "stageSince": "2026-08-26T10:35:28.052+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1231",
-      "descriptionExcerpt": "저희 commercial display 하단 SNS 컴포넌트를 수동 말고 자동으로 바꿀 수 있을까요 ?\n원래 자동 컴포넌트인데 저희가 수동으로 요청해서 현재 수동 컴포넌트로 들어간 것으로 기억합니다 ㅠㅠ\n자동으로 바꿔주시면 감사하겠습니닷.\n채널 | URL\nYouTube | www.youtube.com/@LGCommercialDisplayGlobal\nLinkedIn | www.linkedin.com/company/lg-commercial-display-global\nFacebook | www.facebook.com/LGCommercialDisplayGlobal"
+      "descriptionExcerpt": "저희 commercial display 하단 SNS 컴포넌트를 수동 말고 자동으로 바꿀 수 있을까요 ?\n원래 자동 컴포넌트인데 저희가 수동으로 요청해서 현재 수동 컴포넌트로 들어간 것으로 기억합니다 ㅠㅠ\n자동으로 바꿔주시면 감사하겠습니닷.\n채널 | URL\nYouTube | www.youtube.com/@LGCommercialDisplayGlobal\nLinkedIn | www.linkedin.com/company/lg-commercial-display-global\nFacebook | www.facebook.com/LGCommercialDisplayGlobal",
+      "commentCount": 37,
+      "comments": [
+        {
+          "author": "장현주/선임/MS B2B디지털이노베이션파트",
+          "created": "2026-09-14T17:28:45.565+0900",
+          "text": "@김영민/(협력사) 책임/B2B디지털채널팀 회신 대기중입니다."
+        },
+        {
+          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-09-14T17:23:47.875+0900",
+          "text": "@장현주/선임/MS B2B디지털이노베이션파트 선임님, 안녕하세요.\nToken 생성 업체에서 확인된 내용이 있는지 문의드립니다.\n고맙습니다.\ncc @조승은/(협력사) 부장/B2B디지털채널팀 @신은아/(협력사) 선임/B2B디지털채널팀"
+        },
+        {
+          "author": "장현주/선임/MS B2B디지털이노베이션파트",
+          "created": "2026-09-10T09:45:43.792+0900",
+          "text": "@신은아/(협력사) 선임/B2B디지털채널팀 안녕하세요 가이드 감사드리며 저희에게 아예 advertising API가 없어서 링크드인측에 확인 요청했습니다.\n답변 대기하고 있습니다.~"
+        }
+      ]
     },
     {
       "key": "LGCOMPE-1541",
@@ -137,7 +240,15 @@
       "due": null,
       "stageSince": "2026-09-14T17:08:17.715+0900",
       "url": "https://lge-gmc.atlassian.net/browse/LGCOMPE-1541",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 1,
+      "comments": [
+        {
+          "author": "김정민/(협력사) 과장/D2C플랫폼운영팀",
+          "created": "2026-09-10T16:40:19.871+0900",
+          "text": "Dear @Ignacio Castro/LGEPR Marketing , adding new menu in GNB needs HQ approval.\nDear @박준상/(협력사) 차장/D2C플랫폼개발팀 , Could you check this with the HQ? Many thanks."
+        }
+      ]
     },
     {
       "key": "BTOBGLOBAL-1372",
@@ -156,7 +267,25 @@
       "due": null,
       "stageSince": "2026-09-14T11:02:26.431+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1372",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 11,
+      "comments": [
+        {
+          "author": "박성운/선임/MS B2B마케팅전략팀",
+          "created": "2026-09-14T10:41:49.176+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 @박나은/(협력사) 선임/B2B디지털채널팀\n감사합니다. LG.COM 라이브 해주신 것 확인하였고, 문제 없습니다. 종료 처리 부탁드리겠습니다."
+        },
+        {
+          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
+          "created": "2026-09-14T09:42:59.951+0900",
+          "text": "안녕하세요 @박성운/선임/MS B2B마케팅전략팀 선임님,\n\n아래 준상 차장님의 코멘트 내 라이브 페이지 링크 확인 후 컨펌 주시면 감사하겠습니다.\n\n감사합니다.\n박나은 드림\ncc@서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박준상/(협력사) 차장/D2C플랫폼개발팀"
+        },
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-10T22:55:55.768+0900",
+          "text": "@박성운/선임/MS B2B마케팅전략팀 선임님, 안녕하세요.\nhttps://www.lg.com/global/business/insights/commercial-display/case-study/rose-salgado-elementary-usa/  페이지 라이브 되었습니다.\n하기 영역의 발행 일자 한번 더 체크 부탁드립니다.\n\n감사합니다.\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀@강경희/(협력사) 부장/D2C플랫폼개발팀"
+        }
+      ]
     },
     {
       "key": "BTOBGLOBAL-1263",
@@ -175,7 +304,25 @@
       "due": null,
       "stageSince": "2026-09-11T13:47:48.399+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1263",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 30,
+      "comments": [
+        {
+          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
+          "created": "2026-09-11T13:24:18.312+0900",
+          "text": "안녕하세요 @김영민/(협력사) 책임/B2B디지털채널팀 책임님,\n김시용 책임님 요청으로 해당 티켓 종료 부탁드리겠습니다.\n\n@김시용/책임/MS B2B제품마케팅팀 책임님,\n팀즈로 말씀 드린 것과 같이 추후 다시 작업 필요하실 때 새 티켓으로 요청 부탁드리겠습니다.\n\n감사합니다.\n박나은 드림\ncc @박준상/(협력사) 차장/D2C플랫폼개발팀 @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀"
+        },
+        {
+          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-09-09T13:32:49.673+0900",
+          "text": "- 9/9 : @김시용/책임/MS B2B제품마케팅팀 책임님의 피드백 대기 중"
+        },
+        {
+          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
+          "created": "2026-09-02T09:43:55.007+0900",
+          "text": "- 9/2 : @김시용/책임/MS B2B제품마케팅팀 책임님 PDR=Y → N 변경 관련 유관부서 확인 후 회신 예정으로 피드백 대기 중\n\ncc @박준상/(협력사) 차장/D2C플랫폼개발팀 @김영민/(협력사) 책임/B2B디지털채널팀"
+        }
+      ]
     },
     {
       "key": "LGCOMMON-30097",
@@ -194,7 +341,25 @@
       "due": null,
       "stageSince": "2026-09-08T15:47:44.966+0900",
       "url": "https://lge-gmc.atlassian.net/browse/LGCOMMON-30097",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 21,
+      "comments": [
+        {
+          "author": "이지선/(협력사) 선임/B2B디지털채널팀",
+          "created": "2026-09-08T15:43:45.148+0900",
+          "text": "@이광원/(협력사) 과장/D2C플랫폼운영팀\n안녕하세요 과장님!\nTask 상태 업데이트 완료했습니다.\n감사합니다 :slight_smile:"
+        },
+        {
+          "author": "이광원/(협력사) 과장/D2C플랫폼운영팀",
+          "created": "2026-09-08T14:59:13.042+0900",
+          "text": "안녕하세요 @이지선/(협력사) 선임/B2B디지털채널팀\n티켓 종료를 위해 sub task 종료 요청 드립니다.\n감사합니다."
+        },
+        {
+          "author": "김재원/(협력사) 과장/B2B디지털채널팀",
+          "created": "2026-09-02T18:10:59.842+0900",
+          "text": "@장현주/선임/MS B2B디지털이노베이션파트\nAE 페이지는 각 페이지가 아래와 같이 canonical link가 설정되어, 페이지 url과 동일한 점 확인 완료했습니다.\nhttps://www.lg.com/ae/business/digital-signage/lg-55ut801c0la\nhttps://www.lg.com/ae/business/digital-signage/lg-86ut801c0lb\nhttps://www.lg.com/ae/business/digital-signage/lg-65ut801c0la"
+        }
+      ]
     },
     {
       "key": "BTOBGLOBAL-1271",
@@ -213,7 +378,25 @@
       "due": null,
       "stageSince": "2026-09-03T10:49:31.708+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1271",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 7,
+      "comments": [
+        {
+          "author": "전다은/선임/MS B2B제품마케팅팀",
+          "created": "2026-09-03T10:22:05.347+0900",
+          "text": "@김영민/(협력사) 책임/B2B디지털채널팀\n수정 확인하였습니다. 티켓 종료 부탁드립니다. :slight_smile:"
+        },
+        {
+          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-09-02T09:06:24.512+0900",
+          "text": "@전다은/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n상기 코멘트 내 페이지 검토 부탁드리며, 이상 없는 경우 코멘트 남겨주시면 티켓 종료하겠습니다.\n고맙습니다.\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀 @박준상/(협력사) 차장/D2C플랫폼개발팀"
+        },
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-01T17:52:55.435+0900",
+          "text": "@전다은/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n하기 모델 수정 반영 되었습니다.\n해당 모델 (총 5개) - 55VSH7J / 55VSM5J / 55VL5PJ / 49VL5PJ / 55VM5R\nhttps://www.lg.com/global/business/commercial-display/digital-signage-after/video-wall/55vsh7j/\nhttps://www.lg.com/global/business/commercial-display/digital-signage-after/video-wall/55vsm5j/\nhttps://www.lg.com/global/business/commercial-display/digital-signage-after/video-wall/55vl5pj…"
+        }
+      ]
     },
     {
       "key": "BTOBGLOBAL-1343",
@@ -232,7 +415,25 @@
       "due": null,
       "stageSince": "2026-09-02T12:55:44.270+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1343",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 8,
+      "comments": [
+        {
+          "author": "조덕호/선임/MS B2B제품마케팅팀",
+          "created": "2026-09-02T10:32:22.388+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 차장님, 확인 완료 하였습니다. 티켓 종료 부탁드리겠습니다."
+        },
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-01T17:12:02.542+0900",
+          "text": "@조덕호/선임/MS B2B제품마케팅팀 선임님 안녕하세요.\n하기 페이지 스펙 수정되어 전달드립니다.\nPDP URL (Global / Business)\n- 17HQ901G — https://www.lg.com/global/business/monitors-pcs/medical-displays/digital-x-ray-detectors/17hq901g/\n- 14HQ901G — https://www.lg.com/global/business/monitors-pcs/medical-displays/digital-x-ray-detectors/14hq901g/\n- 10HQ701G — https://www.lg.com/global/business/monitors-pcs/medical-displays/digital-x-ray-d…"
+        },
+        {
+          "author": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
+          "created": "2026-09-01T10:47:32.413+0900",
+          "text": "Dear@박준상/(협력사) 차장/D2C플랫폼개발팀 ,\nspec:“Current Cycle Time (Wired / Wireless),” were not found in the PIM."
+        }
+      ]
     },
     {
       "key": "BTOBGLOBAL-1314",
@@ -251,7 +452,25 @@
       "due": null,
       "stageSince": "2026-09-02T12:32:10.898+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1314",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 30,
+      "comments": [
+        {
+          "author": "김정모/선임/MS B2B제품마케팅팀",
+          "created": "2026-09-02T11:26:53.862+0900",
+          "text": "@김영민/(협력사) 책임/B2B디지털채널팀 이상 없습니다. 감사합니다."
+        },
+        {
+          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-09-02T09:31:59.981+0900",
+          "text": "@김정모/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n아래 코멘트 확인 부탁드리며, 이상 없는 경우 코멘트 남겨주시면 티켓 종료하겠습니다.\n- https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1314?focusedCommentId=1649902\n고맙습니다.\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀 @박준상/(협력사) 차장/D2C플랫폼개발팀"
+        },
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-08-31T14:25:07.373+0900",
+          "text": "@김정모/선임/MS B2B제품마케팅팀 선임님, 페이지 라이브 되었습니다.\n일부 페이지 22 인치 표기 안되는것은 시간이 지나면 반영될 것으로 보입니다.\n보통 2시간에서 길게는 다음날까지 필요할 수 있습니다.\n\n확인 부탁드립니다.\n감사합니다.\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀@강경희/(협력사) 부장/D2C플랫폼개발팀"
+        }
+      ]
     },
     {
       "key": "BTOBGLOBAL-1297",
@@ -270,7 +489,25 @@
       "due": null,
       "stageSince": "2026-09-02T10:58:11.644+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1297",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 25,
+      "comments": [
+        {
+          "author": "조덕호/선임/MS B2B제품마케팅팀",
+          "created": "2026-09-02T10:30:49.498+0900",
+          "text": "@김영민/(협력사) 책임/B2B디지털채널팀 책임님, 확인하였습니다. 티켓 종료 부탁드리겠습니다."
+        },
+        {
+          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-09-02T09:13:23.164+0900",
+          "text": "@조덕호/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n아래 코멘트 확인 부탁드리며, 이상 없는 경우 코멘트 남겨주시면 티켓 종료하겠습니다.\n- https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1297?focusedCommentId=1652506\n고맙습니다.\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀 @박준상/(협력사) 차장/D2C플랫폼개발팀"
+        },
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-01T17:08:49.104+0900",
+          "text": "@조덕호/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n필터 확인부탁드립니다.\n\n추가 요청사항 있으시면 말씀부탁드립니다.\n감사합니다.\ncc @김영민/(협력사) 책임/B2B디지털채널팀 @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀 @강경희/(협력사) 부장/D2C플랫폼개발팀"
+        }
+      ]
     },
     {
       "key": "LGCOMPE-1475",
@@ -289,7 +526,25 @@
       "due": null,
       "stageSince": "2026-09-01T09:08:51.814+0900",
       "url": "https://lge-gmc.atlassian.net/browse/LGCOMPE-1475",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 19,
+      "comments": [
+        {
+          "author": "김정민/(협력사) 과장/D2C플랫폼운영팀",
+          "created": "2026-08-31T08:51:26.380+0900",
+          "text": "Dear @Ignacio Castro/LGEPR Marketing , as @박준상/(협력사) 차장/D2C플랫폼개발팀 mentioned above; HQ IT dept declined the modification. I will close the CSR. Please let us know if you need us for further assistance; Thank you."
+        },
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-08-27T17:10:09.065+0900",
+          "text": "Dear@ERICPELL LATAMD2CTEAM/LATAM LATAM D2C TEAM\nUnfortunately, HQ has informed us that this request cannot be supported at this time.\nThey advised that the IT menu update under the Global Request should be handled first, including the addition of UltraGear evo.\nHQ also suggested that it would be better to review and reorganize the Level 1 menu structure for ID products first.\nThank you.\nCC@김정민/(협력…"
+        },
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-08-27T10:11:21.155+0900",
+          "text": "Dear@ERICPELL LATAMD2CTEAM/LATAM LATAM D2C TEAM\nThe PIC has not replied yet, so I have sent a reminder.\nI will share an update as soon as I receive a response.\nThank you.\nCC@김정민/(협력사) 과장/D2C플랫폼운영팀 @Ignacio Castro/LGEPR Marketing"
+        }
+      ]
     },
     {
       "key": "BTOBGLOBAL-1262",
@@ -308,7 +563,25 @@
       "due": null,
       "stageSince": "2026-08-21T10:31:41.239+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1262",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 22,
+      "comments": [
+        {
+          "author": "김시용/책임/MS B2B제품마케팅팀",
+          "created": "2026-08-31T17:12:24.618+0900",
+          "text": "@박성운/선임/MS B2B마케팅전략팀"
+        },
+        {
+          "author": "김시용/책임/MS B2B제품마케팅팀",
+          "created": "2026-08-21T10:03:19.355+0900",
+          "text": "@김영민/(협력사) 책임/B2B디지털채널팀 yes. thanks"
+        },
+        {
+          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-08-21T09:59:07.464+0900",
+          "text": "Dear @김시용/책임/MS B2B제품마케팅팀\nCould I close this ticket?"
+        }
+      ]
     },
     {
       "key": "BTOBGLOBAL-1146",
@@ -327,7 +600,25 @@
       "due": null,
       "stageSince": "2026-08-26T12:54:22.932+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1146",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 43,
+      "comments": [
+        {
+          "author": "김상모/책임/MS B2B디지털이노베이션파트",
+          "created": "2026-08-26T16:22:12.609+0900",
+          "text": "@김영민/(협력사) 책임/B2B디지털채널팀 네, 알겠습니다. 수고 많으셨습니다."
+        },
+        {
+          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-08-26T12:54:11.949+0900",
+          "text": "@김상모/책임/MS B2B디지털이노베이션파트 책임님, 안녕하세요.\nLive 후 특이 사항 없는 것으로 이해하고 티켓 종료하겠습니다.\n- https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1146?focusedCommentId=1641921\n고맙습니다.\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀"
+        },
+        {
+          "author": "김상모/책임/MS B2B디지털이노베이션파트",
+          "created": "2026-08-26T11:29:57.039+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 네, 확인하였습니다. 정말 고생 많으셨습니다. 감사합니다."
+        }
+      ]
     },
     {
       "key": "BTOBGLOBAL-1329",
@@ -346,7 +637,25 @@
       "due": null,
       "stageSince": "2026-08-25T08:20:05.559+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1329",
-      "descriptionExcerpt": ""
+      "descriptionExcerpt": "",
+      "commentCount": 7,
+      "comments": [
+        {
+          "author": "김정모/선임/MS B2B제품마케팅팀",
+          "created": "2026-08-25T08:13:54.139+0900",
+          "text": "@김영민/(협력사) 책임/B2B디지털채널팀 네 종료하셔도 됩니다 감사합니다."
+        },
+        {
+          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-08-24T21:40:17.602+0900",
+          "text": "@김정모/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n티켓 종료해도 되는지 확인 부탁드립니다.\n고맙습니다.\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀 @박준상/(협력사) 차장/D2C플랫폼개발팀"
+        },
+        {
+          "author": "김정모/선임/MS B2B제품마케팅팀",
+          "created": "2026-08-24T16:09:31.708+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 확인 완료 했습니다. 감사합니다."
+        }
+      ]
     }
   ]
 }
