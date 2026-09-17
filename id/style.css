@@ -178,6 +178,26 @@ tbody tr.row-link:hover{background:#FAFBFD}
 .link{color:#A50034;text-decoration:none;font-weight:700}
 .link:hover{text-decoration:underline}
 
+/* Comments — 티켓 탭 타임라인 */
+.cm-list{list-style:none;margin:0;padding:0;position:relative}
+.cm-list::before{content:'';position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:#EEF0F5}
+.cm-item{position:relative;padding:0 0 14px 22px}
+.cm-item:last-child{padding-bottom:0}
+.cm-item::before{content:'';position:absolute;left:0;top:6px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid #CBD2E1}
+.cm-item.is-latest::before{border-color:#A50034;background:#A50034}
+.cm-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px}
+.cm-author{font-size:12.5px;font-weight:800;color:#1A1D2E}
+.cm-when{font-size:11px;color:#9BA3BF;font-weight:500}
+.cm-latest{font-size:9px;font-weight:800;letter-spacing:.04em;padding:2px 6px;border-radius:3px;background:#FFF0F2;color:#A50034}
+.cm-body{white-space:pre-wrap;font-size:12.5px;line-height:1.65;color:#334155;word-break:break-word;background:#FAFBFD;border:1px solid #F0F1F8;border-radius:10px;padding:10px 12px}
+.cm-item.is-latest .cm-body{background:#fff;border-color:#E8EAF2}
+/* Overview 테이블 '마지막 코멘트' 열 */
+.col-cm{min-width:220px;max-width:320px}
+.cm-cell-head{display:flex;align-items:center;gap:2px;font-size:12px;color:#1A1D2E;white-space:nowrap}
+.cm-cell-head b{font-weight:700}
+.cm-count{margin-left:auto;font-size:9.5px;font-weight:700;color:#9BA3BF;background:#F5F6FA;border-radius:3px;padding:1px 5px}
+.cm-cell-body{font-size:11.5px;color:#64748B;margin-top:3px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:300px}
+
 /* Loading / toast */
 .dashboard-loading-shell{display:flex;align-items:center;justify-content:center;min-height:50vh}
 .dashboard-loading-card{background:#fff;border:1px solid #E8EAF2;border-radius:14px;padding:24px 28px;min-width:280px;text-align:center}
@@ -218,4 +238,6 @@ tbody tr.row-link:hover{background:#FAFBFD}
   .kpi b{font-size:22px}
   .tk-title{font-size:17px}
   thead th:nth-child(4),tbody td:nth-child(4){display:none}
+  .col-cm{display:none}
+  .cm-item{padding-left:20px}
 }
