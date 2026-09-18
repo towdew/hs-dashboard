@@ -1,11 +1,85 @@
 {
-  "generatedAt": "2026-09-18T05:42:58+00:00",
+  "generatedAt": "2026-09-18T06:40:38+00:00",
   "baseUrl": "https://lge-gmc.atlassian.net",
   "scope": "involved",
   "board": "id",
   "doneDays": 30,
   "count": 18,
   "tickets": [
+    {
+      "key": "BTOBGLOBAL-1441",
+      "title": "[Case Study Creation] Portland International Airport Case Study Creation_LG.com/global",
+      "status": "IN PROGRESS",
+      "statusCategory": "indeterminate",
+      "assignee": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
+      "reporter": "박성운/선임/MS B2B마케팅전략팀",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
+      "created": "2026-09-15T14:44:14.506+0900",
+      "resolved": null,
+      "updated": "2026-09-18T15:15:06.379+0900",
+      "due": null,
+      "stageSince": "2026-09-15T15:13:17.940+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1441",
+      "descriptionExcerpt": "",
+      "commentCount": 3,
+      "comments": [
+        {
+          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
+          "created": "2026-09-18T15:15:06.306+0900",
+          "text": "Hello @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\nCould you please share the progress and ETA?\nBest Regards,\nMarina\ncc @박준상/(협력사) 차장/D2C플랫폼개발팀 @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀"
+        },
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-15T15:13:14.056+0900",
+          "text": "Dear @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\nPlease review the link below and create the page.\nhttps://author-p155411-e1648866.adobeaemcloud.com/ui#/aem/assets.html/content/dam/channelbtb/lgcom/global/ms/id/common/2026/casestudy/portland-international-airport\nThank you.\ncc @김영민/(협력사) 책임/B2B디지털채널팀 @서동한/(협력사) 책임/B2B디지털채널팀  @김나연/(협력사) 사원/HS디지털컨텐츠팀  @박나은/(협력사) 선임/B2B디지털채널팀  @강경희/(협력사) 부장/D2C플랫폼개발팀"
+        },
+        {
+          "author": "박성운/선임/MS B2B마케팅전략팀",
+          "created": "2026-09-15T14:48:26.902+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 @박나은/(협력사) 선임/B2B디지털채널팀 @김시용/책임/MS B2B제품마케팅팀\n박준상 차장님, 박나은 선임님 수고 많으십니다.\nDAM이관이 많이 지연되어, LG.com  B2B 업로드 빠른 진행 부탁드리겠습니다..!"
+        }
+      ]
+    },
+    {
+      "key": "BTOBGLOBAL-1415",
+      "title": "ID)UH5Q-G PDP PLP PAGE 신규 제작 43\" 49\" 55\" 65\" 75\" 86\"",
+      "status": "IN PROGRESS",
+      "statusCategory": "indeterminate",
+      "assignee": "김정모/선임/MS B2B제품마케팅팀",
+      "reporter": "김정모/선임/MS B2B제품마케팅팀",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
+      "created": "2026-09-10T17:32:08.675+0900",
+      "resolved": null,
+      "updated": "2026-09-18T14:40:39.219+0900",
+      "due": null,
+      "stageSince": "2026-09-11T17:14:58.842+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1415",
+      "descriptionExcerpt": "",
+      "commentCount": 15,
+      "comments": [
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-18T14:40:22.587+0900",
+          "text": "@김정모/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n확인해 보니 49는 해당 suffix가 없는 것으로 확인되었습니다.\n번거로우시겠지만, 49만 49UH5Q-GQ.SUSCLJR로 진행하면 될지 확인 부탁드립니다.\n\n43UH5Q-GQ.SUSGLJR\n49UH5Q-GQ.SUSCLJR\n55UH5Q-GQ.SUSGLJR\n65UH5Q-GQ.SUSGLJR\n75UH5Q-GQ.SUSGLJR\n86UH5Q-GQ.SUSGLJR"
+        },
+        {
+          "author": "김정모/선임/MS B2B제품마케팅팀",
+          "created": "2026-09-17T09:47:11.459+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 SUSGLJR로 진행 부탁드립니다."
+        },
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-16T14:08:23.408+0900",
+          "text": "@김정모/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n주신 모델 코드로 입력시에 하기와 같이 메시지가 나와 등록되지 않습니다.\n\n혹시 다른 모델 코드는 없는지 여쭤봅니다.\n감사합니다.\n\ncc @김영민/(협력사) 책임/B2B디지털채널팀   @서동한/(협력사) 책임/B2B디지털채널팀  @김나영/(협력사) 책임/B2B디지털채널팀  @박나은/(협력사) 선임/B2B디지털채널팀  @강경희/(협력사) 부장/D2C플랫폼개발팀"
+        }
+      ]
+    },
     {
       "key": "BTOBGLOBAL-1373",
       "title": "[ID] Discontinue for PDPs ",
@@ -188,75 +262,6 @@
           "author": "조덕호/선임/MS B2B제품마케팅팀",
           "created": "2026-09-17T09:26:13.763+0900",
           "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 차장님,\n55MH5K 스펙에 Resolution 다음 Aspect Ratio, 16:9가 빠져있습니다.\n\nSize[Inch] / Pixel Pitch / Resolution / Aspect Ratio\nBacklight Technology / Panel Type / Peak Brightness(Typ.)[cd/m²] / Brightness(Typ.)[cd/m²]\nContrast Ratio(Typ.) / Color Bit / Color Gamut(Typ.) / Response Time\nViewing Angle(CR≥10) / Surface Treatment\n요청 드린 스펙으로 다시 확인 부탁드립니다.\n\n감사합니다."
-        }
-      ]
-    },
-    {
-      "key": "BTOBGLOBAL-1415",
-      "title": "ID)UH5Q-G PDP PLP PAGE 신규 제작 43\" 49\" 55\" 65\" 75\" 86\"",
-      "status": "IN PROGRESS",
-      "statusCategory": "indeterminate",
-      "assignee": "김정모/선임/MS B2B제품마케팅팀",
-      "reporter": "김정모/선임/MS B2B제품마케팅팀",
-      "priority": "Medium",
-      "issuetype": "Contents",
-      "project": "BTOBGLOBAL",
-      "parent": null,
-      "created": "2026-09-10T17:32:08.675+0900",
-      "resolved": null,
-      "updated": "2026-09-18T14:40:39.219+0900",
-      "due": null,
-      "stageSince": "2026-09-11T17:14:58.842+0900",
-      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1415",
-      "descriptionExcerpt": "",
-      "commentCount": 15,
-      "comments": [
-        {
-          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
-          "created": "2026-09-18T14:40:22.587+0900",
-          "text": "@김정모/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n확인해 보니 49는 해당 suffix가 없는 것으로 확인되었습니다.\n번거로우시겠지만, 49만 49UH5Q-GQ.SUSCLJR로 진행하면 될지 확인 부탁드립니다.\n\n43UH5Q-GQ.SUSGLJR\n49UH5Q-GQ.SUSCLJR\n55UH5Q-GQ.SUSGLJR\n65UH5Q-GQ.SUSGLJR\n75UH5Q-GQ.SUSGLJR\n86UH5Q-GQ.SUSGLJR"
-        },
-        {
-          "author": "김정모/선임/MS B2B제품마케팅팀",
-          "created": "2026-09-17T09:47:11.459+0900",
-          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 SUSGLJR로 진행 부탁드립니다."
-        },
-        {
-          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
-          "created": "2026-09-16T14:08:23.408+0900",
-          "text": "@김정모/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n주신 모델 코드로 입력시에 하기와 같이 메시지가 나와 등록되지 않습니다.\n\n혹시 다른 모델 코드는 없는지 여쭤봅니다.\n감사합니다.\n\ncc @김영민/(협력사) 책임/B2B디지털채널팀   @서동한/(협력사) 책임/B2B디지털채널팀  @김나영/(협력사) 책임/B2B디지털채널팀  @박나은/(협력사) 선임/B2B디지털채널팀  @강경희/(협력사) 부장/D2C플랫폼개발팀"
-        }
-      ]
-    },
-    {
-      "key": "BTOBGLOBAL-1441",
-      "title": "[Case Study Creation] Portland International Airport Case Study Creation_LG.com/global",
-      "status": "IN PROGRESS",
-      "statusCategory": "indeterminate",
-      "assignee": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
-      "reporter": "박성운/선임/MS B2B마케팅전략팀",
-      "priority": "Medium",
-      "issuetype": "Contents",
-      "project": "BTOBGLOBAL",
-      "parent": null,
-      "created": "2026-09-15T14:44:14.506+0900",
-      "resolved": null,
-      "updated": "2026-09-16T09:32:17.396+0900",
-      "due": null,
-      "stageSince": "2026-09-15T15:13:17.940+0900",
-      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1441",
-      "descriptionExcerpt": "",
-      "commentCount": 2,
-      "comments": [
-        {
-          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
-          "created": "2026-09-15T15:13:14.056+0900",
-          "text": "Dear @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\nPlease review the link below and create the page.\nhttps://author-p155411-e1648866.adobeaemcloud.com/ui#/aem/assets.html/content/dam/channelbtb/lgcom/global/ms/id/common/2026/casestudy/portland-international-airport\nThank you.\ncc @김영민/(협력사) 책임/B2B디지털채널팀 @서동한/(협력사) 책임/B2B디지털채널팀  @김나연/(협력사) 사원/HS디지털컨텐츠팀  @박나은/(협력사) 선임/B2B디지털채널팀  @강경희/(협력사) 부장/D2C플랫폼개발팀"
-        },
-        {
-          "author": "박성운/선임/MS B2B마케팅전략팀",
-          "created": "2026-09-15T14:48:26.902+0900",
-          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 @박나은/(협력사) 선임/B2B디지털채널팀 @김시용/책임/MS B2B제품마케팅팀\n박준상 차장님, 박나은 선임님 수고 많으십니다.\nDAM이관이 많이 지연되어, LG.com  B2B 업로드 빠른 진행 부탁드리겠습니다..!"
         }
       ]
     },
