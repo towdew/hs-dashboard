@@ -1,110 +1,43 @@
 {
-  "baseDate": "20260916",
-  "prevDate": "20260903",
+  "baseDate": "20260921",
+  "prevDate": "20260916",
   "changes": {
-    "Smart Monitor Multi AI|CZ": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
+    "gram pro gallery|AU": {
+      "type": "new_task"
     },
-    "Smart Monitor Multi AI|DE": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
+    "gram pro gallery|CN": {
+      "type": "new_task"
     },
-    "Smart Monitor Multi AI|HK_EN": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
+    "gram pro gallery|DE": {
+      "type": "new_task"
     },
-    "Smart Monitor Multi AI|IN": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
+    "gram pro gallery|GLOBAL": {
+      "type": "new_task"
     },
-    "Smart Monitor Multi AI|PE": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
+    "gram pro gallery|SG": {
+      "type": "new_task"
     },
-    "Smart Monitor Multi AI|SG": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
+    "gram pro gallery|UK": {
+      "type": "new_task"
     },
-    "Smart Monitor Multi AI|TR": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
+    "gram pro gallery|VN": {
+      "type": "new_task"
     },
-    "Smart Monitor Multi AI|HK": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
+    "gram pro gallery|CA_EN": {
+      "type": "new_task"
     },
-    "Smart Monitor Multi AI|ID": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
+    "gram pro gallery|CA_FR": {
+      "type": "new_task"
     },
-    "Smart Monitor Multi AI|MX": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "FAQ Request (UltraGear PLP)|ES": {
-      "type": "status",
-      "from": "법인리뷰",
-      "to": "완료"
-    },
-    "GNB Structure|VN": {
-      "type": "status",
-      "from": "작업중",
-      "to": "완료"
-    },
-    "GNB Structure|AU": {
-      "type": "status",
-      "from": "법인리뷰",
-      "to": "취소"
-    },
-    "GNB Structure|HU": {
-      "type": "status",
-      "from": "작업중",
-      "to": "취소"
-    },
-    "GNB Structure|JP": {
-      "type": "status",
-      "from": "법인리뷰",
-      "to": "취소"
-    },
-    "GNB Structure|BG": {
-      "type": "new_country"
-    },
-    "GNB Structure|HR": {
-      "type": "new_country"
-    },
-    "GNB Structure|RS": {
-      "type": "new_country"
-    },
-    "GNB Structure|CH_FR": {
-      "type": "status",
-      "from": "작업중",
-      "to": "취소"
+    "gram pro gallery|IT": {
+      "type": "new_task"
     }
   },
   "taskSummary": {
-    "Smart Monitor Multi AI": {
-      "changed": 10,
-      "new": 0
-    },
-    "FAQ Request (UltraGear PLP)": {
-      "changed": 1,
-      "new": 0
-    },
-    "GNB Structure": {
-      "changed": 5,
-      "new": 3
+    "gram pro gallery": {
+      "changed": 0,
+      "new": 10
     }
   },
-  "generatedAt": "2026-09-16"
+  "generatedAt": "2026-09-21"
 }
