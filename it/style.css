@@ -2169,3 +2169,37 @@ button,input,select,textarea{font-family:inherit}
 .dash-sr-item .sr-sub { color: #94A3B8; font-size: 11px; margin-left: auto; white-space: nowrap; }
 .dash-sr-empty { padding: 16px 12px; color: #94A3B8; font-size: 12px; text-align: center; }
 @media (max-width: 900px) { .topbar-search { display: none; } }
+
+/* GR Overview — /id Overview 레이아웃을 IT 톤으로 */
+.gr-ov-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.gr-ov-chip{
+  border:1.5px solid #E0E4F0;background:#fff;border-radius:20px;padding:5px 12px;
+  font-size:11px;font-weight:600;color:#4A5280;cursor:pointer;transition:all .15s;
+}
+.gr-ov-chip b{margin-left:4px;color:#1A1D2E}
+.gr-ov-chip:hover{border-color:#A50034;color:#A50034}
+.gr-ov-chip[aria-pressed="true"]{border-color:#A50034;background:#FFF0F2;color:#A50034}
+.gr-ov-chip[aria-pressed="true"] b{color:#A50034}
+.gr-ov-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.gr-ov-bar h2{font-size:14px;font-weight:800;color:#1A1D2E;margin:0}
+.gr-ov-bar h2 span{font-weight:600;font-size:12px;color:#9BA3BF;margin-left:6px}
+.gr-ov-bar select{font-size:12px;font-weight:600;padding:6px 28px 6px 10px;border-radius:6px;border:1px solid #E2E5EC;background:#fff;color:#4A5280}
+.gr-ov-table-wrap{overflow-x:auto;border:1px solid #EEF0F5;border-radius:10px}
+.gr-ov-table{width:100%;border-collapse:collapse;font-size:12px}
+.gr-ov-table thead th{
+  text-align:left;font-size:10.5px;font-weight:700;color:#9BA3BF;letter-spacing:.04em;text-transform:uppercase;
+  padding:10px 14px;background:#FAFBFD;border-bottom:1px solid #EEF0F5;white-space:nowrap;
+}
+.gr-ov-table tbody td{padding:12px 14px;border-bottom:1px solid #F3F4F8;vertical-align:top}
+.gr-ov-table tbody tr:last-child td{border-bottom:none}
+.gr-ov-row{cursor:pointer}
+.gr-ov-row:hover{background:#FAFBFD}
+.gr-ov-title{font-weight:700;color:#1A1D2E;line-height:1.35}
+.gr-ov-key{font-size:10.5px;color:#9BA3BF;margin-top:3px;font-weight:600;letter-spacing:.02em}
+.gr-ov-empty{padding:28px;text-align:center;color:#9BA3BF}
+.gr-ov-num{white-space:nowrap}
+.gr-ov-memo{max-width:280px;color:#64748B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gr-ov-badge{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.03em;padding:3px 8px;border-radius:4px;white-space:nowrap}
+.gr-ov-badge-in_progress{background:#E0F2FE;color:#0369A1}
+.gr-ov-badge-planned{background:#F1F5F9;color:#475569}
+.gr-ov-badge-done{background:#DCFCE7;color:#15803D}

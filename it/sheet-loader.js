@@ -335,9 +335,11 @@ async function loadDashboardFromPublishedHtml() {
 
   initBaseGlobals(keys, sourceMap);
 
-  // 커스텀 섹션 (IT 제품 현황 / URL Library) 특수 키 등록 — initBaseGlobals(DATA={}) 이후에 추가
+  // 커스텀 섹션 (Overview / IT 제품 현황 / URL Library) 특수 키 등록 — initBaseGlobals(DATA={}) 이후에 추가
+  window.__DASHBOARD_KEYS.unshift('gr_overview');
   window.__DASHBOARD_KEYS.push('npi_product_status');
   window.__DASHBOARD_KEYS.push('url_library');
+  window.DATA['gr_overview'] = { displayTitle: 'IT 업무 현황', _custom: true };
   window.DATA['npi_product_status'] = { displayTitle: 'IT 제품 현황', _custom: true, _loaded: false };
   window.DATA['url_library'] = { displayTitle: 'Live URL Library', _custom: true, _loaded: false };
 
@@ -1655,6 +1657,7 @@ function npiNavPreviewEnabled() {
 var HIDE_NPI_NAV = !npiNavPreviewEnabled();
 
 var CUSTOM_NAV_TABS = [
+  { key: 'gr_overview', label: 'IT 업무 현황', abbr: 'OV', section: 'Overview', aliases: ['overview', 'OV', 'gr_overview'] },
   { key: 'npi_product_status', label: 'IT 제품 현황', abbr: 'PS', section: 'NPI' },
   { key: 'url_library', label: 'Live URL Library', abbr: 'UL', section: 'Live URL' },
 ];
@@ -1748,15 +1751,9 @@ function pickNewestGrKeyFromPool(pool, grKeys) {
   return sorted[0];
 }
 
-// 첫 진입 시 In Progress 그룹에서 주차(W)가 가장 높은 태스크를 기본 선택한다.
+// 첫 진입(?task= 없음)은 Overview. 시트 딥링크는 dashboardInit의 grInitialKeyFromUrl이 우선한다.
 function pickDefaultGrNavKey(keys) {
-  var customKeys = CUSTOM_NAV_TABS.map(function(t) { return t.key; });
-  var grKeys = (keys || []).filter(function(k) { return customKeys.indexOf(k) === -1; });
-  if (!grKeys.length) return (keys && keys[0]) || null;
-  var built = buildGrNavGroups(grKeys);
-  var pool = built.groups.in_progress;
-  if (!pool.length && built.canGroup) return null;
-  return pickNewestGrKeyFromPool(pool.length ? pool : grKeys, grKeys) || grKeys[grKeys.length - 1];
+  return 'gr_overview';
 }
 
 function renderSidebarNavFromSheets(keys) {
@@ -1775,6 +1772,13 @@ function renderSidebarNavFromSheets(keys) {
   var canGroup = built.canGroup;
   var defaultKey = pickDefaultGrNavKey(keys);
   if (typeof window !== 'undefined') window.__DEFAULT_GR_NAV_KEY = defaultKey;
+
+  html.push('<div class="sb-section-label">Overview</div>');
+  html.push('<div class="nav-item' + (defaultKey === 'gr_overview' ? ' active' : '') +
+    '" data-key="gr_overview" data-abbr="OV" onclick="switchMenu(this)" title="IT 업무 현황">' +
+    '<span class="ni-text" data-abbr="OV">IT 업무 현황</span>' +
+    '<span class="ni-badge" style="background:rgba(148,163,184,.16);color:#64748B">' +
+    grKeys.length.toLocaleString() + '</span></div>');
 
   var navIdx = 0;
   // collapseId를 주면 라벨 클릭으로 접히는 아코디언이 된다(기본 열림, 상태는 localStorage 유지).

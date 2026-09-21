@@ -1513,7 +1513,8 @@ function grDeepLinkEntries() {
     var tab = null;
     for (var i = 0; i < custom.length; i++) if (custom[i].key === key) { tab = custom[i]; break; }
     if (tab) {
-      entries.push({ key: key, title: tab.label, shortTitle: tab.label, aliases: [key, tab.abbr].filter(Boolean) });
+      var aliases = (tab.aliases && tab.aliases.length) ? tab.aliases.slice() : [key, tab.abbr];
+      entries.push({ key: key, title: tab.label, shortTitle: tab.label, aliases: aliases.filter(Boolean) });
       return;
     }
     var d = window.DATA && window.DATA[key];
@@ -1554,9 +1555,12 @@ function copyTaskLink() {
 
 // ── MENU SWITCH ──────────────────────────────────────────────
 function switchMenu(el) {
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  el.classList.add('active');
-  currentKey = el.dataset.key;
+  var key = (typeof el === 'string') ? el : (el && el.dataset && el.dataset.key);
+  if (!key) return;
+  document.querySelectorAll('.nav-item').forEach(function (n) {
+    n.classList.toggle('active', n.dataset.key === key);
+  });
+  currentKey = key;
   currentTab = 'all'; currentView = 'grid'; filterRegion = ''; filterPhase = '';
   const d = DATA[currentKey];
   updateTopbarTitle();
@@ -2778,8 +2782,24 @@ function toggleUrlLibModel(modelName) {
 }
 
 // ── RENDER CONTENT ───────────────────────────────────────────
+function renderGrOverviewContent() {
+  updateTopbarTitle();
+  var wrap = document.getElementById('contentWrap');
+  if (!wrap) return;
+  if (typeof ensureGrDataLoaded === 'function') ensureGrDataLoaded();
+  if (typeof grOverviewRenderHtml !== 'function') {
+    wrap.innerHTML = '<div class="ov-card-new"><p class="ov-head-sub">Overview 모듈을 불러오지 못했습니다.</p></div>';
+    return;
+  }
+  wrap.innerHTML = grOverviewRenderHtml({
+    filter: window.__grOvFilter || 'active',
+    sort: window.__grOvSort || 'week',
+  });
+}
+
 function renderContent() {
   // ── 커스텀 섹션 분기 ──
+  if (currentKey === 'gr_overview') { renderGrOverviewContent(); return; }
   if (currentKey === 'npi_product_status') { renderNpiProductStatusContent(); return; }
   if (currentKey === 'url_library') { renderUrlLibraryContent(); return; }
 
@@ -6115,6 +6135,10 @@ function ensureGrDataLoaded() {
   _grDataLoadTriggered = true;
   var bust = '?v=' + Date.now();
   function maybeRerenderGrTab() {
+    if (currentKey === 'gr_overview' && typeof renderGrOverviewContent === 'function') {
+      renderGrOverviewContent();
+      return;
+    }
     var d = DATA[currentKey];
     if (window.__SHEET_DRIVEN_NAV && d && isGrSheetDisplayTitle(getDashboardDisplayTitle(d))) {
       renderTable();
@@ -6169,6 +6193,7 @@ function ensureGrDataLoaded() {
         n.classList.toggle('active', n.dataset.key === currentKey);
       });
     }
+    if (typeof maybeRerenderGrTab === 'function') maybeRerenderGrTab();
   }).catch(function() { window._grTaskState = null; });
 }
 
