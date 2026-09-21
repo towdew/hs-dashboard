@@ -5,13 +5,7 @@
     "gram pro gallery|AU": {
       "type": "new_task"
     },
-    "gram pro gallery|CN": {
-      "type": "new_task"
-    },
     "gram pro gallery|DE": {
-      "type": "new_task"
-    },
-    "gram pro gallery|GLOBAL": {
       "type": "new_task"
     },
     "gram pro gallery|SG": {
@@ -29,6 +23,9 @@
     "gram pro gallery|CA_FR": {
       "type": "new_task"
     },
+    "gram pro gallery|GLOBAL": {
+      "type": "new_task"
+    },
     "gram pro gallery|IT": {
       "type": "new_task"
     }
@@ -36,7 +33,7 @@
   "taskSummary": {
     "gram pro gallery": {
       "changed": 0,
-      "new": 10
+      "new": 9
     }
   },
   "generatedAt": "2026-09-21"
