@@ -7,7 +7,6 @@ var GR_OVERVIEW_CHIPS = [
   { id: 'in_progress', label: 'In Progress' },
   { id: 'planned', label: 'Planned' },
   { id: 'done', label: 'Done' },
-  { id: 'weekly', label: '금주 변경' },
 ];
 
 function grOverviewWeekOf(title) {
@@ -90,14 +89,14 @@ function grOverviewFilterRows(rows, filter) {
 }
 
 function grOverviewKpis(rows) {
-  var k = { inProgress: 0, planned: 0, done: 0, wipSites: 0, reviewSites: 0, weeklyTasks: 0 };
+  var k = { inProgress: 0, planned: 0, done: 0, wipSites: 0, reviewSites: 0, weeklyChanges: 0 };
   (rows || []).forEach(function (r) {
     if (r.group === 'in_progress') k.inProgress++;
     else if (r.group === 'planned') k.planned++;
     else if (r.group === 'done') k.done++;
     k.wipSites += r.inProgressSites || 0;
     k.reviewSites += r.reviewSites || 0;
-    if ((r.weekly || 0) > 0) k.weeklyTasks++;
+    k.weeklyChanges += r.weekly || 0;
   });
   return k;
 }
@@ -150,7 +149,7 @@ function grOverviewRenderHtml(opts) {
     kpi(kpis.planned, '예정') + '<div class="ov-stat-div"></div>' +
     kpi(kpis.wipSites, '작업중 사이트') + '<div class="ov-stat-div"></div>' +
     kpi(kpis.reviewSites, '법인리뷰 사이트') + '<div class="ov-stat-div"></div>' +
-    kpi(kpis.weeklyTasks, '금주 변경') + '<div class="ov-stat-div"></div>' +
+    kpi(kpis.weeklyChanges, '금주 변경') + '<div class="ov-stat-div"></div>' +
     kpi(kpis.done, '완료 태스크') + '</div>');
   h.push('<div class="gr-ov-chips" role="group" aria-label="태스크 필터">');
   GR_OVERVIEW_CHIPS.forEach(function (chip) {
