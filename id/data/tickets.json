@@ -1,11 +1,129 @@
 {
-  "generatedAt": "2026-09-19T03:18:39+00:00",
+  "generatedAt": "2026-09-21T07:34:01+00:00",
   "baseUrl": "https://lge-gmc.atlassian.net",
   "scope": "involved",
   "board": "id",
   "doneDays": 30,
-  "count": 22,
+  "count": 24,
   "tickets": [
+    {
+      "key": "BTOBGLOBAL-1472",
+      "title": "[Case Study Creation] Tatnall School Case Study Creation_LG.com/global",
+      "status": "PRE-CHECK",
+      "statusCategory": "new",
+      "assignee": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+      "reporter": "박성운/선임/MS B2B마케팅전략팀",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
+      "created": "2026-09-21T16:15:05.466+0900",
+      "resolved": null,
+      "updated": "2026-09-21T16:32:59.166+0900",
+      "due": null,
+      "stageSince": "2026-09-21T16:15:06.130+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1472",
+      "descriptionExcerpt": "",
+      "commentCount": 1,
+      "comments": [
+        {
+          "author": "박성운/선임/MS B2B마케팅전략팀",
+          "created": "2026-09-21T16:20:41.346+0900",
+          "text": "@박나은/(협력사) 선임/B2B디지털채널팀 @박준상/(협력사) 차장/D2C플랫폼개발팀 @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\n박나은 선임님, 박준상 차장님, 수고 많으십니다.\n위 Tatnall School 요청건 확인하시어 LG.com 업로드 진행해주시면 감사드리겠습니다."
+        }
+      ]
+    },
+    {
+      "key": "BTOBGLOBAL-1471",
+      "title": "[Case Study Creation] SAVI HQ Case Study Creation_LG.com/global",
+      "status": "PRE-CHECK",
+      "statusCategory": "new",
+      "assignee": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+      "reporter": "박성운/선임/MS B2B마케팅전략팀",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
+      "created": "2026-09-21T16:10:04.869+0900",
+      "resolved": null,
+      "updated": "2026-09-21T16:32:53.647+0900",
+      "due": null,
+      "stageSince": "2026-09-21T16:10:05.556+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1471",
+      "descriptionExcerpt": "",
+      "commentCount": 1,
+      "comments": [
+        {
+          "author": "박성운/선임/MS B2B마케팅전략팀",
+          "created": "2026-09-21T16:17:33.688+0900",
+          "text": "@박나은/(협력사) 선임/B2B디지털채널팀 @박준상/(협력사) 차장/D2C플랫폼개발팀 @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\n박나은 선임님, 박준상 차장님 수고 많으십니다.\n위 요청건 확인하시어 LG.com 업로드 부탁드리겠습니다."
+        }
+      ]
+    },
+    {
+      "key": "BTOBGLOBAL-1469",
+      "title": "LG.com(글로벌) Case Study 컨텐츠 등록 - Adelaide Marriott Hotel",
+      "status": "OPEN",
+      "statusCategory": "new",
+      "assignee": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+      "reporter": "전다은/선임/MS B2B제품마케팅팀",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
+      "created": "2026-09-21T11:08:54.772+0900",
+      "resolved": null,
+      "updated": "2026-09-21T15:07:40.932+0900",
+      "due": null,
+      "stageSince": "2026-09-21T11:08:55.636+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1469",
+      "descriptionExcerpt": "",
+      "commentCount": 1,
+      "comments": [
+        {
+          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-09-21T14:31:33.264+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 차장님, 안녕하세요.\n진행 검토 부탁드립니다.\n고맙습니다.\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀"
+        }
+      ]
+    },
+    {
+      "key": "BTOBGLOBAL-1445",
+      "title": "ID사업부 히어로배너 변경 요청의 건 (Liam)",
+      "status": "OPEN",
+      "statusCategory": "new",
+      "assignee": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
+      "reporter": "장현주/선임/MS B2B디지털이노베이션파트",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
+      "created": "2026-09-16T11:06:34.787+0900",
+      "resolved": null,
+      "updated": "2026-09-21T11:54:57.686+0900",
+      "due": null,
+      "stageSince": "2026-09-16T11:06:36.462+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1445",
+      "descriptionExcerpt": "",
+      "commentCount": 7,
+      "comments": [
+        {
+          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
+          "created": "2026-09-21T11:54:57.686+0900",
+          "text": "Hello @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\n\nCould you please share the progress and ETA?\n\nBest Regards,\nMarina\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀"
+        },
+        {
+          "author": "장현주/선임/MS B2B디지털이노베이션파트",
+          "created": "2026-09-18T17:30:41.154+0900",
+          "text": "안녕하세요, 제가 차주 월-수 부재 예정입니다. 추석 연휴 기간이 있어서, 조치가 완료되면 ON Hold 상태로 변경 (Closed X)로 부탁드립니다 ~"
+        },
+        {
+          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
+          "created": "2026-09-17T09:19:15.677+0900",
+          "text": "Hello @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\nPlease proceed with the banner update as requested below:\n- Scope of Work:\n- Replace the existing 2D Liam banner with the new 3D Liam banner (Image replacement only).\n- Copy & CTA Links: Keep all existing text/copy and CTA links as-is (No changes to text or link URLs).\n- Content Matrix: Please note that there is no separate Content Matrix for this request since i…"
+        }
+      ]
+    },
     {
       "key": "BTOBGLOBAL-1373",
       "title": "[ID] Discontinue for PDPs ",
@@ -19,13 +137,18 @@
       "parent": null,
       "created": "2026-09-01T15:41:52.550+0900",
       "resolved": null,
-      "updated": "2026-09-18T22:17:03.221+0900",
+      "updated": "2026-09-21T09:17:27.835+0900",
       "due": null,
       "stageSince": "2026-09-07T09:24:44.803+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1373",
       "descriptionExcerpt": "",
-      "commentCount": 44,
+      "commentCount": 45,
       "comments": [
+        {
+          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
+          "created": "2026-09-21T09:05:33.114+0900",
+          "text": "안녕하세요 @장현주/선임/MS B2B디지털이노베이션파트 선임님,\n\nB2B는 수정이 전부 되었다고 해서\n25 RO 국가 @박준상/(협력사) 차장/D2C플랫폼개발팀 차장님 검토 예정\n1차 RO 국가 제가 검토 예정입니다.\n\nD2C - EG(en/ar), CN_zh, TW_zh, HK(en/zh), MY_en 는 수정되었으나,\nAE(en/ar)같은 경우는 GP1 업그레이드/전환 작업으로 인해 현재 Admin 시스템이 Frozen되어 있어 수정 사항을 저장/반영할 수 없는 상태입니다.\n10월 15일 런칭 이후 업데이트가 가능할 듯한데, 그 쯤 법인에 다이렉트로 또는 법인 티켓으로 다시 한번 요청해보셔야할 것 같습니다.\n\nB2B는 검토 후 다시 안내드리겠습니다 :slight_smile:\n\n감사합니다.\n박나은 드림\nc…"
+        },
         {
           "author": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
           "created": "2026-09-18T22:17:03.221+0900",
@@ -35,11 +158,80 @@
           "author": "박나은/(협력사) 선임/B2B디지털채널팀",
           "created": "2026-09-17T18:33:59.861+0900",
           "text": "- 9/17(Thur):\n25 RO 국가 @박준상/(협력사) 차장/D2C플랫폼개발팀 차장님 검토 예정\n1차 RO 국가 @박나은/(협력사) 선임/B2B디지털채널팀 검토 예정"
+        }
+      ]
+    },
+    {
+      "key": "BTOBGLOBAL-1437",
+      "title": "1차 롤아웃 국가 Front Image Alt Text 누락건",
+      "status": "ON HOLD (RESPONSE)",
+      "statusCategory": "indeterminate",
+      "assignee": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+      "reporter": "장현주/선임/MS B2B디지털이노베이션파트",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
+      "created": "2026-09-14T17:46:06.786+0900",
+      "resolved": null,
+      "updated": "2026-09-21T09:07:15.233+0900",
+      "due": null,
+      "stageSince": "2026-09-15T10:55:19.639+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1437",
+      "descriptionExcerpt": "",
+      "commentCount": 11,
+      "comments": [
+        {
+          "author": "김호민/선임/B2B디지털채널팀",
+          "created": "2026-09-21T09:07:15.171+0900",
+          "text": "@서동한/(협력사) 책임/B2B디지털채널팀 @장현주/선임/MS B2B디지털이노베이션파트\n별도 메신저 및 메일을 통해 설명드린 바와 같이 해당 내용에 대해서는 Rollout 프로젝트에서 처리가 어려운 점 양해부탁드립니다.\n운영 프로세스에 맞춰 진행되어야 할 것 같습니다."
         },
         {
-          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
-          "created": "2026-09-17T09:03:02.332+0900",
-          "text": "Hello@JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\n\nThank you for the work.\nPanama (CAC) ‘86XE3FS1-B' Discontinued on our side.\n\nI will go ahead and check the rest.\n\nAre you still working on discontinuing the products for D2C countries?\n\nBest Regards,\nMarina\ncc @박준상/(협력사) 차장/D2C플랫폼개발팀@서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀"
+          "author": "장현주/선임/MS B2B디지털이노베이션파트",
+          "created": "2026-09-18T17:31:31.133+0900",
+          "text": "안녕하세요, 제가 차주 월-수 부재 예정입니다. 추석 연휴 기간이 있어서, 조치가 완료되면 ON Hold 상태로 변경 (Closed X)로 부탁드립니다 ~"
+        },
+        {
+          "author": "서동한/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-09-17T17:23:35.536+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀\n\n차장님, 해당건 46건의 Alt Text - Simple Modification 정도 수준이면 될것 같은데,\n첨부 장현주 선임님 리스트 확인 후 예상비용은 따로 장현주 선임님께 말씀드리고 글로벌리퀘스트 형태로 검토 및 진행부탁드립니다.\n\n감사합니다."
+        }
+      ]
+    },
+    {
+      "key": "BTOBGLOBAL-1231",
+      "title": "[ID] 메인페이지 하단 SNS 컴포넌트 변경 ",
+      "status": "ON HOLD (RESPONSE)",
+      "statusCategory": "indeterminate",
+      "assignee": "장현주/선임/MS B2B디지털이노베이션파트",
+      "reporter": "장현주/선임/MS B2B디지털이노베이션파트",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
+      "created": "2026-07-24T18:08:26.853+0900",
+      "resolved": null,
+      "updated": "2026-09-21T08:56:10.395+0900",
+      "due": null,
+      "stageSince": "2026-08-26T10:35:28.052+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1231",
+      "descriptionExcerpt": "저희 commercial display 하단 SNS 컴포넌트를 수동 말고 자동으로 바꿀 수 있을까요 ?\n원래 자동 컴포넌트인데 저희가 수동으로 요청해서 현재 수동 컴포넌트로 들어간 것으로 기억합니다 ㅠㅠ\n자동으로 바꿔주시면 감사하겠습니닷.\n채널 | URL\nYouTube | www.youtube.com/@LGCommercialDisplayGlobal\nLinkedIn | www.linkedin.com/company/lg-commercial-display-global\nFacebook | www.facebook.com/LGCommercialDisplayGlobal",
+      "commentCount": 41,
+      "comments": [
+        {
+          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-09-18T18:13:36.224+0900",
+          "text": "@장현주/선임/MS B2B디지털이노베이션파트 선임님, 안녕하세요.\n전달해주신 Token 적용하여 정상 노출 확인했습니다.\n기존 컴포넌트는 삭제하고 Live 하였으며, 다음주 부재이시니 추석 연휴 이후 확인 때까지 티켓은 Hold 해두겠습니다.\n- https://www.lg.com/global/business/commercial-display/\n고맙습니다.\ncc @조승은/(협력사) 부장/B2B디지털채널팀 @신은아/(협력사) 선임/B2B디지털채널팀 @박호경/(협력사) 책임/B2B디지털채널팀 @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀"
+        },
+        {
+          "author": "장현주/선임/MS B2B디지털이노베이션파트",
+          "created": "2026-09-18T17:29:24.563+0900",
+          "text": "@장현주/선임/MS B2B디지털이노베이션파트 아울러 제가 다음주 월~수 부재 예정입니다. 업무에 참고 부탁드립니다."
+        },
+        {
+          "author": "장현주/선임/MS B2B디지털이노베이션파트",
+          "created": "2026-09-18T17:29:02.825+0900",
+          "text": "안녕하세요 ! 오래 기다려주셔서 정말 감사합니다.\n드디어 링크드인에 답변 받아, 토큰 전달 드립니다.\n\n<Access token>\nAQWqRPUIhr1T6wclsWm2NVbAYb-WvsXldkrksig_o5Y73qif-JoK4oh2Fav0FexhQomyHndOFtx5yTyClim1jDTt4iM6wgRWQyl7PVzyg90vnjG46gVed-pd1oArEZYIP-3nYeGrDW4LRo2XdP6PyrIQ9N25ljuckoZiw555ETZT6l8kwDHJQX3tFDh8g6zsxw1OSZkTYUQXbnuypiXmq29P5UzIcynEUeL0fbImkdN2S1qzY5oKEafem2fbVC-Tqc3R7lJA5ug4sUJcdxLQPgol3emPprQTpMGANkVm01qonDLinmTeBKYabI5kEU-V2fOkKIW…"
         }
       ]
     },
@@ -118,43 +310,6 @@
       ]
     },
     {
-      "key": "BTOBGLOBAL-1231",
-      "title": "[ID] 메인페이지 하단 SNS 컴포넌트 변경 ",
-      "status": "ON HOLD (RESPONSE)",
-      "statusCategory": "indeterminate",
-      "assignee": "장현주/선임/MS B2B디지털이노베이션파트",
-      "reporter": "장현주/선임/MS B2B디지털이노베이션파트",
-      "priority": "Medium",
-      "issuetype": "Contents",
-      "project": "BTOBGLOBAL",
-      "parent": null,
-      "created": "2026-07-24T18:08:26.853+0900",
-      "resolved": null,
-      "updated": "2026-09-18T18:14:10.387+0900",
-      "due": null,
-      "stageSince": "2026-08-26T10:35:28.052+0900",
-      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1231",
-      "descriptionExcerpt": "저희 commercial display 하단 SNS 컴포넌트를 수동 말고 자동으로 바꿀 수 있을까요 ?\n원래 자동 컴포넌트인데 저희가 수동으로 요청해서 현재 수동 컴포넌트로 들어간 것으로 기억합니다 ㅠㅠ\n자동으로 바꿔주시면 감사하겠습니닷.\n채널 | URL\nYouTube | www.youtube.com/@LGCommercialDisplayGlobal\nLinkedIn | www.linkedin.com/company/lg-commercial-display-global\nFacebook | www.facebook.com/LGCommercialDisplayGlobal",
-      "commentCount": 41,
-      "comments": [
-        {
-          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
-          "created": "2026-09-18T18:13:36.224+0900",
-          "text": "@장현주/선임/MS B2B디지털이노베이션파트 선임님, 안녕하세요.\n전달해주신 Token 적용하여 정상 노출 확인했습니다.\n기존 컴포넌트는 삭제하고 Live 하였으며, 다음주 부재이시니 추석 연휴 이후 확인 때까지 티켓은 Hold 해두겠습니다.\n- https://www.lg.com/global/business/commercial-display/\n고맙습니다.\ncc @조승은/(협력사) 부장/B2B디지털채널팀 @신은아/(협력사) 선임/B2B디지털채널팀 @박호경/(협력사) 책임/B2B디지털채널팀 @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀"
-        },
-        {
-          "author": "장현주/선임/MS B2B디지털이노베이션파트",
-          "created": "2026-09-18T17:29:24.563+0900",
-          "text": "@장현주/선임/MS B2B디지털이노베이션파트 아울러 제가 다음주 월~수 부재 예정입니다. 업무에 참고 부탁드립니다."
-        },
-        {
-          "author": "장현주/선임/MS B2B디지털이노베이션파트",
-          "created": "2026-09-18T17:29:02.825+0900",
-          "text": "안녕하세요 ! 오래 기다려주셔서 정말 감사합니다.\n드디어 링크드인에 답변 받아, 토큰 전달 드립니다.\n\n<Access token>\nAQWqRPUIhr1T6wclsWm2NVbAYb-WvsXldkrksig_o5Y73qif-JoK4oh2Fav0FexhQomyHndOFtx5yTyClim1jDTt4iM6wgRWQyl7PVzyg90vnjG46gVed-pd1oArEZYIP-3nYeGrDW4LRo2XdP6PyrIQ9N25ljuckoZiw555ETZT6l8kwDHJQX3tFDh8g6zsxw1OSZkTYUQXbnuypiXmq29P5UzIcynEUeL0fbImkdN2S1qzY5oKEafem2fbVC-Tqc3R7lJA5ug4sUJcdxLQPgol3emPprQTpMGANkVm01qonDLinmTeBKYabI5kEU-V2fOkKIW…"
-        }
-      ]
-    },
-    {
       "key": "BTOBGLOBAL-1415",
       "title": "ID)UH5Q-G PDP PLP PAGE 신규 제작 43\" 49\" 55\" 65\" 75\" 86\"",
       "status": "IN PROGRESS",
@@ -192,43 +347,6 @@
       ]
     },
     {
-      "key": "BTOBGLOBAL-1437",
-      "title": "1차 롤아웃 국가 Front Image Alt Text 누락건",
-      "status": "ON HOLD (RESPONSE)",
-      "statusCategory": "indeterminate",
-      "assignee": "박준상/(협력사) 차장/D2C플랫폼개발팀",
-      "reporter": "장현주/선임/MS B2B디지털이노베이션파트",
-      "priority": "Medium",
-      "issuetype": "Contents",
-      "project": "BTOBGLOBAL",
-      "parent": null,
-      "created": "2026-09-14T17:46:06.786+0900",
-      "resolved": null,
-      "updated": "2026-09-18T17:31:31.133+0900",
-      "due": null,
-      "stageSince": "2026-09-15T10:55:19.639+0900",
-      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1437",
-      "descriptionExcerpt": "",
-      "commentCount": 10,
-      "comments": [
-        {
-          "author": "장현주/선임/MS B2B디지털이노베이션파트",
-          "created": "2026-09-18T17:31:31.133+0900",
-          "text": "안녕하세요, 제가 차주 월-수 부재 예정입니다. 추석 연휴 기간이 있어서, 조치가 완료되면 ON Hold 상태로 변경 (Closed X)로 부탁드립니다 ~"
-        },
-        {
-          "author": "서동한/(협력사) 책임/B2B디지털채널팀",
-          "created": "2026-09-17T17:23:35.536+0900",
-          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀\n\n차장님, 해당건 46건의 Alt Text - Simple Modification 정도 수준이면 될것 같은데,\n첨부 장현주 선임님 리스트 확인 후 예상비용은 따로 장현주 선임님께 말씀드리고 글로벌리퀘스트 형태로 검토 및 진행부탁드립니다.\n\n감사합니다."
-        },
-        {
-          "author": "서동한/(협력사) 책임/B2B디지털채널팀",
-          "created": "2026-09-17T15:51:45.468+0900",
-          "text": "@장현주/선임/MS B2B디지털이노베이션파트\n\n안녕하세요, 선임님 :)\n관련해서 제가 RO 담당자분께 확인하고 있습니다. 확인되면 진행여부 결정할수 있을것 같고,\n다시 말씀드리겠습니다. 감사합니다!\n\ncc. @김호민/선임/B2B디지털채널팀 @김영민/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀"
-        }
-      ]
-    },
-    {
       "key": "LGCOMTH-3178",
       "title": "LG.com TH 시블링 요청(LG.com TH Sibling Update Request)",
       "status": "ON HOLD (RESPONSE)",
@@ -262,43 +380,6 @@
           "author": "김영민/(협력사) 책임/B2B디지털채널팀",
           "created": "2026-09-18T15:41:11.607+0900",
           "text": "Dear @박준상/(협력사) 차장/D2C플랫폼개발팀\nI will check with Development Team and share the confirmation.\nThank you.\ncc  @박호경/(협력사) 책임/B2B디지털채널팀 @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀"
-        }
-      ]
-    },
-    {
-      "key": "BTOBGLOBAL-1445",
-      "title": "ID사업부 히어로배너 변경 요청의 건 (Liam)",
-      "status": "OPEN",
-      "statusCategory": "new",
-      "assignee": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
-      "reporter": "장현주/선임/MS B2B디지털이노베이션파트",
-      "priority": "Medium",
-      "issuetype": "Contents",
-      "project": "BTOBGLOBAL",
-      "parent": null,
-      "created": "2026-09-16T11:06:34.787+0900",
-      "resolved": null,
-      "updated": "2026-09-18T17:30:41.154+0900",
-      "due": null,
-      "stageSince": "2026-09-16T11:06:36.462+0900",
-      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1445",
-      "descriptionExcerpt": "",
-      "commentCount": 6,
-      "comments": [
-        {
-          "author": "장현주/선임/MS B2B디지털이노베이션파트",
-          "created": "2026-09-18T17:30:41.154+0900",
-          "text": "안녕하세요, 제가 차주 월-수 부재 예정입니다. 추석 연휴 기간이 있어서, 조치가 완료되면 ON Hold 상태로 변경 (Closed X)로 부탁드립니다 ~"
-        },
-        {
-          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
-          "created": "2026-09-17T09:19:15.677+0900",
-          "text": "Hello @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\nPlease proceed with the banner update as requested below:\n- Scope of Work:\n- Replace the existing 2D Liam banner with the new 3D Liam banner (Image replacement only).\n- Copy & CTA Links: Keep all existing text/copy and CTA links as-is (No changes to text or link URLs).\n- Content Matrix: Please note that there is no separate Content Matrix for this request since i…"
-        },
-        {
-          "author": "장현주/선임/MS B2B디지털이노베이션파트",
-          "created": "2026-09-16T15:24:25.226+0900",
-          "text": "@박나은/(협력사) 선임/B2B디지털채널팀 네 맞습니다 !!"
         }
       ]
     },
@@ -659,43 +740,6 @@
           "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
           "created": "2026-08-27T10:11:21.155+0900",
           "text": "Dear@ERICPELL LATAMD2CTEAM/LATAM LATAM D2C TEAM\nThe PIC has not replied yet, so I have sent a reminder.\nI will share an update as soon as I receive a response.\nThank you.\nCC@김정민/(협력사) 과장/D2C플랫폼운영팀 @Ignacio Castro/LGEPR Marketing"
-        }
-      ]
-    },
-    {
-      "key": "BTOBGLOBAL-1262",
-      "title": "[Case Study Creation] Sahuarita School Case Study Creation_LG.com/global",
-      "status": "RESOLVED / CLOSED",
-      "statusCategory": "done",
-      "assignee": "박성운/선임/MS B2B마케팅전략팀",
-      "reporter": "김시용/책임/MS B2B제품마케팅팀",
-      "priority": "Medium",
-      "issuetype": "Contents",
-      "project": "BTOBGLOBAL",
-      "parent": null,
-      "created": "2026-08-03T15:16:59.000+0900",
-      "resolved": "2026-08-21T10:31:41.221+0900",
-      "updated": "2026-08-31T17:12:24.618+0900",
-      "due": null,
-      "stageSince": "2026-08-21T10:31:41.239+0900",
-      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1262",
-      "descriptionExcerpt": "",
-      "commentCount": 22,
-      "comments": [
-        {
-          "author": "김시용/책임/MS B2B제품마케팅팀",
-          "created": "2026-08-31T17:12:24.618+0900",
-          "text": "@박성운/선임/MS B2B마케팅전략팀"
-        },
-        {
-          "author": "김시용/책임/MS B2B제품마케팅팀",
-          "created": "2026-08-21T10:03:19.355+0900",
-          "text": "@김영민/(협력사) 책임/B2B디지털채널팀 yes. thanks"
-        },
-        {
-          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
-          "created": "2026-08-21T09:59:07.464+0900",
-          "text": "Dear @김시용/책임/MS B2B제품마케팅팀\nCould I close this ticket?"
         }
       ]
     },
