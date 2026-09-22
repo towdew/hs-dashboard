@@ -1,11 +1,85 @@
 {
-  "generatedAt": "2026-09-22T00:37:24+00:00",
+  "generatedAt": "2026-09-22T08:45:31+00:00",
   "baseUrl": "https://lge-gmc.atlassian.net",
   "scope": "involved",
   "board": "id",
   "doneDays": 30,
   "count": 24,
   "tickets": [
+    {
+      "key": "BTOBGLOBAL-1437",
+      "title": "1차 롤아웃 국가 Front Image Alt Text 누락건",
+      "status": "ON HOLD (RESPONSE)",
+      "statusCategory": "indeterminate",
+      "assignee": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+      "reporter": "장현주/선임/MS B2B디지털이노베이션파트",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
+      "created": "2026-09-14T17:46:06.786+0900",
+      "resolved": null,
+      "updated": "2026-09-22T15:59:13.438+0900",
+      "due": null,
+      "stageSince": "2026-09-15T10:55:19.639+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1437",
+      "descriptionExcerpt": "",
+      "commentCount": 12,
+      "comments": [
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-22T15:59:13.373+0900",
+          "text": "@장현주/선임/MS B2B디지털이노베이션파트 선임님, 안녕하세요.\n예상 금액은 Simple Modification $2.744 × 46으로, 총 $126.224(₩175,893.144)입니다.\n작업은 차주 초에 마무리될 것으로 예상됩니다.\n감사합니다.\n\nCC. @김나영/(협력사) 책임/B2B디지털채널팀 @조승은/(협력사) 부장/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀 @김영민/(협력사) 책임/B2B디지털채널팀 @신은아/(협력사) 선임/B2B디지털채널팀"
+        },
+        {
+          "author": "김호민/선임/B2B디지털채널팀",
+          "created": "2026-09-21T09:07:15.171+0900",
+          "text": "@서동한/(협력사) 책임/B2B디지털채널팀 @장현주/선임/MS B2B디지털이노베이션파트\n별도 메신저 및 메일을 통해 설명드린 바와 같이 해당 내용에 대해서는 Rollout 프로젝트에서 처리가 어려운 점 양해부탁드립니다.\n운영 프로세스에 맞춰 진행되어야 할 것 같습니다."
+        },
+        {
+          "author": "장현주/선임/MS B2B디지털이노베이션파트",
+          "created": "2026-09-18T17:31:31.133+0900",
+          "text": "안녕하세요, 제가 차주 월-수 부재 예정입니다. 추석 연휴 기간이 있어서, 조치가 완료되면 ON Hold 상태로 변경 (Closed X)로 부탁드립니다 ~"
+        }
+      ]
+    },
+    {
+      "key": "BTOBGLOBAL-1373",
+      "title": "[ID] Discontinue for PDPs ",
+      "status": "IN PROGRESS",
+      "statusCategory": "indeterminate",
+      "assignee": "박나은/(협력사) 선임/B2B디지털채널팀",
+      "reporter": "장현주/선임/MS B2B디지털이노베이션파트",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
+      "created": "2026-09-01T15:41:52.550+0900",
+      "resolved": null,
+      "updated": "2026-09-22T14:08:47.714+0900",
+      "due": null,
+      "stageSince": "2026-09-07T09:24:44.803+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1373",
+      "descriptionExcerpt": "",
+      "commentCount": 46,
+      "comments": [
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-22T14:05:58.860+0900",
+          "text": "@박나은/(협력사) 선임/B2B디지털채널팀 선임님, 안녕하세요.\n25 RO 국가는 전체 Discontinued 처리된 부분 확인했습니다.\n감사합니다.\ncc @김영민/(협력사) 책임/B2B디지털채널팀   @서동한/(협력사) 책임/B2B디지털채널팀  @김나영/(협력사) 책임/B2B디지털채널팀   @강경희/(협력사) 부장/D2C플랫폼개발팀"
+        },
+        {
+          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
+          "created": "2026-09-21T09:05:33.114+0900",
+          "text": "안녕하세요 @장현주/선임/MS B2B디지털이노베이션파트 선임님,\n\nB2B는 수정이 전부 되었다고 해서\n25 RO 국가 @박준상/(협력사) 차장/D2C플랫폼개발팀 차장님 검토 예정\n1차 RO 국가 제가 검토 예정입니다.\n\nD2C - EG(en/ar), CN_zh, TW_zh, HK(en/zh), MY_en 는 수정되었으나,\nAE(en/ar)같은 경우는 GP1 업그레이드/전환 작업으로 인해 현재 Admin 시스템이 Frozen되어 있어 수정 사항을 저장/반영할 수 없는 상태입니다.\n10월 15일 런칭 이후 업데이트가 가능할 듯한데, 그 쯤 법인에 다이렉트로 또는 법인 티켓으로 다시 한번 요청해보셔야할 것 같습니다.\n\nB2B는 검토 후 다시 안내드리겠습니다 :slight_smile:\n\n감사합니다.\n박나은 드림\nc…"
+        },
+        {
+          "author": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
+          "created": "2026-09-18T22:17:03.221+0900",
+          "text": "Dear@박나은/(협력사) 선임/B2B디지털채널팀 ,\nD2C site also completed.\nTarget Sites:\n- EG(en/ar) WR2336016JW & WR2336017JW\n- AE(en/ar) Due to the upgrade of AE to GP1, the admin system has been frozen, An update is expected to be released after the launch on October 15.\n- CN_zh WR2333504JW\n- TW_zh WR2333513JW\n- HK(en/zh) WR2333507JW & WR2333508JW\n- MY_en WR2333514JW\nPlease kindly reivew thanks."
+        }
+      ]
+    },
     {
       "key": "LGCOMTH-3178",
       "title": "LG.com TH 시블링 요청(LG.com TH Sibling Update Request)",
@@ -19,7 +93,7 @@
       "parent": null,
       "created": "2026-09-04T14:01:53.813+0900",
       "resolved": null,
-      "updated": "2026-09-22T09:29:33.799+0900",
+      "updated": "2026-09-22T14:07:37.580+0900",
       "due": null,
       "stageSince": "2026-09-17T20:57:43.622+0900",
       "url": "https://lge-gmc.atlassian.net/browse/LGCOMTH-3178",
@@ -29,7 +103,7 @@
         {
           "author": "김영민/(협력사) 책임/B2B디지털채널팀",
           "created": "2026-09-22T09:20:34.170+0900",
-          "text": "Dear All,\nThe ‘DB update' related to 'TH’s Sibling code' is scheduled on September 30 (Tue).\nI will share it once it is applied.\nThank you.\ncc  @박호경/(협력사) 책임/B2B디지털채널팀 @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀"
+          "text": "Dear All,\nThe ‘DB update' related to 'TH’s Sibling code' is scheduled on September 30th (Wed).\nI will share it once it is applied.\nThank you.\ncc  @박호경/(협력사) 책임/B2B디지털채널팀 @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀 @박경림/(협력사) 책임/D2C플랫폼개발팀"
         },
         {
           "author": "장현주/선임/MS B2B디지털이노베이션파트",
@@ -44,11 +118,80 @@
       ]
     },
     {
+      "key": "BTOBGLOBAL-1289",
+      "title": "Medical) 수술용 DISPLAY 스펙 통일 요청",
+      "status": "WAITING FOR SUB APPROVAL",
+      "statusCategory": "indeterminate",
+      "assignee": "김영민/(협력사) 책임/B2B디지털채널팀",
+      "reporter": "조덕호/선임/MS B2B제품마케팅팀",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
+      "created": "2026-08-11T15:38:18.199+0900",
+      "resolved": null,
+      "updated": "2026-09-22T13:48:49.164+0900",
+      "due": null,
+      "stageSince": "2026-08-13T15:20:57.232+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1289",
+      "descriptionExcerpt": "",
+      "commentCount": 35,
+      "comments": [
+        {
+          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-09-22T13:48:43.821+0900",
+          "text": "- 9/22 : Pre Dev Task 생성\n- PIM에서 ‘Product Code’ 수정 시 Admin의 PROD만 업데이트 되고, STG는 수정되지 않음\n- PIM에서 ‘Product Code’ 수정한 제품의 Spec Value 업데이트 시 STG에 전송되나, Admin의 Spec Manager 내 정상 노출되지 않음"
+        },
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-22T13:41:36.088+0900",
+          "text": "@조덕호/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n아래 55MH5K의 Product Code를 변경해야 다른 항목과 스펙 순서를 맞출 수 있는 것으로 확인했습니다.\n해당 Product Code는 스펙과 연결되어 있으며, 55MH5K의 코드를 MNMESD27로 변경하거나 CSME55NN의 스펙 구조를 변경하는 방안에 대해 개발팀에서 확인 중입니다.\n- 27HS714S 외 나머지 Product  > MNMESD27\n\n- 55MH5K > CSME55NN\n\n개발팀 확인되면 다시 업데이트 드리겠습니다.\n감사합니다.\n\ncc @김영민/(협력사) 책임/B2B디지털채널팀   @서동한/(협력사) 책임/B2B디지털채널팀  @김나영/(협력사) 책임/B2B디지털채널팀  @박나은/(협력사) 선임/B2B디지털채널팀  @강경희…"
+        },
+        {
+          "author": "조덕호/선임/MS B2B제품마케팅팀",
+          "created": "2026-09-17T10:48:14.942+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 차장님, 하기 PANEL 항목은 전체 삭제 부탁드리며 Aspect Ratio는 요청드린 것과 같이 반영 부탁드리겠습니다."
+        }
+      ]
+    },
+    {
+      "key": "BTOBGLOBAL-1469",
+      "title": "LG.com(글로벌) Case Study 컨텐츠 등록 - Adelaide Marriott Hotel",
+      "status": "IN PROGRESS",
+      "statusCategory": "indeterminate",
+      "assignee": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
+      "reporter": "전다은/선임/MS B2B제품마케팅팀",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
+      "created": "2026-09-21T11:08:54.772+0900",
+      "resolved": null,
+      "updated": "2026-09-22T13:44:28.861+0900",
+      "due": null,
+      "stageSince": "2026-09-22T13:44:24.040+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1469",
+      "descriptionExcerpt": "",
+      "commentCount": 2,
+      "comments": [
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-21T17:20:58.523+0900",
+          "text": "Dear @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\nPlease register 1 Case Study on the LG.com global Insights > Case Study page.\nPlease refer to the details below.\n\n- Please proceed based on the Figma (PC/MO) page reference.\n260921_Adelaide Marriot Hotel_Case Study_fin\n\n2. B2B DAM: https://author-p155411-e1648866.adobeaemcloud.com/ui#/aem/assets.html/content/dam/channelbtb/lgcom/global/ms/id/common/2026/casestudy/…"
+        },
+        {
+          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-09-21T14:31:33.264+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 차장님, 안녕하세요.\n진행 검토 부탁드립니다.\n고맙습니다.\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀"
+        }
+      ]
+    },
+    {
       "key": "BTOBGLOBAL-1415",
       "title": "ID)UH5Q-G PDP PLP PAGE 신규 제작 43\" 49\" 55\" 65\" 75\" 86\"",
       "status": "IN PROGRESS",
       "statusCategory": "indeterminate",
-      "assignee": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+      "assignee": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
       "reporter": "김정모/선임/MS B2B제품마케팅팀",
       "priority": "Medium",
       "issuetype": "Contents",
@@ -56,13 +199,18 @@
       "parent": null,
       "created": "2026-09-10T17:32:08.675+0900",
       "resolved": null,
-      "updated": "2026-09-21T22:56:21.684+0900",
+      "updated": "2026-09-22T11:48:34.347+0900",
       "due": null,
       "stageSince": "2026-09-11T17:14:58.842+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1415",
       "descriptionExcerpt": "",
-      "commentCount": 19,
+      "commentCount": 20,
       "comments": [
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-22T11:48:28.453+0900",
+          "text": "Dear@JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\nPlease proceed with the sibling work as well.\nThank you.\n\ncc @김영민/(협력사) 책임/B2B디지털채널팀   @서동한/(협력사) 책임/B2B디지털채널팀  @김나영/(협력사) 책임/B2B디지털채널팀  @박나은/(협력사) 선임/B2B디지털채널팀  @강경희/(협력사) 부장/D2C플랫폼개발팀"
+        },
         {
           "author": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
           "created": "2026-09-21T22:56:21.684+0900",
@@ -72,11 +220,43 @@
           "author": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
           "created": "2026-09-18T18:14:09.491+0900",
           "text": "Dear@박준상/(협력사) 차장/D2C플랫폼개발팀 ,\nThanks for you feedback,\nWe’ll have it finished by Monday."
+        }
+      ]
+    },
+    {
+      "key": "BTOBGLOBAL-1445",
+      "title": "ID사업부 히어로배너 변경 요청의 건 (Liam)",
+      "status": "PRE-CHECK",
+      "statusCategory": "new",
+      "assignee": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
+      "reporter": "장현주/선임/MS B2B디지털이노베이션파트",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
+      "created": "2026-09-16T11:06:34.787+0900",
+      "resolved": null,
+      "updated": "2026-09-22T11:06:42.840+0900",
+      "due": null,
+      "stageSince": "2026-09-16T11:06:36.462+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1445",
+      "descriptionExcerpt": "",
+      "commentCount": 7,
+      "comments": [
+        {
+          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
+          "created": "2026-09-21T11:54:57.686+0900",
+          "text": "Hello @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\n\nCould you please share the progress and ETA?\n\nBest Regards,\nMarina\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀"
         },
         {
-          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
-          "created": "2026-09-18T16:34:44.365+0900",
-          "text": "Dear@JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\nPlease find the suffix below.\n43UH5Q-GQ.SUSGLJR\n49UH5Q-GQ.SUSCLJR\n55UH5Q-GQ.SUSGLJR\n65UH5Q-GQ.SUSGLJR\n75UH5Q-GQ.SUSGLJR\n86UH5Q-GQ.SUSGLJR\nPlease proceed with the work. Thanks!\ncc @김영민/(협력사) 책임/B2B디지털채널팀   @서동한/(협력사) 책임/B2B디지털채널팀  @김나영/(협력사) 책임/B2B디지털채널팀  @박나은/(협력사) 선임/B2B디지털채널팀  @강경희/(협력사) 부장/D2C플랫폼개발팀"
+          "author": "장현주/선임/MS B2B디지털이노베이션파트",
+          "created": "2026-09-18T17:30:41.154+0900",
+          "text": "안녕하세요, 제가 차주 월-수 부재 예정입니다. 추석 연휴 기간이 있어서, 조치가 완료되면 ON Hold 상태로 변경 (Closed X)로 부탁드립니다 ~"
+        },
+        {
+          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
+          "created": "2026-09-17T09:19:15.677+0900",
+          "text": "Hello @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\nPlease proceed with the banner update as requested below:\n- Scope of Work:\n- Replace the existing 2D Liam banner with the new 3D Liam banner (Image replacement only).\n- Copy & CTA Links: Keep all existing text/copy and CTA links as-is (No changes to text or link URLs).\n- Content Matrix: Please note that there is no separate Content Matrix for this request since i…"
         }
       ]
     },
@@ -145,38 +325,6 @@
       ]
     },
     {
-      "key": "BTOBGLOBAL-1469",
-      "title": "LG.com(글로벌) Case Study 컨텐츠 등록 - Adelaide Marriott Hotel",
-      "status": "PRE-CHECK",
-      "statusCategory": "new",
-      "assignee": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
-      "reporter": "전다은/선임/MS B2B제품마케팅팀",
-      "priority": "Medium",
-      "issuetype": "Contents",
-      "project": "BTOBGLOBAL",
-      "parent": null,
-      "created": "2026-09-21T11:08:54.772+0900",
-      "resolved": null,
-      "updated": "2026-09-21T17:21:08.431+0900",
-      "due": null,
-      "stageSince": "2026-09-21T11:08:55.636+0900",
-      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1469",
-      "descriptionExcerpt": "",
-      "commentCount": 2,
-      "comments": [
-        {
-          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
-          "created": "2026-09-21T17:20:58.523+0900",
-          "text": "Dear @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\nPlease register 1 Case Study on the LG.com global Insights > Case Study page.\nPlease refer to the details below.\n\n- Please proceed based on the Figma (PC/MO) page reference.\n260921_Adelaide Marriot Hotel_Case Study_fin\n\n2. B2B DAM: https://author-p155411-e1648866.adobeaemcloud.com/ui#/aem/assets.html/content/dam/channelbtb/lgcom/global/ms/id/common/2026/casestudy/…"
-        },
-        {
-          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
-          "created": "2026-09-21T14:31:33.264+0900",
-          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 차장님, 안녕하세요.\n진행 검토 부탁드립니다.\n고맙습니다.\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀"
-        }
-      ]
-    },
-    {
       "key": "BTOBGLOBAL-1441",
       "title": "[Case Study Creation] Portland International Airport Case Study Creation_LG.com/global",
       "status": "WAITING FOR SUB APPROVAL",
@@ -210,117 +358,6 @@
           "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
           "created": "2026-09-21T16:54:44.113+0900",
           "text": "@박성운/선임/MS B2B마케팅전략팀 선임님, 안녕하세요.\nhttps://ncms-btb-auth.gp1.aws.lge.com/global/business/insights/commercial-display/case-study/portland-international-airport-usa\n페이지 검토 부탁드립니다.\n감사합니다.\n\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀@박나은/(협력사) 선임/B2B디지털채널팀 @강경희/(협력사) 부장/D2C플랫폼개발팀"
-        }
-      ]
-    },
-    {
-      "key": "BTOBGLOBAL-1445",
-      "title": "ID사업부 히어로배너 변경 요청의 건 (Liam)",
-      "status": "OPEN",
-      "statusCategory": "new",
-      "assignee": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
-      "reporter": "장현주/선임/MS B2B디지털이노베이션파트",
-      "priority": "Medium",
-      "issuetype": "Contents",
-      "project": "BTOBGLOBAL",
-      "parent": null,
-      "created": "2026-09-16T11:06:34.787+0900",
-      "resolved": null,
-      "updated": "2026-09-21T11:54:57.686+0900",
-      "due": null,
-      "stageSince": "2026-09-16T11:06:36.462+0900",
-      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1445",
-      "descriptionExcerpt": "",
-      "commentCount": 7,
-      "comments": [
-        {
-          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
-          "created": "2026-09-21T11:54:57.686+0900",
-          "text": "Hello @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\n\nCould you please share the progress and ETA?\n\nBest Regards,\nMarina\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀"
-        },
-        {
-          "author": "장현주/선임/MS B2B디지털이노베이션파트",
-          "created": "2026-09-18T17:30:41.154+0900",
-          "text": "안녕하세요, 제가 차주 월-수 부재 예정입니다. 추석 연휴 기간이 있어서, 조치가 완료되면 ON Hold 상태로 변경 (Closed X)로 부탁드립니다 ~"
-        },
-        {
-          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
-          "created": "2026-09-17T09:19:15.677+0900",
-          "text": "Hello @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\nPlease proceed with the banner update as requested below:\n- Scope of Work:\n- Replace the existing 2D Liam banner with the new 3D Liam banner (Image replacement only).\n- Copy & CTA Links: Keep all existing text/copy and CTA links as-is (No changes to text or link URLs).\n- Content Matrix: Please note that there is no separate Content Matrix for this request since i…"
-        }
-      ]
-    },
-    {
-      "key": "BTOBGLOBAL-1373",
-      "title": "[ID] Discontinue for PDPs ",
-      "status": "IN PROGRESS",
-      "statusCategory": "indeterminate",
-      "assignee": "박준상/(협력사) 차장/D2C플랫폼개발팀",
-      "reporter": "장현주/선임/MS B2B디지털이노베이션파트",
-      "priority": "Medium",
-      "issuetype": "Contents",
-      "project": "BTOBGLOBAL",
-      "parent": null,
-      "created": "2026-09-01T15:41:52.550+0900",
-      "resolved": null,
-      "updated": "2026-09-21T09:17:27.835+0900",
-      "due": null,
-      "stageSince": "2026-09-07T09:24:44.803+0900",
-      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1373",
-      "descriptionExcerpt": "",
-      "commentCount": 45,
-      "comments": [
-        {
-          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
-          "created": "2026-09-21T09:05:33.114+0900",
-          "text": "안녕하세요 @장현주/선임/MS B2B디지털이노베이션파트 선임님,\n\nB2B는 수정이 전부 되었다고 해서\n25 RO 국가 @박준상/(협력사) 차장/D2C플랫폼개발팀 차장님 검토 예정\n1차 RO 국가 제가 검토 예정입니다.\n\nD2C - EG(en/ar), CN_zh, TW_zh, HK(en/zh), MY_en 는 수정되었으나,\nAE(en/ar)같은 경우는 GP1 업그레이드/전환 작업으로 인해 현재 Admin 시스템이 Frozen되어 있어 수정 사항을 저장/반영할 수 없는 상태입니다.\n10월 15일 런칭 이후 업데이트가 가능할 듯한데, 그 쯤 법인에 다이렉트로 또는 법인 티켓으로 다시 한번 요청해보셔야할 것 같습니다.\n\nB2B는 검토 후 다시 안내드리겠습니다 :slight_smile:\n\n감사합니다.\n박나은 드림\nc…"
-        },
-        {
-          "author": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
-          "created": "2026-09-18T22:17:03.221+0900",
-          "text": "Dear@박나은/(협력사) 선임/B2B디지털채널팀 ,\nD2C site also completed.\nTarget Sites:\n- EG(en/ar) WR2336016JW & WR2336017JW\n- AE(en/ar) Due to the upgrade of AE to GP1, the admin system has been frozen, An update is expected to be released after the launch on October 15.\n- CN_zh WR2333504JW\n- TW_zh WR2333513JW\n- HK(en/zh) WR2333507JW & WR2333508JW\n- MY_en WR2333514JW\nPlease kindly reivew thanks."
-        },
-        {
-          "author": "박나은/(협력사) 선임/B2B디지털채널팀",
-          "created": "2026-09-17T18:33:59.861+0900",
-          "text": "- 9/17(Thur):\n25 RO 국가 @박준상/(협력사) 차장/D2C플랫폼개발팀 차장님 검토 예정\n1차 RO 국가 @박나은/(협력사) 선임/B2B디지털채널팀 검토 예정"
-        }
-      ]
-    },
-    {
-      "key": "BTOBGLOBAL-1437",
-      "title": "1차 롤아웃 국가 Front Image Alt Text 누락건",
-      "status": "ON HOLD (RESPONSE)",
-      "statusCategory": "indeterminate",
-      "assignee": "박준상/(협력사) 차장/D2C플랫폼개발팀",
-      "reporter": "장현주/선임/MS B2B디지털이노베이션파트",
-      "priority": "Medium",
-      "issuetype": "Contents",
-      "project": "BTOBGLOBAL",
-      "parent": null,
-      "created": "2026-09-14T17:46:06.786+0900",
-      "resolved": null,
-      "updated": "2026-09-21T09:07:15.233+0900",
-      "due": null,
-      "stageSince": "2026-09-15T10:55:19.639+0900",
-      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1437",
-      "descriptionExcerpt": "",
-      "commentCount": 11,
-      "comments": [
-        {
-          "author": "김호민/선임/B2B디지털채널팀",
-          "created": "2026-09-21T09:07:15.171+0900",
-          "text": "@서동한/(협력사) 책임/B2B디지털채널팀 @장현주/선임/MS B2B디지털이노베이션파트\n별도 메신저 및 메일을 통해 설명드린 바와 같이 해당 내용에 대해서는 Rollout 프로젝트에서 처리가 어려운 점 양해부탁드립니다.\n운영 프로세스에 맞춰 진행되어야 할 것 같습니다."
-        },
-        {
-          "author": "장현주/선임/MS B2B디지털이노베이션파트",
-          "created": "2026-09-18T17:31:31.133+0900",
-          "text": "안녕하세요, 제가 차주 월-수 부재 예정입니다. 추석 연휴 기간이 있어서, 조치가 완료되면 ON Hold 상태로 변경 (Closed X)로 부탁드립니다 ~"
-        },
-        {
-          "author": "서동한/(협력사) 책임/B2B디지털채널팀",
-          "created": "2026-09-17T17:23:35.536+0900",
-          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀\n\n차장님, 해당건 46건의 Alt Text - Simple Modification 정도 수준이면 될것 같은데,\n첨부 장현주 선임님 리스트 확인 후 예상비용은 따로 장현주 선임님께 말씀드리고 글로벌리퀘스트 형태로 검토 및 진행부탁드립니다.\n\n감사합니다."
         }
       ]
     },
@@ -432,43 +469,6 @@
           "author": "박성운/선임/MS B2B마케팅전략팀",
           "created": "2026-09-14T10:41:49.176+0900",
           "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 @박나은/(협력사) 선임/B2B디지털채널팀\n감사합니다. LG.COM 라이브 해주신 것 확인하였고, 문제 없습니다. 종료 처리 부탁드리겠습니다."
-        }
-      ]
-    },
-    {
-      "key": "BTOBGLOBAL-1289",
-      "title": "Medical) 수술용 DISPLAY 스펙 통일 요청",
-      "status": "WAITING FOR SUB APPROVAL",
-      "statusCategory": "indeterminate",
-      "assignee": "박준상/(협력사) 차장/D2C플랫폼개발팀",
-      "reporter": "조덕호/선임/MS B2B제품마케팅팀",
-      "priority": "Medium",
-      "issuetype": "Contents",
-      "project": "BTOBGLOBAL",
-      "parent": null,
-      "created": "2026-08-11T15:38:18.199+0900",
-      "resolved": null,
-      "updated": "2026-09-17T10:48:14.942+0900",
-      "due": null,
-      "stageSince": "2026-08-13T15:20:57.232+0900",
-      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1289",
-      "descriptionExcerpt": "",
-      "commentCount": 33,
-      "comments": [
-        {
-          "author": "조덕호/선임/MS B2B제품마케팅팀",
-          "created": "2026-09-17T10:48:14.942+0900",
-          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 차장님, 하기 PANEL 항목은 전체 삭제 부탁드리며 Aspect Ratio는 요청드린 것과 같이 반영 부탁드리겠습니다."
-        },
-        {
-          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
-          "created": "2026-09-17T10:14:55.054+0900",
-          "text": "@조덕호/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n55MH5K의 경우 다른 스펙과는 달리 일부 스펙이 PANEL 하위에 위치해있습니다.\nMDMS 에 따른 스펙구성이 다른점이 있어 이부분 확인 부탁드립니다.\n\n감사합니다.\ncc @김영민/(협력사) 책임/B2B디지털채널팀 @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀@강경희/(협력사) 부장/D2C플랫폼개발팀"
-        },
-        {
-          "author": "조덕호/선임/MS B2B제품마케팅팀",
-          "created": "2026-09-17T09:26:13.763+0900",
-          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 차장님,\n55MH5K 스펙에 Resolution 다음 Aspect Ratio, 16:9가 빠져있습니다.\n\nSize[Inch] / Pixel Pitch / Resolution / Aspect Ratio\nBacklight Technology / Panel Type / Peak Brightness(Typ.)[cd/m²] / Brightness(Typ.)[cd/m²]\nContrast Ratio(Typ.) / Color Bit / Color Gamut(Typ.) / Response Time\nViewing Angle(CR≥10) / Surface Treatment\n요청 드린 스펙으로 다시 확인 부탁드립니다.\n\n감사합니다."
         }
       ]
     },

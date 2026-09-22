@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-09-22T00:37:28+00:00",
+  "generatedAt": "2026-09-22T08:45:34+00:00",
   "baseUrl": "https://lge-gmc.atlassian.net",
   "scope": "involved",
   "board": "it-b2b",
   "doneDays": 30,
-  "count": 7,
+  "count": 8,
   "tickets": [
     {
-      "key": "BTOBGLOBAL-1349",
-      "title": "IT Laptop PLP 스펙 필터링 검토 요청",
-      "status": "WAITING FOR SUB APPROVAL",
+      "key": "BTOBGLOBAL-1480",
+      "title": "IT B2B) LG.com 모니터 PLP 스펙 필터링 확인 요청",
+      "status": "IN PROGRESS",
       "statusCategory": "indeterminate",
       "assignee": "박준상/(협력사) 차장/D2C플랫폼개발팀",
       "reporter": "김수안/선임/MS B2B제품마케팅팀",
@@ -17,29 +17,61 @@
       "issuetype": "Contents",
       "project": "BTOBGLOBAL",
       "parent": null,
+      "created": "2026-09-22T15:20:28.514+0900",
+      "resolved": null,
+      "updated": "2026-09-22T17:44:28.226+0900",
+      "due": null,
+      "stageSince": "2026-09-22T17:44:23.492+0900",
+      "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1480",
+      "descriptionExcerpt": "",
+      "commentCount": 2,
+      "comments": [
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-22T17:44:21.198+0900",
+          "text": "@김수안/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n확인 결과, Connection Type에는 USB 항목이 입력되어있지 않았네요.\n다만 https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1337 에서 USB/USB-C로 표기되던 값을 통일한 이력은 있습니다.\nConnection Type에 USB를 추가하는 작업을 진행하겠습니다.\n감사합니다.\n\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀@강경희/(협력사) 부장/D2C플랫폼개발팀"
+        },
+        {
+          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
+          "created": "2026-09-22T16:27:10.210+0900",
+          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 차장님, 안녕하세요.\n진행 검토 부탁드립니다.\n고맙습니다.\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀"
+        }
+      ]
+    },
+    {
+      "key": "BTOBGLOBAL-1349",
+      "title": "IT Laptop PLP 스펙 필터링 검토 요청",
+      "status": "WAITING FOR SUB APPROVAL",
+      "statusCategory": "indeterminate",
+      "assignee": "JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀",
+      "reporter": "김수안/선임/MS B2B제품마케팅팀",
+      "priority": "Medium",
+      "issuetype": "Contents",
+      "project": "BTOBGLOBAL",
+      "parent": null,
       "created": "2026-08-26T15:24:43.255+0900",
       "resolved": null,
-      "updated": "2026-09-21T10:39:01.714+0900",
+      "updated": "2026-09-22T17:32:30.069+0900",
       "due": null,
       "stageSince": "2026-08-31T10:41:25.349+0900",
       "url": "https://lge-gmc.atlassian.net/browse/BTOBGLOBAL-1349",
       "descriptionExcerpt": "",
-      "commentCount": 33,
+      "commentCount": 36,
       "comments": [
         {
-          "author": "김수안/선임/MS B2B제품마케팅팀",
-          "created": "2026-09-21T10:27:31.725+0900",
-          "text": "@박준상/(협력사) 차장/D2C플랫폼개발팀 차장님, 안녕하세요. PDP확인해보니 SSD 스펙값 입력이 누락된 것 같네요\n아래처럼 등록을 요청드립니다.\n | SSD | SSD(1) | SSD(2) | SSD(3)\n15U50U | M.2 Dual SSD slots, Gen4\n- NVMe : 1TB / 512GB / 256GB | M.2 Dual SSD slots, Gen4\n- NVMe : 1TB | M.2 Dual SSD slots, Gen4\n- NVMe : 512GB | M.2 Dual SSD slots, Gen4\n- NVMe : 256GB\n16Z90U | M.2 Dual SSD slots, Gen4\n- NVMe : 1TB / 512GB / 256GB | M.2 Dual SSD slots, Gen4\n- NVM…"
-        },
-        {
-          "author": "김영민/(협력사) 책임/B2B디지털채널팀",
-          "created": "2026-09-17T16:33:38.217+0900",
-          "text": "Dear All,\nSpec Value 내 태그 포함 시 저장 안되는 오류는 운영 배포되어 해결되었습니다.\n다만, Spec Value 줄바꿈으로 인해 셀의 높이가 증가하여 스크롤이 잘리는 현상은 CSS 수정이 필요하여 추석 이후 신규 티켓 생성하여 진행될 예정이오니 참고 부탁드립니다.\nSpec Value 줄바꿈 제거 시 스크롤 잘리는 현상은 발생하지 않습니다.\n고맙습니다.\ncc @조승은/(협력사) 부장/B2B디지털채널팀 @신은아/(협력사) 선임/B2B디지털채널팀  @박호경/(협력사) 책임/B2B디지털채널팀 @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀 @박준상/(협력사) 차장/D2C플랫폼개발팀"
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-22T17:32:24.317+0900",
+          "text": "Dear @JiaHaoWu/(협력사) 주임/D2C플랫폼개발팀\nHave you created a category called “Copilot+ PC” on the global site?\nA duplicate Copilot is currently showing in the filter, and we are looking into the cause.\nIf you did create it, please let us know which request it was based on.\n\nThank you.\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀@강경희/(협력사) 부장/D2C플랫폼개발팀"
         },
         {
           "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
-          "created": "2026-09-17T15:50:59.679+0900",
-          "text": "@김수안/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n<br> 제거 후 필터 조정했습니다.\nhttps://www.lg.com/global/business/monitors-pcs/laptops/view-all-laptops/?ec_model_status_code=Active&sortCriteria=%40ec_stock_status+descending%2C%40ec_model_release_date+descending?\n필터 중 Category 내 Copilot+ PC가 중복 노출되는 부분은 개발팀에서 확인 중이며, 그 외 수정 건은 반영했습니다.\n\n15U50U와 16Z90U Storage 스펙이 한 스펙으로 묶여 있어, 필터 에서 1TB - 15U50U / 256G - B15U50U / 16Z90U가 노…"
+          "created": "2026-09-22T15:28:42.034+0900",
+          "text": "@김영민/(협력사) 책임/B2B디지털채널팀 책임님, 안녕하세요.\nCategory 항목의 Copilot+ PC 중복 노출 건 개발팀 확인이 완료되면 말씀 부탁드립니다.\n\n감사합니다.\n\ncc @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀 @박준상/(협력사) 차장/D2C플랫폼개발팀"
+        },
+        {
+          "author": "박준상/(협력사) 차장/D2C플랫폼개발팀",
+          "created": "2026-09-22T15:23:02.586+0900",
+          "text": "@김수안/선임/MS B2B제품마케팅팀 선임님, 안녕하세요.\n아래와 같이 추가했으나 필터는 아직 반영되지 않아 확인 중입니다.\n반영되는지 체크하고 말씀드리겠습니다.\n\n15U50U\n\n16Z90U\n\n감사합니다.\n\ncc @조승은/(협력사) 부장/B2B디지털채널팀 @신은아/(협력사) 선임/B2B디지털채널팀  @박호경/(협력사) 책임/B2B디지털채널팀 @서동한/(협력사) 책임/B2B디지털채널팀 @김나영/(협력사) 책임/B2B디지털채널팀 @박나은/(협력사) 선임/B2B디지털채널팀"
         }
       ]
     },
