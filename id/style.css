@@ -38,6 +38,11 @@ a{color:inherit}
   font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#B0B8D0;
   padding:0 16px 6px;white-space:nowrap;overflow:hidden;transition:opacity .2s;
 }
+.sb-section-label.sb-status{letter-spacing:.02em;text-transform:none;font-size:10px;color:#44546F;white-space:normal;line-height:1.35}
+.sb-status-dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:0}
+.sb-status-dot.jira-new{background:#44546F}
+.sb-status-dot.jira-progress{background:#0055CC}
+.sb-status-dot.jira-done{background:#216E4E}
 .sb-section-count{color:#C5CBDD;font-weight:600;letter-spacing:0}
 .sidebar.collapsed .sb-section-label{opacity:0;pointer-events:none;height:0;padding:0}
 .sb-section-label-toggle{cursor:pointer;user-select:none}
@@ -148,16 +153,10 @@ tbody tr.row-link:hover{background:#FAFBFD}
 
 /* Status badges */
 .badge{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.03em;padding:3px 8px;border-radius:4px;white-space:nowrap;background:#EEF2FF;color:#3B4CCA}
-.badge.st-new{background:#F1F5F9;color:#475569}
-.badge.st-progress{background:#E0F2FE;color:#0369A1}
-.badge.st-review{background:#EEF2FF;color:#4338CA}
-.badge.st-hold{background:#FEF3C7;color:#B45309}
-.badge.st-done{background:#DCFCE7;color:#15803D}
-.nav-item .ni-badge.st-new{background:#F1F5F9;color:#64748B}
-.nav-item .ni-badge.st-progress{background:#E0F2FE;color:#0369A1}
-.nav-item .ni-badge.st-review{background:#EEF2FF;color:#4338CA}
-.nav-item .ni-badge.st-hold{background:#FEF3C7;color:#B45309}
-.nav-item .ni-badge.st-done{background:#DCFCE7;color:#15803D}
+.badge.jira-new,.nav-item .ni-badge.jira-new,.chip.jira-new{background:#DCDFE4;color:#44546F}
+.badge.jira-progress,.nav-item .ni-badge.jira-progress,.chip.jira-progress{background:#E9F2FF;color:#0055CC}
+.badge.jira-done,.nav-item .ni-badge.jira-done,.chip.jira-done{background:#DCFFF1;color:#216E4E}
+.nav-item .ni-badge{max-width:108px;overflow:hidden;text-overflow:ellipsis}
 
 /* Ticket detail */
 .tk-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -171,7 +170,7 @@ tbody tr.row-link:hover{background:#FAFBFD}
 .alert{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;font-size:12px;font-weight:600;background:#FFF7ED;color:#9A3412;border:1px solid #FED7AA}
 .alert.info{background:#F8FAFC;color:#475569;border-color:#E2E8F0}
 .alert.done{background:#F0FDF4;color:#15803D;border-color:#BBF7D0}
-.nav-item .ni-badge.st-done{opacity:.85}
+.nav-item .ni-badge.jira-done{opacity:.85}
 .meta-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px 22px}
 .meta dt{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#9BA3BF;margin-bottom:5px}
 .meta dd{font-size:13px;font-weight:600;color:#1A1D2E;line-height:1.4;word-break:break-word}
