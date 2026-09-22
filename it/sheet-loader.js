@@ -1835,19 +1835,18 @@ function renderSidebarNavFromSheets(keys) {
     pushGrSection('Global Request', grKeys);
   }
 
-  // IT NPI 현황은 /it 기본 메뉴. IT 제품 현황은 ?npi=1 프리뷰에만 둔다.
-  // ID NPI 현황은 /id 사이드바에 있다.
-  html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">NPI</div>');
+  // NPI 메뉴는 ?npi=1 또는 NPI 딥링크에서만 보인다.
   if (!HIDE_NPI_NAV) {
+    html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">NPI</div>');
     html.push('<div class="nav-item nav-item-custom" data-key="npi_product_status" onclick="switchMenu(this)">' +
       '<span class="ni-text" data-abbr="PS">IT 제품 현황</span>' +
       '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">PS</span>' +
       '</div>');
+    html.push('<div class="nav-item nav-item-custom" data-key="npi_weekly_it" onclick="switchMenu(this)">' +
+      '<span class="ni-text" data-abbr="IW">IT NPI 현황</span>' +
+      '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">IT</span>' +
+      '</div>');
   }
-  html.push('<div class="nav-item nav-item-custom" data-key="npi_weekly_it" onclick="switchMenu(this)">' +
-    '<span class="ni-text" data-abbr="IW">IT NPI 현황</span>' +
-    '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">IT</span>' +
-    '</div>');
 
   // ── Live URL 섹션 ──
   html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">Live URL</div>');
