@@ -96,6 +96,13 @@ a{color:inherit}
 /* ── CONTENT ─────────────────────────────────── */
 .content-wrap{display:flex;flex-direction:column;padding:20px 24px 40px;gap:16px}
 .card{background:#fff;border:1px solid #E8EAF2;border-radius:14px;padding:22px 26px;box-shadow:0 1px 3px rgba(15,15,30,.02)}
+.ov-card-new{background:#fff;border:1px solid #E8EAF2;border-radius:16px;padding:24px 28px;box-shadow:0 1px 3px rgba(15,15,30,.02)}
+.ov-head-new{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;gap:16px;flex-wrap:wrap}
+.ov-head-title{flex:1;min-width:0}
+.ov-head-eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#A50034;margin-bottom:6px}
+.ov-head-name{font-size:20px;font-weight:800;color:#1A1D2E;letter-spacing:-.4px;line-height:1.2}
+.ov-head-total{text-align:right;flex-shrink:0}
+.ov-head-total-num{font-size:28px;font-weight:800;color:#A50034;letter-spacing:-.6px;line-height:1.1}
 .eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#A50034;margin-bottom:6px;display:inline-flex;align-items:center;gap:6px}
 .h1{font-size:20px;font-weight:800;color:#1A1D2E;letter-spacing:-.4px;line-height:1.25}
 .sub{font-size:12px;color:#9BA3BF;margin-top:4px}

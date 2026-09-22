@@ -2781,6 +2781,50 @@ function toggleUrlLibModel(modelName) {
   urlLibRenderResults();
 }
 
+// ── NPI 주간/월 현황 (IT·ID). 등록 모수와 진행 스냅샷은 따로 그린다. ──
+var _npiWeeklyBundle = null;
+var _npiWeeklyMonth = '';
+
+function renderNpiWeeklyContent(dept) {
+  updateTopbarTitle();
+  var wrap = document.getElementById('contentWrap');
+  if (!wrap) return;
+  if (typeof npiWeeklyReportHtml !== 'function') {
+    wrap.innerHTML = '<div class="npi-ps-empty" role="alert"><p>NPI 현황 모듈을 불러오지 못했습니다.</p></div>';
+    return;
+  }
+  if (!_npiWeeklyBundle) {
+    wrap.innerHTML = '<div class="npi-ps-empty" role="status">NPI 현황 데이터를 불러오는 중...</div>';
+    var bust = window.__BUILD_TS || window.__BUILD_V || Date.now();
+    Promise.all([
+      fetch('data/npi.json?v=' + bust).then(function (r) { return r.json(); }),
+      fetch('data/npi-weekly-cut.json?v=' + bust).then(function (r) { return r.json(); }),
+    ]).then(function (pair) {
+      _npiWeeklyBundle = { registration: pair[0], weeklyCut: pair[1] };
+      var liveDept = currentKey === 'npi_weekly_id' ? 'ID' : 'IT';
+      renderNpiWeeklyContent(liveDept);
+    }).catch(function (e) {
+      wrap.innerHTML = '<div class="npi-ps-empty" role="alert"><p>NPI 현황 데이터 로드 실패: ' +
+        escapeHtmlSheet(String(e)) +
+        '</p><button type="button" class="url-lib-page-btn" onclick="renderNpiWeeklyContent(\'' +
+        (dept === 'ID' ? 'ID' : 'IT') + '\')">다시 시도</button></div>';
+    });
+    return;
+  }
+  wrap.innerHTML = npiWeeklyReportHtml({
+    dept: dept,
+    month: _npiWeeklyMonth,
+    registration: _npiWeeklyBundle.registration,
+    weeklyCut: _npiWeeklyBundle.weeklyCut,
+  });
+}
+
+function npiWeeklySetMonth(value) {
+  _npiWeeklyMonth = value || '';
+  if (currentKey === 'npi_weekly_id') renderNpiWeeklyContent('ID');
+  else renderNpiWeeklyContent('IT');
+}
+
 // ── RENDER CONTENT ───────────────────────────────────────────
 function renderGrOverviewContent() {
   updateTopbarTitle();
@@ -2801,6 +2845,8 @@ function renderContent() {
   // ── 커스텀 섹션 분기 ──
   if (currentKey === 'gr_overview') { renderGrOverviewContent(); return; }
   if (currentKey === 'npi_product_status') { renderNpiProductStatusContent(); return; }
+  if (currentKey === 'npi_weekly_it') { renderNpiWeeklyContent('IT'); return; }
+  if (currentKey === 'npi_weekly_id') { renderNpiWeeklyContent('ID'); return; }
   if (currentKey === 'url_library') { renderUrlLibraryContent(); return; }
 
   updateTopbarTitle();
