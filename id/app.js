@@ -130,6 +130,11 @@ function renderSidebar() {
   section('In Progress', 'in_progress', groups.in_progress, false);
   section('Planned', 'planned', groups.planned, true);
   section(DATA.doneDays ? 'Done · ' + DATA.doneDays + '일' : 'Done', 'done', groups.done, true);
+  if (CFG.board === 'id') {
+    html.push('<div class="sb-section-label" style="margin-top:10px">NPI</div>');
+    html.push('<div class="nav-item' + (currentKey === 'id_npi' ? ' active' : '') + '" data-key="id_npi" data-abbr="NPI" onclick="switchTicket(this)" title="ID NPI 현황">' +
+      '<span class="ni-text">ID NPI 현황</span><span class="ni-badge ni-badge-muted">NPI</span></div>');
+  }
   if (!all.length) html.push('<div class="sb-empty">표시할 티켓이 없습니다.</div>');
   $('ticketNavList').innerHTML = html.join('');
   applySearchToNav();
@@ -150,7 +155,7 @@ function switchTicket(el) {
   if (window.innerWidth <= 768) closeMobileSidebar();
 }
 function selectKey(key) {
-  currentKey = findTicket(key) ? findTicket(key).key : 'overview';
+  currentKey = (CFG.board === 'id' && key === 'id_npi') ? 'id_npi' : (findTicket(key) ? findTicket(key).key : 'overview');
   document.querySelectorAll('.nav-item[data-key]').forEach(function (n) {
     n.classList.toggle('active', n.dataset.key === currentKey);
   });
@@ -159,7 +164,9 @@ function selectKey(key) {
 }
 function initialKeyFromUrl() {
   try {
-    var raw = new URLSearchParams(window.location.search).get(PARAM) || '';
+    var params = new URLSearchParams(window.location.search);
+    if (CFG.board === 'id' && (params.get('npi') === '1' || params.get('view') === 'npi')) return 'id_npi';
+    var raw = params.get(PARAM) || '';
     if (!raw) return 'overview';
     var t = findTicket(raw);
     if (!t) {
@@ -175,7 +182,13 @@ function initialKeyFromUrl() {
 function syncUrl() {
   try {
     var params = new URLSearchParams(window.location.search);
-    if (currentKey === 'overview') params.delete(PARAM); else params.set(PARAM, currentKey);
+    if (currentKey === 'id_npi') {
+      params.delete(PARAM);
+      params.set('npi', '1');
+    } else {
+      params.delete('npi');
+      if (currentKey === 'overview') params.delete(PARAM); else params.set(PARAM, currentKey);
+    }
     var qs = params.toString();
     var next = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
     if (next !== window.location.pathname + window.location.search + window.location.hash) {
@@ -210,6 +223,7 @@ function applySearchToNav() {
 
 // ── 본문 ─────────────────────────────────────────────────
 function renderContent() {
+  if (currentKey === 'id_npi') { renderIdNpi(); return; }
   var wrap = $('contentWrap');
   var t = currentKey === 'overview' ? null : findTicket(currentKey);
   $('topTitle').textContent = t ? t.key + ' · ' + shortTitle(t.title) : CFG.title;
@@ -217,6 +231,45 @@ function renderContent() {
   if (t) { jira.href = t.url; jira.style.display = 'inline-flex'; } else { jira.style.display = 'none'; }
   wrap.innerHTML = t ? renderTicket(t) : renderOverview();
   document.title = (t ? t.key + ' · ' : '') + CFG.docTitle;
+}
+
+var _idNpiBundle = null;
+var _idNpiMonth = '';
+
+function renderIdNpi() {
+  var wrap = $('contentWrap');
+  $('topTitle').textContent = 'ID NPI 현황';
+  $('topJiraLink').style.display = 'none';
+  document.title = 'ID NPI 현황 · ' + CFG.docTitle;
+  if (typeof npiWeeklyReportHtml !== 'function') {
+    wrap.innerHTML = '<div class="card">NPI 현황 모듈을 불러오지 못했습니다.</div>';
+    return;
+  }
+  if (!_idNpiBundle) {
+    wrap.innerHTML = '<div class="card">ID NPI 현황을 불러오는 중입니다.</div>';
+    var bust = window.__BUILD_V || Date.now();
+    Promise.all([
+      fetch('../it/data/npi.json?v=' + bust).then(function (r) { if (!r.ok) throw new Error('npi.json HTTP ' + r.status); return r.json(); }),
+      fetch('../it/data/npi-weekly-cut.json?v=' + bust).then(function (r) { if (!r.ok) throw new Error('weekly cut HTTP ' + r.status); return r.json(); }),
+    ]).then(function (pair) {
+      _idNpiBundle = { registration: pair[0], weeklyCut: pair[1] };
+      if (currentKey === 'id_npi') renderIdNpi();
+    }).catch(function (e) {
+      wrap.innerHTML = '<div class="notice">ID NPI 데이터를 불러오지 못했습니다 (' + esc(e.message) + ').</div>';
+    });
+    return;
+  }
+  wrap.innerHTML = npiWeeklyReportHtml({
+    dept: 'ID',
+    month: _idNpiMonth,
+    registration: _idNpiBundle.registration,
+    weeklyCut: _idNpiBundle.weeklyCut,
+  });
+}
+
+function npiWeeklySetMonth(value) {
+  _idNpiMonth = value || '';
+  if (currentKey === 'id_npi') renderIdNpi();
 }
 
 function renderOverview() {

@@ -338,9 +338,13 @@ async function loadDashboardFromPublishedHtml() {
   // 커스텀 섹션 (Overview / IT 제품 현황 / URL Library) 특수 키 등록 — initBaseGlobals(DATA={}) 이후에 추가
   window.__DASHBOARD_KEYS.unshift('gr_overview');
   window.__DASHBOARD_KEYS.push('npi_product_status');
+  window.__DASHBOARD_KEYS.push('npi_weekly_it');
+  window.__DASHBOARD_KEYS.push('npi_weekly_id');
   window.__DASHBOARD_KEYS.push('url_library');
   window.DATA['gr_overview'] = { displayTitle: 'IT 업무 현황', _custom: true };
   window.DATA['npi_product_status'] = { displayTitle: 'IT 제품 현황', _custom: true, _loaded: false };
+  window.DATA['npi_weekly_it'] = { displayTitle: 'IT NPI 현황', _custom: true, _loaded: false };
+  window.DATA['npi_weekly_id'] = { displayTitle: 'ID NPI 현황', _custom: true, _loaded: false };
   window.DATA['url_library'] = { displayTitle: 'Live URL Library', _custom: true, _loaded: false };
 
   validSheets.forEach(function(s) {
@@ -1649,7 +1653,8 @@ function npiNavPreviewEnabled() {
     if (v === '1' || v === 'true' || v === 'yes') return true;
     // ?task= 딥링크가 NPI 탭을 가리키면 숨김을 풀어야 그 화면이 열린다.
     var task = String(q.get('task') || '').trim().toLowerCase().replace(/[^a-z0-9\uac00-\ud7a3]+/g, '');
-    return task === 'npiproductstatus' || task === 'npi' || task === '제품현황' || task === 'it제품현황';
+    return task === 'npiproductstatus' || task === 'npi' || task === '제품현황' || task === 'it제품현황' ||
+      task === 'itnpi' || task === 'idnpi';
   } catch (e) {
     return false;
   }
@@ -1658,7 +1663,9 @@ var HIDE_NPI_NAV = !npiNavPreviewEnabled();
 
 var CUSTOM_NAV_TABS = [
   { key: 'gr_overview', label: 'IT 업무 현황', abbr: 'OV', section: 'Overview', aliases: ['overview', 'OV', 'gr_overview'] },
-  { key: 'npi_product_status', label: 'IT 제품 현황', abbr: 'PS', section: 'NPI' },
+  { key: 'npi_product_status', label: 'IT 제품 현황', abbr: 'PS', section: 'NPI', aliases: ['npi-product-status', 'npi', 'IT 제품 현황'] },
+  { key: 'npi_weekly_it', label: 'IT NPI 현황', abbr: 'IW', section: 'NPI', aliases: ['it-npi', 'IT NPI 현황'] },
+  { key: 'npi_weekly_id', label: 'ID NPI 현황', abbr: 'DW', section: 'NPI', aliases: ['id-npi', 'ID NPI 현황'] },
   { key: 'url_library', label: 'Live URL Library', abbr: 'UL', section: 'Live URL' },
 ];
 if (typeof window !== 'undefined') window.HIDE_NPI_NAV = HIDE_NPI_NAV;
@@ -1828,14 +1835,19 @@ function renderSidebarNavFromSheets(keys) {
     pushGrSection('Global Request', grKeys);
   }
 
-  // ── NPI 섹션 (HIDE_NPI_NAV로 사이드바 비표시) ──
+  // IT NPI 현황은 /it 기본 메뉴. IT 제품 현황은 ?npi=1 프리뷰에만 둔다.
+  // ID NPI 현황은 /id 사이드바에 있다.
+  html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">NPI</div>');
   if (!HIDE_NPI_NAV) {
-    html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">NPI</div>');
     html.push('<div class="nav-item nav-item-custom" data-key="npi_product_status" onclick="switchMenu(this)">' +
       '<span class="ni-text" data-abbr="PS">IT 제품 현황</span>' +
       '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">PS</span>' +
       '</div>');
   }
+  html.push('<div class="nav-item nav-item-custom" data-key="npi_weekly_it" onclick="switchMenu(this)">' +
+    '<span class="ni-text" data-abbr="IW">IT NPI 현황</span>' +
+    '<span class="ni-badge ni-badge-custom" style="background:rgba(165,0,52,.1);color:#A50034">IT</span>' +
+    '</div>');
 
   // ── Live URL 섹션 ──
   html.push('<div class="sb-section-label sb-section-label-custom" style="margin-top:10px">Live URL</div>');
