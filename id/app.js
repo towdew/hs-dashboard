@@ -58,17 +58,25 @@ function stageOf(t) {
   if (/PRE.?CHECK|OPEN|NEW|CREATE|TO DO/i.test(t.status)) return '사전검토';
   return '진행 중';
 }
-function stageClass(t) {
-  return { '사전검토': 'st-new', '진행 중': 'st-progress', '검토·승인': 'st-review', '응답 대기': 'st-hold', '완료': 'st-done' }[stageOf(t)] || '';
+function isDone(t) { return t.statusCategory === 'done'; }
+function jiraStatusAppearance(t) {
+  if (t.statusCategory === 'done') return 'jira-done';
+  if (t.statusCategory === 'new') return 'jira-new';
+  return 'jira-progress';
 }
-function isOverdue(t) { var d = daysUntil(t.due); return d != null && d < 0 && stageOf(t) !== '완료'; }
-function isStale(t) { var d = daysSince(t.updated); return d != null && d >= 7 && stageOf(t) !== '완료'; }
-// 사이드바 그룹: /it 의 In Progress / Planned / Done 과 같은 3분할
-function groupOf(t) {
-  if (t.statusCategory === 'done') return 'done';
-  if (stageOf(t) === '사전검토') return 'planned';
-  return 'in_progress';
+function statusRank(status, category) {
+  var rank = {
+    'OPEN': 10, 'TO DO': 11, 'PRE-CHECK': 20, 'IN PROGRESS': 30,
+    'WAITING FOR SUB APPROVAL': 40, 'ON HOLD (RESPONSE)': 50,
+    'RESOLVED / CLOSED': 80, 'REJECTED': 90
+  }[status];
+  if (rank != null) return rank;
+  if (category === 'new') return 15;
+  if (category === 'done') return 85;
+  return 45;
 }
+function isOverdue(t) { var d = daysUntil(t.due); return d != null && d < 0 && !isDone(t); }
+function isStale(t) { var d = daysSince(t.updated); return d != null && d >= 7 && !isDone(t); }
 
 function tickets() { return (DATA && DATA.tickets) || []; }
 function lastComment(t) { return (t.comments && t.comments.length) ? t.comments[0] : null; }
@@ -96,40 +104,65 @@ function toggleNavSection(id) {
   try { localStorage.setItem(CFG.board + '-nav-collapsed:' + id, collapsed ? '1' : '0'); } catch (e) { /* ignore */ }
 }
 
+function ticketKeyOrder(a, b) {
+  var ak = String(a.key || '').split('-');
+  var bk = String(b.key || '').split('-');
+  var proj = ak[0].localeCompare(bk[0]);
+  if (proj) return proj;
+  return (parseInt(ak[1], 10) || 0) - (parseInt(bk[1], 10) || 0);
+}
+
 function renderSidebar() {
   var all = tickets();
-  var groups = { in_progress: [], planned: [], done: [] };
-  all.forEach(function (t) { groups[groupOf(t)].push(t); });
+  var byStatus = {};
+  all.forEach(function (t) {
+    var name = t.status || 'UNKNOWN';
+    if (!byStatus[name]) byStatus[name] = [];
+    byStatus[name].push(t);
+  });
+  var statuses = Object.keys(byStatus).sort(function (a, b) {
+    var sampleA = byStatus[a][0];
+    var sampleB = byStatus[b][0];
+    var ra = statusRank(a, sampleA.statusCategory);
+    var rb = statusRank(b, sampleB.statusCategory);
+    if (ra !== rb) return ra - rb;
+    return a.localeCompare(b);
+  });
   var html = [];
   html.push('<div class="sb-section-label">Overview</div>');
   html.push('<div class="nav-item' + (currentKey === 'overview' ? ' active' : '') + '" data-key="overview" data-abbr="' + esc(CFG.navAbbr) + '" onclick="switchTicket(this)" title="' + esc(CFG.title) + '">' +
     '<span class="ni-text">' + esc(CFG.title) + '</span><span class="ni-badge ni-badge-muted" id="navTotalBadge">' + all.length + '</span></div>');
 
-  function section(label, id, list, collapsible) {
+  function section(label, id, list, collapsible, appearance) {
     if (!list.length) return;
     var collapsed = collapsible && navSectionCollapsed(id);
+    var dot = '<span class="sb-status-dot ' + appearance + '" aria-hidden="true"></span>';
     if (collapsible) {
-      html.push('<div class="sb-section-label sb-section-label-toggle' + (collapsed ? ' is-collapsed' : '') + '" style="margin-top:10px" role="button" tabindex="0" ' +
-        'data-section="' + id + '" aria-expanded="' + (collapsed ? 'false' : 'true') + '" onclick="toggleNavSection(\'' + id + '\')" ' +
-        'onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();toggleNavSection(\'' + id + '\')}">' +
-        '<span class="sb-section-caret" aria-hidden="true">▾</span>' + esc(label) + ' <span class="sb-section-count">(' + list.length + ')</span></div>');
-      html.push('<div class="sb-section-body' + (collapsed ? ' is-collapsed' : '') + '" data-section="' + id + '">');
+      html.push('<div class="sb-section-label sb-status sb-section-label-toggle' + (collapsed ? ' is-collapsed' : '') + '" style="margin-top:10px" role="button" tabindex="0" ' +
+        'data-section="' + esc(id) + '" aria-expanded="' + (collapsed ? 'false' : 'true') + '" onclick="toggleNavSection(\'' + esc(id) + '\')" ' +
+        'onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();toggleNavSection(\'' + esc(id) + '\')}">' +
+        '<span class="sb-section-caret" aria-hidden="true">▾</span>' + dot + esc(label) + ' <span class="sb-section-count">(' + list.length + ')</span></div>');
+      html.push('<div class="sb-section-body' + (collapsed ? ' is-collapsed' : '') + '" data-section="' + esc(id) + '">');
     } else {
-      html.push('<div class="sb-section-label" style="margin-top:10px">' + esc(label) + ' <span class="sb-section-count">(' + list.length + ')</span></div>');
+      html.push('<div class="sb-section-label sb-status" style="margin-top:10px">' + dot + esc(label) +
+        ' <span class="sb-section-count">(' + list.length + ')</span></div>');
     }
     list.forEach(function (t) {
       var abbr = t.key.replace(/^[A-Z]+-/, '');
       html.push('<div class="nav-item' + (currentKey === t.key ? ' active' : '') + '" data-key="' + esc(t.key) + '" data-abbr="' + esc(abbr) + '" ' +
         'data-search="' + esc((t.key + ' ' + t.title + ' ' + t.assignee).toLowerCase()) + '" onclick="switchTicket(this)" title="' + esc(t.key + ' · ' + t.title) + '">' +
         '<span class="ni-text"><span class="ni-key">' + esc(t.key) + '</span><span class="ni-title">' + esc(shortTitle(t.title)) + '</span></span>' +
-        '<span class="ni-badge ' + stageClass(t) + '">' + esc(stageShort(t)) + '</span></div>');
+        '<span class="ni-badge ' + jiraStatusAppearance(t) + '" title="' + esc(t.status) + '">' + esc(t.status) + '</span></div>');
     });
     if (collapsible) html.push('</div>');
   }
-  groups.done.sort(function (a, b) { return String(b.resolved || b.stageSince || '').localeCompare(String(a.resolved || a.stageSince || '')); });
-  section('In Progress', 'in_progress', groups.in_progress, false);
-  section('Planned', 'planned', groups.planned, true);
-  section(DATA.doneDays ? 'Done · ' + DATA.doneDays + '일' : 'Done', 'done', groups.done, true);
+  statuses.forEach(function (name) {
+    var list = byStatus[name].slice().sort(ticketKeyOrder);
+    var sample = list[0];
+    var done = isDone(sample);
+    var label = done && DATA.doneDays ? name + ' · ' + DATA.doneDays + 'd' : name;
+    section(label, 'status:' + name, list, done, jiraStatusAppearance(sample));
+  });
   if (CFG.board === 'id') {
     html.push('<div class="sb-section-label" style="margin-top:10px">NPI</div>');
     html.push('<div class="nav-item' + (currentKey === 'id_npi' ? ' active' : '') + '" data-key="id_npi" data-abbr="NPI" onclick="switchTicket(this)" title="ID NPI 현황">' +
@@ -275,7 +308,7 @@ function npiWeeklySetMonth(value) {
 function renderOverview() {
   var all = tickets();
   var visible = all.filter(function (t) {
-    if (stageFilter && stageOf(t) !== stageFilter) return false;
+    if (stageFilter && t.status !== stageFilter) return false;
     if (searchTerm && (t.key + ' ' + t.title + ' ' + t.assignee).toLowerCase().indexOf(searchTerm) < 0) return false;
     return true;
   });
@@ -305,10 +338,17 @@ function renderOverview() {
     kpi(overdue, '마감일 초과', overdue > 0) + '<div class="kpi-div"></div>' +
     kpi(stale, '7일 이상 변경 없음', stale > 0) + '<div class="kpi-div"></div>' +
     kpi(doneN, (DATA.doneDays ? '최근 ' + DATA.doneDays + '일 ' : '') + '완료') + '</div>');
-  h.push('<div class="chips" role="group" aria-label="단계 필터">' + [''].concat(STAGES).map(function (s) {
-    var n = s ? all.filter(function (t) { return stageOf(t) === s; }).length : all.length;
+  var statusChips = Object.keys(all.reduce(function (acc, t) { acc[t.status] = t; return acc; }, {})).sort(function (a, b) {
+    var ta = all.filter(function (t) { return t.status === a; })[0];
+    var tb = all.filter(function (t) { return t.status === b; })[0];
+    return statusRank(a, ta.statusCategory) - statusRank(b, tb.statusCategory);
+  });
+  h.push('<div class="chips" role="group" aria-label="Status">' + [''].concat(statusChips).map(function (s) {
+    var sample = s ? all.filter(function (t) { return t.status === s; }) : [];
+    var n = s ? sample.length : all.length;
     if (s && !n) return '';
-    return '<button class="chip" data-stage="' + esc(s) + '" aria-pressed="' + (s === stageFilter) + '" onclick="setStageFilter(this.dataset.stage)">' + (s || '전체') + '<b>' + n + '</b></button>';
+    var tone = s ? jiraStatusAppearance(sample[0]) : '';
+    return '<button class="chip' + (tone ? ' ' + tone : '') + '" data-stage="' + esc(s) + '" aria-pressed="' + (s === stageFilter) + '" onclick="setStageFilter(this.dataset.stage)">' + (s || 'All') + '<b>' + n + '</b></button>';
   }).join('') + '</div>');
   h.push('</div>');
 
@@ -321,7 +361,7 @@ function renderOverview() {
   visible.forEach(function (t) {
     h.push('<tr class="row-link" onclick="selectKey(\'' + esc(t.key) + '\')">' +
       '<td><div class="t-title">' + esc(t.title) + '</div><div class="t-key">' + esc(t.key) + (t.parent && t.parent.key ? ' · 상위 ' + esc(t.parent.key) : '') + '</div></td>' +
-      '<td><span class="badge ' + stageClass(t) + '">' + esc(t.status) + '</span></td>' +
+      '<td><span class="badge ' + jiraStatusAppearance(t) + '">' + esc(t.status) + '</span></td>' +
       '<td>' + esc(t.assignee) + '</td>' +
       '<td class="t-num' + (isOverdue(t) ? ' overdue' : '') + '">' + (stageOf(t) === '완료' ? '<span class="muted">완료 ' + esc(day(t.resolved || t.stageSince)) + '</span>' : (t.due ? esc(t.due) : '미정')) + '</td>' +
       '<td class="t-num">' + esc(day(t.updated)) + '<span class="t-sub">' + esc(ago(t.updated)) + '</span></td>' +
@@ -350,7 +390,7 @@ function renderTicket(t) {
   var sinceStage = daysSince(t.stageSince);
   h.push('<div class="card">');
   h.push('<div class="tk-head"><div class="tk-head-main">' +
-    '<div class="tk-key"><span>' + esc(t.key) + '</span><span class="badge ' + stageClass(t) + '">' + esc(t.status) + '</span>' +
+    '<div class="tk-key"><span>' + esc(t.key) + '</span><span class="badge ' + jiraStatusAppearance(t) + '">' + esc(t.status) + '</span>' +
     (t.priority ? '<span class="pill">' + esc(t.priority) + '</span>' : '') + (t.issuetype ? '<span class="pill">' + esc(t.issuetype) + '</span>' : '') + '</div>' +
     '<div class="tk-title">' + esc(t.title) + '</div></div>' +
     '<div class="tk-actions"><a class="btn-primary" href="' + esc(t.url) + '" target="_blank" rel="noopener">Jira에서 열기 ↗</a></div></div>');
@@ -370,7 +410,7 @@ function renderTicket(t) {
   h.push('<dl class="meta-grid">' +
     meta('담당자', t.assignee) +
     meta('보고자', t.reporter || '—') +
-    meta('진행 단계', stage, t.status) +
+    meta('Status', t.status) +
     meta('프로젝트', t.project) +
     meta('상위 티켓', t.parent && t.parent.key ? '<a class="link" href="' + esc(DATA.baseUrl + '/browse/' + t.parent.key) + '" target="_blank" rel="noopener">' + esc(t.parent.key) + '</a>' : '—', t.parent && t.parent.title ? t.parent.title : '', true) +
     meta('생성', day(t.created) || '—', ago(t.created)) +
