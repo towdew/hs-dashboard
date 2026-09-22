@@ -567,16 +567,12 @@ function npiWeeklyTrackerHtml(dept, cut, tracker, problems) {
       bucket[stage] += 1;
     });
   });
-  var scope = dept === 'ID' ? 'PIM Category2 = ID' : 'PIM Category2 = IT, Site = B2B 또는 B2C';
   var html = '<div style="padding:16px 24px 28px">';
   html += '<div class="ov-card-new"><div class="ov-head-new"><div class="ov-head-title">';
   html += '<div class="ov-head-eyebrow">NPI Weekly Status Report</div>';
   html += '<div class="ov-head-name">' + (dept === 'ID' ? 'ID' : 'IT') + '</div>';
-  html += '<div style="font-size:12px;font-weight:500;color:#64748B;margin-top:4px;line-height:1.6">Action-focused view by Owner'
-    + ' · Data Cut ' + npiWeeklyEscape(npiWeeklyCutDateLabel(meta.date)) + ' ' + npiWeeklyEscape(meta.label || '')
-    + ' · NPI Month ' + npiWeeklyEscape(meta.month || '—')
-    + ' · ' + npiWeeklyEscape(scope)
-    + ' · ' + npiWeeklyEscape(meta.sourceFile || '') + '</div>';
+  html += '<div style="font-size:12px;font-weight:500;color:#64748B;margin-top:4px;line-height:1.6">'
+    + npiWeeklyEscape(npiWeeklyCutDateLabel(meta.date)) + '</div>';
   html += '</div><div class="ov-head-total"><div class="ov-head-total-label">Total NPI</div><div class="ov-head-total-num">' + tracker.total + '</div></div></div>';
   html += '<div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:8px">';
   NPI_WEEKLY_STAGES.forEach(function (stage) {
@@ -627,7 +623,7 @@ function npiWeeklyTrackerHtml(dept, cut, tracker, problems) {
   html += '</div>';
   html += '<div style="font-size:13px;font-weight:800;color:#92400E;margin:8px 0">SUBSIDIARY ACTION NEEDED · ' + tracker.subsidiary.length + ' products</div>';
   html += tracker.subsidiary.length
-    ? npiWeeklyTable(['#', 'Site', 'Product ID', 'NPI Type', 'Current Status', 'Action To Do'], tracker.subsidiary.map(function (item, index) {
+    ? npiWeeklyTable(['#', 'Site', 'Country', 'Product ID', 'NPI Type', 'Current Status', 'Action To Do'], tracker.subsidiary.map(function (item, index) {
       var status = item.stage === 'notReady' ? 'Not Ready' : (item.stage === 'underReview' ? 'Under Review' : 'On-Hold');
       var action = (item.gaps && item.gaps.length)
         ? item.gaps.map(npiWeeklyActionPhrase).join('<br>')
@@ -635,6 +631,7 @@ function npiWeeklyTrackerHtml(dept, cut, tracker, problems) {
       return '<tr style="border-top:1px solid #E2E8F0">' +
         '<td style="padding:8px 10px">' + (index + 1) + '</td>' +
         '<td style="padding:8px 10px">' + npiWeeklyEscape(item.site) + '</td>' +
+        '<td style="padding:8px 10px">' + npiWeeklyEscape(item.locale || '—') + '</td>' +
         '<td style="padding:8px 10px">' + npiWeeklyEscape(item.model) + '</td>' +
         '<td style="padding:8px 10px">' + npiWeeklyEscape(item.npiType) + '</td>' +
         '<td style="padding:8px 10px">' + status + '</td>' +
@@ -647,10 +644,11 @@ function npiWeeklyTrackerHtml(dept, cut, tracker, problems) {
   html += '<div class="ov-head-name" style="font-size:16px">3. Not Ready - Product Readiness Detail</div>';
   html += '<div style="font-size:12px;color:#64748B;margin:8px 0 12px">STEP 1 Not Ready ' + buckets.notReady.length + '건. 값이 비거나 조건에 안 맞는 항목이 액션입니다.</div>';
   html += buckets.notReady.length
-    ? npiWeeklyTable(['Site', 'Product ID', 'Spec Status', 'UFN', 'Key Feature', 'Spec Assignment', 'Local Asset Review', 'Exact Action To Do'], buckets.notReady.map(function (item) {
+    ? npiWeeklyTable(['Site', 'Country', 'Product ID', 'Spec Status', 'UFN', 'Key Feature', 'Spec Assignment', 'Local Asset Review', 'Exact Action To Do'], buckets.notReady.map(function (item) {
       var action = item.gaps.map(npiWeeklyActionPhrase).join('<br>');
       return '<tr style="border-top:1px solid #E2E8F0">' +
         '<td style="padding:8px 10px">' + npiWeeklyEscape(item.site) + '</td>' +
+        '<td style="padding:8px 10px">' + npiWeeklyEscape(item.locale || '—') + '</td>' +
         '<td style="padding:8px 10px">' + npiWeeklyEscape(item.model) + '</td>' +
         '<td style="padding:8px 10px">' + npiWeeklyEscape(item.specStatus || '—') + '</td>' +
         '<td style="padding:8px 10px">' + npiWeeklyEscape(item.ufn || '—') + '</td>' +
