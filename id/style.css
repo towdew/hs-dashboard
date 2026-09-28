@@ -183,6 +183,12 @@ tbody tr.row-link:hover{background:#FAFBFD}
 .pill{font-size:11px;font-weight:600;color:#4A5280;background:#F5F6FA;border-radius:6px;padding:4px 9px}
 .link{color:#A50034;text-decoration:none;font-weight:700}
 .link:hover{text-decoration:underline}
+.cat-sku{font-weight:800;color:#1A1D2E;text-decoration:none}
+.cat-sku:hover{color:#A50034}
+.delta-add{color:#15803D}
+.delta-remove{color:#C2410C}
+.pill.delta-add{background:#F0FDF4;color:#15803D}
+.pill.delta-remove{background:#FFF7ED;color:#C2410C}
 
 /* Comments — 티켓 탭 타임라인 */
 .cm-list{list-style:none;margin:0;padding:0;position:relative}
@@ -244,6 +250,7 @@ tbody tr.row-link:hover{background:#FAFBFD}
   .kpi b{font-size:22px}
   .tk-title{font-size:17px}
   thead th:nth-child(4),tbody td:nth-child(4){display:none}
+  .cat-table thead th:nth-child(4),.cat-table tbody td:nth-child(4){display:table-cell}
   .col-cm{display:none}
   .cm-item{padding-left:20px}
 }

@@ -11,7 +11,8 @@ var CFG = Object.assign({
 }, window.DASH_CONFIG || {});
 
 var DATA = null;              // tickets.json 전체
-var currentKey = 'overview';  // 'overview' | 티켓 키
+var CATALOG = null;           // it-b2b/data/catalog.json — 모델 변동
+var currentKey = 'overview';  // 'overview' | 'catalog' | 'id_npi' | 티켓 키
 var stageFilter = '';         // Overview 단계 칩
 var searchTerm = '';
 var PARAM = 'ticket';
@@ -132,6 +133,12 @@ function renderSidebar() {
   html.push('<div class="sb-section-label">Overview</div>');
   html.push('<div class="nav-item' + (currentKey === 'overview' ? ' active' : '') + '" data-key="overview" data-abbr="' + esc(CFG.navAbbr) + '" onclick="switchTicket(this)" title="' + esc(CFG.title) + '">' +
     '<span class="ni-text">' + esc(CFG.title) + '</span><span class="ni-badge ni-badge-muted" id="navTotalBadge">' + all.length + '</span></div>');
+  if (CFG.board === 'it-b2b') {
+    var delta = catalogChangeCount(CATALOG);
+    html.push('<div class="sb-section-label" style="margin-top:10px">Catalog</div>');
+    html.push('<div class="nav-item' + (currentKey === 'catalog' ? ' active' : '') + '" data-key="catalog" data-abbr="PLP" onclick="switchTicket(this)" title="Global B2B 모델 변동">' +
+      '<span class="ni-text">모델 변동</span><span class="ni-badge ' + (delta ? 'jira-progress' : 'ni-badge-muted') + '">' + (CATALOG ? delta : '…') + '</span></div>');
+  }
 
   function section(label, id, list, collapsible, appearance) {
     if (!list.length) return;
@@ -187,8 +194,14 @@ function switchTicket(el) {
   selectKey(key);
   if (window.innerWidth <= 768) closeMobileSidebar();
 }
+function customKey(key) {
+  if (CFG.board === 'id' && key === 'id_npi') return 'id_npi';
+  if (CFG.board === 'it-b2b' && key === 'catalog') return 'catalog';
+  return '';
+}
 function selectKey(key) {
-  currentKey = (CFG.board === 'id' && key === 'id_npi') ? 'id_npi' : (findTicket(key) ? findTicket(key).key : 'overview');
+  var custom = customKey(key);
+  currentKey = custom || (findTicket(key) ? findTicket(key).key : 'overview');
   document.querySelectorAll('.nav-item[data-key]').forEach(function (n) {
     n.classList.toggle('active', n.dataset.key === currentKey);
   });
@@ -199,6 +212,7 @@ function initialKeyFromUrl() {
   try {
     var params = new URLSearchParams(window.location.search);
     if (CFG.board === 'id' && (params.get('npi') === '1' || params.get('view') === 'npi')) return 'id_npi';
+    if (CFG.board === 'it-b2b' && params.get('view') === 'catalog') return 'catalog';
     var raw = params.get(PARAM) || '';
     if (!raw) return 'overview';
     var t = findTicket(raw);
@@ -215,12 +229,18 @@ function initialKeyFromUrl() {
 function syncUrl() {
   try {
     var params = new URLSearchParams(window.location.search);
+    params.delete('npi');
+    params.delete('view');
     if (currentKey === 'id_npi') {
       params.delete(PARAM);
       params.set('npi', '1');
+    } else if (currentKey === 'catalog') {
+      params.delete(PARAM);
+      params.set('view', 'catalog');
+    } else if (currentKey === 'overview') {
+      params.delete(PARAM);
     } else {
-      params.delete('npi');
-      if (currentKey === 'overview') params.delete(PARAM); else params.set(PARAM, currentKey);
+      params.set(PARAM, currentKey);
     }
     var qs = params.toString();
     var next = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
@@ -247,7 +267,7 @@ function toast(msg) {
 }
 
 // ── 검색 (사이드바 필터) ─────────────────────────────────
-function onSearchInput(v) { searchTerm = String(v || '').trim().toLowerCase(); applySearchToNav(); if (currentKey === 'overview') renderContent(); }
+function onSearchInput(v) { searchTerm = String(v || '').trim().toLowerCase(); applySearchToNav(); if (currentKey === 'overview' || currentKey === 'catalog') renderContent(); }
 function applySearchToNav() {
   document.querySelectorAll('.nav-item[data-search]').forEach(function (n) {
     n.classList.toggle('is-hidden', !!searchTerm && n.dataset.search.indexOf(searchTerm) < 0);
@@ -256,7 +276,10 @@ function applySearchToNav() {
 
 // ── 본문 ─────────────────────────────────────────────────
 function renderContent() {
+  var search = $('ticketSearch');
+  if (search) search.placeholder = currentKey === 'catalog' ? '모델, 이름 검색' : '티켓 번호, 제목, 담당자 검색';
   if (currentKey === 'id_npi') { renderIdNpi(); return; }
+  if (currentKey === 'catalog') { renderCatalog(); return; }
   var wrap = $('contentWrap');
   var t = currentKey === 'overview' ? null : findTicket(currentKey);
   $('topTitle').textContent = t ? t.key + ' · ' + shortTitle(t.title) : CFG.title;
@@ -303,6 +326,116 @@ function renderIdNpi() {
 function npiWeeklySetMonth(value) {
   _idNpiMonth = value || '';
   if (currentKey === 'id_npi') renderIdNpi();
+}
+
+function catalogChangeCount(payload) {
+  var n = 0;
+  ((payload && payload.catalogs) || []).forEach(function (c) {
+    var ch = c.change || {};
+    n += (ch.added || []).length + (ch.removed || []).length + (ch.renamed || []).length;
+  });
+  return n;
+}
+function loadCatalog() {
+  fetch('./data/catalog.json?v=' + Date.now(), { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function (json) {
+      CATALOG = json;
+      renderSidebar();
+      if (currentKey === 'catalog') renderCatalog();
+    })
+    .catch(function (e) {
+      if (currentKey === 'catalog') {
+        $('contentWrap').innerHTML = '<div class="notice">모델 목록을 불러오지 못했습니다 (' + esc(e.message) + ').</div>';
+      }
+    });
+}
+function setCatalog(id) {
+  window.__catId = id || 'laptops';
+  if (currentKey === 'catalog') renderCatalog();
+}
+function renderCatalog() {
+  var wrap = $('contentWrap');
+  $('topTitle').textContent = '모델 변동';
+  $('topJiraLink').style.display = 'none';
+  document.title = '모델 변동 · ' + CFG.docTitle;
+  if (!CATALOG) {
+    wrap.innerHTML = '<div class="card">모델 목록을 불러오는 중입니다.</div>';
+    return;
+  }
+  var catalogs = CATALOG.catalogs || [];
+  var activeId = window.__catId || (catalogs[0] && catalogs[0].id) || 'laptops';
+  var cat = catalogs.filter(function (c) { return c.id === activeId; })[0] || catalogs[0];
+  if (!cat) {
+    wrap.innerHTML = '<div class="notice">표시할 카탈로그가 없습니다.</div>';
+    return;
+  }
+  var change = cat.change || {};
+  var added = change.added || [];
+  var removed = change.removed || [];
+  var renamed = change.renamed || [];
+  var models = (cat.models || []).filter(function (m) {
+    if (!searchTerm) return true;
+    return (m.sku + ' ' + m.name + ' ' + m.category).toLowerCase().indexOf(searchTerm) >= 0;
+  });
+  var html = [];
+  html.push('<div class="card">');
+  html.push('<div class="eyebrow">Global B2B · view all</div>');
+  html.push('<div class="ov-head"><div><div class="h1">' + esc(cat.label) + '</div>');
+  html.push('<div class="sub">평일 09:20 · 16:20에 목록을 다시 받아 비교합니다. 마지막 점검 ' + esc(fmtDateTime(CATALOG.checkedAt)) + '</div></div>');
+  html.push('<div class="ov-total"><div class="ov-total-label">모델</div><div class="ov-total-num">' + cat.total + '</div></div></div>');
+  html.push('<div class="kpi-row">');
+  html.push('<div class="kpi"><b class="delta-add">' + added.length + '</b><span>이번 추가</span></div>');
+  html.push('<div class="kpi-div"></div>');
+  html.push('<div class="kpi"><b class="delta-remove">' + removed.length + '</b><span>이번 빠짐</span></div>');
+  html.push('<div class="kpi-div"></div>');
+  html.push('<div class="kpi"><b>' + renamed.length + '</b><span>이름 변경</span></div>');
+  html.push('</div>');
+  html.push('<div class="chips">');
+  catalogs.forEach(function (c) {
+    html.push('<button type="button" class="chip" aria-pressed="' + (c.id === cat.id ? 'true' : 'false') + '" onclick="setCatalog(\'' + esc(c.id) + '\')">' + esc(c.label) + '<b>' + c.total + '</b></button>');
+  });
+  html.push('<a class="chip" href="' + esc(cat.pageUrl) + '" target="_blank" rel="noopener">페이지 열기 ↗</a>');
+  html.push('</div></div>');
+
+  if (!added.length && !removed.length && !renamed.length && !(cat.history || []).length) {
+    html.push('<div class="alert info">첫 기준입니다. 다음 점검부터 추가되거나 빠진 모델이 여기 표시됩니다.</div>');
+  }
+  if (added.length || removed.length || renamed.length) {
+    html.push('<div class="card"><div class="card-title">이번 점검에서 바뀐 모델</div>');
+    function lines(title, list, cls) {
+      if (!list.length) return;
+      html.push('<div class="card-title" style="margin-top:8px">' + esc(title) + '</div><div class="pill-row">');
+      list.forEach(function (m) {
+        var label = m.sku + (m.name ? ' · ' + m.name : '');
+        if (m.before) label = m.sku + ' · ' + m.before + ' → ' + m.after;
+        html.push('<span class="pill ' + cls + '">' + esc(label) + '</span>');
+      });
+      html.push('</div>');
+    }
+    lines('추가', added, 'delta-add');
+    lines('빠짐', removed, 'delta-remove');
+    lines('이름', renamed, '');
+    html.push('</div>');
+  }
+  var past = (cat.history || []).slice(0, 5);
+  if (past.length && !added.length && !removed.length && !renamed.length) {
+    html.push('<div class="card"><div class="card-title">최근 변동 <small>이번 점검은 그대로입니다</small></div>');
+    past.forEach(function (h) {
+      html.push('<div class="sub" style="margin-bottom:8px">' + esc(fmtDateTime(h.at)) + ' · 추가 ' + (h.added || []).length + ' · 빠짐 ' + (h.removed || []).length + '</div>');
+    });
+    html.push('</div>');
+  }
+
+  html.push('<div class="card"><div class="section-bar"><h2>현재 목록 ' + models.length + '건</h2></div>');
+  html.push('<div class="table-wrap"><table class="cat-table"><thead><tr><th>모델</th><th>분류</th><th>이름</th><th>출시</th></tr></thead><tbody>');
+  if (!models.length) html.push('<tr><td class="t-empty" colspan="4">해당하는 모델이 없습니다.</td></tr>');
+  models.forEach(function (m) {
+    var sku = m.url ? '<a class="cat-sku" href="' + esc(m.url) + '" target="_blank" rel="noopener">' + esc(m.sku) + '</a>' : '<span class="cat-sku">' + esc(m.sku) + '</span>';
+    html.push('<tr><td>' + sku + '</td><td>' + esc(m.category || '—') + '</td><td><div class="t-title">' + esc(m.name || '—') + '</div></td><td class="t-num">' + esc(m.released || '—') + '</td></tr>');
+  });
+  html.push('</tbody></table></div></div>');
+  wrap.innerHTML = html.join('');
 }
 
 function renderOverview() {
@@ -484,6 +617,7 @@ function init() {
       renderSidebar();
       renderContent();
       syncUrl();
+      if (CFG.board === 'it-b2b') loadCatalog();
     })
     .catch(function (e) {
       console.error('[id-dashboard] tickets.json 로드 실패', e);
