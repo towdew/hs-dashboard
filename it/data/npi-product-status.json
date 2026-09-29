@@ -1,7 +1,7 @@
 {
- "generatedAt": "2026-09-28 16:09",
- "pttRawFile": "raw-data-20260928.xlsb",
- "cmsFile": "cms_merged_view_20260914_161709.csv",
+ "generatedAt": "2026-09-29 09:38",
+ "pttRawFile": "raw-data-20260929.xlsb",
+ "cmsFile": "cms_merged_view_20260928_002100.csv",
  "sourceFile": "43 NPI for IT product status_20260707.xlsx",
  "totalRows": 42,
  "stages": [
@@ -1056,15 +1056,15 @@
      "pttId": "WR2289887AK",
      "pttStatus": "[WPL] Change req. need close",
      "targetStagingDate": "2026-06-15",
-     "detailKr": "제작 착수 가능",
-     "detailEn": "Ready to start production",
+     "detailKr": "라이브 게시 확인 (실측 200, 2026-09-29)",
+     "detailEn": "Publication verified (HTTP 200)",
      "expectedLocalTargetDate": "",
      "pdpStatus": "N",
      "stgUrl": "",
-     "liveUrl": "",
-     "cmsLive": "등록·미게시",
+     "liveUrl": "https://www.lg.com/es/laptops/gram/17z90ub-h-au96bn/",
+     "cmsLive": "라이브",
      "statusTip": "",
-     "stageForce": "",
+     "stageForce": "live",
      "stageFallback": "precheck",
      "pimChecked": true,
      "readinessCheck": "Ready",
@@ -1083,7 +1083,7 @@
       "Live URL Partners": "-",
       "Live URL Education": "-"
      },
-     "stage": "client_review",
+     "stage": "live",
      "category": "NPI",
      "targetLaunchDate": "2026-09-30",
      "hasStg": true
@@ -1648,7 +1648,7 @@
      "pdpStatus": "제품 이미지에 스펙 잘못됨. 16GB로 수정 필요",
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/ca_en/laptops/all-laptops/17z90u-g78/",
-     "cmsLive": "PIM 미등록",
+     "cmsLive": "라이브",
      "readinessCheck": "Ready",
      "readinessTip": "라이브 게시 확인 · Spec Y · KF 5 · UFN ✓ · Need Assign · LAR 미기재 · gp1",
      "readinessFields": {
@@ -1689,7 +1689,7 @@
      "pdpStatus": "제품 이미지에 스펙 잘못됨. 2TB로 수정 필요. 상세 스펙 입력 안되어 있음",
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/ca_en/laptops/all-laptops/17z90ur-p/",
-     "cmsLive": "PIM 미등록",
+     "cmsLive": "등록·미게시",
      "readinessCheck": "Ready",
      "readinessTip": "라이브 게시 확인 · Spec Y · KF 2 · UFN ✓ · Need Assign · LAR 미기재 · gp1",
      "readinessFields": {
