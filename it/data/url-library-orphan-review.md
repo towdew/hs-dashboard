@@ -1,14 +1,13 @@
 # Live URL Library 검토 필요 모델 목록 (자동 병합 실패)
 
-생성일: 2026-09-16
-총 303건 — 1개국만 라이브 중이며 고신뢰도 매칭 규칙에 맞는 병합 대상을 찾지 못한 모델
+생성일: 2026-09-29
+총 304건 — 1개국만 라이브 중이며 고신뢰도 매칭 규칙에 맞는 병합 대상을 찾지 못한 모델
 
 ## Laptops
 
 - **13Z940-G** (BR : BR (pt)) — https://www.lg.com/br/computadores/ultra-pc/13z940-g-bk71p1/
 - **14T90N-V** (JP : JP (ja)) — https://www.lg.com/jp/laptops/gram/14t90n-vr51j1/
 - **14U390-L** (BR : BR (pt)) — https://www.lg.com/br/computadores/ultra-pc/14u390-l-by36p1/
-- **14ZB90S-G** (JP : JP (ja)) — https://www.lg.com/jp/mobile-pc/gram/14zb90s-ga54j/
 - **14ZD90U-G** (ES : ES (es)) — https://www.lg.com/es/portatiles/gram/14zd90u-g/
 - **14ZT90R-G** (UK : GB (en)) — https://www.lg.com/uk/business/monitors-pcs/thin-clients/mobile-thin-clients/14zt90r-g-ax34a1/
 - **14ZT980-L** (UK : GB (en)) — https://www.lg.com/uk/business/monitors-pcs/thin-clients/all-in-one-thin-clients/14zt980-l/
@@ -132,8 +131,8 @@
 - **24SP410M-PM** (IN : IN (en)) — https://www.lg.com/in/monitors/fhd-qhd/24sp410m/
 - **24TK41EV-PZ** (IT : IT (it)) — https://www.lg.com/it/monitor/monitor-tv/24tk41ev-pz/
 - **24TK425A-PT** (ID : ID (in)) — https://www.lg.com/id/monitor/monitor-tv/24tk425a-pt/
+- **25G520B-B** (IN : IN (en)) — https://www.lg.com/in/monitors/gaming/25g520b-b/
 - **25UM64-S** (RU : RU (ru)) — https://www.lg.com/ru/monitors/lg-25UM64-ultrawide-monitors
-- **27BF410B-B** (JP : JP (ja)) — https://www.lg.com/jp/monitors/fhd-qhd/27bf410b-b/
 - **27BQ410B-B** (JP : JP (ja)) — https://www.lg.com/jp/monitors/fhd-qhd/27bq410b-b/
 - **27BR400-B** (IT : IT (it)) — https://www.lg.com/it/monitor/business/27br400-b/
 - **27BU650B-B** (GLOBAL : GLOBAL (en)) — https://www.lg.com/global/business/monitors-pcs/monitors/lg-ultrafine/27bu650b-b/
@@ -162,7 +161,8 @@
 - **32BN88U-B** (AU : AU (en)) — https://www.lg.com/au/monitors/ultrafine-uhd-4k-5k/32bn88u-b/
 - **32BQ85U-W** (AU : AU (en)) — https://www.lg.com/au/monitors/ultrafine-uhd-4k-5k/32bq85u-w/
 - **32BR50C-B** (AU : AU (en)) — https://www.lg.com/au/monitors/full-hd-qhd/32br50c-b-aauq/
-- **32BU950A-S** (GLOBAL : GLOBAL (en)) — https://www.lg.com/global/business/monitors-pcs/monitors/lg-ultrafine/32bu950a-s/
+- **32BU950A-S** (GLOBAL : GLOBAL (en)) — https://www.lg.com/global/monitors/lg-ultrafine/32bu950a-s/
+- **32G60ZA-B** (DE : DE (de)) — https://www.lg.com/de/monitore/gaming/32g60za-b/
 - **32GQ85X-B** (DE : DE (de)) — https://www.lg.com/de/monitore/gaming/32gq85x-b/
 - **32GS75W-B** (ES : ES (es)) — https://www.lg.com/es/monitors/fhd-qhd/32gs75w-b-eeu/
 - **32LF580N** (TR : TR (tr)) — https://www.lg.com/tr/monitor/fhd-qhd/32lf580n/
@@ -285,6 +285,7 @@
 - **M2794S-PM** (JP : JP (ja)) — https://www.lg.com/jp/monitors/fhd-qhd/m2794s-pm/
 - **M3703C-BA** (JP : JP (ja)) — https://www.lg.com/jp/monitors/fhd-qhd/m3703c-ba/
 - **M4213C-BA** (JP : JP (ja)) — https://www.lg.com/jp/monitors/fhd-qhd/m4213c-ba/
+- **M5203CCBA** (AU : AU (en)) — https://www.lg.com/au/monitors/full-hd-qhd/m5203ccba/
 - **M52D** (RU : RU (ru)) — https://www.lg.com/ru/monitors/lg-M52D-3d-monitors
 - **M52T** (RU : RU (ru)) — https://www.lg.com/ru/monitors/lg-M52T-3d-monitors
 - **M5520CCBA** (AU : AU (en)) — https://www.lg.com/au/monitors/full-hd-qhd/m5520ccba/
