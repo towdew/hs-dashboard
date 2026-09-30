@@ -1,6 +1,6 @@
 {
   "baseDate": "20260929",
-  "prevDate": "20260916",
+  "prevDate": "20260922",
   "changes": {
     "GNB Structure|HK": {
       "type": "status",
@@ -31,44 +31,13 @@
       "type": "status",
       "from": "작업중",
       "to": "법인리뷰"
-    },
-    "gram pro gallery|AU": {
-      "type": "new_task"
-    },
-    "gram pro gallery|DE": {
-      "type": "new_task"
-    },
-    "gram pro gallery|SG": {
-      "type": "new_task"
-    },
-    "gram pro gallery|UK": {
-      "type": "new_task"
-    },
-    "gram pro gallery|VN": {
-      "type": "new_task"
-    },
-    "gram pro gallery|CA_EN": {
-      "type": "new_task"
-    },
-    "gram pro gallery|CA_FR": {
-      "type": "new_task"
-    },
-    "gram pro gallery|GLOBAL": {
-      "type": "new_task"
-    },
-    "gram pro gallery|IT": {
-      "type": "new_task"
     }
   },
   "taskSummary": {
     "GNB Structure": {
       "changed": 6,
       "new": 0
-    },
-    "gram pro gallery": {
-      "changed": 0,
-      "new": 9
     }
   },
-  "generatedAt": "2026-09-29"
+  "generatedAt": "2026-09-30"
 }
