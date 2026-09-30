@@ -1,12 +1,12 @@
 {
-  "checkedAt": "2026-09-29T16:20:06+09:00",
+  "checkedAt": "2026-09-30T09:20:06+09:00",
   "catalogs": [
     {
       "id": "laptops",
       "label": "Laptops",
       "pageUrl": "https://www.lg.com/global/business/monitors-pcs/laptops/view-all-laptops/?ec_model_status_code=Active&sortCriteria=%40ec_stock_status+descending%2C%40ec_model_release_date+descending",
       "total": 31,
-      "checkedAt": "2026-09-29T16:20:06+09:00",
+      "checkedAt": "2026-09-30T09:20:06+09:00",
       "change": {
         "added": [],
         "removed": [],
@@ -23,19 +23,19 @@
           "released": "2026-08-12"
         },
         {
-          "sku": "14Z95U-G.AU86A3",
-          "name": "14-Inch LG gram;Copilot+ PC, Windows 11 Pro, Lightweight Dual AI Laptop, AMD Ryzen™, IPS Display",
-          "category": "gram",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/14z95u/",
-          "released": "2026-08-11"
-        },
-        {
           "sku": "15U50U-G.AA52AN",
           "name": "15.6-inch LG gram Book, Windows 11 Pro, Lightweight Dual AI Laptop, Intel® Core™ Ultra 5, IPS Display",
           "category": "gram Book",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-book/15u50u/",
+          "released": "2026-08-11"
+        },
+        {
+          "sku": "14Z95U-G.AU86A3",
+          "name": "14-Inch LG gram;Copilot+ PC, Windows 11 Pro, Lightweight Dual AI Laptop, AMD Ryzen™, IPS Display",
+          "category": "gram",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/14z95u/",
           "released": "2026-08-11"
         },
         {
@@ -47,19 +47,19 @@
           "released": "2026-08-10"
         },
         {
-          "sku": "14Z90U-G.AU85BN",
-          "name": "14-Inch LG gram;Copilot+ PC, Windows 11 Pro, Lightweight Dual AI Laptop, Intel® Core™ U7, IPS Display",
-          "category": "gram",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/14z90u/",
-          "released": "2026-08-10"
-        },
-        {
           "sku": "15Z90U-H.AU87U1",
           "name": "15.6-Inch LG gram;Copilot+ PC, Windows 11 Pro, Lightweight Dual AI Laptop, Intel® Core™ U7, Touch Display",
           "category": "gram",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/15z90u/",
+          "released": "2026-08-10"
+        },
+        {
+          "sku": "14Z90U-G.AU85BN",
+          "name": "14-Inch LG gram;Copilot+ PC, Windows 11 Pro, Lightweight Dual AI Laptop, Intel® Core™ U7, IPS Display",
+          "category": "gram",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/14z90u/",
           "released": "2026-08-10"
         },
         {
@@ -95,19 +95,19 @@
           "released": "2026-07-19"
         },
         {
-          "sku": "17Z90U-G.AU88AP",
-          "name": "17-Inch LG gram Pro;Copilot+ PC, Windows 11 Pro, Lightweight Dual AI Laptop, Intel® Core™ U7, IPS Display",
-          "category": "gram Pro",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-pro/17z90u/",
-          "released": "2026-07-18"
-        },
-        {
           "sku": "17Z90UR-P.AU99U3",
           "name": "17-Inch LG gram Pro;Copilot+ PC, Window 11 Pro, Lightweight Aerominum™ Dual AI Laptop, Intel® Core™ Ultra 9, RTX™ 5050, Touch Display",
           "category": "gram Pro",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-pro/17z90ur/",
+          "released": "2026-07-18"
+        },
+        {
+          "sku": "17Z90U-G.AU88AP",
+          "name": "17-Inch LG gram Pro;Copilot+ PC, Windows 11 Pro, Lightweight Dual AI Laptop, Intel® Core™ U7, IPS Display",
+          "category": "gram Pro",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-pro/17z90u/",
           "released": "2026-07-18"
         },
         {
@@ -135,14 +135,6 @@
           "released": "2025-04-15"
         },
         {
-          "sku": "16T90TP-G.A5CBW",
-          "name": "LG gram Pro 2in1 16\", Windows 11 Pro, Ultra-light & superslim 32GB RAM Intel® Arrow Lake H Laptop, gram AI, Copilot, LG gram Link, 16:10 OLED display",
-          "category": "laptops 2in1",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-pro/16t90tp/",
-          "released": "2025-04-11"
-        },
-        {
           "sku": "16Z90TP-G.A5BBW",
           "name": "LG gram Pro 16\", Windows 11 Pro, Lightweight 32GB RAM Intel® Core™ Ultra Processor Laptop, gram Hybrid AI, Copilot, LG gram Link, 16:10 OLED display",
           "category": "gram Pro",
@@ -151,27 +143,19 @@
           "released": "2025-04-11"
         },
         {
+          "sku": "16T90TP-G.A5CBW",
+          "name": "LG gram Pro 2in1 16\", Windows 11 Pro, Ultra-light & superslim 32GB RAM Intel® Arrow Lake H Laptop, gram AI, Copilot, LG gram Link, 16:10 OLED display",
+          "category": "laptops 2in1",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-pro/16t90tp/",
+          "released": "2025-04-11"
+        },
+        {
           "sku": "14Z90T-G.A5HBW",
           "name": "LG gram 14”, Windows 11 Pro, Lightweight Intel® Arrow Lake H Laptop, gram AI, Copilot, LG gram Link, WUXGA 16:10 Anti-glare IPS display",
           "category": "gram",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/14z90t/",
-          "released": "2025-01-22"
-        },
-        {
-          "sku": "16Z90T-G.AA75A9",
-          "name": "LG gram 16\", Windows 11 Pro, Lightweight Intel® Arrow Lake H Laptop, gram AI, Copilot, LG gram Link, WQXGA 16:10 Anti-glare IPS touchscreen",
-          "category": "gram",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/16z90t/",
-          "released": "2025-01-22"
-        },
-        {
-          "sku": "17Z90T-G.AA75A9",
-          "name": "LG gram 17\" |  Lightweight Intel® Core™ Ultra Processor Laptop | Windows 11 Pro, gram Hybrid AI, Copiliot, LG gram Link, WQXGA 16:10 Anti-glare IPS touchscreen",
-          "category": "gram",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/17z90t/",
           "released": "2025-01-22"
         },
         {
@@ -188,6 +172,22 @@
           "category": "gram",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/16z90tl/",
+          "released": "2025-01-22"
+        },
+        {
+          "sku": "17Z90T-G.AA75A9",
+          "name": "LG gram 17\" |  Lightweight Intel® Core™ Ultra Processor Laptop | Windows 11 Pro, gram Hybrid AI, Copiliot, LG gram Link, WQXGA 16:10 Anti-glare IPS touchscreen",
+          "category": "gram",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/17z90t/",
+          "released": "2025-01-22"
+        },
+        {
+          "sku": "16Z90T-G.AA75A9",
+          "name": "LG gram 16\", Windows 11 Pro, Lightweight Intel® Arrow Lake H Laptop, gram AI, Copilot, LG gram Link, WQXGA 16:10 Anti-glare IPS touchscreen",
+          "category": "gram",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/16z90t/",
           "released": "2025-01-22"
         },
         {
@@ -269,7 +269,7 @@
       "label": "Monitors",
       "pageUrl": "https://www.lg.com/global/business/monitors-pcs/monitors/view-all-monitors/",
       "total": 42,
-      "checkedAt": "2026-09-29T16:20:06+09:00",
+      "checkedAt": "2026-09-30T09:20:06+09:00",
       "change": {
         "added": [],
         "removed": [],
@@ -310,19 +310,19 @@
           "released": "2026-07-10"
         },
         {
-          "sku": "29BF550B-W.AUB",
-          "name": "29-inch UltraWide™, WFHD IPS 100Hz Monitor with USB-C",
-          "category": "LG UltraWide",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-ultrawide/29bf550b-w/",
-          "released": "2026-07-09"
-        },
-        {
           "sku": "34BF550B-W.AUB",
           "name": "34-inch UltraWide™, WFHD IPS 100Hz Monitor with USB-C",
           "category": "LG UltraWide",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-ultrawide/34bf550b-w/",
+          "released": "2026-07-09"
+        },
+        {
+          "sku": "29BF550B-W.AUB",
+          "name": "29-inch UltraWide™, WFHD IPS 100Hz Monitor with USB-C",
+          "category": "LG UltraWide",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-ultrawide/29bf550b-w/",
           "released": "2026-07-09"
         },
         {
@@ -422,14 +422,6 @@
           "released": "2025-02-21"
         },
         {
-          "sku": "27BA65QB-B.AEU",
-          "name": "27” QHD IPS Monitor with USB-C with Daisy Chain",
-          "category": "LG Monitor",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/27ba65qb/",
-          "released": "2024-09-27"
-        },
-        {
           "sku": "27BA75QB-B.AEU",
           "name": "27” QHD IPS Monitor with USB-C with Daisy Chain",
           "category": "LG Monitor",
@@ -438,19 +430,35 @@
           "released": "2024-09-27"
         },
         {
+          "sku": "27BA65QB-B.AEU",
+          "name": "27” QHD IPS Monitor with USB-C with Daisy Chain",
+          "category": "LG Monitor",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/27ba65qb/",
+          "released": "2024-09-27"
+        },
+        {
+          "sku": "24BA650-B.AEU",
+          "name": "24” Full HD IPS Monitor with USB Type-C™",
+          "category": "LG Monitor",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/24ba650/",
+          "released": "2024-08-19"
+        },
+        {
+          "sku": "27BA650-B.AEU",
+          "name": "27” Full HD IPS Monitor with USB Type-C™",
+          "category": "LG Monitor",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/27ba650/",
+          "released": "2024-08-19"
+        },
+        {
           "sku": "22BR410-B.AUBQ",
           "name": "21.45\" Full HD monitor with AMD FreeSync™",
           "category": "LG Monitor",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/22br410/",
-          "released": "2024-08-19"
-        },
-        {
-          "sku": "24BA850-B.AEU",
-          "name": "24” Full HD IPS Monitor with Built-in FHD webcam and USB Type-C™",
-          "category": "LG Monitor",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/24ba850/",
           "released": "2024-08-19"
         },
         {
@@ -462,11 +470,11 @@
           "released": "2024-08-19"
         },
         {
-          "sku": "24BA650-B.AEU",
-          "name": "24” Full HD IPS Monitor with USB Type-C™",
+          "sku": "24BA850-B.AEU",
+          "name": "24” Full HD IPS Monitor with Built-in FHD webcam and USB Type-C™",
           "category": "LG Monitor",
           "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/24ba650/",
+          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/24ba850/",
           "released": "2024-08-19"
         },
         {
@@ -475,14 +483,6 @@
           "category": "LG Monitor",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/24ba400/",
-          "released": "2024-08-19"
-        },
-        {
-          "sku": "27BA650-B.AEU",
-          "name": "27” Full HD IPS Monitor with USB Type-C™",
-          "category": "LG Monitor",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/27ba650/",
           "released": "2024-08-19"
         },
         {
@@ -502,14 +502,6 @@
           "released": "2024-08-16"
         },
         {
-          "sku": "27BA850-B.AEU",
-          "name": "27” Full HD IPS Monitor with Built-in FHD webcam and USB Type-C™",
-          "category": "LG Monitor",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/27ba850/",
-          "released": "2024-08-16"
-        },
-        {
           "sku": "24BA750-B.AEU",
           "name": "24” Full HD IPS Monitor with USB Type-C™ and RJ45",
           "category": "LG Monitor",
@@ -523,6 +515,14 @@
           "category": "LG Monitor",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/19ba300/",
+          "released": "2024-08-16"
+        },
+        {
+          "sku": "27BA850-B.AEU",
+          "name": "27” Full HD IPS Monitor with Built-in FHD webcam and USB Type-C™",
+          "category": "LG Monitor",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/27ba850/",
           "released": "2024-08-16"
         },
         {
@@ -574,19 +574,19 @@
           "released": "2024-04-24"
         },
         {
+          "sku": "27BA450-B.AAUQ",
+          "name": "27” Full HD IPS Monitor",
+          "category": "LG Monitor",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/27ba450/",
+          "released": "2024-04-23"
+        },
+        {
           "sku": "24BA450-B.AAUQ",
           "name": "24” Full HD IPS Monitor",
           "category": "LG Monitor",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/24ba450/",
-          "released": "2024-04-23"
-        },
-        {
-          "sku": "24BA550-B.AEUQ",
-          "name": "24” Full HD IPS Monitor",
-          "category": "LG Monitor",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/24ba550/",
           "released": "2024-04-23"
         },
         {
@@ -598,11 +598,11 @@
           "released": "2024-04-23"
         },
         {
-          "sku": "27BA450-B.AAUQ",
-          "name": "27” Full HD IPS Monitor",
+          "sku": "24BA550-B.AEUQ",
+          "name": "24” Full HD IPS Monitor",
           "category": "LG Monitor",
           "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/27ba450/",
+          "url": "https://www.lg.com/global/business/monitors-pcs/monitors/lg-monitor/24ba550/",
           "released": "2024-04-23"
         },
         {
