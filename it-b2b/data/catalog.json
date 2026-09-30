@@ -1,12 +1,12 @@
 {
-  "checkedAt": "2026-09-30T09:20:06+09:00",
+  "checkedAt": "2026-09-30T10:34:04+09:00",
   "catalogs": [
     {
       "id": "laptops",
       "label": "Laptops",
       "pageUrl": "https://www.lg.com/global/business/monitors-pcs/laptops/view-all-laptops/?ec_model_status_code=Active&sortCriteria=%40ec_stock_status+descending%2C%40ec_model_release_date+descending",
       "total": 31,
-      "checkedAt": "2026-09-30T09:20:06+09:00",
+      "checkedAt": "2026-09-30T10:34:04+09:00",
       "change": {
         "added": [],
         "removed": [],
@@ -23,19 +23,19 @@
           "released": "2026-08-12"
         },
         {
-          "sku": "15U50U-G.AA52AN",
-          "name": "15.6-inch LG gram Book, Windows 11 Pro, Lightweight Dual AI Laptop, Intel® Core™ Ultra 5, IPS Display",
-          "category": "gram Book",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-book/15u50u/",
-          "released": "2026-08-11"
-        },
-        {
           "sku": "14Z95U-G.AU86A3",
           "name": "14-Inch LG gram;Copilot+ PC, Windows 11 Pro, Lightweight Dual AI Laptop, AMD Ryzen™, IPS Display",
           "category": "gram",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/14z95u/",
+          "released": "2026-08-11"
+        },
+        {
+          "sku": "15U50U-G.AA52AN",
+          "name": "15.6-inch LG gram Book, Windows 11 Pro, Lightweight Dual AI Laptop, Intel® Core™ Ultra 5, IPS Display",
+          "category": "gram Book",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-book/15u50u/",
           "released": "2026-08-11"
         },
         {
@@ -47,19 +47,19 @@
           "released": "2026-08-10"
         },
         {
-          "sku": "15Z90U-H.AU87U1",
-          "name": "15.6-Inch LG gram;Copilot+ PC, Windows 11 Pro, Lightweight Dual AI Laptop, Intel® Core™ U7, Touch Display",
-          "category": "gram",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/15z90u/",
-          "released": "2026-08-10"
-        },
-        {
           "sku": "14Z90U-G.AU85BN",
           "name": "14-Inch LG gram;Copilot+ PC, Windows 11 Pro, Lightweight Dual AI Laptop, Intel® Core™ U7, IPS Display",
           "category": "gram",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/14z90u/",
+          "released": "2026-08-10"
+        },
+        {
+          "sku": "15Z90U-H.AU87U1",
+          "name": "15.6-Inch LG gram;Copilot+ PC, Windows 11 Pro, Lightweight Dual AI Laptop, Intel® Core™ U7, Touch Display",
+          "category": "gram",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/15z90u/",
           "released": "2026-08-10"
         },
         {
@@ -95,19 +95,19 @@
           "released": "2026-07-19"
         },
         {
-          "sku": "17Z90UR-P.AU99U3",
-          "name": "17-Inch LG gram Pro;Copilot+ PC, Window 11 Pro, Lightweight Aerominum™ Dual AI Laptop, Intel® Core™ Ultra 9, RTX™ 5050, Touch Display",
-          "category": "gram Pro",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-pro/17z90ur/",
-          "released": "2026-07-18"
-        },
-        {
           "sku": "17Z90U-G.AU88AP",
           "name": "17-Inch LG gram Pro;Copilot+ PC, Windows 11 Pro, Lightweight Dual AI Laptop, Intel® Core™ U7, IPS Display",
           "category": "gram Pro",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-pro/17z90u/",
+          "released": "2026-07-18"
+        },
+        {
+          "sku": "17Z90UR-P.AU99U3",
+          "name": "17-Inch LG gram Pro;Copilot+ PC, Window 11 Pro, Lightweight Aerominum™ Dual AI Laptop, Intel® Core™ Ultra 9, RTX™ 5050, Touch Display",
+          "category": "gram Pro",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-pro/17z90ur/",
           "released": "2026-07-18"
         },
         {
@@ -135,14 +135,6 @@
           "released": "2025-04-15"
         },
         {
-          "sku": "16Z90TP-G.A5BBW",
-          "name": "LG gram Pro 16\", Windows 11 Pro, Lightweight 32GB RAM Intel® Core™ Ultra Processor Laptop, gram Hybrid AI, Copilot, LG gram Link, 16:10 OLED display",
-          "category": "gram Pro",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-pro/16z90tp/",
-          "released": "2025-04-11"
-        },
-        {
           "sku": "16T90TP-G.A5CBW",
           "name": "LG gram Pro 2in1 16\", Windows 11 Pro, Ultra-light & superslim 32GB RAM Intel® Arrow Lake H Laptop, gram AI, Copilot, LG gram Link, 16:10 OLED display",
           "category": "laptops 2in1",
@@ -151,11 +143,35 @@
           "released": "2025-04-11"
         },
         {
+          "sku": "16Z90TP-G.A5BBW",
+          "name": "LG gram Pro 16\", Windows 11 Pro, Lightweight 32GB RAM Intel® Core™ Ultra Processor Laptop, gram Hybrid AI, Copilot, LG gram Link, 16:10 OLED display",
+          "category": "gram Pro",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram-pro/16z90tp/",
+          "released": "2025-04-11"
+        },
+        {
           "sku": "14Z90T-G.A5HBW",
           "name": "LG gram 14”, Windows 11 Pro, Lightweight Intel® Arrow Lake H Laptop, gram AI, Copilot, LG gram Link, WUXGA 16:10 Anti-glare IPS display",
           "category": "gram",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/14z90t/",
+          "released": "2025-01-22"
+        },
+        {
+          "sku": "16Z90T-G.AA75A9",
+          "name": "LG gram 16\", Windows 11 Pro, Lightweight Intel® Arrow Lake H Laptop, gram AI, Copilot, LG gram Link, WQXGA 16:10 Anti-glare IPS touchscreen",
+          "category": "gram",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/16z90t/",
+          "released": "2025-01-22"
+        },
+        {
+          "sku": "17Z90T-G.AA75A9",
+          "name": "LG gram 17\" |  Lightweight Intel® Core™ Ultra Processor Laptop | Windows 11 Pro, gram Hybrid AI, Copiliot, LG gram Link, WQXGA 16:10 Anti-glare IPS touchscreen",
+          "category": "gram",
+          "status": "ACTIVE",
+          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/17z90t/",
           "released": "2025-01-22"
         },
         {
@@ -172,22 +188,6 @@
           "category": "gram",
           "status": "ACTIVE",
           "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/16z90tl/",
-          "released": "2025-01-22"
-        },
-        {
-          "sku": "17Z90T-G.AA75A9",
-          "name": "LG gram 17\" |  Lightweight Intel® Core™ Ultra Processor Laptop | Windows 11 Pro, gram Hybrid AI, Copiliot, LG gram Link, WQXGA 16:10 Anti-glare IPS touchscreen",
-          "category": "gram",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/17z90t/",
-          "released": "2025-01-22"
-        },
-        {
-          "sku": "16Z90T-G.AA75A9",
-          "name": "LG gram 16\", Windows 11 Pro, Lightweight Intel® Arrow Lake H Laptop, gram AI, Copilot, LG gram Link, WQXGA 16:10 Anti-glare IPS touchscreen",
-          "category": "gram",
-          "status": "ACTIVE",
-          "url": "https://www.lg.com/global/business/monitors-pcs/laptops/gram/16z90t/",
           "released": "2025-01-22"
         },
         {
@@ -269,7 +269,7 @@
       "label": "Monitors",
       "pageUrl": "https://www.lg.com/global/business/monitors-pcs/monitors/view-all-monitors/",
       "total": 42,
-      "checkedAt": "2026-09-30T09:20:06+09:00",
+      "checkedAt": "2026-09-30T10:34:04+09:00",
       "change": {
         "added": [],
         "removed": [],
