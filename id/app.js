@@ -271,9 +271,8 @@ function toast(msg) {
 // ── 검색 (사이드바 필터) ─────────────────────────────────
 function onSearchInput(v) {
   searchTerm = String(v || '').trim().toLowerCase();
-  if (currentKey === 'cms') window.__cmsPage = 0;
   applySearchToNav();
-  if (currentKey === 'overview' || currentKey === 'catalog' || currentKey === 'cms') renderContent();
+  if (currentKey === 'overview' || currentKey === 'catalog') renderContent();
 }
 function applySearchToNav() {
   document.querySelectorAll('.nav-item[data-search]').forEach(function (n) {
@@ -283,9 +282,11 @@ function applySearchToNav() {
 
 // ── 본문 ─────────────────────────────────────────────────
 function renderContent() {
+  var wrapEl = $('contentWrap');
+  if (wrapEl) wrapEl.classList.toggle('cms-url-lib', currentKey === 'cms');
   var search = $('ticketSearch');
   if (search) {
-    var modelSearch = currentKey === 'catalog' || currentKey === 'cms';
+    var modelSearch = currentKey === 'catalog';
     search.placeholder = modelSearch ? '모델, 국가 검색' : '티켓 번호, 제목, 담당자 검색';
     search.setAttribute('aria-label', modelSearch ? '모델 검색' : '티켓 검색');
   }
@@ -450,11 +451,48 @@ function renderCatalog() {
   wrap.innerHTML = html.join('');
 }
 
+var CMS_LIB_PAGE = 50;
+var CMS_LIB_DEFAULT = { search: '', category: '', status: 'ACTIVE', locale: '', page: 1 };
+var _cmsLibFilter = { search: '', category: '', status: 'ACTIVE', locale: '', page: 1 };
+var _cmsLibView = 'model';
+var _cmsLibOpen = null;
+var _cmsLibCountryQuery = '';
+var _cmsLibLocaleIndex = null;
+var _cmsLibCountryMeta = {};
+var _cmsLibSearchTimer = null;
+var CMS_LIB_SEARCH_ICON = '<svg class="dash-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+var CMS_DEFAULT_LANG = {
+  ae: 'en', bd: 'en', br: 'pt', cac: 'es', cl: 'es', co: 'es', de: 'de', es: 'es',
+  fr: 'fr', hk: 'zh', id: 'id', in: 'en', it: 'it', jp: 'ja', mx: 'es', nl: 'nl',
+  pe: 'es', pl: 'pl', ru: 'ru', sa: 'ar', sg: 'en', th: 'th', uk: 'en', za: 'en'
+};
+
+function cmsNormalizeLocale(loc) {
+  if (!loc || String(loc.locale || '').indexOf(' : ') >= 0) {
+    if (loc && !loc.prodUrl) loc.prodUrl = loc.url || '';
+    return;
+  }
+  var slug = String(loc.locale || '').toLowerCase().replace(/-/g, '_');
+  var parts = slug.split('_').filter(Boolean);
+  var base = (parts[0] || '').toUpperCase();
+  if (base === 'GB') base = 'UK';
+  var lang = parts.length > 1 ? parts[1] : (CMS_DEFAULT_LANG[parts[0]] || '');
+  var token = parts.length > 1 ? (base + '_' + String(parts[1]).toUpperCase()) : base;
+  loc.locale = lang ? (token + ' : ' + base + ' (' + lang + ')') : token;
+  loc.country = lang ? (token + ' : ' + base + ' (' + lang.toUpperCase() + ')') : token;
+  loc.prodUrl = loc.url || loc.prodUrl || '';
+}
 function loadCms() {
   fetch('./data/cms-business.json?v=' + (window.__BUILD_V || Date.now()), { cache: 'no-store' })
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (json) {
+      (json.models || []).forEach(function (model) {
+        model.salesModelCode = model.salesModelCode || model.modelName || '';
+        (model.locales || []).forEach(cmsNormalizeLocale);
+      });
       CMS = json;
+      _cmsLibLocaleIndex = null;
+      _cmsLibCountryMeta = (typeof urlLibLocaleDisplayMap === 'function') ? urlLibLocaleDisplayMap(json.models || []) : {};
       renderSidebar();
       if (currentKey === 'cms') renderCms();
     })
@@ -464,27 +502,132 @@ function loadCms() {
       }
     });
 }
-function cmsUpdatedLabel(payload) {
+function cmsLibUpdatedLabel(payload) {
   var match = /(20\d{2})(\d{2})(\d{2})/.exec((payload && payload.cmsSource) || '');
   return match ? match[1] + '-' + match[2] + '-' + match[3] : ((payload && payload.generatedAt) || '');
 }
-function cmsSetStatus(status) {
-  window.__cmsStatus = status || '';
-  window.__cmsPage = 0;
-  if (currentKey === 'cms') renderCms();
+function cmsLibToggleClear(id, value) {
+  var btn = document.getElementById(id);
+  if (!btn) return;
+  btn.classList.toggle('dash-search-clear-visible', !!value);
 }
-function cmsSetCategory(category) {
-  window.__cmsCat = category || '';
-  window.__cmsPage = 0;
-  if (currentKey === 'cms') renderCms();
+function cmsLibRenderSoon() {
+  clearTimeout(_cmsLibSearchTimer);
+  _cmsLibSearchTimer = setTimeout(cmsLibRenderResults, 150);
 }
-function cmsSetPage(page) {
-  window.__cmsPage = page;
-  if (currentKey === 'cms') renderCms();
+function urlLibAllLocaleTokens(allModels) {
+  var seen = {};
+  var tokens = [];
+  (allModels || []).forEach(function (model) {
+    (model.locales || []).forEach(function (loc) {
+      var token = urlLibLocaleToken(loc.locale);
+      if (token && !seen[token]) { seen[token] = 1; tokens.push(token); }
+    });
+  });
+  tokens.sort();
+  return tokens;
 }
-function cmsToggle(name) {
-  window.__cmsOpen = window.__cmsOpen === name ? '' : name;
-  if (currentKey === 'cms') renderCms();
+function getUrlLibLocaleIndex() {
+  if (!_cmsLibLocaleIndex && CMS && typeof buildUrlLibLocaleIndex === 'function') {
+    _cmsLibLocaleIndex = buildUrlLibLocaleIndex(CMS.models || []);
+  }
+  return _cmsLibLocaleIndex || {};
+}
+function urlLibSetViewMode(mode) {
+  _cmsLibView = mode;
+  _cmsLibCountryQuery = '';
+  window.__cmsCountry = '';
+  renderCms();
+}
+function urlLibOnSearchInput(inputEl) {
+  _cmsLibFilter.search = inputEl.value;
+  _cmsLibFilter.page = 1;
+  cmsLibToggleClear('urlLibSearchClear', inputEl.value);
+  cmsLibRenderSoon();
+}
+function urlLibClearSearch() {
+  var input = document.getElementById('urlLibSearchInput');
+  if (input) input.value = '';
+  _cmsLibFilter.search = '';
+  _cmsLibFilter.page = 1;
+  cmsLibToggleClear('urlLibSearchClear', '');
+  cmsLibRenderResults();
+  if (input) input.focus();
+}
+function urlLibOnCountryQueryInput(inputEl) {
+  _cmsLibCountryQuery = inputEl.value;
+  cmsLibToggleClear('urlLibCountryClear', inputEl.value);
+  cmsLibRenderSoon();
+}
+function urlLibClearCountryQuery() {
+  var input = document.getElementById('urlLibCountryQueryInput');
+  if (input) input.value = '';
+  _cmsLibCountryQuery = '';
+  cmsLibToggleClear('urlLibCountryClear', '');
+  cmsLibRenderResults();
+  if (input) input.focus();
+}
+function urlLibSelectLocale(token) {
+  window.__cmsCountry = window.__cmsCountry === token ? '' : token;
+  cmsLibRenderResults();
+}
+function urlLibSetFilter(key, value) {
+  if (key !== 'page') _cmsLibFilter.page = 1;
+  _cmsLibFilter[key] = key === 'page' ? parseInt(value, 10) : value;
+  cmsLibRenderResults();
+}
+function urlLibResetFilter() {
+  _cmsLibFilter = { search: '', category: '', status: 'ACTIVE', locale: '', page: 1 };
+  _cmsLibCountryQuery = '';
+  var searchInput = document.getElementById('urlLibSearchInput');
+  if (searchInput) searchInput.value = '';
+  cmsLibToggleClear('urlLibSearchClear', '');
+  var countryInput = document.getElementById('urlLibCountryQueryInput');
+  if (countryInput) countryInput.value = '';
+  cmsLibToggleClear('urlLibCountryClear', '');
+  var categorySel = document.getElementById('urlLibCategorySelect');
+  if (categorySel) categorySel.value = '';
+  var statusSel = document.getElementById('urlLibStatusSelect');
+  if (statusSel) statusSel.value = 'ACTIVE';
+  var localeSel = document.getElementById('urlLibLocaleSelect');
+  if (localeSel) localeSel.value = '';
+  cmsLibRenderResults();
+}
+function toggleUrlLibModel(modelName) {
+  _cmsLibOpen = _cmsLibOpen === modelName ? null : modelName;
+  cmsLibRenderResults();
+}
+function urlLibDownloadExcel() {
+  if (typeof XLSX === 'undefined') { alert('엑셀 라이브러리를 불러오지 못했습니다.'); return; }
+  if (!CMS || !CMS.models) { alert('CMS 데이터가 아직 로드되지 않았습니다.'); return; }
+  var models = urlLibSortModels(urlLibFilterModels(CMS.models, _cmsLibFilter), 'name');
+  var aoa = [['Model', 'Sales Model Code', 'Category', 'Locale', 'Country', 'Status', 'Live URL']];
+  models.forEach(function (m) {
+    urlLibMatchedLocales(m, _cmsLibFilter).forEach(function (l) {
+      aoa.push([
+        m.modelName || '', m.salesModelCode || '', m.category || '',
+        urlLibLocaleToken(l.locale), l.country || '', l.status || '', l.prodUrl || ''
+      ]);
+    });
+  });
+  if (aoa.length === 1) { alert('현재 필터 조건에 해당하는 URL이 없습니다.'); return; }
+  var ws = XLSX.utils.aoa_to_sheet(aoa);
+  ws['!cols'] = [{ wch: 22 }, { wch: 22 }, { wch: 14 }, { wch: 12 }, { wch: 28 }, { wch: 14 }, { wch: 72 }];
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'URL Library');
+  var f = _cmsLibFilter;
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+    ['항목', '값'],
+    ['CMS 소스', CMS.cmsSource || ''],
+    ['카테고리', f.category || '전체'],
+    ['상태', f.status || '전체'],
+    ['로케일', f.locale || '전체'],
+    ['검색어', f.search || ''],
+    ['모델 수', models.length],
+    ['URL 수', aoa.length - 1]
+  ]), '추출 조건');
+  var stamp = (String(CMS.cmsSource || '').match(/20\d{6}/) || ['export'])[0];
+  XLSX.writeFile(wb, 'LG_Business_URL_Library_' + stamp + '.xlsx');
 }
 function renderCms() {
   var wrap = $('contentWrap');
@@ -492,79 +635,198 @@ function renderCms() {
   $('topJiraLink').style.display = 'none';
   document.title = 'Business CMS · ' + CFG.docTitle;
   if (!CMS) {
-    wrap.innerHTML = '<div class="card">CMS 모델을 불러오는 중입니다.</div>';
+    wrap.innerHTML = '<div class="url-lib-empty" role="status">CMS 모델을 불러오는 중입니다.</div>';
     return;
   }
-  var statusFilter = window.__cmsStatus == null ? 'ACTIVE' : window.__cmsStatus;
-  var categoryFilter = window.__cmsCat || '';
-  var pageSize = 40;
-  var models = (CMS.models || []).filter(function (model) {
-    if (categoryFilter && model.category !== categoryFilter) return false;
-    var locales = model.locales || [];
-    if (statusFilter && !locales.some(function (loc) { return loc.status === statusFilter; })) return false;
-    if (!searchTerm) return true;
-    var hay = (model.modelName + ' ' + model.category + ' ' + locales.map(function (loc) { return loc.locale; }).join(' ')).toLowerCase();
-    return hay.indexOf(searchTerm) >= 0;
-  });
-  var pages = Math.max(1, Math.ceil(models.length / pageSize));
-  var page = Math.min(window.__cmsPage || 0, pages - 1);
-  window.__cmsPage = page;
-  var slice = models.slice(page * pageSize, page * pageSize + pageSize);
-  var cats = CMS.categories || [];
-  var statuses = ['', 'ACTIVE', 'DISCONTINUED', 'SUSPENDED', 'HIDDEN'];
-  var html = [];
-  html.push('<div class="card">');
-  html.push('<div class="ov-head"><div><div class="eyebrow">CMS · business</div><div class="h1">Business 하위 IT 모델</div>');
-  html.push('<div class="sub">노트북·모니터·gram·프로젝터·씬클라이언트. 업데이트 ' + esc(cmsUpdatedLabel(CMS)) + '</div></div>');
-  html.push('<div class="ov-total"><div class="ov-total-label">모델</div><div class="ov-total-num">' + CMS.totalModels + '</div>');
-  html.push('<div class="sub">' + CMS.totalUrls + ' URL</div></div></div>');
-  html.push('<div class="chips" role="group" aria-label="Category">');
-  html.push('<button type="button" class="chip" aria-pressed="' + (categoryFilter === '' ? 'true' : 'false') + '" onclick="cmsSetCategory(\'\')">All</button>');
-  cats.forEach(function (cat) {
-    var n = (CMS.models || []).filter(function (model) { return model.category === cat; }).length;
-    html.push('<button type="button" class="chip" aria-pressed="' + (categoryFilter === cat ? 'true' : 'false') + '" onclick="cmsSetCategory(\'' + esc(cat) + '\')">' + esc(cat) + '<b>' + n + '</b></button>');
-  });
-  html.push('</div>');
-  html.push('<div class="chips" role="group" aria-label="Status" style="margin-top:8px">');
-  statuses.forEach(function (status) {
-    var label = status || 'All Status';
-    html.push('<button type="button" class="chip" aria-pressed="' + (statusFilter === status ? 'true' : 'false') + '" onclick="cmsSetStatus(\'' + esc(status) + '\')">' + esc(label) + '</button>');
-  });
-  html.push('</div></div>');
-
-  html.push('<div class="card"><div class="section-bar"><h2>모델 ' + models.length + '건</h2>');
-  if (pages > 1) {
-    html.push('<div class="chips">');
-    html.push('<button type="button" class="chip"' + (page === 0 ? ' disabled' : ' onclick="cmsSetPage(' + (page - 1) + ')"') + '>이전</button>');
-    html.push('<span class="sub">' + (page + 1) + ' / ' + pages + '</span>');
-    html.push('<button type="button" class="chip"' + (page >= pages - 1 ? ' disabled' : ' onclick="cmsSetPage(' + (page + 1) + ')"') + '>다음</button>');
-    html.push('</div>');
+  if (typeof urlLibFilterModels !== 'function') {
+    wrap.innerHTML = '<div class="notice">URL 라이브러리 모듈을 불러오지 못했습니다.</div>';
+    return;
   }
-  html.push('</div>');
-  html.push('<div class="table-wrap"><table class="cat-table"><thead><tr><th>모델</th><th>분류</th><th>상태</th><th>국가</th></tr></thead><tbody>');
-  if (!slice.length) html.push('<tr><td class="t-empty" colspan="4">해당하는 모델이 없습니다.</td></tr>');
-  slice.forEach(function (model) {
-    var locales = (model.locales || []).filter(function (loc) {
-      return !statusFilter || loc.status === statusFilter;
-    });
-    var statusesHere = {};
-    locales.forEach(function (loc) { if (loc.status) statusesHere[loc.status] = 1; });
-    var statusKeys = Object.keys(statusesHere);
-    var statusLabel = statusKeys.length === 1 ? statusKeys[0] : (statusKeys.length ? '혼합' : '—');
-    var open = window.__cmsOpen === model.modelName;
-    html.push('<tr><td><button type="button" class="cat-sku" style="background:none;border:0;padding:0;cursor:pointer" onclick="cmsToggle(decodeURIComponent(\'' + encodeURIComponent(model.modelName) + '\'))" aria-expanded="' + (open ? 'true' : 'false') + '">' + esc(model.modelName) + '</button></td>');
-    html.push('<td>' + esc(model.category) + '</td><td>' + esc(statusLabel) + '</td><td class="t-num">' + locales.length + '</td></tr>');
-    if (open) {
-      html.push('<tr><td colspan="4"><div class="cms-locales">');
-      locales.forEach(function (loc) {
-        var mark = loc.published ? '' : ' · 미게시';
-        html.push('<a href="' + esc(loc.url) + '" target="_blank" rel="noopener">' + esc(loc.locale) + mark + '</a>');
-      });
-      html.push('</div></td></tr>');
-    }
+  var allModels = CMS.models || [];
+  var categories = CMS.categories || [];
+  var statusOptions = ['ACTIVE', 'DISCONTINUED', 'SUSPENDED', 'HIDDEN'];
+  var localeTokens = urlLibAllLocaleTokens(allModels);
+  var localeMeta = _cmsLibCountryMeta || {};
+  var headerHtml = '<div style="padding:16px 24px 0;flex-shrink:0"><div class="ov-card-new">';
+  headerHtml += '<div class="ov-head-new"><div class="ov-head-title">';
+  headerHtml += '<div class="ov-head-eyebrow">Live URL Library · Business IT</div>';
+  headerHtml += '<div class="ov-head-name">제품별 Live URL 모음집</div>';
+  headerHtml += '</div>';
+  headerHtml += '<div class="ov-head-total"><div class="ov-head-total-num ov-head-total-sites">';
+  headerHtml += '<strong>' + allModels.length.toLocaleString() + '</strong>개 모델 · ';
+  headerHtml += '<strong>' + (CMS.totalUrls || 0).toLocaleString() + '</strong>개 URL';
+  var updated = cmsLibUpdatedLabel(CMS);
+  if (updated) headerHtml += '<span style="color:#94A3B8;font-size:var(--fs-caption);font-weight:500;margin-left:8px">업데이트: ' + esc(updated) + '</span>';
+  headerHtml += '</div></div></div>';
+  headerHtml += '<div class="url-lib-view-tabs">';
+  headerHtml += '<button type="button" class="url-lib-view-tab' + (_cmsLibView === 'model' ? ' url-lib-view-tab-active' : '') + '" aria-pressed="' + (_cmsLibView === 'model' ? 'true' : 'false') + '" onclick="urlLibSetViewMode(\'model\')">모델별</button>';
+  headerHtml += '<button type="button" class="url-lib-view-tab' + (_cmsLibView === 'country' ? ' url-lib-view-tab-active' : '') + '" aria-pressed="' + (_cmsLibView === 'country' ? 'true' : 'false') + '" onclick="urlLibSetViewMode(\'country\')">국가별</button>';
+  headerHtml += '</div>';
+  headerHtml += '<div class="url-lib-filter-bar">';
+  if (_cmsLibView === 'country') {
+    headerHtml += '<div class="dash-search">' + CMS_LIB_SEARCH_ICON;
+    headerHtml += '<input id="urlLibCountryQueryInput" class="dash-search-input" type="text" aria-label="국가명 또는 로케일 검색" placeholder="국가명 또는 로케일 검색 (예: Spain, ES)..." value="' + esc(_cmsLibCountryQuery) + '" oninput="urlLibOnCountryQueryInput(this)">';
+    headerHtml += '<button type="button" class="dash-search-clear' + (_cmsLibCountryQuery ? ' dash-search-clear-visible' : '') + '" id="urlLibCountryClear" onclick="urlLibClearCountryQuery()" aria-label="Clear search">&times;</button></div>';
+  } else {
+    headerHtml += '<div class="dash-search">' + CMS_LIB_SEARCH_ICON;
+    headerHtml += '<input id="urlLibSearchInput" class="dash-search-input" type="text" aria-label="Search model or code" placeholder="Search model or code..." value="' + esc(_cmsLibFilter.search) + '" oninput="urlLibOnSearchInput(this)">';
+    headerHtml += '<button type="button" class="dash-search-clear' + (_cmsLibFilter.search ? ' dash-search-clear-visible' : '') + '" id="urlLibSearchClear" onclick="urlLibClearSearch()" aria-label="Clear search">&times;</button></div>';
+  }
+  headerHtml += '<select class="url-lib-select" id="urlLibCategorySelect"' + urlLibSelectA11y('Category filter') + ' onchange="urlLibSetFilter(\'category\',this.value)">';
+  headerHtml += '<option value="">All Categories</option>';
+  categories.forEach(function (cat) {
+    headerHtml += '<option value="' + esc(cat) + '"' + (_cmsLibFilter.category === cat ? ' selected' : '') + '>' + esc(cat) + '</option>';
   });
-  html.push('</tbody></table></div></div>');
-  wrap.innerHTML = html.join('');
+  headerHtml += '</select>';
+  headerHtml += '<select class="url-lib-select" id="urlLibStatusSelect"' + urlLibSelectA11y('Status filter') + ' onchange="urlLibSetFilter(\'status\',this.value)">';
+  headerHtml += '<option value="">All Status</option>';
+  statusOptions.forEach(function (s) {
+    headerHtml += '<option value="' + s + '"' + (_cmsLibFilter.status === s ? ' selected' : '') + '>' + s + '</option>';
+  });
+  headerHtml += '</select>';
+  if (_cmsLibView !== 'country') {
+    headerHtml += '<select class="url-lib-select" id="urlLibLocaleSelect"' + urlLibSelectA11y('Country filter') + ' onchange="urlLibSetFilter(\'locale\',this.value)">';
+    headerHtml += '<option value="">All Countries</option>';
+    localeTokens.forEach(function (token) {
+      var lm = localeMeta[token] || {};
+      var label = token + ' — ' + urlLibLocaleDisplayName(token, lm.lang, lm.withLang);
+      headerHtml += '<option value="' + esc(token) + '"' + (_cmsLibFilter.locale === token ? ' selected' : '') + '>' + esc(label) + '</option>';
+    });
+    headerHtml += '</select>';
+    headerHtml += '<button type="button" class="url-lib-page-btn" id="urlLibResetBtn" onclick="urlLibResetFilter()">Reset</button>';
+  }
+  headerHtml += '</div></div></div><div id="urlLibResults"></div>';
+  wrap.innerHTML = headerHtml;
+  cmsLibRenderResults();
+}
+function cmsLibRenderResults() {
+  var resultsEl = document.getElementById('urlLibResults');
+  if (!resultsEl || !CMS) return;
+  if (_cmsLibView === 'country') cmsLibRenderCountry();
+  else cmsLibRenderModels();
+}
+function cmsLibStatusClass(status) {
+  if (status === 'ACTIVE') return 'url-lib-status-active';
+  if (status === 'DISCONTINUED') return 'url-lib-status-disc';
+  return 'url-lib-status-other';
+}
+function cmsLibRenderModels() {
+  var wrap = document.getElementById('urlLibResults');
+  if (!wrap) return;
+  var filtered = urlLibSortModels(urlLibFilterModels(CMS.models || [], _cmsLibFilter), 'name');
+  var pageInfo = urlLibPaginate(filtered, _cmsLibFilter.page, CMS_LIB_PAGE);
+  var page = pageInfo.page;
+  var html = '<div style="padding:12px 24px">';
+  html += '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px">';
+  html += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500">' + filtered.length.toLocaleString() + '개 모델</div>';
+  html += '<button type="button" id="urlLibExcelBtn" onclick="urlLibDownloadExcel()" title="현재 필터 조건 그대로 내보냅니다" style="cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:8px;padding:5px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">⬇ Excel Download</button>';
+  html += '</div>';
+  if (!filtered.length) {
+    wrap.innerHTML = html + urlLibEmptyStateMarkup('조건에 맞는 모델이 없습니다.') + '</div>';
+    return;
+  }
+  html += '<div class="url-lib-model-list">';
+  pageInfo.pageItems.forEach(function (model, modelIndex) {
+    var open = _cmsLibOpen === model.modelName;
+    var shown = urlLibMatchedLocales(model, _cmsLibFilter);
+    var activeCount = shown.filter(function (l) { return l.status === 'ACTIVE'; }).length;
+    var detailId = 'urlLibModelDetail-' + page + '-' + modelIndex;
+    html += '<div class="url-lib-model-row' + (open ? ' url-lib-model-row-active' : '') + '">';
+    html += '<button type="button" class="url-lib-model-main" data-mk="' + esc(model.modelName) + '" aria-expanded="' + (open ? 'true' : 'false') + '" aria-controls="' + detailId + '" onclick="toggleUrlLibModel(this.getAttribute(\'data-mk\'))">';
+    html += '<span class="url-lib-model-identity"><span class="url-lib-model-name">' + esc(model.modelName) + '</span>';
+    html += '<span class="url-lib-model-cat">' + esc(model.category) + '</span></span>';
+    html += '<span class="url-lib-model-stats">';
+    html += '<span style="font-size:var(--fs-caption);color:#10B981;font-weight:700">ACTIVE ' + activeCount + '</span>';
+    html += '<span style="font-size:var(--fs-caption);color:#64748B">' + urlLibCountryCount({ locales: shown }) + '개국 · ' + shown.length + '개 사이트</span>';
+    html += '<span style="color:#94A3B8">' + (open ? '▲' : '▼') + '</span></span></button>';
+    if (open) {
+      html += '<div class="url-lib-detail-table" id="' + detailId + '"><table class="url-lib-table"><thead><tr>';
+      html += '<th>Locale</th><th>Country</th><th>Status</th><th>Live URL</th></tr></thead><tbody>';
+      shown.forEach(function (loc) {
+        var displayUrl = urlLibDisplayUrl(loc.prodUrl);
+        html += '<tr><td><span class="url-lib-locale-badge">' + esc(String(loc.locale || '').toUpperCase()) + '</span></td>';
+        html += '<td style="color:#334155">' + esc(loc.country || loc.locale) + '</td>';
+        html += '<td><span class="' + cmsLibStatusClass(loc.status) + '">' + esc(loc.status) + '</span></td>';
+        html += '<td><a class="url-lib-url-link" href="' + esc(loc.prodUrl) + '" target="_blank" rel="noopener" title="' + esc(loc.prodUrl) + '">' + esc(displayUrl) + '</a></td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+    html += '</div>';
+  });
+  html += '</div>';
+  if (pageInfo.totalPages > 1) {
+    html += '<div class="url-lib-pagination">';
+    html += '<button class="url-lib-page-btn" ' + (page <= 1 ? 'disabled' : '') + ' onclick="urlLibSetFilter(\'page\',' + (page - 1) + ')">← 이전</button>';
+    html += '<span style="color:#64748B;font-size:var(--fs-caption)">' + page + ' / ' + pageInfo.totalPages + '</span>';
+    html += '<button class="url-lib-page-btn" ' + (page >= pageInfo.totalPages ? 'disabled' : '') + ' onclick="urlLibSetFilter(\'page\',' + (page + 1) + ')">다음 →</button>';
+    html += '</div>';
+  }
+  html += '</div>';
+  wrap.innerHTML = html;
+}
+function cmsLibRenderCountry() {
+  var wrap = document.getElementById('urlLibResults');
+  if (!wrap) return;
+  var index = getUrlLibLocaleIndex();
+  var tokens = Object.keys(index);
+  var selected = window.__cmsCountry || '';
+  function filteredModelsFor(token) {
+    return (index[token] || []).filter(function (entry) {
+      if (_cmsLibFilter.category && entry.category !== _cmsLibFilter.category) return false;
+      if (_cmsLibFilter.status && entry.status !== _cmsLibFilter.status) return false;
+      return true;
+    });
+  }
+  if (!selected) {
+    var matched = tokens.filter(function (t) { return urlLibLocaleMatchesQuery(t, _cmsLibCountryQuery); });
+    var countByToken = {};
+    matched.forEach(function (token) { countByToken[token] = filteredModelsFor(token).length; });
+    matched.sort(function (a, b) { return countByToken[b] - countByToken[a]; });
+    var html = '<div style="padding:12px 24px">';
+    if (!matched.length) {
+      wrap.innerHTML = html + urlLibEmptyStateMarkup('조건에 맞는 국가가 없습니다.') + '</div>';
+      return;
+    }
+    html += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500;margin-bottom:8px">국가를 검색하거나 아래에서 선택하세요</div>';
+    html += '<div class="url-lib-country-grid">';
+    matched.forEach(function (token) {
+      var cm = _cmsLibCountryMeta[token] || {};
+      html += '<button type="button" class="url-lib-country-card" data-token="' + esc(token) + '" onclick="urlLibSelectLocale(this.getAttribute(\'data-token\'))">';
+      html += '<span class="url-lib-country-name">' + esc(urlLibLocaleDisplayName(token, cm.lang, cm.withLang)) + '</span>';
+      html += '<span class="url-lib-country-token">' + esc(token) + '</span>';
+      html += '<span class="url-lib-country-count">' + countByToken[token].toLocaleString() + '개 제품</span></button>';
+    });
+    html += '</div></div>';
+    wrap.innerHTML = html;
+    return;
+  }
+  var entries = filteredModelsFor(selected).slice().sort(function (a, b) {
+    return a.category.localeCompare(b.category) || a.modelName.localeCompare(b.modelName);
+  });
+  var catCounts = {};
+  entries.forEach(function (e) { catCounts[e.category] = (catCounts[e.category] || 0) + 1; });
+  var catSummary = Object.keys(catCounts).sort().map(function (c) { return c + ' ' + catCounts[c]; }).join(' · ');
+  var sm = _cmsLibCountryMeta[selected] || {};
+  var html2 = '<div style="padding:12px 24px">';
+  html2 += '<button type="button" class="url-lib-country-back" data-token="' + esc(selected) + '" onclick="urlLibSelectLocale(this.getAttribute(\'data-token\'))">← 국가 목록으로</button>';
+  html2 += '<div class="ov-head-total-num ov-head-total-sites" style="margin:8px 0">';
+  html2 += esc(urlLibLocaleDisplayName(selected, sm.lang, sm.withLang)) + ' (' + esc(selected) + ') · <strong>' + entries.length.toLocaleString() + '</strong>개 IT 제품 라이브';
+  if (catSummary) html2 += '<span style="color:#94A3B8;font-size:var(--fs-caption);font-weight:500;margin-left:8px">(' + esc(catSummary) + ')</span>';
+  html2 += '</div>';
+  if (!entries.length) {
+    wrap.innerHTML = html2 + urlLibEmptyStateMarkup('조건에 맞는 제품이 없습니다.') + '</div>';
+    return;
+  }
+  html2 += '<table class="url-lib-table"><thead><tr><th>Category</th><th>Model</th><th>Status</th><th>Live URL</th></tr></thead><tbody>';
+  entries.forEach(function (e) {
+    var displayUrl = urlLibDisplayUrl(e.prodUrl);
+    html2 += '<tr><td style="color:#334155">' + esc(e.category) + '</td>';
+    html2 += '<td style="font-weight:600">' + esc(e.modelName) + '</td>';
+    html2 += '<td><span class="' + cmsLibStatusClass(e.status) + '">' + esc(e.status) + '</span></td>';
+    html2 += '<td><a class="url-lib-url-link" href="' + esc(e.prodUrl) + '" target="_blank" rel="noopener" title="' + esc(e.prodUrl) + '">' + esc(displayUrl) + '</a></td></tr>';
+  });
+  html2 += '</tbody></table></div>';
+  wrap.innerHTML = html2;
 }
 
 function renderOverview() {
