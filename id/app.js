@@ -81,10 +81,6 @@ function isOverdue(t) { var d = daysUntil(t.due); return d != null && d < 0 && !
 function isStale(t) { var d = daysSince(t.updated); return d != null && d >= 7 && !isDone(t); }
 
 function tickets() { return (DATA && DATA.tickets) || []; }
-function lastComment(t) { return (t.comments && t.comments.length) ? t.comments[0] : null; }
-// "박나은/(협력사) 선임/B2B디지털채널팀" → "박나은" (전체는 title 툴팁으로)
-function shortName(name) { return String(name || '').split('/')[0].trim() || name || ''; }
-function oneLine(text, max) { var s = String(text || '').replace(/\s+/g, ' ').trim(); return s.length > max ? s.slice(0, max).trim() + '…' : s; }
 function findTicket(key) {
   key = String(key || '').trim().toUpperCase();
   for (var i = 0; i < tickets().length; i++) if (tickets()[i].key.toUpperCase() === key) return tickets()[i];
@@ -158,8 +154,8 @@ function renderSidebar() {
     list.forEach(function (t) {
       var abbr = t.key.replace(/^[A-Z]+-/, '');
       html.push('<div class="nav-item' + (currentKey === t.key ? ' active' : '') + '" data-key="' + esc(t.key) + '" data-abbr="' + esc(abbr) + '" ' +
-        'data-search="' + esc((t.key + ' ' + t.title + ' ' + t.assignee).toLowerCase()) + '" onclick="switchTicket(this)" title="' + esc(t.key + ' · ' + t.title) + '">' +
-        '<span class="ni-text"><span class="ni-key">' + esc(t.key) + '</span><span class="ni-title">' + esc(shortTitle(t.title)) + '</span></span>' +
+        'data-search="' + esc(t.key.toLowerCase()) + '" onclick="switchTicket(this)" title="' + esc(t.key) + '">' +
+        '<span class="ni-text"><span class="ni-key">' + esc(t.key) + '</span></span>' +
         '<span class="ni-badge ' + jiraStatusAppearance(t) + '" title="' + esc(t.status) + '">' + esc(t.status) + '</span></div>');
     });
     if (collapsible) html.push('</div>');
@@ -181,10 +177,6 @@ function renderSidebar() {
   applySearchToNav();
 }
 
-// 제목 접두 "[ID]", "ID)", "Medical)" 등은 사이드바에서는 노이즈 — 표시용으로만 뗀다.
-function shortTitle(title) {
-  return String(title || '').replace(/^\s*(\[[^\]]*\]\s*|\(IT\s*B2B\)\s*|IT\s*B2B\s*\)\s*|ID사업부\s*|ID\s*\)\s*|Medical\s*\)\s*)+/i, '').trim() || title;
-}
 function stageShort(t) {
   return { '사전검토': '사전검토', '진행 중': '진행', '검토·승인': '승인대기', '응답 대기': '응답대기', '완료': '완료' }[stageOf(t)];
 }
@@ -287,7 +279,7 @@ function renderContent() {
   var search = $('ticketSearch');
   if (search) {
     var modelSearch = currentKey === 'catalog';
-    search.placeholder = modelSearch ? '모델, 국가 검색' : '티켓 번호, 제목, 담당자 검색';
+    search.placeholder = modelSearch ? '모델, 국가 검색' : '티켓 번호 검색';
     search.setAttribute('aria-label', modelSearch ? '모델 검색' : '티켓 검색');
   }
   if (currentKey === 'id_npi') { renderIdNpi(); return; }
@@ -295,7 +287,7 @@ function renderContent() {
   if (currentKey === 'cms') { renderCms(); return; }
   var wrap = $('contentWrap');
   var t = currentKey === 'overview' ? null : findTicket(currentKey);
-  $('topTitle').textContent = t ? t.key + ' · ' + shortTitle(t.title) : CFG.title;
+  $('topTitle').textContent = t ? t.key : CFG.title;
   var jira = $('topJiraLink');
   if (t) { jira.href = t.url; jira.style.display = 'inline-flex'; } else { jira.style.display = 'none'; }
   wrap.innerHTML = t ? renderTicket(t) : renderOverview();
@@ -833,7 +825,7 @@ function renderOverview() {
   var all = tickets();
   var visible = all.filter(function (t) {
     if (stageFilter && t.status !== stageFilter) return false;
-    if (searchTerm && (t.key + ' ' + t.title + ' ' + t.assignee).toLowerCase().indexOf(searchTerm) < 0) return false;
+    if (searchTerm && t.key.toLowerCase().indexOf(searchTerm) < 0) return false;
     return true;
   });
   var sortSel = $('ovSort');
@@ -880,28 +872,19 @@ function renderOverview() {
   h.push('<div class="section-bar"><h2>티켓별 현황 <span class="muted" style="font-weight:600;font-size:12px">' + visible.length + '건</span></h2>' +
     '<select id="ovSort" aria-label="정렬" onchange="renderContent()">' +
     opt('updated', '최근 업데이트순', sort) + opt('due', '마감일순', sort) + opt('stale', '변경 오래된순', sort) + '</select></div>');
-  h.push('<div class="table-wrap"><table><thead><tr><th>티켓 / 업무</th><th>진행 상태</th><th>담당자</th><th>마감일</th><th>최근 변경</th><th class="col-cm">마지막 코멘트</th></tr></thead><tbody>');
-  if (!visible.length) h.push('<tr><td colspan="6" class="t-empty">조건에 맞는 티켓이 없습니다.</td></tr>');
+  h.push('<div class="table-wrap"><table><thead><tr><th>티켓</th><th>진행 상태</th><th>마감일</th><th>최근 변경</th></tr></thead><tbody>');
+  if (!visible.length) h.push('<tr><td colspan="4" class="t-empty">조건에 맞는 티켓이 없습니다.</td></tr>');
   visible.forEach(function (t) {
     h.push('<tr class="row-link" onclick="selectKey(\'' + esc(t.key) + '\')">' +
-      '<td><div class="t-title">' + esc(t.title) + '</div><div class="t-key">' + esc(t.key) + (t.parent && t.parent.key ? ' · 상위 ' + esc(t.parent.key) : '') + '</div></td>' +
+      '<td><div class="t-key">' + esc(t.key) + '</div></td>' +
       '<td><span class="badge ' + jiraStatusAppearance(t) + '">' + esc(t.status) + '</span></td>' +
-      '<td>' + esc(t.assignee) + '</td>' +
       '<td class="t-num' + (isOverdue(t) ? ' overdue' : '') + '">' + (stageOf(t) === '완료' ? '<span class="muted">완료 ' + esc(day(t.resolved || t.stageSince)) + '</span>' : (t.due ? esc(t.due) : '미정')) + '</td>' +
-      '<td class="t-num">' + esc(day(t.updated)) + '<span class="t-sub">' + esc(ago(t.updated)) + '</span></td>' +
-      '<td class="col-cm">' + cellComment(t) + '</td></tr>');
+      '<td class="t-num">' + esc(day(t.updated)) + '<span class="t-sub">' + esc(ago(t.updated)) + '</span></td></tr>');
   });
   h.push('</tbody></table></div>');
   h.push('<p class="sub" style="margin-top:12px">완료 티켓은 최근 ' + (DATA.doneDays || 0) + '일 내 완료 전환된 건만 포함되며, 그 이전 완료건은 표시하지 않습니다. 단계는 Jira 상태명으로 판정합니다.</p>');
   h.push('</div>');
   return h.join('');
-}
-function cellComment(t) {
-  var c = lastComment(t);
-  if (!c) return '<span class="muted">—</span>';
-  return '<div class="cm-cell"><div class="cm-cell-head"><b title="' + esc(c.author) + '">' + esc(shortName(c.author)) + '</b><span class="t-sub" style="display:inline;margin-left:6px">' + esc(ago(c.created)) + '</span>' +
-    (t.commentCount ? '<span class="cm-count" title="코멘트 ' + t.commentCount + '개">' + t.commentCount + '</span>' : '') + '</div>' +
-    '<div class="cm-cell-body" title="' + esc(oneLine(c.text, 400)) + '">' + esc(oneLine(c.text, 80)) + '</div></div>';
 }
 function kpi(n, label, warn) { return '<div class="kpi' + (warn ? ' warn' : '') + '"><b>' + n + '</b><span>' + esc(label) + '</span></div>'; }
 function opt(v, label, cur) { return '<option value="' + v + '"' + (v === cur ? ' selected' : '') + '>' + label + '</option>'; }
@@ -916,14 +899,12 @@ function renderTicket(t) {
   h.push('<div class="tk-head"><div class="tk-head-main">' +
     '<div class="tk-key"><span>' + esc(t.key) + '</span><span class="badge ' + jiraStatusAppearance(t) + '">' + esc(t.status) + '</span>' +
     (t.priority ? '<span class="pill">' + esc(t.priority) + '</span>' : '') + (t.issuetype ? '<span class="pill">' + esc(t.issuetype) + '</span>' : '') + '</div>' +
-    '<div class="tk-title">' + esc(t.title) + '</div></div>' +
+    '<div class="tk-title">업무 내용과 담당자, 코멘트는 이 페이지에 표시하지 않습니다.</div></div>' +
     '<div class="tk-actions"><a class="btn-primary" href="' + esc(t.url) + '" target="_blank" rel="noopener">Jira에서 열기 ↗</a></div></div>');
   var alerts = [];
   if (isOverdue(t)) alerts.push('<div class="alert">마감일 ' + esc(t.due) + ' 을 ' + Math.abs(untilDue) + '일 지났습니다.</div>');
   else if (untilDue != null && untilDue <= 3 && stage !== '완료') alerts.push('<div class="alert">마감일 ' + esc(t.due) + ' 까지 ' + untilDue + '일 남았습니다.</div>');
   if (isStale(t)) alerts.push('<div class="alert">' + daysSince(t.updated) + '일 동안 Jira 업데이트가 없습니다.</div>');
-  var lc = lastComment(t);
-  if (lc && stage !== '완료' && daysSince(lc.created) >= 7) alerts.push('<div class="alert info">마지막 코멘트 ' + daysSince(lc.created) + '일 전 (' + esc(shortName(lc.author)) + ')</div>');
   if (stage === '응답 대기') alerts.push('<div class="alert info">응답 대기 상태 — 요청자/법인 회신을 확인하세요.</div>');
   if (stage === '검토·승인') alerts.push('<div class="alert info">승인 대기 상태 — 법인 승인 진행을 확인하세요.</div>');
   if (stage === '완료') alerts.push('<div class="alert done">' + esc(day(t.resolved || t.stageSince)) + ' 완료 (' + esc(t.status) + ')</div>');
@@ -932,11 +913,8 @@ function renderTicket(t) {
 
   h.push('<div class="card"><div class="card-title">티켓 정보<small>Jira 기준 ' + esc(fmtDateTime(DATA.generatedAt)) + '</small></div>');
   h.push('<dl class="meta-grid">' +
-    meta('담당자', t.assignee) +
-    meta('보고자', t.reporter || '—') +
     meta('Status', t.status) +
     meta('프로젝트', t.project) +
-    meta('상위 티켓', t.parent && t.parent.key ? '<a class="link" href="' + esc(DATA.baseUrl + '/browse/' + t.parent.key) + '" target="_blank" rel="noopener">' + esc(t.parent.key) + '</a>' : '—', t.parent && t.parent.title ? t.parent.title : '', true) +
     meta('생성', day(t.created) || '—', ago(t.created)) +
     (stage === '완료'
       ? meta('완료일', day(t.resolved || t.stageSince) || '—', ago(t.resolved || t.stageSince))
@@ -944,32 +922,6 @@ function renderTicket(t) {
     meta('최근 변경', day(t.updated) || '—', ago(t.updated)) +
     meta('상태 그룹 변경', day(t.stageSince) || '—', sinceStage == null ? '' : sinceStage + '일 경과 · 개별 상태 체류시간 아님') +
     '</dl></div>');
-
-  h.push(renderComments(t));
-  h.push('<div class="card"><div class="card-title">설명 요약<small>Jira 본문 앞부분</small></div>');
-  if (t.descriptionExcerpt) h.push('<div class="desc">' + esc(t.descriptionExcerpt) + '</div>');
-  else h.push('<div class="desc empty">Jira 본문이 비어 있거나 내보내기에서 제외됐습니다. 전체 내용은 Jira에서 확인하세요.</div>');
-  h.push('</div>');
-  return h.join('');
-}
-function renderComments(t) {
-  var list = t.comments || [];
-  var total = t.commentCount != null ? t.commentCount : list.length;
-  var h = ['<div class="card"><div class="card-title">최근 코멘트<small>' +
-    (total ? '코멘트 ' + total + '개 · 최근 ' + list.length + '개 · <a class="link" href="' + esc(t.url) + '" target="_blank" rel="noopener">Jira에서 전체 보기</a>' : 'Jira 코멘트') + '</small></div>'];
-  if (!list.length) {
-    h.push('<div class="desc empty">' + (t.comments ? '아직 코멘트가 없습니다.' : '코멘트가 내보내기에서 제외됐습니다.') + '</div></div>');
-    return h.join('');
-  }
-  h.push('<ol class="cm-list">');
-  list.forEach(function (c, i) {
-    h.push('<li class="cm-item' + (i === 0 ? ' is-latest' : '') + '">' +
-      '<div class="cm-head"><b class="cm-author" title="' + esc(c.author) + '">' + esc(shortName(c.author)) + '</b>' +
-      '<span class="cm-when" title="' + esc(fmtDateTime(c.created)) + '">' + esc(ago(c.created)) + ' · ' + esc(day(c.created)) + '</span>' +
-      (i === 0 ? '<span class="cm-latest">최신</span>' : '') + '</div>' +
-      '<div class="cm-body">' + esc(c.text || '(본문 없음)') + '</div></li>');
-  });
-  h.push('</ol></div>');
   return h.join('');
 }
 function meta(label, value, small, raw) {

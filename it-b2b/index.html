@@ -56,7 +56,7 @@
     <div class="topbar-search">
       <svg class="topbar-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
       <input id="ticketSearch" class="topbar-search-input" type="search" autocomplete="off" spellcheck="false"
-             placeholder="티켓 번호, 제목, 담당자 검색" aria-label="티켓 검색" oninput="onSearchInput(this.value)">
+             placeholder="티켓 번호 검색" aria-label="티켓 검색" oninput="onSearchInput(this.value)">
     </div>
     <div class="topbar-right">
       <a class="topbar-btn" id="topJiraLink" href="https://lge-gmc.atlassian.net/" target="_blank" rel="noopener" style="display:none">Jira에서 열기 ↗</a>
@@ -79,7 +79,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script>
-var __BUILD_V = '0.1.10';
+var __BUILD_V = '0.1.11';
 // id/app.js 공유 — 보드 문구만 바꾼다
 window.DASH_CONFIG = {
   board: 'it-b2b',
@@ -90,5 +90,5 @@ window.DASH_CONFIG = {
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
 <script src="../it/js-lib/url-lib-locale.js?v=0.1.10"></script>
-<script src="../id/app.js?v=0.1.10"></script>
+<script src="../id/app.js?v=0.1.11"></script>
 </body></html>
