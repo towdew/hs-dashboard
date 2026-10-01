@@ -1,94 +1,16 @@
 <!DOCTYPE html>
-<html lang="ko"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LG IT/B2B Dashboard</title>
-<link rel="icon" type="image/x-icon" href="../it/favicon.ico">
-<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
-<link rel="stylesheet" href="../id/style.css?v=0.1.10">
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta http-equiv="refresh" content="0;url=https://lg-dashboard-admin.pages.dev/it-b2b/">
+  <title>LG IT/B2B Dashboard</title>
+  <style>
+    body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:Pretendard,sans-serif;background:#F5F6FA;color:#1A1D2E}
+    a{color:#A50034;font-weight:700;text-decoration:none}
+  </style>
 </head>
 <body>
-
-<div class="app">
-
-<!-- /it-b2b — id/ 와 같은 정적 티켓 대시보드. 스타일·로직은 ../id/ 를 공유한다. -->
-<!-- ══════════════════ SIDEBAR ══════════════════ -->
-<aside class="sidebar" id="sidebar">
-  <div class="sb-logo">
-    <button class="sb-toggle-btn" onclick="toggleSidebar()" title="메뉴 펼치기/닫기" aria-label="메뉴 펼치기/닫기">
-      <div class="hb"><span></span><span></span><span></span></div>
-    </button>
-    <div class="sidebar-text-group">
-      <div class="sb-logo-text">IT/B2B Dashboard</div>
-      <div class="sb-logo-sub">Jira follow-up · IT B2B</div>
-    </div>
-  </div>
-
-  <div class="sb-section" id="ticketNavList">
-    <div class="sb-section-label">Overview</div>
-    <div class="nav-item active" data-key="overview" onclick="switchTicket(this)">
-      <span class="ni-text" data-abbr="IT">IT/B2B 업무 현황</span>
-      <span class="ni-badge ni-badge-muted" id="navTotalBadge">-</span>
-    </div>
-    <div class="sb-section-label" style="margin-top:10px">Tickets</div>
-    <div class="nav-item loading-nav" data-key="loading">
-      <span class="ni-text" data-abbr="--">Loading...</span>
-    </div>
-  </div>
-
-  <div class="sb-foot" id="sbFoot">Jira 기준 —</div>
-</aside>
-
-<div class="sidebar-backdrop" id="sbBackdrop" onclick="closeMobileSidebar()"></div>
-
-<!-- ══════════════════ MAIN ══════════════════ -->
-<div class="main" id="mainArea">
-
-  <div class="topbar">
-    <button class="mobile-menu-btn" onclick="openMobileSidebar()" aria-label="메뉴 열기">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
-    <div class="topbar-titlewrap">
-      <span class="topbar-title" id="topTitle">IT/B2B 업무 현황</span>
-      <button type="button" class="topbar-link-btn" onclick="copyTicketLink()" title="이 화면 링크 복사 (?ticket=…)" aria-label="이 화면 링크 복사"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></button>
-    </div>
-    <span class="topbar-meta" id="topMeta">Jira 기준 —</span>
-    <div class="topbar-search">
-      <svg class="topbar-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-      <input id="ticketSearch" class="topbar-search-input" type="search" autocomplete="off" spellcheck="false"
-             placeholder="티켓 번호 검색" aria-label="티켓 검색" oninput="onSearchInput(this.value)">
-    </div>
-    <div class="topbar-right">
-      <a class="topbar-btn" id="topJiraLink" href="https://lge-gmc.atlassian.net/" target="_blank" rel="noopener" style="display:none">Jira에서 열기 ↗</a>
-    </div>
-  </div>
-
-  <div class="content-wrap" id="contentWrap">
-    <div class="dashboard-loading-shell" id="dashboardLoading">
-      <div class="dashboard-loading-card">
-        <div class="dashboard-loading-head"><span class="dashboard-loading-dot"></span><span>IT/B2B Jira 티켓 현황</span></div>
-        <div class="dashboard-loading-sub">tickets.json을 불러오는 중입니다</div>
-        <div class="dashboard-loading-bar"><span></span></div>
-      </div>
-    </div>
-  </div>
-
-</div><!-- .main -->
-</div><!-- .app -->
-
-<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
-
-<script>
-var __BUILD_V = '0.1.11';
-// id/app.js 공유 — 보드 문구만 바꾼다
-window.DASH_CONFIG = {
-  board: 'it-b2b',
-  logoText: 'IT/B2B Dashboard', logoSub: 'Jira follow-up · IT B2B',
-  navAbbr: 'IT', title: 'IT/B2B 업무 현황', eyebrow: 'Jira follow-up · IT B2B', heading: 'IT/B2B 업무 진행 현황',
-  subject: 'IT B2B 티켓', docTitle: 'LG IT/B2B Dashboard'
-};
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
-<script src="../it/js-lib/url-lib-locale.js?v=0.1.10"></script>
-<script src="../id/app.js?v=0.1.11"></script>
-</body></html>
+  <p><a href="https://lg-dashboard-admin.pages.dev/it-b2b/">IT/B2B 대시보드로 이동</a></p>
+</body>
+</html>
