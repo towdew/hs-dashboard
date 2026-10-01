@@ -183,6 +183,9 @@ tbody tr.row-link:hover{background:#FAFBFD}
 .pill{font-size:11px;font-weight:600;color:#4A5280;background:#F5F6FA;border-radius:6px;padding:4px 9px}
 .link{color:#A50034;text-decoration:none;font-weight:700}
 .link:hover{text-decoration:underline}
+.cms-locales{display:flex;flex-wrap:wrap;gap:8px 14px;padding:4px 0 2px}
+.cms-locales a{font-size:12px;font-weight:700;color:#0055CC;text-decoration:none}
+.cms-locales a:hover{color:#A50034}
 .cat-sku{font-weight:800;color:#1A1D2E;text-decoration:none}
 .cat-sku:hover{color:#A50034}
 .delta-add{color:#15803D}

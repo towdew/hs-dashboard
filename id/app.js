@@ -11,8 +11,9 @@ var CFG = Object.assign({
 }, window.DASH_CONFIG || {});
 
 var DATA = null;              // tickets.json 전체
-var CATALOG = null;           // it-b2b/data/catalog.json — 모델 변동
-var currentKey = 'overview';  // 'overview' | 'catalog' | 'id_npi' | 티켓 키
+var CATALOG = null;           // it-b2b/data/catalog.json — 모델 변동(메뉴는 숨김)
+var CMS = null;               // it-b2b/data/cms-business.json — business 하위 IT 모델
+var currentKey = 'overview';  // 'overview' | 'catalog' | 'cms' | 'id_npi' | 티켓 키
 var stageFilter = '';         // Overview 단계 칩
 var searchTerm = '';
 var PARAM = 'ticket';
@@ -134,10 +135,10 @@ function renderSidebar() {
   html.push('<div class="nav-item' + (currentKey === 'overview' ? ' active' : '') + '" data-key="overview" data-abbr="' + esc(CFG.navAbbr) + '" onclick="switchTicket(this)" title="' + esc(CFG.title) + '">' +
     '<span class="ni-text">' + esc(CFG.title) + '</span><span class="ni-badge ni-badge-muted" id="navTotalBadge">' + all.length + '</span></div>');
   if (CFG.board === 'it-b2b') {
-    var delta = catalogChangeCount(CATALOG);
-    html.push('<div class="sb-section-label" style="margin-top:10px">Catalog</div>');
-    html.push('<div class="nav-item' + (currentKey === 'catalog' ? ' active' : '') + '" data-key="catalog" data-abbr="PLP" onclick="switchTicket(this)" title="Global B2B 모델 변동">' +
-      '<span class="ni-text">모델 변동</span><span class="ni-badge ' + (delta ? 'jira-progress' : 'ni-badge-muted') + '">' + (CATALOG ? delta : '…') + '</span></div>');
+    var cmsCount = CMS && CMS.totalModels != null ? CMS.totalModels : '…';
+    html.push('<div class="sb-section-label" style="margin-top:10px">CMS</div>');
+    html.push('<div class="nav-item' + (currentKey === 'cms' ? ' active' : '') + '" data-key="cms" data-abbr="CMS" onclick="switchTicket(this)" title="Business 하위 IT 모델">' +
+      '<span class="ni-text">Business CMS</span><span class="ni-badge ni-badge-muted">' + cmsCount + '</span></div>');
   }
 
   function section(label, id, list, collapsible, appearance) {
@@ -196,7 +197,7 @@ function switchTicket(el) {
 }
 function customKey(key) {
   if (CFG.board === 'id' && key === 'id_npi') return 'id_npi';
-  if (CFG.board === 'it-b2b' && key === 'catalog') return 'catalog';
+  if (CFG.board === 'it-b2b' && (key === 'catalog' || key === 'cms')) return key;
   return '';
 }
 function selectKey(key) {
@@ -213,6 +214,7 @@ function initialKeyFromUrl() {
     var params = new URLSearchParams(window.location.search);
     if (CFG.board === 'id' && (params.get('npi') === '1' || params.get('view') === 'npi')) return 'id_npi';
     if (CFG.board === 'it-b2b' && params.get('view') === 'catalog') return 'catalog';
+    if (CFG.board === 'it-b2b' && params.get('view') === 'cms') return 'cms';
     var raw = params.get(PARAM) || '';
     if (!raw) return 'overview';
     var t = findTicket(raw);
@@ -234,9 +236,9 @@ function syncUrl() {
     if (currentKey === 'id_npi') {
       params.delete(PARAM);
       params.set('npi', '1');
-    } else if (currentKey === 'catalog') {
+    } else if (currentKey === 'catalog' || currentKey === 'cms') {
       params.delete(PARAM);
-      params.set('view', 'catalog');
+      params.set('view', currentKey);
     } else if (currentKey === 'overview') {
       params.delete(PARAM);
     } else {
@@ -267,7 +269,12 @@ function toast(msg) {
 }
 
 // ── 검색 (사이드바 필터) ─────────────────────────────────
-function onSearchInput(v) { searchTerm = String(v || '').trim().toLowerCase(); applySearchToNav(); if (currentKey === 'overview' || currentKey === 'catalog') renderContent(); }
+function onSearchInput(v) {
+  searchTerm = String(v || '').trim().toLowerCase();
+  if (currentKey === 'cms') window.__cmsPage = 0;
+  applySearchToNav();
+  if (currentKey === 'overview' || currentKey === 'catalog' || currentKey === 'cms') renderContent();
+}
 function applySearchToNav() {
   document.querySelectorAll('.nav-item[data-search]').forEach(function (n) {
     n.classList.toggle('is-hidden', !!searchTerm && n.dataset.search.indexOf(searchTerm) < 0);
@@ -277,9 +284,14 @@ function applySearchToNav() {
 // ── 본문 ─────────────────────────────────────────────────
 function renderContent() {
   var search = $('ticketSearch');
-  if (search) search.placeholder = currentKey === 'catalog' ? '모델, 이름 검색' : '티켓 번호, 제목, 담당자 검색';
+  if (search) {
+    var modelSearch = currentKey === 'catalog' || currentKey === 'cms';
+    search.placeholder = modelSearch ? '모델, 국가 검색' : '티켓 번호, 제목, 담당자 검색';
+    search.setAttribute('aria-label', modelSearch ? '모델 검색' : '티켓 검색');
+  }
   if (currentKey === 'id_npi') { renderIdNpi(); return; }
   if (currentKey === 'catalog') { renderCatalog(); return; }
+  if (currentKey === 'cms') { renderCms(); return; }
   var wrap = $('contentWrap');
   var t = currentKey === 'overview' ? null : findTicket(currentKey);
   $('topTitle').textContent = t ? t.key + ' · ' + shortTitle(t.title) : CFG.title;
@@ -433,6 +445,123 @@ function renderCatalog() {
   models.forEach(function (m) {
     var sku = m.url ? '<a class="cat-sku" href="' + esc(m.url) + '" target="_blank" rel="noopener">' + esc(m.sku) + '</a>' : '<span class="cat-sku">' + esc(m.sku) + '</span>';
     html.push('<tr><td>' + sku + '</td><td>' + esc(m.category || '—') + '</td><td><div class="t-title">' + esc(m.name || '—') + '</div></td><td class="t-num">' + esc(m.released || '—') + '</td></tr>');
+  });
+  html.push('</tbody></table></div></div>');
+  wrap.innerHTML = html.join('');
+}
+
+function loadCms() {
+  fetch('./data/cms-business.json?v=' + (window.__BUILD_V || Date.now()), { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function (json) {
+      CMS = json;
+      renderSidebar();
+      if (currentKey === 'cms') renderCms();
+    })
+    .catch(function (e) {
+      if (currentKey === 'cms') {
+        $('contentWrap').innerHTML = '<div class="notice">CMS 모델을 불러오지 못했습니다 (' + esc(e.message) + ').</div>';
+      }
+    });
+}
+function cmsUpdatedLabel(payload) {
+  var match = /(20\d{2})(\d{2})(\d{2})/.exec((payload && payload.cmsSource) || '');
+  return match ? match[1] + '-' + match[2] + '-' + match[3] : ((payload && payload.generatedAt) || '');
+}
+function cmsSetStatus(status) {
+  window.__cmsStatus = status || '';
+  window.__cmsPage = 0;
+  if (currentKey === 'cms') renderCms();
+}
+function cmsSetCategory(category) {
+  window.__cmsCat = category || '';
+  window.__cmsPage = 0;
+  if (currentKey === 'cms') renderCms();
+}
+function cmsSetPage(page) {
+  window.__cmsPage = page;
+  if (currentKey === 'cms') renderCms();
+}
+function cmsToggle(name) {
+  window.__cmsOpen = window.__cmsOpen === name ? '' : name;
+  if (currentKey === 'cms') renderCms();
+}
+function renderCms() {
+  var wrap = $('contentWrap');
+  $('topTitle').textContent = 'Business CMS';
+  $('topJiraLink').style.display = 'none';
+  document.title = 'Business CMS · ' + CFG.docTitle;
+  if (!CMS) {
+    wrap.innerHTML = '<div class="card">CMS 모델을 불러오는 중입니다.</div>';
+    return;
+  }
+  var statusFilter = window.__cmsStatus == null ? 'ACTIVE' : window.__cmsStatus;
+  var categoryFilter = window.__cmsCat || '';
+  var pageSize = 40;
+  var models = (CMS.models || []).filter(function (model) {
+    if (categoryFilter && model.category !== categoryFilter) return false;
+    var locales = model.locales || [];
+    if (statusFilter && !locales.some(function (loc) { return loc.status === statusFilter; })) return false;
+    if (!searchTerm) return true;
+    var hay = (model.modelName + ' ' + model.category + ' ' + locales.map(function (loc) { return loc.locale; }).join(' ')).toLowerCase();
+    return hay.indexOf(searchTerm) >= 0;
+  });
+  var pages = Math.max(1, Math.ceil(models.length / pageSize));
+  var page = Math.min(window.__cmsPage || 0, pages - 1);
+  window.__cmsPage = page;
+  var slice = models.slice(page * pageSize, page * pageSize + pageSize);
+  var cats = CMS.categories || [];
+  var statuses = ['', 'ACTIVE', 'DISCONTINUED', 'SUSPENDED', 'HIDDEN'];
+  var html = [];
+  html.push('<div class="card">');
+  html.push('<div class="ov-head"><div><div class="eyebrow">CMS · business</div><div class="h1">Business 하위 IT 모델</div>');
+  html.push('<div class="sub">노트북·모니터·gram·프로젝터·씬클라이언트. 업데이트 ' + esc(cmsUpdatedLabel(CMS)) + '</div></div>');
+  html.push('<div class="ov-total"><div class="ov-total-label">모델</div><div class="ov-total-num">' + CMS.totalModels + '</div>');
+  html.push('<div class="sub">' + CMS.totalUrls + ' URL</div></div></div>');
+  html.push('<div class="chips" role="group" aria-label="Category">');
+  html.push('<button type="button" class="chip" aria-pressed="' + (categoryFilter === '' ? 'true' : 'false') + '" onclick="cmsSetCategory(\'\')">All</button>');
+  cats.forEach(function (cat) {
+    var n = (CMS.models || []).filter(function (model) { return model.category === cat; }).length;
+    html.push('<button type="button" class="chip" aria-pressed="' + (categoryFilter === cat ? 'true' : 'false') + '" onclick="cmsSetCategory(\'' + esc(cat) + '\')">' + esc(cat) + '<b>' + n + '</b></button>');
+  });
+  html.push('</div>');
+  html.push('<div class="chips" role="group" aria-label="Status" style="margin-top:8px">');
+  statuses.forEach(function (status) {
+    var label = status || 'All Status';
+    html.push('<button type="button" class="chip" aria-pressed="' + (statusFilter === status ? 'true' : 'false') + '" onclick="cmsSetStatus(\'' + esc(status) + '\')">' + esc(label) + '</button>');
+  });
+  html.push('</div></div>');
+
+  html.push('<div class="card"><div class="section-bar"><h2>모델 ' + models.length + '건</h2>');
+  if (pages > 1) {
+    html.push('<div class="chips">');
+    html.push('<button type="button" class="chip"' + (page === 0 ? ' disabled' : ' onclick="cmsSetPage(' + (page - 1) + ')"') + '>이전</button>');
+    html.push('<span class="sub">' + (page + 1) + ' / ' + pages + '</span>');
+    html.push('<button type="button" class="chip"' + (page >= pages - 1 ? ' disabled' : ' onclick="cmsSetPage(' + (page + 1) + ')"') + '>다음</button>');
+    html.push('</div>');
+  }
+  html.push('</div>');
+  html.push('<div class="table-wrap"><table class="cat-table"><thead><tr><th>모델</th><th>분류</th><th>상태</th><th>국가</th></tr></thead><tbody>');
+  if (!slice.length) html.push('<tr><td class="t-empty" colspan="4">해당하는 모델이 없습니다.</td></tr>');
+  slice.forEach(function (model) {
+    var locales = (model.locales || []).filter(function (loc) {
+      return !statusFilter || loc.status === statusFilter;
+    });
+    var statusesHere = {};
+    locales.forEach(function (loc) { if (loc.status) statusesHere[loc.status] = 1; });
+    var statusKeys = Object.keys(statusesHere);
+    var statusLabel = statusKeys.length === 1 ? statusKeys[0] : (statusKeys.length ? '혼합' : '—');
+    var open = window.__cmsOpen === model.modelName;
+    html.push('<tr><td><button type="button" class="cat-sku" style="background:none;border:0;padding:0;cursor:pointer" onclick="cmsToggle(decodeURIComponent(\'' + encodeURIComponent(model.modelName) + '\'))" aria-expanded="' + (open ? 'true' : 'false') + '">' + esc(model.modelName) + '</button></td>');
+    html.push('<td>' + esc(model.category) + '</td><td>' + esc(statusLabel) + '</td><td class="t-num">' + locales.length + '</td></tr>');
+    if (open) {
+      html.push('<tr><td colspan="4"><div class="cms-locales">');
+      locales.forEach(function (loc) {
+        var mark = loc.published ? '' : ' · 미게시';
+        html.push('<a href="' + esc(loc.url) + '" target="_blank" rel="noopener">' + esc(loc.locale) + mark + '</a>');
+      });
+      html.push('</div></td></tr>');
+    }
   });
   html.push('</tbody></table></div></div>');
   wrap.innerHTML = html.join('');
@@ -617,7 +746,7 @@ function init() {
       renderSidebar();
       renderContent();
       syncUrl();
-      if (CFG.board === 'it-b2b') loadCatalog();
+      if (CFG.board === 'it-b2b') { loadCatalog(); loadCms(); }
     })
     .catch(function (e) {
       console.error('[id-dashboard] tickets.json 로드 실패', e);
