@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PDP HS Energy Labeling 이미지 검출 — 국가·리전 분석</title>
+<style>
+:root{
+  --red:#A50034; --red-soft:#F6E6EC; --ink:#111111; --g6:#262626; --g5:#595959; --g4:#8C8C8C; --g3:#BFBFBF;
+  --g2:#E5E5E5; --g1:#F5F5F5; --bg:#FAFAFA; --surface:#FFFFFF; --border:#E5E5E5;
+  --bar-mid:#9E9E9E; --bar-rv:#D9D9D9;
+  --font:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#F2F2F2;--g6:#1C1C1C;--g5:#B3B3B3;--g4:#8C8C8C;--g3:#5A5A5A;--g2:#333;--g1:#262626;--bg:#121212;--surface:#1A1A1A;--border:#333;--bar-mid:#7A7A7A;--bar-rv:#4A4A4A}}
+:root[data-theme="dark"]{--ink:#F2F2F2;--g6:#1C1C1C;--g5:#B3B3B3;--g4:#8C8C8C;--g3:#5A5A5A;--g2:#333;--g1:#262626;--bg:#121212;--surface:#1A1A1A;--border:#333;--bar-mid:#7A7A7A;--bar-rv:#4A4A4A}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg)}
+body{font-family:var(--font);color:var(--ink);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  padding-bottom:env(safe-area-inset-bottom,0px)}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+.top-rule{height:3px;background:#000}
+header.hd{background:var(--g6);color:#fff;padding:calc(28px + env(safe-area-inset-top,0px)) 0 28px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.hd h1{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.hd p{color:#BDBDBD;font-size:13px;margin-top:6px}
+.hd .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.hd .chip{border:1px solid #4A4A4A;color:#D9D9D9;font-size:12px;padding:4px 10px;border-radius:999px}
+
+main{padding:28px 0 60px}
+section{margin-top:40px}
+section:first-child{margin-top:0}
+.sec-h{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.sec-h h2{font-size:18px;font-weight:700;letter-spacing:-.01em}
+.sec-h p{color:var(--g5);font-size:13px;margin-top:2px}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);border:1px solid var(--border);background:var(--surface)}
+.kpi{padding:20px 22px;border-right:1px solid var(--border)}
+.kpi:last-child{border-right:0}
+.kpi .lb{font-size:12px;color:var(--g5)}
+.kpi .v{font-size:32px;font-weight:700;letter-spacing:-.03em;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi .v small{font-size:14px;font-weight:500;color:var(--g5);margin-left:3px}
+.kpi .sub{font-size:12px;color:var(--g4);margin-top:2px}
+.kpi.accent .v{color:var(--red)}
+
+/* legend */
+.legend{display:flex;gap:14px;font-size:12px;color:var(--g5);flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;display:inline-block}
+
+/* region accordion */
+.panel{background:var(--surface);border:1px solid var(--border)}
+.reg{border-bottom:1px solid var(--border)}
+.reg:last-child{border-bottom:0}
+.reg-btn{width:100%;background:none;border:0;text-align:left;display:grid;
+  grid-template-columns:150px 1fr 200px 20px;align-items:center;gap:20px;padding:16px 20px}
+.reg-btn:hover{background:var(--g1)}
+.reg-name{font-weight:700;font-size:15px}
+.reg-name small{display:block;font-weight:400;font-size:12px;color:var(--g5)}
+.reg-stats{display:grid;grid-template-columns:1fr;font-size:12px;color:var(--g5);text-align:right}
+.reg-stats b{display:block;font-size:16px;color:var(--ink);font-variant-numeric:tabular-nums}
+.chev{width:16px;height:16px;transition:transform .2s;color:var(--g4)}
+.reg.open .chev{transform:rotate(180deg)}
+.reg-body{display:none;background:var(--bg);border-top:1px solid var(--border);padding:6px 20px 12px}
+.reg.open .reg-body{display:block}
+
+.bar{display:flex;height:12px;background:var(--g1);width:100%}
+.bar i{display:block;height:100%}
+.bar .hi{background:var(--red)} .bar .mid{background:var(--bar-mid)} .bar .rv{background:var(--bar-rv)}
+.bar-wrap{display:flex;align-items:center;gap:10px}
+.bar-wrap .num{font-size:13px;font-weight:700;min-width:34px;text-align:right;font-variant-numeric:tabular-nums}
+
+.crow{width:100%;background:none;border:0;text-align:left;display:grid;
+  grid-template-columns:150px 1fr 200px 20px;gap:20px;align-items:center;padding:10px 0;border-bottom:1px solid var(--g2)}
+.crow:last-child{border-bottom:0}
+.crow:hover .cname{color:var(--red)}
+.cname{font-size:14px;font-weight:600}
+.cname small{font-weight:400;color:var(--g4);font-size:12px;margin-left:4px}
+.cmeta{font-size:12px;color:var(--g5);text-align:right}
+.arrow{width:14px;height:14px;color:var(--g3)}
+
+/* table */
+.toolbar{display:flex;gap:6px;flex-wrap:wrap}
+.tbtn{border:1px solid var(--border);background:var(--surface);color:var(--g4);font-size:12px;padding:6px 12px;border-radius:999px}
+.tbtn.on{background:var(--g6);color:#fff;border-color:var(--g6)}
+.tscroll{overflow-x:auto;border:1px solid var(--border);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+th{background:var(--g1);color:var(--g5);font-weight:600;font-size:12px;padding:10px 12px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--border);position:relative}
+th.l,td.l{text-align:left}
+th.sort{cursor:pointer;user-select:none}
+th.sort.act{color:var(--ink)}
+td{padding:10px 12px;border-bottom:1px solid var(--g2);text-align:right;white-space:nowrap}
+tbody tr{cursor:pointer}
+tbody tr:hover td{background:rgba(165,0,52,.06)}
+tfoot td{font-weight:700;background:var(--g1);border-bottom:0}
+.pri{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border:1px solid var(--g3);color:var(--g5)}
+.pri.p1{background:var(--red);border-color:var(--red);color:#fff}
+.pri.p2{border-color:var(--red);color:var(--red)}
+.zero{color:var(--g3)}
+.mini{width:110px;display:inline-flex;vertical-align:middle}
+.mini .bar-wrap{width:100%}
+
+/* matrix */
+.mx td{text-align:center;min-width:64px}
+.mx th{text-align:center}
+.mx td.l,.mx th.l{text-align:left}
+
+.notes{margin-top:40px;border-top:1px solid var(--border);padding-top:18px;font-size:12px;color:var(--g5)}
+.notes li{margin:4px 0 4px 16px}
+
+/* bottom sheet */
+.dim{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}
+.dim.show{opacity:1;pointer-events:auto}
+.sheet{visibility:hidden;position:fixed;left:50%;bottom:0;width:min(860px,100%);max-height:84vh;background:var(--surface);
+  transform:translate(-50%,100%);transition:transform .25s ease;z-index:51;display:flex;flex-direction:column;
+  padding-bottom:env(safe-area-inset-bottom,0px)}
+.sheet.show{transform:translate(-50%,0);visibility:visible}
+.sheet-h{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.sheet-h h3{font-size:18px;font-weight:700}
+.sheet-h p{font-size:12px;color:var(--g5);margin-top:2px}
+.xbtn{background:none;border:1px solid var(--border);width:32px;height:32px;display:grid;place-items:center;flex:none}
+.sheet-kpi{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)}
+.sheet-kpi div{padding:12px 22px;font-size:12px;color:var(--g5);border-right:1px solid var(--border)}
+.sheet-kpi div:last-child{border-right:0}
+.sheet-kpi b{display:block;font-size:18px;color:var(--ink)}
+.sheet-body{overflow:auto;padding:4px 22px 22px}
+.img-row{display:grid;grid-template-columns:1fr auto;gap:12px;padding:12px 0;border-bottom:1px solid var(--g2)}
+.img-row .fn{font-size:13px;font-weight:600;word-break:break-all}
+.img-row .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tag{font-size:11px;border:1px solid var(--border);color:var(--g5);padding:1px 7px}
+.tag.warn{border-color:var(--red);color:var(--red)}
+.img-row .rt{text-align:right;font-size:12px;color:var(--g5)}
+.img-row .rt b{display:block;font-size:18px;color:var(--ink)}
+.img-row .rt a{color:var(--red);text-decoration:none}
+
+@media (max-width:900px){
+  .reg-btn,.crow{grid-template-columns:110px 1fr 20px}
+  .reg-stats,.cmeta{display:none}
+  .sheet-kpi{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  .kpi .v{font-size:26px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="top-rule"></div>
+<header class="hd">
+  <div class="wrap">
+    <h1>PDP HS Energy Labeling — 이미지 검출 국가·리전 분석</h1>
+    <p>판정 “이미지 있음” 전건 기준, 국가(Locale 자동추출)와 유럽 5개 권역으로 재집계한 결과입니다.</p>
+    <div class="meta" id="meta"></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <section>
+    <div class="sec-h">
+      <div><h2>리전별 현황</h2><p>리전을 펼치면 국가별 막대가, 국가를 누르면 검출 이미지 목록이 열립니다.</p></div>
+      <div class="legend"><span><i style="background:var(--red)"></i>신뢰도 높음</span><span><i style="background:var(--bar-mid)"></i>보통</span><span><i style="background:var(--bar-rv)"></i>부분매칭</span></div>
+    </div>
+    <div class="panel" id="regions"></div>
+  </section>
+
+  <section>
+    <div class="sec-h">
+      <div><h2>국가별 상세</h2><p>열 제목을 누르면 정렬, 행을 누르면 이미지 목록이 열립니다.</p></div>
+      <div class="toolbar" id="filters"></div>
+    </div>
+    <div class="tscroll"><table id="ctable"></table></div>
+  </section>
+
+  <section>
+    <div class="sec-h"><div><h2>국가 × 제품군</h2><p>검출건수 기준. 색이 진할수록 검출이 많습니다.</p></div></div>
+    <div class="tscroll"><table class="mx" id="matrix"></table></div>
+  </section>
+
+  <ul>
+    <p></p>
+
+  </ul>
+</main>
+
+<div class="dim" id="dim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-title">
+  <div class="sheet-h">
+    <div><h3 id="sh-title"></h3><p id="sh-sub"></p></div>
+    <button class="xbtn" id="sh-close" aria-label="닫기"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 1l12 12M13 1L1 13"/></svg></button>
+  </div>
+  <div class="sheet-kpi" id="sh-kpi"></div>
+  <div class="sheet-body" id="sh-body"></div>
+</div>
+
+<script>
+const D = {"countries": [{"reg": "남유럽", "name": "스페인", "iso": "ES", "locs": ["es"], "n": 81, "u": 12, "hi": 2, "mid": 77, "rv": 2, "leg": 0, "cat": {"WM(세탁기)": 77, "WD(세탁건조기)": 2, "COOK(빌트인)": 1, "REF(냉장고)": 1}, "models": ["Vivace R500", "Vivace R700", "GVX 2025 (F4X5/F2X5)"], "imgs": [{"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop-v1.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/es/images/wm/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop-v1.jpg", "n": 46, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}, {"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/es/images/wm/features/WM-VivaceRefresh-R700-white-gp1-01-1-desktop.jpg", "n": 9, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop-V3.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/es/images/wm/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop-V3.jpg", "n": 6, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.18}, {"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop1.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/es/images/wm/features/WM-VivaceRefresh-R700-white-gp1-01-1-desktop1.jpg", "n": 5, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}, {"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop-ES.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/es/images/WM-VivaceRefresh-R700-white-gp1-01-1-desktop-ES.jpg", "n": 4, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}, {"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop1.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/es/images/lavado-y-secado/f4wr7013agw_abwqpes_eees_es_c/features/WM-VivaceRefresh-R700-white-gp1-01-1-desktop1.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}, {"fn": "WD-Vivace-R700-White-03-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/es/images/wm/features/WD-Vivace-R700-White-03-1-desktop.jpg", "n": 2, "cat": "WD(세탁건조기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.13}, {"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop_v1.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/es/images/wm/features/WM-VivaceRefresh-R700-white-gp1-01-1-desktop_v1.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}, {"fn": "front-loading-washing-machine-gvx-2025-f2x5fyny5-feature-energy-efficiency-dv1.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/es/productos/ha/2025/lavadoras/f2x50s9tlb/lgcom/features/front-loading-washing-machine-gvx-2025-f2x5fyny5-feature-energy-efficiency-dv1.jpg", "n": 2, "cat": "WM(세탁기)", "model": "GVX 2025 (F4X5/F2X5)", "m": "해시매칭", "p": "AEM DAM", "d": 0.18}, {"fn": "DZ-01.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/es/images/electrodomesticos-integrables/hcez3626s_cbkqeur_eees_es_c/gallery/DZ-01.jpg", "n": 1, "cat": "COOK(빌트인)", "model": "-", "m": "부분매칭(특징점)", "p": "AEM DAM", "d": null}, {"fn": "2010-4.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/es/productos/ha/2025/frigorificos/combi/gbbs726csw/lgcom/gallery/resized-gallery/2010/2010-4.jpg/jcr:content/renditions/thum-1600x1062.jpeg", "n": 1, "cat": "REF(냉장고)", "model": "-", "m": "부분매칭(특징점)", "p": "AEM DAM", "d": null}, {"fn": "front-loading-washing-machine-gvx-2025-f4x5511thb-feature-energy-efficiency-d.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/es/productos/ha/2026/lavadoras/f4x5009tlc/lg-com/feature/desktop/front-loading-washing-machine-gvx-2025-f4x5511thb-feature-energy-efficiency-d.jpg", "n": 1, "cat": "WM(세탁기)", "model": "GVX 2025 (F4X5/F2X5)", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}]}, {"reg": "남유럽", "name": "포르투갈", "iso": "PT", "locs": ["pt"], "n": 38, "u": 11, "hi": 36, "mid": 2, "rv": 0, "leg": 0, "cat": {"WM(세탁기)": 36, "REF(냉장고)": 2}, "models": ["Vivace R700", "Vivace R500", "Vivace R750"], "imgs": [{"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pt/tratamento-de-roupa/máquina-lavar/2023/vivacerefresh-r700-gp1/features/desktop/WM-VivaceRefresh-R700-white-gp1-01-1-desktop.jpg", "n": 11, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pt/tratamento-de-roupa/máquina-lavar/2023/vivacerefresh-r500n-gp1/features/desktop/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "n": 10, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R350-white-gp1-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pt/tratamento-de-roupa/máquina-lavar/2023/vivacerefresh-r350-gp1/features/desktop/WM-VivaceRefresh-R350-white-gp1-02-1-desktop.jpg", "n": 4, "cat": "WM(세탁기)", "model": "Vivace R350", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pt/frigorificos/lg-com-gp1/2024/ref-bf-gbb92mbb3p-lg-com-pdp-2023_pt-pt/features/Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "n": 2, "cat": "REF(냉장고)", "model": "REF Energy A-20%", "m": "해시매칭", "p": "AEM DAM", "d": 0.18}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pt/tratamento-de-roupa/máquina-lavar-e-secar/2023/vivacerefresh-r500n-pdp-gp1/features1/desktop/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pt/tratamento-de-roupa/máquina-lavar-e-secar/2023/vivacerefresh-r700-pdp-gp1/features1/desktop/WM-VivaceRefresh-R700-white-gp1-01-1-desktop.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R750-white-gp1-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pt/tratamento-de-roupa/máquina-lavar-e-secar/2023/vivacerefresh-r750-pdp-gp1/features1/desktop/WM-VivaceRefresh-R750-white-gp1-02-1-desktop.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R750-white-gp1-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pt/tratamento-de-roupa/máquina-lavar/2023/vivacerefresh-r750-pdp-gp1/features/desktop/WM-VivaceRefresh-R750-white-gp1-02-1-desktop.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R950-white-gp1-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pt/tratamento-de-roupa/máquina-lavar-e-secar/2023/vivacerefresh-r950-pdp-gp1/features/desktop/WM-VivaceRefresh-R950-white-gp1-02-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R950", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R905-white-gp1-02-1-desktop-new.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pt/tratamento-de-roupa/máquina-lavar/2023/vivacerefresh-r900-pdp-gp1/features/desktop/WM-VivaceRefresh-R905-white-gp1-02-1-desktop-new.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R905", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R950-white-gp1-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pt/tratamento-de-roupa/máquina-lavar/2023/vivacerefresh-r950-pdp-gp1/features/desktop/WM-VivaceRefresh-R950-white-gp1-02-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R950", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}]}, {"reg": "발트3국", "name": "리투아니아", "iso": "LT", "locs": ["lt"], "n": 37, "u": 7, "hi": 12, "mid": 25, "rv": 0, "leg": 37, "cat": {"WM(세탁기)": 37}, "models": ["Vivace R500", "Vivace R700", "Vivace R950"], "imgs": [{"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/lt/images/WM/Features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "n": 12, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.14}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop-1.jpg", "url": "https://www.lg.com/lt/images/Features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop-1.jpg", "n": 11, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.17}, {"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop12.jpg", "url": "https://www.lg.com/lt/images/WM/features/WM-VivaceRefresh-R700-white-gp1-01-1-desktop12.jpg", "n": 5, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "레거시(/images)", "d": 0.18}, {"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/lt/images/Features/WM-VivaceRefresh-R700-white-gp1-01-1-desktop.jpg", "n": 3, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "레거시(/images)", "d": 0.18}, {"fn": "WM-VivaceRefresh-R950-white-gp1-02-1-desktop.jpg", "url": "https://www.lg.com/lt/images/Features/WM-VivaceRefresh-R950-white-gp1-02-1-desktop.jpg", "n": 3, "cat": "WM(세탁기)", "model": "Vivace R950", "m": "해시매칭", "p": "레거시(/images)", "d": 0.18}, {"fn": "WM-VivaceRefresh-R950-white-gp1-02-1-desktop-1.jpg", "url": "https://www.lg.com/lt/images/Features/WM-VivaceRefresh-R950-white-gp1-02-1-desktop-1.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R950", "m": "해시매칭", "p": "레거시(/images)", "d": 0.18}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop1.jpg", "url": "https://www.lg.com/lt/images/WM/Features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop1.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.16}]}, {"reg": "발트3국", "name": "에스토니아", "iso": "EE", "locs": ["ee"], "n": 36, "u": 13, "hi": 5, "mid": 31, "rv": 0, "leg": 36, "cat": {"WM(세탁기)": 36}, "models": ["Vivace R500", "Vivace R700", "Vivace R750"], "imgs": [{"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop_v1.jpg", "url": "https://www.lg.com/ee/images/WM/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop_v1.jpg", "n": 6, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.16}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop-v.jpg", "url": "https://www.lg.com/ee/images/WM-VivaceRefresh-R500-white-gp1-01-1-desktop-v.jpg", "n": 5, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.16}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop_v4.jpg", "url": "https://www.lg.com/ee/images/WM/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop_v4.jpg", "n": 4, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.16}, {"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop_v1.jpg", "url": "https://www.lg.com/ee/images/WM/features/WM-VivaceRefresh-R700-white-gp1-01-1-desktop_v1.jpg", "n": 4, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "레거시(/images)", "d": 0.16}, {"fn": "WM-VivaceRefresh-R750-white-gp1-02-1-desktop_v1.jpg", "url": "https://www.lg.com/ee/images/WM/features/WM-VivaceRefresh-R750-white-gp1-02-1-desktop_v1.jpg", "n": 3, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "레거시(/images)", "d": 0.15}, {"fn": "WM-VivaceRefresh-R950-white-gp1-01-1-desktop_v11.jpg", "url": "https://www.lg.com/ee/images/WM/features/WM-VivaceRefresh-R950-white-gp1-01-1-desktop_v11.jpg", "n": 3, "cat": "WM(세탁기)", "model": "Vivace R950", "m": "해시매칭", "p": "레거시(/images)", "d": 0.16}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/ee/images/WM/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.14}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktopev.jpg", "url": "https://www.lg.com/ee/images/WM/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktopev.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.17}, {"fn": "WM-VivaceRefresh-R750-white-gp1-02-1-deskt.jpg", "url": "https://www.lg.com/ee/images/WM/features/WM-VivaceRefresh-R750-white-gp1-02-1-deskt.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "레거시(/images)", "d": 0.16}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop-v.jpg", "url": "https://www.lg.com/ee/images/pesukuivatid/md07588351/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop-v.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.16}, {"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop-D.jpg", "url": "https://www.lg.com/ee/images/WM/features/WM-VivaceRefresh-R700-white-gp1-01-1-desktop-D.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "레거시(/images)", "d": 0.16}, {"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop-V1.jpg", "url": "https://www.lg.com/ee/images/WM/features/WM-VivaceRefresh-R700-white-gp1-01-1-desktop-V1.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "레거시(/images)", "d": 0.16}, {"fn": "WM-VivaceRefresh-R950-white-gp1-01-1-desktop_v1.jpg", "url": "https://www.lg.com/ee/images/WM/features/WM-VivaceRefresh-R950-white-gp1-01-1-desktop_v1.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R950", "m": "해시매칭", "p": "레거시(/images)", "d": 0.17}]}, {"reg": "발트3국", "name": "라트비아", "iso": "LV", "locs": ["lv"], "n": 35, "u": 12, "hi": 27, "mid": 8, "rv": 0, "leg": 35, "cat": {"WM(세탁기)": 35}, "models": ["Vivace R500", "Vivace R700", "Vivace R750"], "imgs": [{"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop_v1.jpg", "url": "https://www.lg.com/lv/images/WM/features/WM-VivaceRefresh-R700-white-gp1-01-1-desktop_v1.jpg", "n": 7, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "레거시(/images)", "d": 0.15}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop_v1.jpg", "url": "https://www.lg.com/lv/images/WM/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop_v1.jpg", "n": 6, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.15}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop-v(lv).jpg", "url": "https://www.lg.com/lv/images/WM-VivaceRefresh-R500-white-gp1-01-1-desktop-v(lv).jpg", "n": 4, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.16}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/lv/images/WM/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "n": 4, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.14}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop-vv.jpg", "url": "https://www.lg.com/lv/images/WM/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop-vv.jpg", "n": 3, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.17}, {"fn": "WM-VivaceRefresh-R750-white-gp1-02-1-desktop_v1.jpg", "url": "https://www.lg.com/lv/images/WM/features/WM-VivaceRefresh-R750-white-gp1-02-1-desktop_v1.jpg", "n": 3, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "레거시(/images)", "d": 0.15}, {"fn": "WM-VivaceRefresh-R950-white-gp1-02-1-desktop_v1.jpg", "url": "https://www.lg.com/lv/images/WM/features/WM-VivaceRefresh-R950-white-gp1-02-1-desktop_v1.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R950", "m": "해시매칭", "p": "레거시(/images)", "d": 0.15}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop_v1.jpg", "url": "https://www.lg.com/lv/images/velas-masinas/md07589727/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop_v1.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.15}, {"fn": "WM-VivaceRefresh-R950-white-gp1-02-1-desktop_v_4.jpg", "url": "https://www.lg.com/lv/images/WM/features/WM-VivaceRefresh-R950-white-gp1-02-1-desktop_v_4.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R950", "m": "해시매칭", "p": "레거시(/images)", "d": 0.17}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop_v1.jpg", "url": "https://www.lg.com/lv/images/velas-masinas/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop_v1.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.15}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop_v1.jpg", "url": "https://www.lg.com/lv/images/velas-masinas/md07588364/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop_v1.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.15}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop_v1.jpg", "url": "https://www.lg.com/lv/images/velas-masinas/md07589714/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop_v1.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.15}]}, {"reg": "남유럽", "name": "이탈리아", "iso": "IT", "locs": ["it"], "n": 29, "u": 19, "hi": 16, "mid": 8, "rv": 5, "leg": 0, "cat": {"WM(세탁기)": 17, "WD(세탁건조기)": 6, "REF(냉장고)": 2, "VC(청소기)": 2, "RAC(에어컨)": 1, "공통(에너지라벨)": 1}, "models": ["Vivace R750", "Vivace R700", "Vivace R300WB"], "imgs": [{"fn": "WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/images/wm/WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "n": 6, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "AEM DAM", "d": 0.13}, {"fn": "WM-Vivace-R300WB-White-02-1-desktop111.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/images/wm/features/WM-Vivace-R300WB-White-02-1-desktop111.jpg", "n": 3, "cat": "WM(세탁기)", "model": "Vivace R300WB", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WD-Vivace-R905-White-03-1-desktop-A-20-new-1.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/images/wm/features/WD-Vivace-R905-White-03-1-desktop-A-20-new-1.jpg", "n": 2, "cat": "WD(세탁건조기)", "model": "Vivace R905", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}, {"fn": "WD-Vivace-Slim-R500S-white-03-1-desktopv.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/images/wm/features/WD-Vivace-Slim-R500S-white-03-1-desktopv.jpg", "n": 2, "cat": "WD(세탁건조기)", "model": "Vivace R500S", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}, {"fn": "WM-Vivace-R700-White-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/images/wm/features/WM-Vivace-R700-White-02-1-desktop.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.13}, {"fn": "bottom-freezer-f-ub5-2025-gbbs726cpy-feature-zero-clearance-m-gp1.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/2025-hs-contents/kitchen/gbbs726cpy/gp1/feature/mobile/bottom-freezer-f-ub5-2025-gbbs726cpy-feature-zero-clearance-m-gp1.jpg", "n": 1, "cat": "REF(냉장고)", "model": "-", "m": "부분매칭(특징점)", "p": "AEM DAM", "d": null}, {"fn": "M12-03_HA-Vacuum-CombiTower-14-3-LCD-screen-m.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/ha/features/vc/a9tx-primeg/features/M12-03_HA-Vacuum-CombiTower-14-3-LCD-screen-m.jpg", "n": 1, "cat": "VC(청소기)", "model": "-", "m": "부분매칭(특징점)", "p": "AEM DAM", "d": null}, {"fn": "WM-Vivace-R700-White-02-1-desktop-20.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/ha/features/wm/wm-vivace-r700-f4r7013tswg-white-pdp-feature/desktop/WM-Vivace-R700-White-02-1-desktop-20.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "13.A9C-AIR1E 2010x1334.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/ha/gallery_lg-com/vc/a9c-air1e/13.A9C-AIR1E 2010x1334.jpg/jcr:content/renditions/thum-1600x1062.jpeg", "n": 1, "cat": "VC(청소기)", "model": "-", "m": "부분매칭(특징점)", "p": "AEM DAM", "d": null}, {"fn": "Energy-efficiency-D.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/images/elettrodomestici/Energy-efficiency-D.jpg", "n": 1, "cat": "공통(에너지라벨)", "model": "-", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}, {"fn": "D07_lg-kitchen-wine-cellar-uv-resistant-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/images/frigoriferi/lsr200w_agrqeur_eeis_it_c/feature/D07_lg-kitchen-wine-cellar-uv-resistant-desktop.jpg", "n": 1, "cat": "REF(냉장고)", "model": "-", "m": "부분매칭(특징점)", "p": "AEM DAM", "d": null}, {"fn": "WM-VivaceRefresh-R500W-white-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/images/wm/WM-VivaceRefresh-R500W-white-02-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R500W", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "Untitled-2WM-Vivace-R700-White-02-1-desktop-v1.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/images/wm/features/Untitled-2WM-Vivace-R700-White-02-1-desktop-v1.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WD-Vivace-R500W-white-03-1-desktop-1.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/images/wm/features/WD-Vivace-R500W-white-03-1-desktop-1.jpg", "n": 1, "cat": "WD(세탁건조기)", "model": "Vivace R500W", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}, {"fn": "WD-Vivace-R700-White-03-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/images/wm/features/WD-Vivace-R700-White-03-1-desktop.jpg", "n": 1, "cat": "WD(세탁건조기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.13}, {"fn": "WM-Vivace-R300WB-White-02-1-desktop-20new.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/images/wm/features/WM-Vivace-R300WB-White-02-1-desktop-20new.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R300WB", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}, {"fn": "WM-Vivace-R300WB-White-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/images/wm/features/WM-Vivace-R300WB-White-02-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R300WB", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/images/wm/features/WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}, {"fn": "portable-air-conditioner-pa-2026-p9nc09psab0-gallery-2010-07.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/rac_italy/portatile/tf09tas/gallery/gallery/portable-air-conditioner-pa-2026-p9nc09psab0-gallery-2010-07.jpg/jcr:content/renditions/thum-1600x1062.jpeg", "n": 1, "cat": "RAC(에어컨)", "model": "-", "m": "부분매칭(특징점)", "p": "AEM DAM", "d": null}]}, {"reg": "서유럽", "name": "영국", "iso": "UK", "locs": ["uk"], "n": 27, "u": 12, "hi": 24, "mid": 3, "rv": 0, "leg": 0, "cat": {"WM(세탁기)": 27}, "models": ["Vivace R500", "Vivace R950", "GVX 2025 (F4X5/F2X5)"], "imgs": [{"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/uk/images/washing-machines/vivacerefresh_r500_pdp_gp1/desktop/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "n": 7, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pt/images/tratamento-de-roupa/md07582521/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "n": 4, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R950-white-gp1-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/master/h-a/living/wm/front_load/vivace-refresh/vivace-refresh_r950_white_gp1/wm-vivacerefresh-r950-white-pdp-gp1-feature/desktop/WM-VivaceRefresh-R950-white-gp1-02-1-desktop.jpg", "n": 4, "cat": "WM(세탁기)", "model": "Vivace R950", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/uk/images/washing-machines/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "n": 3, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "front-loading-washing-machine-gvx-2025-f4x5511thb-feature-energy-efficiency-d.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/uk/appliances/washing-machines/f4x5011tgb/feature/desktop/front-loading-washing-machine-gvx-2025-f4x5511thb-feature-energy-efficiency-d.jpg", "n": 2, "cat": "WM(세탁기)", "model": "GVX 2025 (F4X5/F2X5)", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/uk/images/washer-dryers/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/uk/images/washer-dryers/fwy706gbtn1/WM-VivaceRefresh-R700-white-gp1-01-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/uk/images/washer-dryers/fwy706wwtn1/WM-VivaceRefresh-R700-white-gp1-01-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "front-loading-washing-machine-gvx-2025-f4x5511thb-feature-03-1-energy-efficiency-d.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/uk/images/washing-machines/f4x5511thb/feature/front-loading-washing-machine-gvx-2025-f4x5511thb-feature-03-1-energy-efficiency-d.jpg", "n": 1, "cat": "WM(세탁기)", "model": "GVX 2025 (F4X5/F2X5)", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/uk/images/washing-machines/f4y510gbln1/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktopv.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/uk/images/washing-machines/f4y510gbln1/WM-VivaceRefresh-R500-white-gp1-01-1-desktopv.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/uk/images/washing-machines/f4y513gbln1/wm-vivacerefresh-r500-white-pdp-gp1-feature/desktop/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}]}, {"reg": "중동부유럽", "name": "루마니아", "iso": "RO", "locs": ["ro"], "n": 17, "u": 8, "hi": 10, "mid": 7, "rv": 0, "leg": 17, "cat": {"WM(세탁기)": 17}, "models": ["Vivace R500", "Vivace R700", "Vivace R900W"], "imgs": [{"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/ro/images/WM/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "n": 5, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.14}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg-v(ro)-111.jpg", "url": "https://www.lg.com/ro/images/WM/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg-v(ro)-111.jpg", "n": 4, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.16}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg-v(ro).jpg", "url": "https://www.lg.com/ro/images/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg-v(ro).jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.16}, {"fn": "WM-VivaceRefresh-R700-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/ro/images/WM/features/WM-VivaceRefresh-R700-white-gp1-01-1-desktop.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "레거시(/images)", "d": 0.14}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg-v(ro)-111.jpg", "url": "https://www.lg.com/ro/images/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg-v(ro)-111.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.15}, {"fn": "R900W ENERGY USP.jpg", "url": "https://www.lg.com/ro/images/WM/features/R900W%20ENERGY%20USP.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R900W", "m": "해시매칭", "p": "레거시(/images)", "d": 0.14}, {"fn": "front-loading-washing-machine-gvx-2025-f4x5511thb-feature-energy-efficiency-dv2 (1).jpg", "url": "https://www.lg.com/ro/images/front-loading-washing-machine-gvx-2025-f4x5511thb-feature-energy-efficiency-dv2%20(1).jpg", "n": 1, "cat": "WM(세탁기)", "model": "GVX 2025 (F4X5/F2X5)", "m": "해시매칭", "p": "레거시(/images)", "d": 0.18}, {"fn": "WM-VivaceRefresh-R500-white-gp1.desktop.jpg", "url": "https://www.lg.com/ro/images/rich-feature/WM-VivaceRefresh-R500-white-gp1.desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "레거시(/images)", "d": 0.15}]}, {"reg": "서유럽", "name": "스위스", "iso": "CH", "locs": ["ch_de", "ch_fr"], "n": 10, "u": 6, "hi": 0, "mid": 10, "rv": 0, "leg": 0, "cat": {"WM(세탁기)": 10}, "models": ["Vivace R750"], "imgs": [{"fn": "WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/ch_de/images/waschmaschinen/features/WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "n": 3, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}, {"fn": "WM-VivaceRefresh-R750-white-02-1-desktop-v1.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/ch_de/images/waschmaschinen/f4wr700y/features/WM-VivaceRefresh-R750-white-02-1-desktop-v1.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}, {"fn": "WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/ch_fr/images/wm/WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}, {"fn": "D05_WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/ch_de/images/waschmaschinen/f4wr7031/D05_WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}, {"fn": "D02_WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/ch_de/images/waschmaschinen/f4wr709g-abwqpdg/features/D02_WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}, {"fn": "D02_WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/ch_fr/images/wm/D02_WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}]}, {"reg": "서유럽", "name": "프랑스", "iso": "FR", "locs": ["fr"], "n": 10, "u": 3, "hi": 0, "mid": 9, "rv": 1, "leg": 0, "cat": {"WM(세탁기)": 9, "REF(냉장고)": 1}, "models": ["GVX 2025 (F4X5/F2X5)"], "imgs": [{"fn": "feature-front-loading-washing-machine-gvx-2025-f4x5511thb-feature-energy-efficiency-d-(f14x58whst).jpg", "url": "https://www.lg.com/content/dam/channel/wcms/fr/2025/others/awards/hs/lavage/wm-x500/feature/feature-front-loading-washing-machine-gvx-2025-f4x5511thb-feature-energy-efficiency-d-(f14x58whst).jpg", "n": 8, "cat": "WM(세탁기)", "model": "GVX 2025 (F4X5/F2X5)", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}, {"fn": "12_D_bottom-freezer-f-ub5-2025-gc-b509emtc-gbbs323cpy-eu-primesilver-11-front-bottomopen.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/fr/2025-hs-contents/kitchen/gbbs323cpy/12_D_bottom-freezer-f-ub5-2025-gc-b509emtc-gbbs323cpy-eu-primesilver-11-front-bottomopen.jpg/jcr:content/renditions/thum-1600x1062.jpeg?w=800", "n": 1, "cat": "REF(냉장고)", "model": "-", "m": "부분매칭(특징점)", "p": "AEM DAM", "d": null}, {"fn": "feature-front-loading-washing-machine-gvx-2025-f4x5511thb-feature-energy-efficiency-d-40.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/fr/2025/others/awards/hs/lavage/wm-x500/feature/feature-front-loading-washing-machine-gvx-2025-f4x5511thb-feature-energy-efficiency-d-40.jpg", "n": 1, "cat": "WM(세탁기)", "model": "GVX 2025 (F4X5/F2X5)", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}]}, {"reg": "중동부유럽", "name": "체코", "iso": "CZ", "locs": ["cz"], "n": 7, "u": 2, "hi": 0, "mid": 7, "rv": 0, "leg": 0, "cat": {"WM(세탁기)": 7}, "models": ["GVX 2025 (F4X5/F2X5)"], "imgs": [{"fn": "front-loading-washing-machine-gvx-2025-f4x5511thb-feature-energy-efficiency-d.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/cz/ha/washer---dryers/pracky/x550-kit/feature/desktop/front-loading-washing-machine-gvx-2025-f4x5511thb-feature-energy-efficiency-d.jpg", "n": 4, "cat": "WM(세탁기)", "model": "GVX 2025 (F4X5/F2X5)", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}, {"fn": "front-loading-washing-machine-gvx-2025-f4x5511thb-feature-energy-efficiency-dv2.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/cz/ha/washer---dryers/pracky/x550-kit/feature/desktop/front-loading-washing-machine-gvx-2025-f4x5511thb-feature-energy-efficiency-dv2.jpg", "n": 3, "cat": "WM(세탁기)", "model": "GVX 2025 (F4X5/F2X5)", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}]}, {"reg": "중동부유럽", "name": "폴란드", "iso": "PL", "locs": ["pl"], "n": 6, "u": 4, "hi": 4, "mid": 2, "rv": 0, "leg": 0, "cat": {"WM(세탁기)": 6}, "models": ["Vivace R500"], "imgs": [{"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pl/images/wm/features/wm-vivacerefresh-r500-white-pdp-gp1-feature/desktop/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pl/pralki/F4W1052YH/feature/WM-VivaceRefresh-R500-white-gp1-01-1-desktop.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.14}, {"fn": "WM-VivaceRefresh-R500-white-02-1-desktop-VV.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pl/images/pralki/feature/WM-VivaceRefresh-R500-white-02-1-desktop-VV.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.18}, {"fn": "WM-VivaceRefresh-R500-white-gp1-01-1-desktopV.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/pl/images/wm/features/WM-VivaceRefresh-R500-white-gp1-01-1-desktopV.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R500", "m": "해시매칭", "p": "AEM DAM", "d": 0.17}]}, {"reg": "서유럽", "name": "독일", "iso": "DE", "locs": ["de"], "n": 5, "u": 4, "hi": 0, "mid": 3, "rv": 2, "leg": 0, "cat": {"REF(냉장고)": 2, "DW(식기세척기)": 2, "WM(세탁기)": 1}, "models": ["REF Energy A-20%", "Vivace R700"], "imgs": [{"fn": "Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/de/images/rf/Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "n": 2, "cat": "REF(냉장고)", "model": "REF Energy A-20%", "m": "해시매칭", "p": "AEM DAM", "d": 0.18}, {"fn": "02_XD-G3_Steam_DBC335TSE_DB476TXS_CoverO_DG_FrontOpen2v-D.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/de/dishwasher/db476txs/gallery/02_XD-G3_Steam_DBC335TSE_DB476TXS_CoverO_DG_FrontOpen2v-D.jpg/jcr:content/renditions/thum-1600x1062.jpeg", "n": 1, "cat": "DW(식기세척기)", "model": "-", "m": "부분매칭(특징점)", "p": "AEM DAM", "d": null}, {"fn": "WM-VivaceRefresh-R700-white-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/de/images/waschmaschinen/vivacerefresh-r700-features/WM-VivaceRefresh-R700-white-02-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R700", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}, {"fn": "18_DB597TXS_2010x1334.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/it/ha/gallery_lg-com/dw/db597txs_gallery/2010x1334/18_DB597TXS_2010x1334.jpg/jcr:content/renditions/thum-1600x1062.jpeg", "n": 1, "cat": "DW(식기세척기)", "model": "-", "m": "부분매칭(특징점)", "p": "AEM DAM", "d": null}]}, {"reg": "서유럽", "name": "벨기에", "iso": "BE", "locs": ["be", "be_fr"], "n": 3, "u": 3, "hi": 0, "mid": 2, "rv": 1, "leg": 0, "cat": {"WM(세탁기)": 2, "기타(배너)": 1}, "models": ["Vivace R950"], "imgs": [{"fn": "WM-VivaceRefresh-R950-white-gp1-02-1-d.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/be/images/wasmachines/features/WM-VivaceRefresh-R950-white-gp1-02-1-d.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R950", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}, {"fn": "WM-VivaceRefresh-R950-white-gp1-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/be/images/wasmachines/features/WM-VivaceRefresh-R950-white-gp1-02-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R950", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}, {"fn": "homemain_hero_pc_2511223.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/be_fr/promotion/gnb-banners/homemain_hero_pc_2511223.jpg", "n": 1, "cat": "기타(배너)", "model": "-", "m": "부분매칭(특징점)", "p": "AEM DAM", "d": null}]}, {"reg": "서유럽", "name": "네덜란드", "iso": "NL", "locs": ["nl"], "n": 2, "u": 1, "hi": 0, "mid": 2, "rv": 0, "leg": 0, "cat": {"WM(세탁기)": 2}, "models": ["Vivace R950"], "imgs": [{"fn": "WM-VivaceRefresh-R950-white-gp1-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/nl/images/wasmachines/features/WM-VivaceRefresh-R950-white-gp1-02-1-desktop.jpg", "n": 2, "cat": "WM(세탁기)", "model": "Vivace R950", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}]}, {"reg": "서유럽", "name": "오스트리아", "iso": "AT", "locs": ["at"], "n": 2, "u": 2, "hi": 0, "mid": 2, "rv": 0, "leg": 0, "cat": {"WM(세탁기)": 2}, "models": ["Vivace R750"], "imgs": [{"fn": "WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/at/images/waschmaschinen/features/WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}, {"fn": "WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/at/waschmaschinen/f4wr703yb/features/WM-VivaceRefresh-R750-white-02-1-desktop.jpg", "n": 1, "cat": "WM(세탁기)", "model": "Vivace R750", "m": "해시매칭", "p": "AEM DAM", "d": 0.16}]}, {"reg": "남유럽", "name": "그리스", "iso": "GR", "locs": ["gr"], "n": 1, "u": 1, "hi": 0, "mid": 1, "rv": 0, "leg": 1, "cat": {"REF(냉장고)": 1}, "models": ["REF Energy A-20%"], "imgs": [{"fn": "Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "url": "https://www.lg.com/gr/images/RF/features/Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "n": 1, "cat": "REF(냉장고)", "model": "REF Energy A-20%", "m": "해시매칭", "p": "레거시(/images)", "d": 0.18}]}, {"reg": "북유럽", "name": "노르웨이", "iso": "NO", "locs": ["no"], "n": 1, "u": 1, "hi": 0, "mid": 1, "rv": 0, "leg": 1, "cat": {"REF(냉장고)": 1}, "models": ["REF Energy A-20%"], "imgs": [{"fn": "Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "url": "https://www.lg.com/no/images/RF/features/Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "n": 1, "cat": "REF(냉장고)", "model": "REF Energy A-20%", "m": "해시매칭", "p": "레거시(/images)", "d": 0.2}]}, {"reg": "북유럽", "name": "덴마크", "iso": "DK", "locs": ["dk"], "n": 1, "u": 1, "hi": 0, "mid": 1, "rv": 0, "leg": 0, "cat": {"REF(냉장고)": 1}, "models": ["REF Energy A-20%"], "imgs": [{"fn": "Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/dk/images/rf/features/Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "n": 1, "cat": "REF(냉장고)", "model": "REF Energy A-20%", "m": "해시매칭", "p": "AEM DAM", "d": 0.2}]}, {"reg": "북유럽", "name": "스웨덴", "iso": "SE", "locs": ["se"], "n": 1, "u": 1, "hi": 0, "mid": 1, "rv": 0, "leg": 0, "cat": {"REF(냉장고)": 1}, "models": ["REF Energy A-20%"], "imgs": [{"fn": "Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/se/images/rf/Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "n": 1, "cat": "REF(냉장고)", "model": "REF Energy A-20%", "m": "해시매칭", "p": "AEM DAM", "d": 0.2}]}, {"reg": "북유럽", "name": "핀란드", "iso": "FI", "locs": ["fi"], "n": 1, "u": 1, "hi": 0, "mid": 1, "rv": 0, "leg": 1, "cat": {"REF(냉장고)": 1}, "models": ["REF Energy A-20%"], "imgs": [{"fn": "Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "url": "https://www.lg.com/fi/images/RF/features/Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "n": 1, "cat": "REF(냉장고)", "model": "REF Energy A-20%", "m": "해시매칭", "p": "레거시(/images)", "d": 0.2}]}, {"reg": "중동부유럽", "name": "슬로바키아", "iso": "SK", "locs": ["sk"], "n": 1, "u": 1, "hi": 0, "mid": 1, "rv": 0, "leg": 1, "cat": {"REF(냉장고)": 1}, "models": ["REF Energy A-20%"], "imgs": [{"fn": "Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "url": "https://www.lg.com/sk/images/chladnicky/features/Energy-Efficiency-A-20-Ref-PDP-01-1-Desktop.jpg", "n": 1, "cat": "REF(냉장고)", "model": "REF Energy A-20%", "m": "해시매칭", "p": "레거시(/images)", "d": 0.2}]}, {"reg": "중동부유럽", "name": "헝가리", "iso": "HU", "locs": ["hu"], "n": 1, "u": 1, "hi": 0, "mid": 0, "rv": 1, "leg": 0, "cat": {"VC(청소기)": 1}, "models": [], "imgs": [{"fn": "large09.jpg", "url": "https://www.lg.com/content/dam/channel/wcms/hu/images/porszivok/a9k-core3s-bfsqeur_eemk_hu_c/gallery/large09.jpg/jcr:content/renditions/thum-1600x1062.jpeg", "n": 1, "cat": "VC(청소기)", "model": "-", "m": "부분매칭(특징점)", "p": "AEM DAM", "d": null}]}], "regions": ["남유럽", "발트3국", "서유럽", "중동부유럽", "북유럽"], "cats": ["WM(세탁기)", "REF(냉장고)", "WD(세탁건조기)", "VC(청소기)", "DW(식기세척기)", "RAC(에어컨)", "COOK(빌트인)", "기타(배너)", "공통(에너지라벨)"], "total": 352, "uniq": 126, "period": "2026-09-28 ~ 2026-09-29"};
+const $ = s => document.querySelector(s);
+const fmt = n => n.toLocaleString('ko-KR');
+const pct = (a,b) => b ? (a/b*100).toFixed(1)+'%' : '-';
+const CHEV = '<svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6l5 5 5-5"/></svg>';
+const ARR  = '<svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3l5 5-5 5"/></svg>';
+const pri = n => n>=30?'P1':n>=10?'P2':'P3';
+const C = D.countries, T = D.total;
+const maxN = Math.max(...C.map(c=>c.n));
+const R = D.regions.map(r=>{
+  const cs=C.filter(c=>c.reg===r);
+  const s=k=>cs.reduce((a,c)=>a+c[k],0);
+  return {name:r,cs,n:s('n'),u:s('u'),hi:s('hi'),mid:s('mid'),rv:s('rv')};
+});
+
+$('#meta').innerHTML=[`검토기간 ${D.period} (KST)`,`원본 ${fmt(T)}건`].map(t=>`<span class="chip">${t}</span>`).join('');
+
+/* KPI */
+$('#kpis').innerHTML=`
+ <div class="kpi accent"><div class="lb">총 검출건수</div><div class="v">${fmt(T)}<small>건</small></div><div class="sub">PDP 노출 기준</div></div>
+ <div class="kpi"><div class="lb">검출 국가</div><div class="v">${C.length}<small>개국</small></div><div class="sub">${R.length}개 리전 · 25 Locale</div></div>`;
+
+
+/* bars */
+const bar=(o,max)=>{const w=o.n/max*100;return `<div class="bar-wrap"><div class="bar" style="width:${Math.max(w,1.5)}%"><i class="hi" style="width:${o.hi/o.n*100}%"></i><i class="mid" style="width:${o.mid/o.n*100}%"></i><i class="rv" style="width:${o.rv/o.n*100}%"></i></div><span class="num">${o.n}</span></div>`};
+
+/* regions accordion */
+const maxR=Math.max(...R.map(r=>r.n));
+$('#regions').innerHTML=R.slice().sort((a,b)=>b.n-a.n).map(r=>`
+ <div class="reg">
+  <button class="reg-btn" aria-expanded="false">
+   <span class="reg-name">${r.name}<small>${r.cs.length}개국 · 비중 ${pct(r.n,T)}</small></span>
+   ${bar(r,maxR)}
+   <span class="reg-stats"><span><b>${r.u}</b></span></span>
+   ${CHEV}
+  </button>
+  <div class="reg-body">${r.cs.map(c=>`
+   <button class="crow" data-c="${c.name}">
+    <span class="cname">${c.name}<small>${c.locs.join(', ')}</small></span>
+    ${bar(c,maxN)}
+    <span class="cmeta">고유 ${c.u} · 높음 ${c.hi} · 보통 ${c.mid}</span>
+    ${ARR}
+   </button>`).join('')}</div>
+ </div>`).join('');
+document.querySelectorAll('.reg-btn').forEach(b=>b.onclick=()=>{const p=b.parentElement;p.classList.toggle('open');b.setAttribute('aria-expanded',p.classList.contains('open'))});
+document.querySelectorAll('.crow').forEach(b=>b.onclick=()=>openSheet(b.dataset.c));
+
+/* country table */
+const cols=[
+ ['순위','rank'],['리전','reg','l'],['국가','name','l'],['검출','n'],['비중','share'],['고유 이미지','u'],['이미지당','per'],
+ ['높음','hi'],['보통','mid'],['분포',null],['주요 모델라인','models','l'],['우선순위','pri']];
+let sortK='n',sortD=-1,filt='전체';
+const rows=C.map(c=>({...c,share:c.n/T,per:c.n/c.u,pri:pri(c.n)}));
+rows.slice().sort((a,b)=>b.n-a.n).forEach((r,i)=>r.rank=i+1);
+$('#filters').innerHTML=['전체',...D.regions].map(r=>`<button class="tbtn${r==='전체'?' on':''}" data-r="${r}">${r}</button>`).join('');
+document.querySelectorAll('.tbtn').forEach(b=>b.onclick=()=>{filt=b.dataset.r;document.querySelectorAll('.tbtn').forEach(x=>x.classList.toggle('on',x===b));renderTable()});
+function renderTable(){
+  let rs=rows.filter(r=>filt==='전체'||r.reg===filt);
+  rs.sort((a,b)=>{const x=a[sortK],y=b[sortK];return (typeof x==='string'?x.localeCompare(y,'ko'):x-y)*sortD});
+  const z=v=>v?fmt(v):'<span class="zero">-</span>';
+  const s=k=>rs.reduce((a,r)=>a+r[k],0);
+  $('#ctable').innerHTML=`<thead><tr>${cols.map(([h,k,a])=>`<th class="${a||''}${k&&k!=='models'?' sort':''}${k===sortK?' act':''}" data-k="${k||''}">${h}${k===sortK?(sortD<0?' ↓':' ↑'):''}</th>`).join('')}</tr></thead>
+  <tbody>${rs.map(r=>`<tr data-c="${r.name}"><td>${r.rank}</td><td class="l">${r.reg}</td><td class="l"><b>${r.name}</b></td><td><b>${r.n}</b></td><td>${(r.share*100).toFixed(1)}%</td><td>${r.u}</td><td>${r.per.toFixed(1)}</td><td>${z(r.hi)}</td><td>${z(r.mid)}</td><td><span class="mini">${bar(r,maxN).replace('<span class="num">'+r.n+'</span>','')}</span></td><td class="l">${r.models.join(', ')||'-'}</td><td><span class="pri ${r.pri.toLowerCase()}">${r.pri}</span></td></tr>`).join('')}</tbody>
+  <tfoot><tr><td></td><td class="l">합계</td><td class="l">${rs.length}개국</td><td>${s('n')}</td><td>${pct(s('n'),T)}</td><td>${s('u')}</td><td>${(s('n')/s('u')).toFixed(1)}</td><td>${s('hi')}</td><td>${s('mid')}</td><td></td><td></td><td></td></tr></tfoot>`;
+  document.querySelectorAll('#ctable th.sort').forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(sortK===k)sortD*=-1;else{sortK=k;sortD=(k==='name'||k==='reg'||k==='rank'||k==='pri')?1:-1}renderTable()});
+  document.querySelectorAll('#ctable tbody tr').forEach(tr=>tr.onclick=()=>openSheet(tr.dataset.c));
+}
+renderTable();
+
+/* matrix */
+const maxCell=Math.max(...C.flatMap(c=>Object.values(c.cat)));
+const ordered=R.flatMap(r=>r.cs.slice().sort((a,b)=>b.n-a.n));
+$('#matrix').innerHTML=`<thead><tr><th class="l">리전</th><th class="l">국가</th>${D.cats.map(k=>`<th>${k.replace('(','<br>(')}</th>`).join('')}<th>합계</th></tr></thead>
+<tbody>${ordered.map(c=>`<tr data-c="${c.name}"><td class="l">${c.reg}</td><td class="l"><b>${c.name}</b></td>${D.cats.map(k=>{const v=c.cat[k]||0;const a=v?0.08+0.82*(v/maxCell):0;return `<td style="background:rgba(165,0,52,${a.toFixed(2)});color:${a>.5?'#fff':'inherit'}">${v||'<span class="zero">-</span>'}</td>`}).join('')}<td><b>${c.n}</b></td></tr>`).join('')}</tbody>
+<tfoot><tr><td class="l">합계</td><td></td>${D.cats.map(k=>`<td>${C.reduce((a,c)=>a+(c.cat[k]||0),0)}</td>`).join('')}<td>${T}</td></tr></tfoot>`;
+document.querySelectorAll('#matrix tbody tr').forEach(tr=>tr.onclick=()=>openSheet(tr.dataset.c));
+
+
+/* sheet */
+function openSheet(name){
+  const c=C.find(x=>x.name===name);
+  $('#sh-title').textContent=c.name;
+  $('#sh-sub').textContent=`${c.reg} · Locale ${c.locs.join(', ')} · 우선순위 ${pri(c.n)}`;
+  $('#sh-kpi').innerHTML=`<div><b>${c.n}</b>검출건수</div><div><b>${c.u}</b>고유 이미지</div><div><b>${c.hi}</b>신뢰도 높음</div><div><b>${c.mid}</b>신뢰도 보통</div>`;
+  $('#sh-body').innerHTML=c.imgs.slice().sort((a,b)=>b.n-a.n).map(i=>`
+   <div class="img-row"><div><div class="fn">${i.fn}</div>
+    <div class="tags"><span class="tag">${i.cat}</span>${i.model!=='-'?`<span class="tag">${i.model}</span>`:''}<span class="tag">${i.p}</span>${i.m!=='해시매칭'?'<span class="tag warn">부분매칭 · 확인필요</span>':`<span class="tag">신호거리 ${i.d.toFixed(2)}</span>`}</div></div>
+    <div class="rt"><b>${i.n}</b>건 검출<br><a href="${i.url}" target="_blank" rel="noopener">이미지 열기</a></div></div>`).join('');
+  $('#dim').classList.add('show');$('#sheet').classList.add('show');$('#sh-close').focus();
+}
+function closeSheet(){$('#dim').classList.remove('show');$('#sheet').classList.remove('show')}
+$('#dim').onclick=closeSheet;$('#sh-close').onclick=closeSheet;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
+</script>
+</body>
+</html>
