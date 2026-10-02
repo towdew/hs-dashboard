@@ -155,9 +155,25 @@ def export_status(src: Path = STATUS_JSON, out: Path = STATUS_XLSX) -> None:
     for row in (1, len(INFO_KEYS) + 4):
         for c in info[row]:
             c.font = Font(bold=True)
+    if out.exists() and _cell_values(out) == _cell_values(wb):
+        print(f'양식 변경 없음: {out.name}')   # 다시 저장하면 내부 시각만 바뀌어 빈 커밋이 생긴다
+        return
     out.parent.mkdir(parents=True, exist_ok=True)
     wb.save(out)
     print(f'양식 기록: {out.name} ({ws.max_row - 2}행)')
+
+
+def _cell_values(src) -> list:
+    wb = src if isinstance(src, Workbook) else load_workbook(src)
+    # 메모리의 ''는 저장 후 None으로 읽히므로 같게 본다. 끝의 빈 행·열도 무시한다.
+    out = []
+    for ws in wb.worksheets:
+        rows = [[None if v == '' else v for v in r] for r in ws.iter_rows(values_only=True)]
+        rows = [r[:max((i + 1 for i, v in enumerate(r) if v is not None), default=0)] for r in rows]
+        while rows and not rows[-1]:
+            rows.pop()
+        out.append((ws.title, rows))
+    return out
 
 
 # ── 제품 현황: 엑셀 → JSON ─────────────────────────────────────────────
