@@ -1,0 +1,101 @@
+name: IT 엑셀 업로드 반영
+
+# 담당자가 GitHub 웹에서 엑셀을 올리면 검증 후 /it 화면 데이터로 반영한다. 안내: it/_upload/README.md
+#   it/Global Request.xlsx             → 검증 + 금주 변경 배지(it/data/gr-changes.json) 재생성
+#   it/_upload/IT_product_status.xlsx  → 검증 + it/data/npi-product-status.json 생성
+#   it/data/npi-product-status.json    → (스크립트로 직접 갱신한 경우) 업로드 양식 엑셀을 최신으로 맞춤
+# 검증에 실패하면 올린 파일을 직전 버전으로 되돌리고 실행을 실패로 표시한다(업로더에게 메일 알림).
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'it/Global Request.xlsx'
+      - 'it/_upload/IT_product_status.xlsx'
+      - 'it/data/npi-product-status.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: it-upload
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install -q openpyxl
+
+      - name: Apply uploads
+        env:
+          BEFORE: ${{ github.event.before }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -uo pipefail
+          GR='it/Global Request.xlsx'
+          PS_XLSX='it/_upload/IT_product_status.xlsx'
+          PS_JSON='it/data/npi-product-status.json'
+          if [[ -n "${BEFORE:-}" && ! "$BEFORE" =~ ^0+$ ]] && git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            CHANGED=$(git diff --name-only "$BEFORE" HEAD)
+          else
+            BEFORE=''
+            CHANGED="$PS_JSON"   # 수동 실행: 양식만 최신화
+          fi
+          echo "변경 파일:"; echo "$CHANGED"
+          FAIL=0
+          MSG=()
+
+          if grep -qxF "$GR" <<<"$CHANGED"; then
+            # 금주 변경 배지의 기준선 = 이번 주 월요일 0시(KST) 직전의 마지막 GR 파일
+            MONDAY=$(TZ=Asia/Seoul date -d "$(TZ=Asia/Seoul date +%F) -$(( $(TZ=Asia/Seoul date +%u) - 1 )) days" +%F)
+            BASE=$(git log -1 --format=%H --before="${MONDAY}T00:00:00+09:00" -- "$GR")
+            if [[ -n "$BASE" ]]; then
+              PREV_DATE=$(TZ=Asia/Seoul git log -1 --format=%cd --date=format-local:%Y%m%d "$BASE")
+              git show "$BASE:$GR" > /tmp/prev_gr.xlsx
+            else
+              PREV_DATE=''; : > /tmp/prev_gr.xlsx
+            fi
+            if python3 it/_tools/it_upload.py gr /tmp/prev_gr.xlsx --prev-date "$PREV_DATE"; then
+              MSG+=("Global Request 반영")
+            else
+              FAIL=1
+              [[ -n "$BEFORE" ]] && git checkout "$BEFORE" -- "$GR" && git checkout "$BEFORE" -- it/data/gr-changes.json
+              MSG+=("Global Request 업로드 거부·복구")
+            fi
+          fi
+
+          if grep -qxF "$PS_XLSX" <<<"$CHANGED"; then
+            if python3 it/_tools/it_upload.py import; then
+              python3 it/_tools/it_upload.py export   # 양식을 정규화된 최신본으로 다시 씀
+              MSG+=("IT 제품 현황 반영")
+            else
+              FAIL=1
+              [[ -n "$BEFORE" ]] && git checkout "$BEFORE" -- "$PS_XLSX" "$PS_JSON"
+              MSG+=("IT 제품 현황 업로드 거부·복구")
+            fi
+          elif grep -qxF "$PS_JSON" <<<"$CHANGED"; then
+            python3 it/_tools/it_upload.py export
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898283+github-actions[bot]@users.noreply.github.com'
+          git add -A it/
+          if ! git diff --cached --quiet; then
+            SUBJECT="data(it): 엑셀 업로드 처리 — $(IFS=', '; echo "${MSG[*]:-양식 갱신}")"
+            git commit -q -m "$SUBJECT"
+            git pull -q --rebase origin main
+            git push -q origin HEAD:main
+            # GITHUB_TOKEN 커밋은 Pages 빌드를 자동으로 띄우지 않을 수 있어 명시적으로 요청한다.
+            gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" >/dev/null || echo '::warning::Pages 빌드 요청 실패 — 다음 push 때 반영됩니다'
+          fi
+          exit $FAIL
