@@ -27,7 +27,13 @@
       "from": "작업중",
       "to": "법인리뷰"
     },
+    "UltraGear Buying Guide|BE": {
+      "type": "url"
+    },
     "UltraGear Buying Guide 2차|AE_AR": {
+      "type": "new_task"
+    },
+    "UltraGear Buying Guide 2차|AE": {
       "type": "new_task"
     },
     "UltraGear Buying Guide 2차|BD": {
@@ -39,13 +45,13 @@
     "UltraGear Buying Guide 2차|BR": {
       "type": "new_task"
     },
-    "UltraGear Buying Guide 2차|CAC": {
-      "type": "new_task"
-    },
     "UltraGear Buying Guide 2차|CA_EN": {
       "type": "new_task"
     },
     "UltraGear Buying Guide 2차|CA_FR": {
+      "type": "new_task"
+    },
+    "UltraGear Buying Guide 2차|CAC": {
       "type": "new_task"
     },
     "UltraGear Buying Guide 2차|CN": {
@@ -55,6 +61,9 @@
       "type": "new_task"
     },
     "UltraGear Buying Guide 2차|CZ": {
+      "type": "new_task"
+    },
+    "UltraGear Buying Guide 2차|DE": {
       "type": "new_task"
     },
     "UltraGear Buying Guide 2차|DK": {
@@ -78,10 +87,10 @@
     "UltraGear Buying Guide 2차|GR": {
       "type": "new_task"
     },
-    "UltraGear Buying Guide 2차|HK": {
+    "UltraGear Buying Guide 2차|HK_EN": {
       "type": "new_task"
     },
-    "UltraGear Buying Guide 2차|HK_EN": {
+    "UltraGear Buying Guide 2차|HK": {
       "type": "new_task"
     },
     "UltraGear Buying Guide 2차|HU": {
@@ -109,6 +118,9 @@
       "type": "new_task"
     },
     "UltraGear Buying Guide 2차|LV": {
+      "type": "new_task"
+    },
+    "UltraGear Buying Guide 2차|MX": {
       "type": "new_task"
     },
     "UltraGear Buying Guide 2차|NL": {
@@ -144,6 +156,9 @@
     "UltraGear Buying Guide 2차|SE": {
       "type": "new_task"
     },
+    "UltraGear Buying Guide 2차|SG": {
+      "type": "new_task"
+    },
     "UltraGear Buying Guide 2차|TH": {
       "type": "new_task"
     },
@@ -156,6 +171,9 @@
     "UltraGear Buying Guide 2차|UA": {
       "type": "new_task"
     },
+    "UltraGear Buying Guide 2차|UK": {
+      "type": "new_task"
+    },
     "UltraGear Buying Guide 2차|ZA": {
       "type": "new_task"
     }
@@ -165,9 +183,13 @@
       "changed": 5,
       "new": 0
     },
+    "UltraGear Buying Guide": {
+      "changed": 1,
+      "new": 0
+    },
     "UltraGear Buying Guide 2차": {
       "changed": 0,
-      "new": 44
+      "new": 49
     }
   },
   "generatedAt": "2026-10-06"
