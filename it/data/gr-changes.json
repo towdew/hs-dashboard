@@ -27,7 +27,7 @@
       "from": "작업중",
       "to": "법인리뷰"
     },
-    "UltraGear Buying Guide|BE": {
+    "UltraGear Buying Guide|BE_FR": {
       "type": "url"
     },
     "UltraGear Buying Guide 2차|AE_AR": {
@@ -37,6 +37,9 @@
       "type": "new_task"
     },
     "UltraGear Buying Guide 2차|BD": {
+      "type": "new_task"
+    },
+    "UltraGear Buying Guide 2차|BE_FR": {
       "type": "new_task"
     },
     "UltraGear Buying Guide 2차|BE": {
@@ -189,7 +192,7 @@
     },
     "UltraGear Buying Guide 2차": {
       "changed": 0,
-      "new": 49
+      "new": 50
     }
   },
   "generatedAt": "2026-10-06"

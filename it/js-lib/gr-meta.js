@@ -16,6 +16,7 @@ var GR_DUAL_LOCALE_MAP = {
   'ae-ar': 'AE_AR', 'ae-en': 'AE',
   'ch-de': 'CH_DE', 'ch-fr': 'CH_FR',
   'eg-ar': 'EG_AR', 'eg-en': 'EG_EN',
+  'be-fr': 'BE_FR', 'be-nl': 'BE',  // 2026-10-06 Buying Guide 2차: be_fr·be 별도 사이트
 };
 
 // ── 작업명 별칭 매핑 ─────────────────────────────────────────
