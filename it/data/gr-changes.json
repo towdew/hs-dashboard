@@ -2,6 +2,31 @@
   "baseDate": "20261006",
   "prevDate": "20260929",
   "changes": {
+    "GNB Structure|BR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "GNB Structure|CO": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "GNB Structure|KZ": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "GNB Structure|MX": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
+    "GNB Structure|PE": {
+      "type": "status",
+      "from": "작업중",
+      "to": "법인리뷰"
+    },
     "UltraGear Buying Guide 2차|AE_AR": {
       "type": "new_task"
     },
@@ -136,6 +161,10 @@
     }
   },
   "taskSummary": {
+    "GNB Structure": {
+      "changed": 5,
+      "new": 0
+    },
     "UltraGear Buying Guide 2차": {
       "changed": 0,
       "new": 44
