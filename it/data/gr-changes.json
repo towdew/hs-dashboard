@@ -1,43 +1,7 @@
 {
-  "baseDate": "20260929",
-  "prevDate": "20260922",
-  "changes": {
-    "GNB Structure|HK": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "GNB Structure|HK_EN": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "GNB Structure|ID": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "GNB Structure|NZ": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "GNB Structure|PH": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    },
-    "GNB Structure|PT": {
-      "type": "status",
-      "from": "작업중",
-      "to": "법인리뷰"
-    }
-  },
-  "taskSummary": {
-    "GNB Structure": {
-      "changed": 6,
-      "new": 0
-    }
-  },
-  "generatedAt": "2026-09-30"
+  "baseDate": "20261006",
+  "prevDate": "20260929",
+  "changes": {},
+  "taskSummary": {},
+  "generatedAt": "2026-10-06"
 }
