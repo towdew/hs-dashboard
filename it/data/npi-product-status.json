@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-10-06 09:25",
- "pttRawFile": "raw-data-20261003.xlsb",
+ "generatedAt": "2026-10-07 14:44",
+ "pttRawFile": "raw-data-20261007.xlsb",
  "cmsFile": "cms_merged_view_20260929_094746.csv",
  "sourceFile": "43 NPI for IT product status_20260707.xlsx",
  "totalRows": 42,
@@ -1013,7 +1013,7 @@
      "model": "17Z90U-G.AU88BN",
      "salesModelKey": "ES-es-17Z90U-G.AU88BN",
      "pttId": "WR2283118AK",
-     "pttStatus": "[WB] In progress",
+     "pttStatus": "[QA] QA review",
      "targetStagingDate": "2026-06-30",
      "detailKr": "제작 착수 가능",
      "detailEn": "Ready to start production",
