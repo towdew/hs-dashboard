@@ -1,5 +1,5 @@
 {
-  "baseDate": "20261006",
+  "baseDate": "20261007",
   "prevDate": "20260929",
   "changes": {
     "GNB Structure|BR": {
@@ -195,5 +195,5 @@
       "new": 50
     }
   },
-  "generatedAt": "2026-10-06"
+  "generatedAt": "2026-10-07"
 }
