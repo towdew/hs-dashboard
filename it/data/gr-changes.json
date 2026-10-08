@@ -45,6 +45,51 @@
     "UltraGear Buying Guide|BE_FR": {
       "type": "url"
     },
+    "Windows 11 Landing|GLOBAL": {
+      "type": "new_task"
+    },
+    "Windows 11 Landing|CA_EN": {
+      "type": "new_task"
+    },
+    "Windows 11 Landing|CA_FR": {
+      "type": "new_task"
+    },
+    "Windows 11 Landing|ES": {
+      "type": "new_task"
+    },
+    "Windows 11 Landing|IT": {
+      "type": "new_task"
+    },
+    "Windows 11 Landing|UK": {
+      "type": "new_task"
+    },
+    "Windows 11 Landing|DE": {
+      "type": "new_task"
+    },
+    "Windows 11 Landing|FR": {
+      "type": "new_task"
+    },
+    "Windows 11 Landing|AU": {
+      "type": "new_task"
+    },
+    "Windows 11 Landing|IN": {
+      "type": "new_task"
+    },
+    "Windows 11 Landing|JP": {
+      "type": "new_task"
+    },
+    "Windows 11 Landing|CN": {
+      "type": "new_task"
+    },
+    "Windows 11 Landing|SG": {
+      "type": "new_task"
+    },
+    "Windows 11 Landing|VN": {
+      "type": "new_task"
+    },
+    "Windows 11 Landing|TW": {
+      "type": "new_task"
+    },
     "UltraGear Buying Guide 2차|AE_AR": {
       "type": "new_task"
     },
@@ -249,6 +294,10 @@
     "UltraGear Buying Guide": {
       "changed": 1,
       "new": 0
+    },
+    "Windows 11 Landing": {
+      "changed": 0,
+      "new": 15
     },
     "UltraGear Buying Guide 2차": {
       "changed": 0,
