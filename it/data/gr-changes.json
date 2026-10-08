@@ -1,5 +1,5 @@
 {
-  "baseDate": "20261007",
+  "baseDate": "20261008",
   "prevDate": "20260929",
   "changes": {
     "GNB Structure|BR": {
@@ -11,6 +11,16 @@
       "type": "status",
       "from": "작업중",
       "to": "법인리뷰"
+    },
+    "GNB Structure|EG_AR": {
+      "type": "status",
+      "from": "작업중",
+      "to": "취소"
+    },
+    "GNB Structure|EG_EN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "취소"
     },
     "GNB Structure|KZ": {
       "type": "status",
@@ -26,6 +36,11 @@
       "type": "status",
       "from": "작업중",
       "to": "법인리뷰"
+    },
+    "GNB Structure|ZA": {
+      "type": "status",
+      "from": "작업중",
+      "to": "완료"
     },
     "UltraGear Buying Guide|BE_FR": {
       "type": "url"
@@ -183,7 +198,7 @@
   },
   "taskSummary": {
     "GNB Structure": {
-      "changed": 5,
+      "changed": 8,
       "new": 0
     },
     "UltraGear Buying Guide": {
@@ -195,5 +210,5 @@
       "new": 50
     }
   },
-  "generatedAt": "2026-10-07"
+  "generatedAt": "2026-10-08"
 }
