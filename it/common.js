@@ -5817,7 +5817,7 @@ var COUNTRY_FULLNAME_DISPLAY_MAP = window.COUNTRY_FULLNAME_DISPLAY_MAP || {
   PK:'Pakistan', PL:'Poland', PR:'Puerto Rico', PT:'Portugal', PY:'Paraguay', QA:'Qatar', RO:'Romania',
   RS:'Serbia', SA:'Saudi Arabia', SE:'Sweden', SG:'Singapore', SI:'Slovenia', SK:'Slovakia', SV:'El Salvador',
   TH:'Thailand', TN:'Tunisia', TR:'Turkey', TW:'Taiwan', TZ:'Tanzania', UA:'Ukraine', UK:'United Kingdom',
-  US:'United States', UY:'Uruguay', VE:'Venezuela', VN:'Vietnam', ZA:'South Africa'
+  US:'United States', UY:'Uruguay', UZ:'Uzbekistan', VE:'Venezuela', VN:'Vietnam', ZA:'South Africa'
 };
 window.COUNTRY_FULLNAME_DISPLAY_MAP = COUNTRY_FULLNAME_DISPLAY_MAP;
 
@@ -6745,7 +6745,7 @@ function inferRegionForDisplay(country) {
     AFRICA:'MEA', LEVANT:'MEA',
     BE:'EU', DK:'EU', FI:'EU', SE:'EU', CZ:'EU', DE:'EU', UK:'EU', GB:'EU', ES:'EU', FR:'EU', IT:'EU', NL:'EU', PL:'EU', PT:'EU', RO:'EU', GR:'EU',
     AU:'ASIA', VN:'ASIA', ID:'ASIA', TW:'ASIA', KR:'ASIA', JP:'ASIA', CN:'ASIA', HK:'ASIA', SG:'ASIA', TH:'ASIA', MY:'ASIA', PH:'ASIA',
-    KZ:'CIS',
+    KZ:'CIS', UZ:'CIS',
     IN:'INDIA',
     US:'NA', CA:'NA',
     MX:'LATAM', BR:'LATAM', AR:'LATAM', CL:'LATAM', CO:'LATAM', PE:'LATAM', EC:'LATAM',
@@ -6832,7 +6832,7 @@ function parseCountryDisplayParts(value) {
 
 function isSheetLanguageCode(value) {
   var code = String(value || '').toLowerCase();
-  return ['en','ar','fr','de','es','pt','ko','ja','zh','it','nl','vi','th','id','tr','pl','cs','da','sv','fi','no','he','fa','ro','bg','hr','hu','el','sk','sl','lt','lv','et','ms','hi'].indexOf(code) >= 0;
+  return ['en','ar','fr','de','es','pt','ko','ja','zh','it','nl','vi','th','id','tr','pl','cs','da','sv','fi','no','he','fa','ro','bg','hr','hu','el','sk','sl','lt','lv','et','ms','hi','ru','uz'].indexOf(code) >= 0;
 }
 
 function normalizeCountryDisplayNameFallback(value) {
@@ -6858,7 +6858,7 @@ function normalizeCountryKeyForDisplay(value) {
     'MOROCCO':'MA','MYANMAR':'MM','MEXICO':'MX','MALAYSIA':'MY','NIGERIA':'NG','NICARAGUA':'NI','NETHERLANDS':'NL','NORWAY':'NO','NEPAL':'NP','NEW ZEALAND':'NZ',
     'OMAN':'OM','PANAMA':'PA','PERU':'PE','PHILIPPINES':'PH','PAKISTAN':'PK','POLAND':'PL','PUERTO RICO':'PR','PORTUGAL':'PT','PARAGUAY':'PY','QATAR':'QA','ROMANIA':'RO','SERBIA':'RS',
     'SAUDI ARABIA':'SA','SWEDEN':'SE','SINGAPORE':'SG','SLOVENIA':'SI','SLOVAKIA':'SK','EL SALVADOR':'SV','THAILAND':'TH','TUNISIA':'TN','TURKEY':'TR','TAIWAN':'TW','TANZANIA':'TZ','UKRAINE':'UA',
-    'UAE':'AE','UNITED ARAB EMIRATES':'AE','UNITED STATES':'US','UNITED STATES OF AMERICA':'US','USA':'US','URUGUAY':'UY','VENEZUELA':'VE','VIETNAM':'VN','VIET NAM':'VN','SOUTH AFRICA':'ZA'
+    'UAE':'AE','UNITED ARAB EMIRATES':'AE','UNITED STATES':'US','UNITED STATES OF AMERICA':'US','USA':'US','URUGUAY':'UY','UZBEKISTAN':'UZ','VENEZUELA':'VE','VIETNAM':'VN','VIET NAM':'VN','SOUTH AFRICA':'ZA'
   };
   var v = String(value || '').trim();
   if (v.indexOf(':') >= 0) v = v.split(':')[0].trim();
@@ -6884,7 +6884,7 @@ var COUNTRY_FULLNAME_DISPLAY_MAP = {
   PK:'Pakistan', PL:'Poland', PR:'Puerto Rico', PT:'Portugal', PY:'Paraguay', QA:'Qatar', RO:'Romania',
   RS:'Serbia', SA:'Saudi Arabia', SE:'Sweden', SG:'Singapore', SI:'Slovenia', SK:'Slovakia', SV:'El Salvador',
   TH:'Thailand', TN:'Tunisia', TR:'Turkey', TW:'Taiwan', TZ:'Tanzania', UA:'Ukraine', UK:'United Kingdom',
-  US:'United States', UY:'Uruguay', VE:'Venezuela', VN:'Vietnam', ZA:'South Africa'
+  US:'United States', UY:'Uruguay', UZ:'Uzbekistan', VE:'Venezuela', VN:'Vietnam', ZA:'South Africa'
 };
 window.COUNTRY_FULLNAME_DISPLAY_MAP = COUNTRY_FULLNAME_DISPLAY_MAP;
 

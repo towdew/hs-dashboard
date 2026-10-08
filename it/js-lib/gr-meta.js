@@ -17,6 +17,8 @@ var GR_DUAL_LOCALE_MAP = {
   'ch-de': 'CH_DE', 'ch-fr': 'CH_FR',
   'eg-ar': 'EG_AR', 'eg-en': 'EG_EN',
   'be-fr': 'BE_FR', 'be-nl': 'BE',  // 2026-10-06 Buying Guide 2차: be_fr·be 별도 사이트
+  'uz-ru': 'UZ_RU', 'uz-uz': 'UZ',
+  'levant-ar': 'LEVANT_AR', 'levant-en': 'LEVANT',
 };
 
 // ── 작업명 별칭 매핑 ─────────────────────────────────────────
@@ -47,7 +49,7 @@ var GR_COUNTRY_NAME_TO_CODE = {
   PAKISTAN: 'PK', POLAND: 'PL', 'PUERTO RICO': 'PR', PORTUGAL: 'PT', PARAGUAY: 'PY', QATAR: 'QA', ROMANIA: 'RO',
   SERBIA: 'RS', RUSSIA: 'RU', 'CENTRAL AMERICA & CARIBBEAN': 'CAC',
   'SAUDI ARABIA': 'SA', SWEDEN: 'SE', SINGAPORE: 'SG', SLOVENIA: 'SI', SLOVAKIA: 'SK', 'EL SALVADOR': 'SV',
-  THAILAND: 'TH', TUNISIA: 'TN', TURKEY: 'TR', TAIWAN: 'TW', TANZANIA: 'TZ', UKRAINE: 'UA',
+  THAILAND: 'TH', TUNISIA: 'TN', TURKEY: 'TR', TAIWAN: 'TW', TANZANIA: 'TZ', UKRAINE: 'UA', UZBEKISTAN: 'UZ',
   'UNITED KINGDOM': 'UK',
   'UNITED STATES': 'US', URUGUAY: 'UY', VENEZUELA: 'VE', VIETNAM: 'VN', 'SOUTH AFRICA': 'ZA',
 };

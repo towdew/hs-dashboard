@@ -1517,7 +1517,7 @@ function parseCountryValueParts(value) {
 function isSheetLoaderLanguageCode(value) {
   const code = String(value || '').toLowerCase();
   return ['en','ar','fr','de','es','pt','ko','ja','zh','it','nl','vi','th','id','tr','pl','cs','da','sv','fi','no','he','fa','ro','bg','hr','hu','el','sk','sl','lt','lv','et','ms','hi',
-          'ru','uk',                     // ISO 639-1인데 누락돼 있던 것
+          'ru','uk','uz',                // ISO 639-1인데 누락돼 있던 것
           'cz','ee','gr','rs'].indexOf(code) >= 0;   // LG 로케일 관용 표기(ISO는 cs/et/el/sr)
 }
 
@@ -1565,7 +1565,7 @@ const COUNTRY_ALIAS_MAP = {
   'VIETNAM': 'VN', 'VIET NAM': 'VN', 'TAIWAN': 'TW', 'HONG KONG': 'HK',
   'UAE': 'AE', 'UNITED ARAB EMIRATES': 'AE', 'SAUDI ARABIA': 'SA', 'TÜRKIYE': 'TR', 'TURKEY': 'TR',
   'SOUTH AFRICA': 'ZA', 'NEW ZEALAND': 'NZ', 'PHILIPPINES': 'PH', 'INDONESIA': 'ID',
-  'KAZAKHSTAN': 'KZ',
+  'KAZAKHSTAN': 'KZ', 'UZBEKISTAN': 'UZ',
   'MEXICO': 'MX', 'BRAZIL': 'BR', 'ARGENTINA': 'AR', 'CHILE': 'CL', 'COLOMBIA': 'CO', 'PERU': 'PE',
   'BELGIUM': 'BE', 'DENMARK': 'DK', 'FINLAND': 'FI', 'SWEDEN': 'SE', 'GERMANY': 'DE', 'SPAIN': 'ES',
   'FRANCE': 'FR', 'ITALY': 'IT', 'AUSTRALIA': 'AU', 'INDIA': 'IN', 'CANADA': 'CA'
@@ -1578,7 +1578,7 @@ const COUNTRY_REGION_MAP = {
   GB:'EU', UK:'EU', GR:'EU', HR:'EU', HU:'EU', IE:'EU', IT:'EU', LT:'EU', LV:'EU', NL:'EU', NO:'EU', PL:'EU',
   PT:'EU', RO:'EU', RS:'EU', SE:'EU', SI:'EU', SK:'EU', TR:'EU',
   // CIS(옛 소비에트권 — GR 워크북에서 Russia/Ukraine/Kazakhstan을 이 버킷으로 묶어 사용)
-  KZ:'CIS', RU:'CIS', UA:'CIS',
+  KZ:'CIS', RU:'CIS', UA:'CIS', UZ:'CIS',
   // ASIA / Oceania
   AU:'ASIA', BD:'ASIA', CN:'ASIA', HK:'ASIA', ID:'ASIA', JP:'ASIA', KR:'ASIA', LK:'ASIA', MY:'ASIA', MM:'ASIA',
   NZ:'ASIA', PH:'ASIA', SG:'ASIA', TH:'ASIA', TW:'ASIA', VN:'ASIA', PK:'ASIA', KH:'ASIA', NP:'ASIA',
@@ -1611,7 +1611,7 @@ const COUNTRY_FULLNAME_MAP = {
   PK:'Pakistan', PL:'Poland', PR:'Puerto Rico', PT:'Portugal', PY:'Paraguay', QA:'Qatar', RO:'Romania',
   RS:'Serbia', RU:'Russia', SA:'Saudi Arabia', SE:'Sweden', SG:'Singapore', SI:'Slovenia', SK:'Slovakia', SV:'El Salvador',
   TH:'Thailand', TN:'Tunisia', TR:'Turkey', TW:'Taiwan', TZ:'Tanzania', UA:'Ukraine', UK:'United Kingdom',
-  US:'United States', UY:'Uruguay', VE:'Venezuela', VN:'Vietnam', ZA:'South Africa'
+  US:'United States', UY:'Uruguay', UZ:'Uzbekistan', VE:'Venezuela', VN:'Vietnam', ZA:'South Africa'
 };
 
 function applySheetData(key, data) {
