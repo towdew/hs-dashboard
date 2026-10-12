@@ -2,6 +2,31 @@
   "baseDate": "20261012",
   "prevDate": "20261008",
   "changes": {
+    "UltraGear Buying Guide 2차|CA_EN": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "완료"
+    },
+    "UltraGear Buying Guide 2차|CA_FR": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "법인리뷰"
+    },
+    "UltraGear Buying Guide 2차|EE": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "UltraGear Buying Guide 2차|LT": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "UltraGear Buying Guide 2차|LV": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "법인리뷰"
+    },
     "UltraGear Buying Guide 2차|UK": {
       "type": "status",
       "from": "사전검토",
@@ -10,7 +35,7 @@
   },
   "taskSummary": {
     "UltraGear Buying Guide 2차": {
-      "changed": 1,
+      "changed": 6,
       "new": 0
     }
   },
