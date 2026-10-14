@@ -1,5 +1,5 @@
 {
-  "baseDate": "20261012",
+  "baseDate": "20261014",
   "prevDate": "20261008",
   "changes": {
     "UltraGear Buying Guide 2차|CA_EN": {
@@ -15,12 +15,12 @@
     "UltraGear Buying Guide 2차|EE": {
       "type": "status",
       "from": "사전검토",
-      "to": "작업중"
+      "to": "법인리뷰"
     },
     "UltraGear Buying Guide 2차|LT": {
       "type": "status",
       "from": "사전검토",
-      "to": "작업중"
+      "to": "법인리뷰"
     },
     "UltraGear Buying Guide 2차|LV": {
       "type": "status",
@@ -39,5 +39,5 @@
       "new": 0
     }
   },
-  "generatedAt": "2026-10-12"
+  "generatedAt": "2026-10-14"
 }
