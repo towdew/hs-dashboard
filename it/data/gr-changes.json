@@ -31,12 +31,85 @@
       "type": "status",
       "from": "사전검토",
       "to": "법인리뷰"
+    },
+    "IT B2B TCO Mark|BE": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|BE_FR": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|DE": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|DK": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|GLOBAL": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|IN": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|IT": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|NL": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|RU": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|SE": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|UK": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|CZ": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|IL": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|PL": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|CA_EN": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|CA_FR": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|ES": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|AE": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|AE_AR": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|MX": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|BR": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|FR": {
+      "type": "new_task"
+    },
+    "IT B2B TCO Mark|SG": {
+      "type": "new_task"
     }
   },
   "taskSummary": {
     "UltraGear Buying Guide 2차": {
       "changed": 6,
       "new": 0
+    },
+    "IT B2B TCO Mark": {
+      "changed": 0,
+      "new": 23
     }
   },
   "generatedAt": "2026-10-14"
