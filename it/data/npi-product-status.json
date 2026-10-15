@@ -1,7 +1,7 @@
 {
- "generatedAt": "2026-10-15 10:24",
+ "generatedAt": "2026-10-15 17:00",
  "pttRawFile": "raw-data-20261015.xlsb",
- "cmsFile": "cms_merged_view_20261007_165625.csv",
+ "cmsFile": "cms_merged_view_20261015_171640.csv",
  "sourceFile": "43 NPI for IT product status_20260707.xlsx",
  "totalRows": 42,
  "stages": [
@@ -1689,7 +1689,7 @@
      "pdpStatus": "제품 이미지에 스펙 잘못됨. 2TB로 수정 필요. 상세 스펙 입력 안되어 있음",
      "stgUrl": "",
      "liveUrl": "https://www.lg.com/ca_en/laptops/all-laptops/17z90ur-p/",
-     "cmsLive": "등록·미게시",
+     "cmsLive": "라이브",
      "readinessCheck": "Ready",
      "readinessTip": "라이브 게시 확인 · Spec Y · KF 2 · UFN ✓ · Need Assign · LAR 미기재 · gp1",
      "readinessFields": {
