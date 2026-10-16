@@ -4534,7 +4534,7 @@
       "modelName": "14ZT90P-G",
       "salesModelCode": "14ZT90P-G",
       "salesSuffixCode": "AM32U1",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "CA_EN : CA (en)",
@@ -4605,7 +4605,7 @@
       "modelName": "14ZT90R-G",
       "salesModelCode": "14ZT90R-G",
       "salesSuffixCode": "AX34A1",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "UK : GB (en)",
@@ -4620,7 +4620,7 @@
       "modelName": "14ZT980-L",
       "salesModelCode": "14ZT980-L",
       "salesSuffixCode": "AM11U",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "UK : GB (en)",
@@ -5050,7 +5050,7 @@
       "modelName": "15UT50T-G",
       "salesModelCode": "15UT50T-G",
       "salesSuffixCode": "AX36U1",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -7315,7 +7315,7 @@
       "modelName": "15ZT90P-G",
       "salesModelCode": "15ZT90P-G",
       "salesSuffixCode": "AM32G",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "CA_EN : CA (en)",
@@ -7365,7 +7365,7 @@
       "modelName": "15ZT90R-G",
       "salesModelCode": "15ZT90R-G",
       "salesSuffixCode": "AX34A1",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "UK : GB (en)",
@@ -8816,7 +8816,7 @@
       "modelName": "16UT70Q-G",
       "salesModelCode": "16UT70Q-G",
       "salesSuffixCode": "AX34A1",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "UK : GB (en)",
@@ -19599,7 +19599,7 @@
       "modelName": "17ZT90P-G",
       "salesModelCode": "17ZT90P-G",
       "salesSuffixCode": "AX36G",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -19629,7 +19629,7 @@
       "modelName": "20CAV37K-B",
       "salesModelCode": "20CAV37K-B",
       "salesSuffixCode": "AWF",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "CAC : GT (es)",
@@ -19665,7 +19665,7 @@
       "modelName": "22CV241-W",
       "salesModelCode": "22CV241-W",
       "salesSuffixCode": "AEC",
-      "category": "Laptops",
+      "category": "Monitors",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -19807,7 +19807,7 @@
       "modelName": "24CAV37K-B",
       "salesModelCode": "24CAV37K-B",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -19976,7 +19976,7 @@
       "modelName": "24CK550N-3A",
       "salesModelCode": "24CK550N-3A",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -20110,7 +20110,7 @@
       "modelName": "24CK560N-3A",
       "salesModelCode": "24CK560N-3A",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BE : BE (nl)",
@@ -20237,7 +20237,7 @@
       "modelName": "24CN650I-6N",
       "salesModelCode": "24CN650I-6N",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "CA_EN : CA (en)",
@@ -20273,7 +20273,7 @@
       "modelName": "24CN650N-6N",
       "salesModelCode": "24CN650N-6N",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -20400,7 +20400,7 @@
       "modelName": "24CN650W-AP",
       "salesModelCode": "24CN650W-AP",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -20562,7 +20562,7 @@
       "modelName": "24CN670I-6N",
       "salesModelCode": "24CN670I-6N",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -20584,7 +20584,7 @@
       "modelName": "24CN670N-6A",
       "salesModelCode": "24CN670N-6A",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "CA_EN : CA (en)",
@@ -20662,7 +20662,7 @@
       "modelName": "24CN670NK6N",
       "salesModelCode": "24CN670NK6N",
       "salesSuffixCode": "AUB",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "CA_EN : CA (en)",
@@ -20684,7 +20684,7 @@
       "modelName": "24CN670W-AP",
       "salesModelCode": "24CN670W-AP",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BE : BE (nl)",
@@ -20776,7 +20776,7 @@
       "modelName": "24CQ650N-6N",
       "salesModelCode": "24CQ650N-6N",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -20798,7 +20798,7 @@
       "modelName": "24CQ650W-BP",
       "salesModelCode": "24CQ650W-BP",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -20820,7 +20820,7 @@
       "modelName": "24CQ651I-6P",
       "salesModelCode": "24CQ651I-6P",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -20870,7 +20870,7 @@
       "modelName": "24CQ651N-6N",
       "salesModelCode": "24CQ651N-6N",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BE : BE (nl)",
@@ -20941,7 +20941,7 @@
       "modelName": "24CQ651W-BP",
       "salesModelCode": "24CQ651W-BP",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BE : BE (nl)",
@@ -21005,7 +21005,7 @@
       "modelName": "24CR660NK6P",
       "salesModelCode": "24CR660NK6P",
       "salesSuffixCode": "ARD",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -21020,7 +21020,7 @@
       "modelName": "24CR661NK6P",
       "salesModelCode": "24CR661NK6P",
       "salesSuffixCode": "KUBNMSM",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -21035,7 +21035,7 @@
       "modelName": "24CR661W-BR",
       "salesModelCode": "24CR661W-BR",
       "salesSuffixCode": "ARD",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -21050,7 +21050,7 @@
       "modelName": "24CR670N-6P",
       "salesModelCode": "24CR670N-6P",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -21093,7 +21093,7 @@
       "modelName": "24CR670NK6N",
       "salesModelCode": "24CR670NK6N",
       "salesSuffixCode": "AUB",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "CA_EN : CA (en)",
@@ -21115,7 +21115,7 @@
       "modelName": "24CR670W-BP",
       "salesModelCode": "24CR670W-BP",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -21130,7 +21130,7 @@
       "modelName": "24CR671I-6N",
       "salesModelCode": "24CR671I-6N",
       "salesSuffixCode": "AEK",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -21145,7 +21145,7 @@
       "modelName": "24CR671N-2P",
       "salesModelCode": "24CR671N-2P",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BE : BE (nl)",
@@ -21251,7 +21251,7 @@
       "modelName": "24CR671W-BP",
       "salesModelCode": "24CR671W-BP",
       "salesSuffixCode": "ARD",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -21373,7 +21373,7 @@
       "modelName": "27CN650I-6N",
       "salesModelCode": "27CN650I-6N",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "CA_EN : CA (en)",
@@ -21409,7 +21409,7 @@
       "modelName": "27CN650N-6A",
       "salesModelCode": "27CN650N-6A",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -21599,7 +21599,7 @@
       "modelName": "27CQ650N-6P",
       "salesModelCode": "27CQ650N-6P",
       "salesSuffixCode": "AEK",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "NL : NL (nl)",
@@ -21628,7 +21628,7 @@
       "modelName": "27CQ650W-BP",
       "salesModelCode": "27CQ650W-BP",
       "salesSuffixCode": "ARD",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -21643,7 +21643,7 @@
       "modelName": "27CQ651I-6P",
       "salesModelCode": "27CQ651I-6P",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -21665,7 +21665,7 @@
       "modelName": "27CQ651N-6P",
       "salesModelCode": "27CQ651N-6P",
       "salesSuffixCode": "AUB",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -21680,7 +21680,7 @@
       "modelName": "27CQ651W-BP",
       "salesModelCode": "27CQ651W-BP",
       "salesSuffixCode": "ARD",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -21695,7 +21695,7 @@
       "modelName": "34CN650I-6N",
       "salesModelCode": "34CN650I-6N",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -21710,7 +21710,7 @@
       "modelName": "34CN650N-6A",
       "salesModelCode": "34CN650N-6A",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -21858,7 +21858,7 @@
       "modelName": "34CR650I-6N",
       "salesModelCode": "34CR650I-6N",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -21873,7 +21873,7 @@
       "modelName": "34CR650N-6N",
       "salesModelCode": "34CR650N-6N",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -21895,7 +21895,7 @@
       "modelName": "34CR650W-BP",
       "salesModelCode": "34CR650W-BP",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "GLOBAL : GLOBAL (en)",
@@ -21910,7 +21910,7 @@
       "modelName": "34CR651I-6P",
       "salesModelCode": "34CR651I-6P",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -21932,7 +21932,7 @@
       "modelName": "34CR651N-6P",
       "salesModelCode": "34CR651N-6P",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BE_FR : BE (fr)",
@@ -21954,7 +21954,7 @@
       "modelName": "34CR651W-BP",
       "salesModelCode": "34CR651W-BP",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -21990,7 +21990,7 @@
       "modelName": "38CK900G-B",
       "salesModelCode": "38CK900G-B",
       "salesSuffixCode": "ARD",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "PL : PL (pl)",
@@ -22012,7 +22012,7 @@
       "modelName": "38CK900N-1C",
       "salesModelCode": "38CK900N-1C",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BG : BG (bg)",
@@ -22055,7 +22055,7 @@
       "modelName": "38CK950N-1C",
       "salesModelCode": "38CK950N-1C",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BG : BG (bg)",
@@ -22196,7 +22196,7 @@
       "modelName": "38CL900G-1C",
       "salesModelCode": "38CL900G-1C",
       "salesSuffixCode": "AWFG",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "CAC : GT (es)",
@@ -22218,7 +22218,7 @@
       "modelName": "38CL950N-1C",
       "salesModelCode": "38CL950N-1C",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BG : BG (bg)",
@@ -22268,7 +22268,7 @@
       "modelName": "38CL950P-1C",
       "salesModelCode": "38CL950P-1C",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -22418,7 +22418,7 @@
       "modelName": "AFW72969006",
       "salesModelCode": "AFW72969006",
       "salesSuffixCode": "ACC",
-      "category": "Laptops",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -22433,7 +22433,7 @@
       "modelName": "CK500N-3A",
       "salesModelCode": "CK500N-3A",
       "salesSuffixCode": "AEUQ",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "CAC : GT (es)",
@@ -22504,7 +22504,7 @@
       "modelName": "CK500W-3A",
       "salesModelCode": "CK500W-3A",
       "salesSuffixCode": "AEUQ",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BG : BG (bg)",
@@ -22645,7 +22645,7 @@
       "modelName": "CL600I-6N",
       "salesModelCode": "CL600I-6N",
       "salesSuffixCode": "AEUQ",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "CA_EN : CA (en)",
@@ -22681,7 +22681,7 @@
       "modelName": "CL600N-6A",
       "salesModelCode": "CL600N-6A",
       "salesSuffixCode": "AEUQ",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -22864,7 +22864,7 @@
       "modelName": "CL600W-AC",
       "salesModelCode": "CL600W-AC",
       "salesSuffixCode": "AEUQ",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -23103,7 +23103,7 @@
       "modelName": "CQ600I-6P",
       "salesModelCode": "CQ600I-6P",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BE : BE (nl)",
@@ -23230,7 +23230,7 @@
       "modelName": "CQ600N-6N",
       "salesModelCode": "CQ600N-6N",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BE : BE (nl)",
@@ -23322,7 +23322,7 @@
       "modelName": "CQ600W-BP",
       "salesModelCode": "CQ600W-BP",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -23344,7 +23344,7 @@
       "modelName": "CQ601I-6P",
       "salesModelCode": "CQ601I-6P",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -23387,7 +23387,7 @@
       "modelName": "CQ601N-2P",
       "salesModelCode": "CQ601N-2P",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BE : BE (nl)",
@@ -23465,7 +23465,7 @@
       "modelName": "CQ601W-BP",
       "salesModelCode": "CQ601W-BP",
       "salesSuffixCode": "AEU",
-      "category": "Laptops",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -23494,7 +23494,7 @@
       "modelName": "EAD62246899",
       "salesModelCode": "EAD62246899",
       "salesSuffixCode": "ACC",
-      "category": "Laptops",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -23509,7 +23509,7 @@
       "modelName": "EAD64046006",
       "salesModelCode": "EAD64046006",
       "salesSuffixCode": "ACC",
-      "category": "Laptops",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "TW : TW (zh)",
@@ -23531,7 +23531,7 @@
       "modelName": "EAD65830122",
       "salesModelCode": "EAD65830122",
       "salesSuffixCode": "ACC",
-      "category": "Laptops",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "TW : TW (zh)",
@@ -23553,7 +23553,7 @@
       "modelName": "EAY62990909",
       "salesModelCode": "EAY62990909",
       "salesSuffixCode": "ACC",
-      "category": "Laptops",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -23575,7 +23575,7 @@
       "modelName": "EAY64490516",
       "salesModelCode": "EAY64490516",
       "salesSuffixCode": "ACC",
-      "category": "Laptops",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -23590,7 +23590,7 @@
       "modelName": "EAY65249001",
       "salesModelCode": "EAY65249001",
       "salesSuffixCode": "ACC",
-      "category": "Laptops",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -23619,7 +23619,7 @@
       "modelName": "EAY65249101",
       "salesModelCode": "EAY65249101",
       "salesSuffixCode": "ACC",
-      "category": "Laptops",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -23662,7 +23662,7 @@
       "modelName": "EAY65895901",
       "salesModelCode": "EAY65895901",
       "salesSuffixCode": "ACC",
-      "category": "Laptops",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -23740,7 +23740,7 @@
       "modelName": "EAY65895911",
       "salesModelCode": "EAY65895911",
       "salesSuffixCode": "ACC",
-      "category": "Laptops",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "SG : SG (en)",
@@ -23762,7 +23762,7 @@
       "modelName": "EAY65895931",
       "salesModelCode": "EAY65895931",
       "salesSuffixCode": "ACC",
-      "category": "Laptops",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "TH : TH (th)",
@@ -23784,7 +23784,7 @@
       "modelName": "EAY65910811",
       "salesModelCode": "EAY65910811",
       "salesSuffixCode": "ACC",
-      "category": "Laptops",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -23806,7 +23806,7 @@
       "modelName": "EAY65910812",
       "salesModelCode": "EAY65910812",
       "salesSuffixCode": "ACC",
-      "category": "Laptops",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -23828,7 +23828,7 @@
       "modelName": "EAY65910831",
       "salesModelCode": "EAY65910831",
       "salesSuffixCode": "ACC",
-      "category": "Laptops",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "CA_EN : CA (en)",
@@ -176053,7 +176053,7 @@
       "modelName": "6410TJW006F",
       "salesModelCode": "6410TJW006F",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -176068,7 +176068,7 @@
       "modelName": "AAN00841902",
       "salesModelCode": "AAN00841902",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -176083,7 +176083,7 @@
       "modelName": "AAN30033609",
       "salesModelCode": "AAN30033609",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "PL : PL (pl)",
@@ -176098,7 +176098,7 @@
       "modelName": "AAN30033610",
       "salesModelCode": "AAN30033610",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "PL : PL (pl)",
@@ -176113,7 +176113,7 @@
       "modelName": "AAN30067402",
       "salesModelCode": "AAN30067402",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -176128,7 +176128,7 @@
       "modelName": "AAN76409401",
       "salesModelCode": "AAN76409401",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -176143,7 +176143,7 @@
       "modelName": "AAN76409928",
       "salesModelCode": "AAN76409928",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -176158,7 +176158,7 @@
       "modelName": "AAN76630215",
       "salesModelCode": "AAN76630215",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -176180,7 +176180,7 @@
       "modelName": "AKB73715689",
       "salesModelCode": "AKB73715689",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -176195,7 +176195,7 @@
       "modelName": "AKB75675305",
       "salesModelCode": "AKB75675305",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -176217,7 +176217,7 @@
       "modelName": "AKB76043633",
       "salesModelCode": "AKB76043633",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -176232,7 +176232,7 @@
       "modelName": "AKB76044701",
       "salesModelCode": "AKB76044701",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "PL : PL (pl)",
@@ -176247,7 +176247,7 @@
       "modelName": "AKB76044724",
       "salesModelCode": "AKB76044724",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -184225,7 +184225,7 @@
       "modelName": "EAD62348815",
       "salesModelCode": "EAD62348815",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -184240,7 +184240,7 @@
       "modelName": "EAD63749401",
       "salesModelCode": "EAD63749401",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "CL : CL (es)",
@@ -184255,7 +184255,7 @@
       "modelName": "EAD63785912",
       "salesModelCode": "EAD63785912",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -184270,7 +184270,7 @@
       "modelName": "EAD63932603",
       "salesModelCode": "EAD63932603",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -184299,7 +184299,7 @@
       "modelName": "EAD63932607",
       "salesModelCode": "EAD63932607",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "CL : CL (es)",
@@ -184321,7 +184321,7 @@
       "modelName": "EAD63988301",
       "salesModelCode": "EAD63988301",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "PL : PL (pl)",
@@ -184343,7 +184343,7 @@
       "modelName": "EAD64108413",
       "salesModelCode": "EAD64108413",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -184358,7 +184358,7 @@
       "modelName": "EAD64247302",
       "salesModelCode": "EAD64247302",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -184373,7 +184373,7 @@
       "modelName": "EAD65185201",
       "salesModelCode": "EAD65185201",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -184402,7 +184402,7 @@
       "modelName": "EAD65845801",
       "salesModelCode": "EAD65845801",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "EG_AR : EG (ar)",
@@ -184431,7 +184431,7 @@
       "modelName": "EAD65845803",
       "salesModelCode": "EAD65845803",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -184446,7 +184446,7 @@
       "modelName": "EAD65879601",
       "salesModelCode": "EAD65879601",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -184461,7 +184461,7 @@
       "modelName": "EAD65912803",
       "salesModelCode": "EAD65912803",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "CL : CL (es)",
@@ -184476,7 +184476,7 @@
       "modelName": "EAY30146201",
       "salesModelCode": "EAY30146201",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -184491,7 +184491,7 @@
       "modelName": "EAY62549205",
       "salesModelCode": "EAY62549205",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -184506,7 +184506,7 @@
       "modelName": "EAY62549209",
       "salesModelCode": "EAY62549209",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -184521,7 +184521,7 @@
       "modelName": "EAY62768615",
       "salesModelCode": "EAY62768615",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "TW : TW (zh)",
@@ -184536,7 +184536,7 @@
       "modelName": "EAY62768625",
       "salesModelCode": "EAY62768625",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "ES : ES (es)",
@@ -184572,7 +184572,7 @@
       "modelName": "EAY62768626",
       "salesModelCode": "EAY62768626",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "MY : MY (en)",
@@ -184661,7 +184661,7 @@
       "modelName": "EAY62933012",
       "salesModelCode": "EAY62933012",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -184690,7 +184690,7 @@
       "modelName": "EAY63032208",
       "salesModelCode": "EAY63032208",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -184705,7 +184705,7 @@
       "modelName": "EAY63032209",
       "salesModelCode": "EAY63032209",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -184734,7 +184734,7 @@
       "modelName": "EAY63190003",
       "salesModelCode": "EAY63190003",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -184777,7 +184777,7 @@
       "modelName": "EAY64929301",
       "salesModelCode": "EAY64929301",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -184799,7 +184799,7 @@
       "modelName": "EAY64929302",
       "salesModelCode": "EAY64929302",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "PL : PL (pl)",
@@ -184814,7 +184814,7 @@
       "modelName": "EAY65068601",
       "salesModelCode": "EAY65068601",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -184892,7 +184892,7 @@
       "modelName": "EAY65068604",
       "salesModelCode": "EAY65068604",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -184949,7 +184949,7 @@
       "modelName": "EAY65068607",
       "salesModelCode": "EAY65068607",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "HK : HK (zh)",
@@ -184978,7 +184978,7 @@
       "modelName": "EAY65689003",
       "salesModelCode": "EAY65689003",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -185007,7 +185007,7 @@
       "modelName": "EAY65689601",
       "salesModelCode": "EAY65689601",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "PL : PL (pl)",
@@ -185022,7 +185022,7 @@
       "modelName": "EAY65689602",
       "salesModelCode": "EAY65689602",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -185051,7 +185051,7 @@
       "modelName": "EAY65768901",
       "salesModelCode": "EAY65768901",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "IN : IN (en)",
@@ -185073,7 +185073,7 @@
       "modelName": "EAY65768902",
       "salesModelCode": "EAY65768902",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -185095,7 +185095,7 @@
       "modelName": "EAY65890001",
       "salesModelCode": "EAY65890001",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -185131,7 +185131,7 @@
       "modelName": "EAY65890002",
       "salesModelCode": "EAY65890002",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -185153,7 +185153,7 @@
       "modelName": "EAY65890003",
       "salesModelCode": "EAY65890003",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "PL : PL (pl)",
@@ -185168,7 +185168,7 @@
       "modelName": "EAY65895705",
       "salesModelCode": "EAY65895705",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -185190,7 +185190,7 @@
       "modelName": "EAY65895713",
       "salesModelCode": "EAY65895713",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "DE : DE (de)",
@@ -185205,7 +185205,7 @@
       "modelName": "EAY65910401",
       "salesModelCode": "EAY65910401",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -185234,7 +185234,7 @@
       "modelName": "EAY65915401",
       "salesModelCode": "EAY65915401",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -185277,7 +185277,7 @@
       "modelName": "EAY65920201",
       "salesModelCode": "EAY65920201",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "JP : JP (ja)",
@@ -185292,7 +185292,7 @@
       "modelName": "EBP64157901",
       "salesModelCode": "EBP64157901",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "PL : PL (pl)",
@@ -185838,7 +185838,7 @@
       "modelName": "GP08NU20",
       "salesModelCode": "GP08NU20",
       "salesSuffixCode": "AUAE10B",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "AU : AU (en)",
@@ -191450,7 +191450,7 @@
       "modelName": "MEC61904928",
       "salesModelCode": "MEC61904928",
       "salesSuffixCode": "ACC",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "PL : PL (pl)",
@@ -191708,7 +191708,7 @@
       "modelName": "N195WU-PN",
       "salesModelCode": "N195WU-PN",
       "salesSuffixCode": "AEU",
-      "category": "Monitors",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BG : BG (bg)",
@@ -191801,7 +191801,7 @@
       "modelName": "N225WU-BN",
       "salesModelCode": "N225WU-BN",
       "salesSuffixCode": "AEU",
-      "category": "Monitors",
+      "category": "Thin Client",
       "locales": [
         {
           "locale": "BG : BG (bg)",
@@ -192049,7 +192049,7 @@
       "modelName": "STA32F",
       "salesModelCode": "STA32F",
       "salesSuffixCode": "AJL",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "CA_EN : CA (en)",
@@ -192134,7 +192134,7 @@
       "modelName": "STA33P",
       "salesModelCode": "STA33P",
       "salesSuffixCode": "ATT",
-      "category": "Monitors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "CA_EN : CA (en)",
@@ -198889,7 +198889,7 @@
       "modelName": "AKB75695301",
       "salesModelCode": "AKB75695301",
       "salesSuffixCode": "ACC",
-      "category": "Projectors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "PL : PL (pl)",
@@ -198904,7 +198904,7 @@
       "modelName": "AKB75735304",
       "salesModelCode": "AKB75735304",
       "salesSuffixCode": "ACC",
-      "category": "Projectors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -198926,7 +198926,7 @@
       "modelName": "AKB76039502",
       "salesModelCode": "AKB76039502",
       "salesSuffixCode": "ACC",
-      "category": "Projectors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "PL : PL (pl)",
@@ -202383,7 +202383,7 @@
       "modelName": "EAY62990921",
       "salesModelCode": "EAY62990921",
       "salesSuffixCode": "ACC",
-      "category": "Projectors",
+      "category": "Accessories",
       "locales": [
         {
           "locale": "BR : BR (pt)",
@@ -211787,12 +211787,14 @@
     }
   ],
   "categories": [
-    "Laptops",
     "Monitors",
+    "Laptops",
+    "Thin Client",
+    "Accessories",
     "Projectors"
   ],
   "totalModels": 2051,
   "totalUrls": 27911,
-  "generatedAt": "2026-10-15",
+  "generatedAt": "2026-10-16",
   "cmsSource": "cms_merged_view_20261015_171640.csv"
 }
