@@ -1,116 +1,93 @@
 {
-  "baseDate": "20261015",
-  "prevDate": "20261008",
+  "baseDate": "20261020",
+  "prevDate": "20261015",
   "changes": {
-    "UltraGear Buying Guide 2차|CA_EN": {
+    "UltraGear Buying Guide 2차|BG": {
       "type": "status",
       "from": "사전검토",
-      "to": "완료"
+      "to": "작업중"
     },
-    "UltraGear Buying Guide 2차|CA_FR": {
+    "UltraGear Buying Guide 2차|BR": {
       "type": "status",
       "from": "사전검토",
-      "to": "법인리뷰"
+      "to": "작업중"
     },
-    "UltraGear Buying Guide 2차|EE": {
+    "UltraGear Buying Guide 2차|CAC": {
       "type": "status",
       "from": "사전검토",
-      "to": "법인리뷰"
+      "to": "작업중"
     },
-    "UltraGear Buying Guide 2차|LT": {
+    "UltraGear Buying Guide 2차|CZ": {
       "type": "status",
       "from": "사전검토",
-      "to": "법인리뷰"
+      "to": "작업중"
     },
-    "UltraGear Buying Guide 2차|LV": {
+    "UltraGear Buying Guide 2차|DE": {
       "type": "status",
       "from": "사전검토",
-      "to": "법인리뷰"
+      "to": "작업중"
     },
-    "UltraGear Buying Guide 2차|UK": {
+    "UltraGear Buying Guide 2차|EC": {
       "type": "status",
       "from": "사전검토",
-      "to": "법인리뷰"
+      "to": "작업중"
     },
-    "IT B2B TCO Mark|BE": {
-      "type": "new_task"
+    "UltraGear Buying Guide 2차|ES": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
     },
-    "IT B2B TCO Mark|BE_FR": {
-      "type": "new_task"
+    "UltraGear Buying Guide 2차|GR": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
     },
-    "IT B2B TCO Mark|DE": {
-      "type": "new_task"
+    "UltraGear Buying Guide 2차|HR": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
     },
-    "IT B2B TCO Mark|DK": {
-      "type": "new_task"
+    "UltraGear Buying Guide 2차|HU": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
     },
-    "IT B2B TCO Mark|GLOBAL": {
-      "type": "new_task"
+    "UltraGear Buying Guide 2차|PA": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
     },
-    "IT B2B TCO Mark|IN": {
-      "type": "new_task"
+    "UltraGear Buying Guide 2차|RO": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
     },
-    "IT B2B TCO Mark|IT": {
-      "type": "new_task"
+    "UltraGear Buying Guide 2차|RS": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
     },
-    "IT B2B TCO Mark|NL": {
-      "type": "new_task"
+    "UltraGear Buying Guide 2차|TR": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
     },
-    "IT B2B TCO Mark|RU": {
-      "type": "new_task"
+    "UltraGear Buying Guide 2차|VN": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
     },
-    "IT B2B TCO Mark|SE": {
-      "type": "new_task"
-    },
-    "IT B2B TCO Mark|UK": {
-      "type": "new_task"
-    },
-    "IT B2B TCO Mark|CZ": {
-      "type": "new_task"
-    },
-    "IT B2B TCO Mark|IL": {
-      "type": "new_task"
-    },
-    "IT B2B TCO Mark|PL": {
-      "type": "new_task"
-    },
-    "IT B2B TCO Mark|CA_EN": {
-      "type": "new_task"
-    },
-    "IT B2B TCO Mark|CA_FR": {
-      "type": "new_task"
-    },
-    "IT B2B TCO Mark|ES": {
-      "type": "new_task"
-    },
-    "IT B2B TCO Mark|AE": {
-      "type": "new_task"
-    },
-    "IT B2B TCO Mark|AE_AR": {
-      "type": "new_task"
-    },
-    "IT B2B TCO Mark|MX": {
-      "type": "new_task"
-    },
-    "IT B2B TCO Mark|BR": {
-      "type": "new_task"
-    },
-    "IT B2B TCO Mark|FR": {
-      "type": "new_task"
-    },
-    "IT B2B TCO Mark|SG": {
-      "type": "new_task"
+    "UltraGear Buying Guide 2차|ZA": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
     }
   },
   "taskSummary": {
     "UltraGear Buying Guide 2차": {
-      "changed": 6,
+      "changed": 16,
       "new": 0
-    },
-    "IT B2B TCO Mark": {
-      "changed": 0,
-      "new": 23
     }
   },
-  "generatedAt": "2026-10-15"
+  "generatedAt": "2026-10-20"
 }
