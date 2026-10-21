@@ -100,7 +100,11 @@ function buildSegmentedBar(counts, opts) {
         'Corp. Review':'법인리뷰','Done':'완료','Cancel':'취소'
       })[st] || st;
       const showNum = opts.showNumbers && w >= 6;
-      return `<div class="seg" style="width:${w}%;background:${cfg.dot}" data-tooltip="${label} ${c}사이트">
+      // 취소는 사전검토와 같은 회색 계열이라 빗금으로 구분한다.
+      const bg = st === 'Cancel'
+        ? `repeating-linear-gradient(135deg,#E2E8F0 0 4px,#F8FAFC 4px 8px)`
+        : cfg.dot;
+      return `<div class="seg" style="width:${w}%;background:${bg}${st === 'Cancel' ? ';color:#64748B;text-shadow:none' : ''}" data-tooltip="${label} ${c}사이트">
         ${showNum ? `<span class="seg-num">${c}</span>` : ''}
       </div>`;
     }).join('');
@@ -491,7 +495,7 @@ function showCountryModal(locale) {
       var donePctM = effTotalM ? Math.round(cntM.Done / effTotalM * 100) : 0;
       var dotsM = countryItems.map(function(x) {
         var s = istatusM(x), t = TLM[s] || TLM['Pre-Review'];
-        var mdl = String(x.remark || '').split(/[\s·(]/)[0] || '-';
+        var mdl = grRemarkModelToken(x.remark) || String(x.remark || '').trim() || '-';
         return '<div class="tl-dot-wrap"><div class="tl-dot ' + (t.pulse ? 'tl-dot-pulse' : '') + '" style="background:' + t.color + ';box-shadow:0 2px 8px ' + t.glow + '"></div><div class="tl-dot-label">' + escapeHtmlSheet(mdl) + '</div></div>';
       }).join('');
       var rowsM = countryItems.map(function(x) {
@@ -1333,9 +1337,23 @@ function getSheetOverviewTotalInfo(d) {
   // Sites는 표의 Country/Contry/PDP Country/Locale 컬럼에 실제로 나오는 값 개수만 사용합니다.
   // row 수 fallback을 쓰면 Country 수와 달라지므로 제거했습니다.
   var sites = countSheetCountrySites(d) || 0;
+  // 진행 바("전체 N개 사이트 · 취소 M개 제외")와 숫자를 맞추려고, 모든 행이 취소인 사이트는 뺀다.
+  var allC = Object.create(null), liveC = Object.create(null);
+  items.forEach(function(x) {
+    var c = String((x && (x.country || x.locale)) || '').trim().toUpperCase();
+    if (!c) return;
+    allC[c] = 1;
+    if ((x.overall || x.status) !== 'Cancel') liveC[c] = 1;
+  });
+  var cancelledSites = Object.keys(allC).filter(function(c) { return !liveC[c]; }).length;
+  if (cancelledSites && cancelledSites < sites) sites -= cancelledSites;
+  else cancelledSites = 0;
+  if (pageInfo.hasPages && pageInfo.pagesByStatus && pageInfo.pagesByStatus.Cancel) {
+    pagesForDisplay = Math.max(pagesForDisplay - pageInfo.pagesByStatus.Cancel, 0);
+  }
   var text = sites.toLocaleString() + ' Sites';
   if (pageInfo.hasPages) text += ' / ' + pagesForDisplay.toLocaleString() + ' Pages';
-  return { sites: sites, pages: pagesForDisplay, hasPages: pageInfo.hasPages, text: text };
+  return { sites: sites, pages: pagesForDisplay, hasPages: pageInfo.hasPages, text: text, cancelledSites: cancelledSites };
 }
 
 
@@ -1478,6 +1496,7 @@ function renderOverviewTotalInfo(d) {
   return '<div class="ov-head-total-stack">' +
     '<div class="ov-head-total-chip ov-head-total-chip-sites"><span class="ov-head-total-value">' + info.sites.toLocaleString() + '</span><span class="ov-head-total-unit">Sites</span></div>' +
     pagesHtml +
+    (info.cancelledSites ? '<div class="ov-head-total-note">취소 ' + info.cancelledSites.toLocaleString() + '개 사이트 제외</div>' : '') +
   '</div>';
 }
 
@@ -1496,7 +1515,12 @@ function updateTopbarTitle() {
   var t = document.getElementById('topTitle');
   var meta = document.getElementById('topMeta');
   if (t && DATA[currentKey]) t.textContent = getDashboardDisplayTitle(DATA[currentKey]);
-  if (meta) meta.textContent = getPrevIsoWeekLabelForMeta();
+  if (meta) {
+    // 오늘이 속한 주가 아니라 직전 주(실적 기준 주차)다. 표기만 보면 오해하기 쉬워 "기준"을 붙인다.
+    var wk = getPrevIsoWeekLabelForMeta();
+    meta.textContent = wk + ' 기준';
+    meta.title = '지난주(' + wk + ') 실적 기준';
+  }
 }
 
 // ── DEEP LINK (?task=…) ──────────────────────────────────────
@@ -2086,7 +2110,8 @@ var _npiPsSort = { key: '', dir: 1 };
 // 구분(NPI/MOD 대분류) → Status(NPI Type+Month 조합) 순으로 맨 왼쪽 (2026-07-16 사용자 지시)
 var NPI_PS_COLUMNS = [
   { key: 'category', label: 'Type' },
-  { key: 'status', label: 'Status' },
+  // 값은 NPI 8월·Transfer 7월·POOL 같은 그룹명이라 'Status'로 두면 Stage와 헷갈린다.
+  { key: 'status', label: 'Group' },
   { key: 'launch', label: 'Target Launch Date' },   // Readiness Check 원본 컬럼명 그대로
   { key: 'region', label: 'Region' }, { key: 'sub', label: 'Sub' },
   { key: 'country', label: 'Country' }, { key: 'model', label: 'Model' },
@@ -2297,13 +2322,17 @@ function npiPsRenderResults() {
     return;
   }
   html += '<div class="npi-detail-table-wrap" style="overflow-x:auto">';
-  html += '<table class="npi-detail-table" style="min-width:1300px">';
+  // 고정 min-width(1300px)는 1440px 화면에서도 STG·Live 칸을 밀어냈다. 내용 폭에 맞추고 좁을 때만 가로 스크롤.
+  html += '<table class="npi-detail-table" style="width:100%">';
   // PTT Task ID는 테이블에서 숨김 — 엑셀 다운로드(NPI_PS_COLUMNS 전체)에만 포함 (2026-07-22 사용자 지시)
   html += '<thead><tr>' + NPI_PS_COLUMNS.filter(function(c) { return c.key !== 'ptt'; }).map(function(c) {
     var arrow = (_npiPsSort.key === c.key) ? (_npiPsSort.dir > 0 ? ' ▲' : ' ▼') : ' ⇅';
     var arrowColor = (_npiPsSort.key === c.key) ? '#2563EB' : '#CBD5E1';
-    return '<th style="cursor:pointer;user-select:none;white-space:nowrap" onclick="npiPsToggleSort(\'' + c.key + '\')" title="클릭: 정렬">' +
-      escapeHtmlSheet(c.label) + '<span style="color:' + arrowColor + ';font-size:10px">' + arrow + '</span></th>';
+    // 긴 머리글(Target Launch Date·Readiness Check)은 두 줄로 접어 칸 폭을 아낀다. 화살표는 마지막 단어에 붙인다.
+    var lbl = escapeHtmlSheet(c.label).replace(/(^| )(\S+)$/, '$1<span style="white-space:nowrap">$2');
+    var lblClose = '</span>';
+    return '<th style="cursor:pointer;user-select:none;white-space:normal;min-width:' + (c.label.length > 10 ? '76px' : '0') + '" onclick="npiPsToggleSort(\'' + c.key + '\')" title="클릭: 정렬">' +
+      lbl + '<span style="color:' + arrowColor + ';font-size:10px">' + arrow + '</span>' + lblClose + '</th>';
   }).join('') + '</tr></thead><tbody>';
   flatRows.forEach(function(item) {
     var row = item.row;
@@ -2316,7 +2345,7 @@ function npiPsRenderResults() {
       '<span style="background:' + stageMeta.color + '"></span>' + escapeHtmlSheet(stageLabel) + '</span>';
     // Status는 칩 없이 일반 텍스트로(2026-07-16 사용자 지시). statusTip('?' 등)은 title 유지.
     var statusEmpty = !item.status || item.status === '-';
-    var statusCell = '<span style="font-weight:600;color:' + (statusEmpty ? '#CBD5E1' : '#334155') + '"' +
+    var statusCell = '<span style="font-weight:600;white-space:nowrap;color:' + (statusEmpty ? '#CBD5E1' : '#334155') + '"' +
       (row.statusTip ? ' title="' + escapeAttrSheet(row.statusTip) + '"' : '') + '>' +
       escapeHtmlSheet(item.status || '-') + '</span>';
     // 구분(대분류) — 칩 없이 일반 텍스트 (2026-07-16 사용자 지시)
@@ -2327,12 +2356,19 @@ function npiPsRenderResults() {
     html += '<td>' + statusCell + '</td>';
     // Target Launch Date — Readiness Check 원본값(YYYY-MM-DD). 미매칭 행은 '-'
     var launch = row.targetLaunchDate || '';
-    html += '<td style="white-space:nowrap;font-size:var(--fs-caption);color:' + (launch ? '#334155' : '#CBD5E1') + '">' +
-      escapeHtmlSheet(launch || '-') + '</td>';
+    // 출시 예정일이 지났는데 아직 Live가 아닌 행은 지연으로 표시한다(원본 날짜는 그대로 둔다).
+    var todayIso = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+    var launchLate = /^\d{4}-\d{2}-\d{2}/.test(launch) && launch.slice(0, 10) < todayIso &&
+      item.stage !== 'live' && item.stage !== 'cancelled';
+    html += '<td style="white-space:nowrap;font-size:var(--fs-caption);color:' + (launchLate ? '#B91C1C' : (launch ? '#334155' : '#CBD5E1')) + '"' +
+      (launchLate ? ' title="출시 예정일이 지났지만 아직 Live 전입니다"' : '') + '>' +
+      escapeHtmlSheet(launch || '-') +
+      (launchLate ? ' <span style="display:inline-block;margin-left:4px;padding:1px 6px;border-radius:4px;background:#FEE2E2;color:#B91C1C;font-size:10px;font-weight:800">지연</span>' : '') +
+      '</td>';
     html += '<td>' + escapeHtmlSheet(row.region) + '</td>';
     html += '<td style="font-size:var(--fs-caption);color:#64748B">' + escapeHtmlSheet(row.sub || '-') + '</td>';
     html += '<td title="' + escapeAttrSheet(row.locale || '') + '">' + escapeHtmlSheet(npiPsCountryName(row.locale)) + '</td>';
-    html += '<td style="font-weight:600" title="' + escapeAttrSheet(row.salesModelKey || '') + '">' + escapeHtmlSheet(row.model) + '</td>';
+    html += '<td style="font-weight:600;white-space:nowrap" title="' + escapeAttrSheet(row.salesModelKey || '') + '">' + escapeHtmlSheet(row.model) + '</td>';
     html += '<td>' + stageCell + '</td>';
     // Readiness Check 판정 칩(2026-07-16): Ready=초록/Not Ready=회색 2단계. 클릭 시 상세 모달(툴팁 대체)
     var rcMeta = {
@@ -2352,7 +2388,7 @@ function npiPsRenderResults() {
     var detailCell = detKr ? '<span style="color:#334155">' + escapeHtmlSheet(detKr) + '</span>' : '';
     if (detEn) detailCell += (detKr ? '<br>' : '') + '<span style="color:#94A3B8">' + escapeHtmlSheet(detEn) + '</span>';
     if (!detailCell) detailCell = '-';
-    html += '<td style="font-size:var(--fs-caption);max-width:280px">' + detailCell + '</td>';
+    html += '<td style="font-size:var(--fs-caption);min-width:160px;max-width:240px">' + detailCell + '</td>';
     // STG는 주소를 노출하지 않고 유무만 표시(2026-07-30 보안 조치 후속). PTT 미등록 행은 '-'
     html += '<td style="text-align:center">' + (row.hasStg
       ? '<span title="STG 페이지 있음" style="color:#047857;font-weight:700">O</span>'
@@ -2606,7 +2642,12 @@ function renderUrlLibModelView(allModels) {
   var listHtml = '<div style="padding:12px 24px">';
   // 다운로드 버튼은 필터바가 아니라 결과 테이블 바로 위 — 목록 개수와 같은 줄에 둔다(2026-08-07 사용자 지시)
   listHtml += '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px">';
-  listHtml += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500">' + filtered.length.toLocaleString() + '개 모델</div>';
+  // 상단은 전체 모델 수, 목록은 필터(기본 ACTIVE) 적용 후라 숫자가 다르다. 기준을 같이 적는다.
+  var urlLibCountNote = filtered.length !== allModels.length
+    ? ' <span style="color:#94A3B8">/ 전체 ' + allModels.length.toLocaleString() + '개' +
+      (_urlLibFilter.status ? ' · 상태 ' + escapeHtmlSheet(_urlLibFilter.status) + ' 기준' : '') + '</span>'
+    : '';
+  listHtml += '<div style="color:#64748B;font-size:var(--fs-caption);font-weight:500">' + filtered.length.toLocaleString() + '개 모델' + urlLibCountNote + '</div>';
   listHtml += '<button type="button" id="urlLibExcelBtn" onclick="urlLibDownloadExcel()" title="현재 필터 조건 그대로 내보냅니다" style="cursor:pointer;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:8px;padding:5px 12px;font-size:var(--fs-caption);font-weight:700;font-family:inherit">⬇ Excel Download</button>';
   listHtml += '</div>';
 
@@ -2964,6 +3005,7 @@ function buildTabs(s) {
     'Corp. Review': (rowStats && rowStats['Corp. Review']) || s['Corp. Review'] || 0,
     'In Progress': (rowStats && rowStats['In Progress']) || s['In Progress'] || 0,
     'Pre-Review': (rowStats && rowStats['Pre-Review']) || s['Pre-Review'] || 0,
+    Cancel: (rowStats && rowStats.Cancel) || s.Cancel || 0,
   };
 
   // stats가 셀 단위인 경우 → 아이템 단위로 재계산. Page#가 있는 시트는 Page# 합계 기준 유지.
@@ -2991,16 +3033,19 @@ function buildTabs(s) {
       tabCounts['Corp. Review'] = allItems.filter(x => (x.overall||x.status) === 'Corp. Review').length;
       tabCounts['In Progress'] = allItems.filter(x => (x.overall||x.status) === 'In Progress').length;
       tabCounts['Pre-Review'] = allItems.filter(x => (x.overall||x.status) === 'Pre-Review').length;
+      tabCounts.Cancel = allItems.filter(x => (x.overall||x.status) === 'Cancel').length;
     }
   }
 
+  // 탭 숫자 합이 All Status와 맞도록 취소도 탭으로 두고, 0건 탭은 숨긴다(선택 중인 탭은 유지).
   const tabs = [
     {key:'all', label:'All Status', cnt: tabCounts.all},
     {key:'Done', label:'완료', cnt: tabCounts.Done},
     {key:'Corp. Review', label:'법인리뷰', cnt: tabCounts['Corp. Review']},
     {key:'In Progress', label:'작업중', cnt: tabCounts['In Progress']},
     {key:'Pre-Review', label:'사전검토', cnt: tabCounts['Pre-Review']},
-  ];
+    {key:'Cancel', label:'취소', cnt: tabCounts.Cancel || 0},
+  ].filter(t => t.key === 'all' || t.cnt > 0 || currentTab === t.key);
   return tabs.map(t => `
     <div class="tab ${currentTab===t.key?'active':''}" data-tab="${t.key}" onclick="switchTab(this)">
       ${t.label} <span class="tab-cnt">${t.cnt}</span>
@@ -6597,6 +6642,8 @@ function groupRowsByRegion(rows, headers) {
     var region = normalizeDisplayRegion(copy.Region || inferRegionForDisplay(country) || 'ETC');
     copy.Region = region;
     copy.__idx = idx;
+    // 시트는 로케일 코드 순(CH가 CZ 앞)이라 화면에 보이는 국가명으로 다시 정렬한다.
+    copy.__ctryName = country ? String(displayCountryFullName(country) || country).toLowerCase() : '\uffff';
     return copy;
   });
 
@@ -6604,6 +6651,7 @@ function groupRowsByRegion(rows, headers) {
     var ai = order.indexOf(a.Region); if (ai < 0) ai = 999;
     var bi = order.indexOf(b.Region); if (bi < 0) bi = 999;
     if (ai !== bi) return ai - bi;
+    if (a.__ctryName !== b.__ctryName) return a.__ctryName < b.__ctryName ? -1 : 1;
     return a.__idx - b.__idx;
   });
 
@@ -6618,6 +6666,13 @@ function groupRowsByRegion(rows, headers) {
     last.rows.push(row);
   });
   return groups;
+}
+
+// 비고 첫 토큰이 모델 코드(영문+숫자, 예: 27GR95QE-B)일 때만 그 토큰을 돌려준다.
+// "10/12 LDM 승인"·"페이지 없음" 같은 메모형 비고는 ''을 돌려 전체 문장을 쓰게 한다.
+function grRemarkModelToken(remark) {
+  var t = String(remark || '').split(/[\s·(]/)[0].trim();
+  return (/[A-Z]/.test(t) && /\d.*\d/.test(t) && /^[A-Z0-9][A-Z0-9.\-\/]{3,}$/.test(t)) ? t : '';
 }
 
 // 국가 통합용 상태 진행도(작을수록 덜 완료). 취소는 별도 처리.
@@ -6664,7 +6719,7 @@ function collapseRowsByCountry(rows, countryHeader, remarkHeader, statusHeader, 
     if (remarkHeader) {
       var seen = {}, models = [];
       members.forEach(function(m) {
-        var t = String(m[remarkHeader] || '').split(/[\s·(]/)[0].trim();
+        var t = grRemarkModelToken(m[remarkHeader]) || String(m[remarkHeader] || '').trim();
         if (t && !seen[t]) { seen[t] = 1; models.push(t); }
       });
       if (models.length) base[remarkHeader] = models.join(', ');
@@ -6832,7 +6887,9 @@ function parseCountryDisplayParts(value) {
 
 function isSheetLanguageCode(value) {
   var code = String(value || '').toLowerCase();
-  return ['en','ar','fr','de','es','pt','ko','ja','zh','it','nl','vi','th','id','tr','pl','cs','da','sv','fi','no','he','fa','ro','bg','hr','hu','el','sk','sl','lt','lv','et','ms','hi','ru','uz'].indexOf(code) >= 0;
+  return ['en','ar','fr','de','es','pt','ko','ja','zh','it','nl','vi','th','id','tr','pl','cs','da','sv','fi','no','he','fa','ro','bg','hr','hu','el','sk','sl','lt','lv','et','ms','hi','ru','uz',
+    // GR 시트가 국가코드를 그대로 언어 자리에 쓰는 값(GR-gr, CZ-cz, EE-ee, RS-rs, UA-uk)
+    'gr','cz','ee','rs','uk','sr','kk','bn','ur'].indexOf(code) >= 0;
 }
 
 function normalizeCountryDisplayNameFallback(value) {
@@ -7082,7 +7139,18 @@ function renderSheetCell(value, header, row, sheetData) {
   var dateHeaderName = normalizeSheetHeaderName(header);
   if (dateHeaderName === '완료일' || dateHeaderName === 'completedate' || (dateHeaderName.indexOf('publish') >= 0 && dateHeaderName.indexOf('date') >= 0)) {
     var dateText = formatSheetCompletionDate(text);
-    if (dateText) return '<span class="sheet-date-cell" style="font-size:10px;font-weight:600;color:#475569;white-space:nowrap">' + escapeHtmlSheet(dateText) + '</span>';
+    if (dateText) {
+      // 완료 전 행의 날짜는 예정일이다. "완료일" 칸에 있어도 완료로 읽히지 않게 표시한다.
+      var rowStatus = '';
+      Object.keys(row || {}).some(function(k) {
+        if (/^status\d*$/.test(normalizeSheetHeaderName(k))) { rowStatus = normalizeSheetRendererStatus(row[k]); return true; }
+        return false;
+      });
+      if (rowStatus && rowStatus !== 'Done' && rowStatus !== 'Cancel') {
+        return '<span class="sheet-date-cell sheet-date-planned" style="font-size:10px;font-weight:600;color:#B45309;white-space:nowrap" title="완료 예정일">예정 ' + escapeHtmlSheet(dateText) + '</span>';
+      }
+      return '<span class="sheet-date-cell" style="font-size:10px;font-weight:600;color:#475569;white-space:nowrap">' + escapeHtmlSheet(dateText) + '</span>';
+    }
   }
 
   return escapeHtmlSheet(text);

@@ -24,6 +24,13 @@ function grOverviewOneLine(text, max) {
   return s.length > n ? s.slice(0, n).trim() + '…' : s;
 }
 
+// 메모(B2)에서 담당 칸과 겹치는 "담당 OOO" 조각을 뺀다.
+function grOverviewMemoText(memo, owner) {
+  var s = String(memo == null ? '' : memo).replace(/\s+/g, ' ').trim();
+  if (!owner) return s;
+  return s.split(/\s*·\s*/).filter(function (part) { return !/^담당\s/.test(part); }).join(' · ');
+}
+
 function grOverviewEsc(value) {
   return String(value == null ? '' : value)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -141,9 +148,10 @@ function grOverviewRenderHtml(opts) {
   h.push('<div class="ov-head-new"><div class="ov-head-title">');
   h.push('<div class="ov-head-eyebrow">IT Global Request</div>');
   h.push('<div class="ov-head-name">IT 업무 진행 현황</div>');
-  h.push('<div class="ov-head-sub">Global Request 태스크 — 진행·예정 기본 표시. 시트 행을 누르면 해당 건으로 이동합니다.</div>');
-  h.push('</div><div class="ov-head-total"><div class="ov-head-total-label">In Progress</div>');
-  h.push('<div class="ov-head-total-num">' + kpis.inProgress + '</div></div></div>');
+  // 기본 필터는 진행+예정. 예정이 없으면 "진행 중"만 말한다.
+  var defaultScope = kpis.planned ? '진행·예정 태스크' : '진행 중 태스크';
+  h.push('<div class="ov-head-sub">' + defaultScope + '를 기본으로 보여 줍니다. 행을 누르면 해당 건으로 이동합니다.</div>');
+  h.push('</div></div>');
   h.push('<div class="ov-stats-row">' +
     kpi(kpis.inProgress, '진행 중 태스크') + '<div class="ov-stat-div"></div>' +
     kpi(kpis.planned, '예정') + '<div class="ov-stat-div"></div>' +
@@ -166,23 +174,26 @@ function grOverviewRenderHtml(opts) {
   h.push('<select id="grOvSort" aria-label="정렬" onchange="setGrOverviewSort(this.value)">' +
     opt('week', '주차 높은순') + opt('owner', '담당자순') +
     opt('pct', '진행률 낮은순') + opt('weekly', '금주 변경순') + '</select></div>');
+  // 보이는 행이 모두 같은 구분이면 구분 칸은 반복 정보라 뺀다.
+  var showGroup = visible.some(function (r) { return r.group !== visible[0].group; });
   h.push('<div class="gr-ov-table-wrap"><table class="gr-ov-table"><thead><tr>' +
-    '<th>태스크</th><th>구분</th><th>담당</th><th>완료율</th><th>사이트</th><th>금주 변경</th><th>메모</th>' +
+    '<th>태스크</th>' + (showGroup ? '<th>구분</th>' : '') + '<th>담당</th><th>완료율</th><th>사이트</th><th>금주 변경</th><th>메모</th>' +
     '</tr></thead><tbody>');
   if (!visible.length) {
     h.push('<tr><td colspan="7" class="gr-ov-empty">조건에 맞는 태스크가 없습니다.</td></tr>');
   }
   visible.forEach(function (r) {
     var week = r.week ? ('W' + r.week) : '';
+    var memo = grOverviewMemoText(r.memo, r.owner);
     h.push('<tr class="gr-ov-row" onclick="switchMenu(\'' + esc(r.key) + '\')">' +
-      '<td><div class="gr-ov-title">' + esc(r.shortTitle || r.title) + '</div>' +
+      '<td class="gr-ov-task"><div class="gr-ov-title">' + esc(r.shortTitle || r.title) + '</div>' +
       '<div class="gr-ov-key">' + (week ? esc(week) + ' · ' : '') + esc(r.title) + '</div></td>' +
-      '<td><span class="gr-ov-badge gr-ov-badge-' + esc(r.group) + '">' + esc(grOverviewGroupLabel(r.group)) + '</span></td>' +
-      '<td>' + esc(r.owner || '—') + '</td>' +
-      '<td class="gr-ov-num">' + r.pct + '%</td>' +
-      '<td class="gr-ov-num">' + r.done + ' / ' + r.effective + '</td>' +
-      '<td class="gr-ov-num">' + (r.weekly ? r.weekly : '—') + '</td>' +
-      '<td class="gr-ov-memo" title="' + esc(r.memo) + '">' + esc(grOverviewOneLine(r.memo, 80) || '—') + '</td>' +
+      (showGroup ? '<td data-label="구분"><span class="gr-ov-badge gr-ov-badge-' + esc(r.group) + '">' + esc(grOverviewGroupLabel(r.group)) + '</span></td>' : '') +
+      '<td class="gr-ov-owner" data-label="담당">' + esc(r.owner || '—') + '</td>' +
+      '<td class="gr-ov-num" data-label="완료율">' + r.pct + '%</td>' +
+      '<td class="gr-ov-num" data-label="사이트">' + r.done + ' / ' + r.effective + '</td>' +
+      '<td class="gr-ov-num" data-label="금주 변경">' + (r.weekly ? r.weekly : '—') + '</td>' +
+      '<td class="gr-ov-memo" title="' + esc(memo) + '">' + esc(grOverviewOneLine(memo, 80) || '—') + '</td>' +
       '</tr>');
   });
   h.push('</tbody></table></div></div>');
@@ -207,6 +218,7 @@ if (typeof module !== 'undefined' && module.exports) {
     grOverviewWeekOf: grOverviewWeekOf,
     grOverviewGroupLabel: grOverviewGroupLabel,
     grOverviewOneLine: grOverviewOneLine,
+    grOverviewMemoText: grOverviewMemoText,
     grOverviewCollectRows: grOverviewCollectRows,
     grOverviewFilterRows: grOverviewFilterRows,
     grOverviewKpis: grOverviewKpis,

@@ -595,7 +595,7 @@ button,input,select,textarea{font-family:inherit}
   font-size:20px;font-weight:800;color:#1A1D2E;
   letter-spacing:-.4px;line-height:1.2;
 }
-.ov-head-sub{font-size:12px;color:#9BA3BF;margin-top:4px}
+.ov-head-sub{font-size:12px;color:#9BA3BF;margin-top:4px;word-break:keep-all}
 .ov-head-total{text-align:right;flex-shrink:0}
   .ov-head-stats{display:flex;align-items:center;gap:18px}
   .ov-stats-row{display:flex;align-items:center;gap:22px;padding:4px 0 14px;margin-bottom:14px;border-bottom:1px solid #F0F1F8}
@@ -1476,7 +1476,8 @@ button,input,select,textarea{font-family:inherit}
   position:static;left:auto;z-index:auto;
   text-align:center;font-weight:900;letter-spacing:.02em;
   border-right:1.5px solid #C7D2FE!important;
-  vertical-align:middle!important;
+  /* EU처럼 27행짜리 묶음이면 가운데 정렬 시 첫 화면에서 지역명이 안 보인다 */
+  vertical-align:top!important;padding-top:14px!important;
   min-width:88px;width:88px;
 }
 .sheet-region-cell.region-eu{background:#EFF6FF!important;color:#1D4ED8!important}
@@ -1506,8 +1507,10 @@ button,input,select,textarea{font-family:inherit}
 .ov-head-total-chip-pages{background:#F8FAFF;border-color:#DCE6FF;color:#1D4ED8}
 .ov-head-total-value{font-size:24px;font-weight:900;letter-spacing:-.7px;font-variant-numeric:tabular-nums;line-height:1}
 .ov-head-total-unit{font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;opacity:.72}
+.ov-head-total-note{flex-basis:100%;text-align:right;font-size:11px;font-weight:600;color:#94A3B8}
 @media (max-width:768px){
   .ov-head-total-stack{justify-content:flex-start}
+  .ov-head-total-note{text-align:left}
   .ov-head-total-chip{min-width:84px;padding:8px 10px}
   .ov-head-total-value{font-size:19px}
 }
@@ -1818,6 +1821,8 @@ button,input,select,textarea{font-family:inherit}
   color: #1A1D2E;
   vertical-align: middle;
 }
+/* 12칸이 1440px 화면에 다 들어가도록 좌우 여백을 줄인다(Live URL 칸이 잘리던 문제) */
+.npi-detail-table th, .npi-detail-table td { padding-left: 9px; padding-right: 9px; }
 .npi-detail-table tr:last-child td { border-bottom: none; }
 .npi-detail-table tr:hover td { background: #F8FAFC; }
 
@@ -2168,7 +2173,6 @@ button,input,select,textarea{font-family:inherit}
 .dash-sr-item .sr-main { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dash-sr-item .sr-sub { color: #94A3B8; font-size: 11px; margin-left: auto; white-space: nowrap; }
 .dash-sr-empty { padding: 16px 12px; color: #94A3B8; font-size: 12px; text-align: center; }
-@media (max-width: 900px) { .topbar-search { display: none; } }
 
 /* GR Overview — /id Overview 레이아웃을 IT 톤으로 */
 .gr-ov-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
@@ -2203,3 +2207,48 @@ button,input,select,textarea{font-family:inherit}
 .gr-ov-badge-in_progress{background:#E0F2FE;color:#0369A1}
 .gr-ov-badge-planned{background:#F1F5F9;color:#475569}
 .gr-ov-badge-done{background:#DCFCE7;color:#15803D}
+
+/* ── 모바일 보정 (2026-10-21 UI 점검) ─────────────────────────
+   담당 이름이 한 글자씩 쌓이고, 표 오른쪽이 잘리고, KPI 라벨이 단어 중간에서 끊기던 문제. */
+.gr-ov-owner{white-space:nowrap}
+.ov-stat-cap{word-break:keep-all}
+@media (max-width:640px){
+  .ov-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 8px}
+  .ov-stats-row .ov-stat-div{display:none}
+  .ov-stat-blk{min-width:0}
+  /* 표 → 카드: 제목·메모는 한 줄 전체, 나머지는 "라벨 값" 칩으로 */
+  .gr-ov-table-wrap{border:0;overflow:visible}
+  .gr-ov-table thead{display:none}
+  .gr-ov-table,.gr-ov-table tbody{display:block}
+  .gr-ov-table tr.gr-ov-row{display:flex;flex-wrap:wrap;gap:6px 14px;padding:12px 14px;border:1px solid #EEF0F5;border-radius:10px;margin-bottom:8px}
+  .gr-ov-table tbody td{display:block;padding:0;border:0}
+  .gr-ov-table td.gr-ov-task{flex-basis:100%}
+  .gr-ov-table td[data-label]::before{content:attr(data-label);margin-right:4px;font-size:10.5px;font-weight:600;color:#9BA3BF}
+  .gr-ov-table td.gr-ov-memo{flex-basis:100%;max-width:none;white-space:normal}
+  .gr-ov-table td.gr-ov-memo:empty{display:none}
+}
+/* 모바일 상단 검색: 아이콘만 두고, 누르면 상단바 폭으로 펼친다 */
+@media (max-width:900px){
+  .topbar-search{display:flex;flex:0 0 32px;min-width:32px;max-width:32px}
+  .topbar-search-input{padding:6px 0 6px 28px;color:transparent;cursor:pointer;border-color:#E0E4F0}
+  .topbar-search-input::placeholder{color:transparent}
+  .topbar-search:focus-within{position:absolute;left:12px;right:12px;max-width:none;z-index:1300;background:#fff}
+  .topbar-search:focus-within .topbar-search-input{color:#1A1D2E;padding-right:26px;cursor:text}
+  .topbar-search:focus-within .topbar-search-input::placeholder{color:#94A3B8}
+  .topbar:has(.topbar-search:focus-within){overflow:visible}
+  .topbar-search-panel{min-width:0}
+}
+/* 모바일 태스크 표: Region을 좁히고 최소 폭을 줄여 Status까지 첫 화면에 보이게 한다.
+   나머지 칸은 가로 스크롤 — 오른쪽 그림자로 더 있다는 걸 알린다. */
+@media (max-width:640px){
+  .sheet-data-table{min-width:0;width:max-content}
+  .sheet-region-table .sheet-region-cell{min-width:44px;width:44px;font-size:10px;padding-left:4px!important;padding-right:4px!important}
+  .sheet-region-table thead th:first-child{min-width:44px;width:44px;padding-left:4px;padding-right:4px}
+  .sheet-data-table th.sheet-country-col,.sheet-data-table td.sheet-country-col{min-width:96px;max-width:140px;width:140px;white-space:normal}
+  .sheet-data-table tbody td{max-width:200px}
+  .sheet-table-scroll{
+    background:
+      linear-gradient(to left,#fff 30%,rgba(255,255,255,0)) right/24px 100% no-repeat local,
+      radial-gradient(farthest-side at 100% 50%,rgba(15,23,42,.16),transparent) right/12px 100% no-repeat scroll;
+  }
+}

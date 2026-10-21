@@ -1878,7 +1878,11 @@ function forceCurrentSheetTitle(key) {
   const top = document.getElementById('topTitle');
   const meta = document.getElementById('topMeta');
   if (top && title) top.textContent = title;
-  if (meta) meta.textContent = getPrevIsoWeekLabelForLoader();
+  if (meta) {
+    const wk = getPrevIsoWeekLabelForLoader();
+    meta.textContent = wk + ' 기준';
+    meta.title = '지난주(' + wk + ') 실적 기준';
+  }
 }
 
 function makeNavAbbr(title, idx) {
