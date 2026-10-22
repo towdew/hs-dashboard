@@ -1,36 +1,31 @@
 {
   "baseDate": "20261022",
-  "prevDate": "20261015",
+  "prevDate": "20261021",
   "changes": {
-    "UltraGear Buying Guide 2차|CA_EN": {
-      "type": "status",
-      "from": "완료",
-      "to": "사전검토"
-    },
     "UltraGear Buying Guide 2차|CA_FR": {
       "type": "status",
       "from": "법인리뷰",
-      "to": "사전검토"
+      "to": "작업중"
     },
     "UltraGear Buying Guide 2차|EE": {
       "type": "status",
       "from": "법인리뷰",
-      "to": "사전검토"
+      "to": "작업중"
     },
     "UltraGear Buying Guide 2차|LT": {
       "type": "status",
       "from": "법인리뷰",
-      "to": "사전검토"
+      "to": "작업중"
     },
     "UltraGear Buying Guide 2차|LV": {
       "type": "status",
       "from": "법인리뷰",
-      "to": "사전검토"
+      "to": "작업중"
     },
-    "UltraGear Buying Guide 2차|UK": {
+    "UltraGear Buying Guide 2차|MX": {
       "type": "status",
-      "from": "법인리뷰",
-      "to": "취소"
+      "from": "사전검토",
+      "to": "작업중"
     },
     "Windows 11 Landing|GLOBAL": {
       "type": "status",
@@ -225,7 +220,7 @@
   },
   "taskSummary": {
     "UltraGear Buying Guide 2차": {
-      "changed": 6,
+      "changed": 5,
       "new": 0
     },
     "Windows 11 Landing": {
