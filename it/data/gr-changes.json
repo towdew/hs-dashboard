@@ -1,83 +1,303 @@
 {
-  "baseDate": "20261021",
-  "prevDate": "20261015",
+  "baseDate": "20261022",
+  "prevDate": "20261021",
   "changes": {
     "UltraGear Buying Guide 2차|BG": {
       "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
+      "from": "작업중",
+      "to": "사전검토"
     },
     "UltraGear Buying Guide 2차|BR": {
       "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
+      "from": "작업중",
+      "to": "사전검토"
+    },
+    "UltraGear Buying Guide 2차|CA_EN": {
+      "type": "status",
+      "from": "완료",
+      "to": "사전검토"
+    },
+    "UltraGear Buying Guide 2차|CA_FR": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "사전검토"
     },
     "UltraGear Buying Guide 2차|CAC": {
       "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
+      "from": "작업중",
+      "to": "사전검토"
     },
     "UltraGear Buying Guide 2차|CZ": {
       "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
+      "from": "작업중",
+      "to": "사전검토"
     },
     "UltraGear Buying Guide 2차|DE": {
       "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
+      "from": "작업중",
+      "to": "사전검토"
     },
     "UltraGear Buying Guide 2차|EC": {
       "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
+      "from": "작업중",
+      "to": "사전검토"
+    },
+    "UltraGear Buying Guide 2차|EE": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "사전검토"
     },
     "UltraGear Buying Guide 2차|ES": {
       "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
+      "from": "작업중",
+      "to": "사전검토"
     },
     "UltraGear Buying Guide 2차|GR": {
       "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
+      "from": "작업중",
+      "to": "사전검토"
     },
     "UltraGear Buying Guide 2차|HR": {
       "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
+      "from": "작업중",
+      "to": "사전검토"
     },
     "UltraGear Buying Guide 2차|HU": {
       "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
+      "from": "작업중",
+      "to": "사전검토"
+    },
+    "UltraGear Buying Guide 2차|LT": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "사전검토"
+    },
+    "UltraGear Buying Guide 2차|LV": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "사전검토"
     },
     "UltraGear Buying Guide 2차|PA": {
       "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
+      "from": "작업중",
+      "to": "사전검토"
     },
     "UltraGear Buying Guide 2차|RO": {
       "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
+      "from": "작업중",
+      "to": "사전검토"
     },
     "UltraGear Buying Guide 2차|RS": {
       "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
+      "from": "작업중",
+      "to": "사전검토"
     },
     "UltraGear Buying Guide 2차|TR": {
       "type": "status",
-      "from": "사전검토",
-      "to": "작업중"
+      "from": "작업중",
+      "to": "사전검토"
+    },
+    "UltraGear Buying Guide 2차|UK": {
+      "type": "status",
+      "from": "법인리뷰",
+      "to": "취소"
     },
     "UltraGear Buying Guide 2차|VN": {
+      "type": "status",
+      "from": "작업중",
+      "to": "사전검토"
+    },
+    "UltraGear Buying Guide 2차|ZA": {
+      "type": "status",
+      "from": "작업중",
+      "to": "사전검토"
+    },
+    "Windows 11 Landing|GLOBAL": {
       "type": "status",
       "from": "사전검토",
       "to": "작업중"
     },
-    "UltraGear Buying Guide 2차|ZA": {
+    "Windows 11 Landing|CA_EN": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "Windows 11 Landing|CA_FR": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "Windows 11 Landing|ES": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "Windows 11 Landing|IT": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "Windows 11 Landing|UK": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "Windows 11 Landing|DE": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "Windows 11 Landing|FR": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "Windows 11 Landing|AU": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "Windows 11 Landing|IN": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "Windows 11 Landing|JP": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "Windows 11 Landing|CN": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "Windows 11 Landing|SG": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "Windows 11 Landing|VN": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "Windows 11 Landing|TW": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|BE": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|BE_FR": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|DE": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|DK": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|GLOBAL": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|IN": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|IT": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|NL": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|RU": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|SE": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|UK": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|CZ": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|IL": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|PL": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|CA_EN": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|CA_FR": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|ES": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|AE": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|AE_AR": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|MX": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|BR": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|FR": {
+      "type": "status",
+      "from": "사전검토",
+      "to": "작업중"
+    },
+    "IT B2B TCO Mark|SG": {
       "type": "status",
       "from": "사전검토",
       "to": "작업중"
@@ -85,9 +305,17 @@
   },
   "taskSummary": {
     "UltraGear Buying Guide 2차": {
-      "changed": 16,
+      "changed": 22,
+      "new": 0
+    },
+    "Windows 11 Landing": {
+      "changed": 15,
+      "new": 0
+    },
+    "IT B2B TCO Mark": {
+      "changed": 23,
       "new": 0
     }
   },
-  "generatedAt": "2026-10-21"
+  "generatedAt": "2026-10-22"
 }
