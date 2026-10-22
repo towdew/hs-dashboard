@@ -12632,7 +12632,8 @@ function escapeAttrSheet(value) {
   }
   function respondPage(base) {
     base = String(base || '').split('#')[0].split('?')[0];
-    if (/\.html?$/i.test(base)) base = base.replace(/[^\/]*$/, '');
+    // .../Phase2/index, .../Phase2/index.html, .../Phase2/MS_Dashboard.html → .../Phase2/
+    if (/\/index$/i.test(base) || /\.[a-z0-9]+$/i.test(base.split('/').pop() || '')) base = base.replace(/[^\/]*$/, '');
     if (base && !/\/$/.test(base)) base += '/';
     return base + 'respond.html';
   }
