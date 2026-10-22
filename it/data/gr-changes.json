@@ -1,17 +1,7 @@
 {
   "baseDate": "20261022",
-  "prevDate": "20261021",
+  "prevDate": "20261015",
   "changes": {
-    "UltraGear Buying Guide 2차|BG": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
-    },
-    "UltraGear Buying Guide 2차|BR": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
-    },
     "UltraGear Buying Guide 2차|CA_EN": {
       "type": "status",
       "from": "완료",
@@ -22,49 +12,9 @@
       "from": "법인리뷰",
       "to": "사전검토"
     },
-    "UltraGear Buying Guide 2차|CAC": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
-    },
-    "UltraGear Buying Guide 2차|CZ": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
-    },
-    "UltraGear Buying Guide 2차|DE": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
-    },
-    "UltraGear Buying Guide 2차|EC": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
-    },
     "UltraGear Buying Guide 2차|EE": {
       "type": "status",
       "from": "법인리뷰",
-      "to": "사전검토"
-    },
-    "UltraGear Buying Guide 2차|ES": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
-    },
-    "UltraGear Buying Guide 2차|GR": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
-    },
-    "UltraGear Buying Guide 2차|HR": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
-    },
-    "UltraGear Buying Guide 2차|HU": {
-      "type": "status",
-      "from": "작업중",
       "to": "사전검토"
     },
     "UltraGear Buying Guide 2차|LT": {
@@ -77,40 +27,10 @@
       "from": "법인리뷰",
       "to": "사전검토"
     },
-    "UltraGear Buying Guide 2차|PA": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
-    },
-    "UltraGear Buying Guide 2차|RO": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
-    },
-    "UltraGear Buying Guide 2차|RS": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
-    },
-    "UltraGear Buying Guide 2차|TR": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
-    },
     "UltraGear Buying Guide 2차|UK": {
       "type": "status",
       "from": "법인리뷰",
       "to": "취소"
-    },
-    "UltraGear Buying Guide 2차|VN": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
-    },
-    "UltraGear Buying Guide 2차|ZA": {
-      "type": "status",
-      "from": "작업중",
-      "to": "사전검토"
     },
     "Windows 11 Landing|GLOBAL": {
       "type": "status",
@@ -305,7 +225,7 @@
   },
   "taskSummary": {
     "UltraGear Buying Guide 2차": {
-      "changed": 22,
+      "changed": 6,
       "new": 0
     },
     "Windows 11 Landing": {
