@@ -3010,79 +3010,36 @@ function statusFor(r){
   const isClientReviewTask = taskLower === '[wpl] client review';
   const isClarificationTask = taskLower === '[wpl] request clarification' || taskLower === '[wpl] change req. need close';
 
-  if(!isNA(r.liveUrl)){
-    const actualPublishingDate = formatDateValue(r.actualPublishing);
-    const ldmApprovalDate = formatDateValue(r.ldmApproval);
-    const periodText = actualPublishingDate
-      ? `Publishing Date: ${actualPublishingDate}`
-      : (ldmApprovalDate ? `Publishing Date: ${ldmApprovalDate}` : '');
-    return { signal:'Green', title:'Complete', aging:'', periodText, reason:'Live URL exists' };
-  }
-  if(taskLower === '[wpl] cancelled') return { signal:'Grey', title:'Cancelled', aging:'', periodText:'', reason:'Task Status = ' + task };
-  // [WPL] Closed → Complete (Live URL 없어도 완료)
-  if(taskLower === '[wpl] closed'){
-    const actualPublishingDate = formatDateValue(r.actualPublishing);
-    const periodText = actualPublishingDate ? `Publishing Date: ${actualPublishingDate}` : '';
-    return { signal:'Green', title:'Complete', aging:'', periodText, reason:'Task Status = ' + task };
-  }
+  // Only these three workflow states are included in this dashboard.
+  if(!isPreCheckTask && !isClientReviewTask && !isClarificationTask) return null;
+  // Published/completed requests are excluded even if their PTT status is stale.
+  if(!isNA(r.liveUrl)) return null;
 
-  // In progress 상태는 신호등data-MMDD.xlsx의 일반 데이터에서만 표시합니다.
-  // Aging/Pending Period는 표시하지 않고, 셀에는 Status + Page 수만 노출합니다.
-  if(isInProgressTask(task)){
-    return { signal:'Blue', title:'In Progress', aging:'', periodText:'', reason:'Task Status = ' + task };
-  }
+  const title = isPreCheckTask ? 'Pre check' :
+    (isClientReviewTask ? 'Subsidiary Review' : 'Request Clarification');
+  const originalDate = isPreCheckTask ? r.ldmAssigned :
+    (isClientReviewTask ? r.clientReviewDate : r.lastComment);
+  const originalDateLabel = isPreCheckTask ? 'LDM assigned date' :
+    (isClientReviewTask ? 'The Date of Client Review' : 'Last comment date');
 
-  // Pre check: [WPL] New Request / [WPL] Create Request 전체를 LDM assigned date부터 계산합니다.
-  const ldmAssignedAge = ageDays(r.ldmAssigned);
-  const ldmAssignedDate = formatDateValue(r.ldmAssigned) || 'N/A';
-
-  // Subsidiary Review: [WPL] Client Review 전체를 The Date of Client Review부터 계산합니다.
-  const clientReviewAge = ageDays(r.clientReviewDate);
-  const clientReviewDate = formatDateValue(r.clientReviewDate) || 'N/A';
-
-  const commentAge = ageDays(r.lastComment);
-  const commentDate = formatDateValue(r.lastComment) || 'N/A';
-
-  // 명시적인 PTT 상태를 우선 판정합니다.
-  if(isClientReviewTask && clientReviewAge !== null && clientReviewAge >= 14){
-    return { signal:'Red', title:'Subsidiary Review', aging:clientReviewAge, periodText:elapsedText(clientReviewAge), reason:`The Date of Client Review (${clientReviewDate}) is ${clientReviewAge} days old (≥14)` };
-  }
-  if(isClarificationTask && commentAge !== null && commentAge >= 14){
-    return { signal:'Red', title:'Request Clarification', aging:commentAge, periodText:elapsedText(commentAge), reason:`Last comment date (${commentDate}) is ${commentAge} days old (≥14)` };
-  }
-  if(isPreCheckTask && ldmAssignedAge !== null && ldmAssignedAge >= 14){
-    return { signal:'Red', title:'Pre-check', aging:ldmAssignedAge, periodText:elapsedText(ldmAssignedAge), reason:`LDM assigned date (${ldmAssignedDate}) is ${ldmAssignedAge} days old (≥14)` };
-  }
-
-  if(isClientReviewTask && clientReviewAge !== null && clientReviewAge >= 7){
-    return { signal:'Orange', title:'Subsidiary Review', aging:clientReviewAge, periodText:elapsedText(clientReviewAge), reason:`The Date of Client Review (${clientReviewDate}) is ${clientReviewAge} days old (≥7)` };
-  }
-  if(isClarificationTask && commentAge !== null && commentAge >= 7){
-    return { signal:'Orange', title:'Request Clarification', aging:commentAge, periodText:elapsedText(commentAge), reason:`Last comment date (${commentDate}) is ${commentAge} days old (≥7)` };
-  }
-  if(isPreCheckTask && ldmAssignedAge !== null && ldmAssignedAge >= 7){
-    return { signal:'Orange', title:'Pre-check', aging:ldmAssignedAge, periodText:elapsedText(ldmAssignedAge), reason:`LDM assigned date (${ldmAssignedDate}) is ${ldmAssignedAge} days old (≥7)` };
-  }
-
-  // 7일 미만은 신호등 도트 없이 현재 단계명과 경과일만 표시합니다.
-  if(isClientReviewTask){
-    const aging = clientReviewAge !== null && clientReviewAge >= 0 ? clientReviewAge : '';
-    return { signal:'None', title:'Subsidiary Review', aging:aging, periodText:aging === '' ? '' : elapsedText(aging), reason:`Task Status = ${task}; The Date of Client Review = ${clientReviewDate}` };
-  }
-  if(isClarificationTask){
-    const aging = commentAge !== null && commentAge >= 0 ? commentAge : '';
-    return { signal:'None', title:'Request Clarification', aging:aging, periodText:aging === '' ? '' : elapsedText(aging), reason:'Task Status = ' + task };
-  }
-  if(isPreCheckTask){
-    const aging = ldmAssignedAge !== null && ldmAssignedAge >= 0 ? ldmAssignedAge : '';
-    return { signal:'None', title:'Pre-check', aging:aging, periodText:aging === '' ? '' : elapsedText(aging), reason:`Task Status = ${task}; LDM assigned date = ${ldmAssignedDate}` };
-  }
-
-  // 코드에 별도로 정의되지 않은 모든 PTT 상태는 In Progress로 표시합니다.
-  if(task){
-    return { signal:'Blue', title:'In Progress', aging:'', periodText:'', reason:'Unmapped Task Status = ' + task };
-  }
-  return { signal:'None', title:'', aging:'', periodText:'', reason:'Task Status is empty' };
+  // A valid Last Comment Date takes priority in ALL THREE workflow states.
+  // Any comment within the last 7 days means the item is NOT pending.
+  const lastCommentAge = ageDays(r.lastComment);
+  const hasLastComment = lastCommentAge !== null && lastCommentAge >= 0;
+  const referenceDate = hasLastComment ? r.lastComment : originalDate;
+  const referenceLabel = hasLastComment ? 'Last comment date' : originalDateLabel;
+  const referenceAge = ageDays(referenceDate);
+  const dateText = formatDateValue(referenceDate) || 'N/A';
+  const reason = `${referenceLabel} (${dateText})` +
+    (referenceAge === null ? ' is not available' : ` is ${referenceAge} days old`);
+  const signal = referenceAge !== null && referenceAge >= 14 ? 'Red' :
+    (referenceAge !== null && referenceAge >= 7 ? 'Orange' : 'None');
+  return {
+    signal, title,
+    aging: referenceAge !== null && referenceAge >= 0 ? referenceAge : '',
+    periodText: referenceAge !== null && referenceAge >= 0 ? elapsedText(referenceAge) : '',
+    reason: reason + (hasLastComment ? ' (Last Comment Date takes priority)' : '')
+  };
 }
 function worse(a,b){ return PRIORITY[b.signal] > PRIORITY[a.signal] ? b : a; }
 
@@ -3106,7 +3063,7 @@ function prepareData(rows){
       region:norm(r.region) || 'Other',
       status:statusFor(r)
     }))
-    .filter(r => r.model && r.country);
+    .filter(r => r.model && r.country && r.status);
 
   // 국가별 다수(majority) 리전으로 정규화 — 같은 국가가 여러 리전에 흩어진 데이터 오류 보정
   const regionVotes = {};
@@ -4338,8 +4295,8 @@ function renderDashboard(rows, clickedCountry=null){
               <span>Color Description</span>
             </div>
             <div class="color-list">
-              <div class="color-card"><span class="color-dot-lg red"></span><span><strong class="color-name">Long Pending</strong><span class="color-desc">Delayed for 14+ days</span></span></div>
-              <div class="color-card"><span class="color-dot-lg orange"></span><span><strong class="color-name">Pending</strong><span class="color-desc">7–13 days pending</span></span></div>
+              <div class="color-card"><span class="color-dot-lg red"></span><span><strong class="color-name">Long Pending</strong><span class="color-desc">14+ days since the latest reference date</span></span></div>
+              <div class="color-card"><span class="color-dot-lg orange"></span><span><strong class="color-name">Pending</strong><span class="color-desc">7–13 days since the latest reference date</span></span></div>
               <div class="color-card"><span class="color-dot-lg green"></span><span><strong class="color-name">Complete</strong><span class="color-desc">Live completed</span></span></div>
               <div class="color-card"><span class="color-dot-lg grey"></span><span><strong class="color-name">Cancelled</strong><span class="color-desc">Cancelled</span></span></div>
             </div>
@@ -4354,13 +4311,12 @@ function renderDashboard(rows, clickedCountry=null){
           </div>
           <div class="total-model">Total Request<span class="num">${totalModel}</span></div>
         </div>
-        <div class="summary-grid">
+        <div class="summary-grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">
           ${statusChip('Long Pending','Red',counts.Red)}
           ${statusChip('Pending','Orange',counts.Orange)}
-          ${statusChip('Complete','Green',counts.Green)}
-          ${statusChip('Cancelled','Grey',counts.Grey)}
+          ${statusChip('Not Pending (<7 days)','None',counts.None)}
         </div>
-        <div class="summary-inprogress-text">In Progress <strong>${inProgressCount}</strong></div>
+        <div class="summary-inprogress-text">Only Pre check, Subsidiary Review and Request Clarification are included. Last Comment Date takes priority for all three.</div>
 
         <div class="filter-panel">
           <div class="filter-help">
@@ -4880,7 +4836,7 @@ const SIGNAL_LABEL = {
   Blue:'In progress',
   Green:'Complete',
   Grey:'Cancelled',
-  None:'Pre-check'
+  None:'Not Pending'
 };
 
 function rowHtml(key, value, muted, stacked){
